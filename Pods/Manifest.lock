@@ -1,0 +1,93 @@
+PODS:
+  - ACFloatingTextfield-Swift (1.5)
+  - Alamofire (4.5.1)
+  - CHIPageControl (0.1.4):
+    - CHIPageControl/Aji (= 0.1.4)
+    - CHIPageControl/Aleppo (= 0.1.4)
+    - CHIPageControl/Chimayo (= 0.1.4)
+    - CHIPageControl/Fresno (= 0.1.4)
+    - CHIPageControl/Jalapeno (= 0.1.4)
+    - CHIPageControl/Jaloro (= 0.1.4)
+    - CHIPageControl/Paprika (= 0.1.4)
+    - CHIPageControl/Puya (= 0.1.4)
+  - CHIPageControl/Aji (0.1.4)
+  - CHIPageControl/Aleppo (0.1.4)
+  - CHIPageControl/Chimayo (0.1.4)
+  - CHIPageControl/Fresno (0.1.4)
+  - CHIPageControl/Jalapeno (0.1.4)
+  - CHIPageControl/Jaloro (0.1.4)
+  - CHIPageControl/Paprika (0.1.4)
+  - CHIPageControl/Puya (0.1.4)
+  - Crashlytics (3.9.3):
+    - Fabric (~> 1.7.2)
+  - DOAlertController (2.0)
+  - Fabric (1.7.2)
+  - GoogleMaps (2.5.0):
+    - GoogleMaps/Maps (= 2.5.0)
+  - GoogleMaps/Base (2.5.0)
+  - GoogleMaps/Maps (2.5.0):
+    - GoogleMaps/Base
+  - GooglePlaces (2.5.0):
+    - GoogleMaps/Base (= 2.5.0)
+  - IQKeyboardManagerSwift (5.0.6)
+  - M13Checkbox (3.2.1)
+  - NVActivityIndicatorView (4.0.0):
+    - NVActivityIndicatorView/Presenter (= 4.0.0)
+  - NVActivityIndicatorView/Presenter (4.0.0)
+  - SDWebImage (4.2.1):
+    - SDWebImage/Core (= 4.2.1)
+  - SDWebImage/Core (4.2.1)
+  - SideMenu (3.1.4)
+  - Socket.IO-Client-Swift (12.1.2):
+    - Starscream (~> 2.1.1)
+  - Starscream (2.1.1)
+  - TransitionButton (0.3.0)
+
+DEPENDENCIES:
+  - ACFloatingTextfield-Swift
+  - Alamofire
+  - CHIPageControl
+  - Crashlytics
+  - DOAlertController (from `https://github.com/okmr-d/DOAlertController.git`, branch `master`)
+  - Fabric
+  - GoogleMaps
+  - GooglePlaces
+  - IQKeyboardManagerSwift
+  - M13Checkbox
+  - NVActivityIndicatorView
+  - SDWebImage (~> 4.0)
+  - SideMenu
+  - Socket.IO-Client-Swift
+  - TransitionButton
+
+EXTERNAL SOURCES:
+  DOAlertController:
+    :branch: master
+    :git: https://github.com/okmr-d/DOAlertController.git
+
+CHECKOUT OPTIONS:
+  DOAlertController:
+    :commit: d0c58322b6ebc8d935399598bed0fb029451e0b3
+    :git: https://github.com/okmr-d/DOAlertController.git
+
+SPEC CHECKSUMS:
+  ACFloatingTextfield-Swift: ebcfb892acbce8545576dd224df7b1b7473a4bbd
+  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  CHIPageControl: 032b5ab68506c00711d5a61bd83e9fdf2a7ecb22
+  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  DOAlertController: 4d4ee33bbf1656271895da4a3cac4fbaa1d3217e
+  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
+  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
+  IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
+  M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
+  NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  SDWebImage: 1fa4c9edf525b744f002db89f3f5a38b3cd4c541
+  SideMenu: 99021e70b3f2eee65b5dd88e4274d09031b1221e
+  Socket.IO-Client-Swift: ba3cb1c4bf0a6ca90080406a2c22685c25ad1f60
+  Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
+  TransitionButton: 0bf7e5ffe80030f9d10d57983a04acf2f511998a
+
+PODFILE CHECKSUM: 0ac7293aef69840dd47a5f4d3a2750f47a655b85
+
+COCOAPODS: 1.3.1

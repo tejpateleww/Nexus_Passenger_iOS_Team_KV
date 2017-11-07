@@ -7,21 +7,64 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001151C31FA1E9B100753F55 /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C21FA1E9B100753F55 /* SideMenuTableViewController.swift */; };
+		001151C61FA1E9EC00753F55 /* MainHeaderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C51FA1E9EC00753F55 /* MainHeaderTableViewCell.swift */; };
+		001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */; };
+		001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */; };
+		001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */; };
+		0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */; };
+		0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */; };
+		0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */; };
+		0061785D1FAC59D80094651F /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061785C1FAC59D80094651F /* TempData.swift */; };
+		0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */; };
+		0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */; };
+		0079BFA21FA35E8D00EFB38D /* WebserviceSubClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BFA11FA35E8D00EFB38D /* WebserviceSubClass.swift */; };
+		0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BFA31FA35E9900EFB38D /* WebserviceMainClass.swift */; };
+		0079BFA91FA3673600EFB38D /* AKRadioButtonsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BFA81FA3673600EFB38D /* AKRadioButtonsController.swift */; };
 		008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22301FA08DCF001223DF /* AppDelegate.swift */; };
-		008D22331FA08DCF001223DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22321FA08DCF001223DF /* ViewController.swift */; };
 		008D22361FA08DCF001223DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008D22341FA08DCF001223DF /* Main.storyboard */; };
 		008D22381FA08DCF001223DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 008D22371FA08DCF001223DF /* Assets.xcassets */; };
 		008D223B1FA08DCF001223DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008D22391FA08DCF001223DF /* LaunchScreen.storyboard */; };
+		008D22431FA08E14001223DF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22421FA08E14001223DF /* LoginViewController.swift */; };
+		008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22441FA08E1F001223DF /* RegisterViewController.swift */; };
+		00A61D471FA87E0600E1BA84 /* ButtonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */; };
+		00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */; };
+		00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */; };
+		00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */; };
+		7B777FCF387F2C0E09F9630B /* Pods_TickTok_User.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		001151C21FA1E9B100753F55 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
+		001151C51FA1E9EC00753F55 /* MainHeaderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainHeaderTableViewCell.swift; sourceTree = "<group>"; };
+		001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewCell.swift; sourceTree = "<group>"; };
+		001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContainerViewController.swift; sourceTree = "<group>"; };
+		001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationNewViewController.swift; sourceTree = "<group>"; };
+		0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
+		0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		0061785C1FAC59D80094651F /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
+		0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLaterViewController.swift; sourceTree = "<group>"; };
+		0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityClass.swift; sourceTree = "<group>"; };
+		0079BFA11FA35E8D00EFB38D /* WebserviceSubClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebserviceSubClass.swift; sourceTree = "<group>"; };
+		0079BFA31FA35E9900EFB38D /* WebserviceMainClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebserviceMainClass.swift; sourceTree = "<group>"; };
+		0079BFA81FA3673600EFB38D /* AKRadioButtonsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AKRadioButtonsController.swift; sourceTree = "<group>"; };
 		008D222D1FA08DCF001223DF /* TickTok User.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TickTok User.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		008D22301FA08DCF001223DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		008D22321FA08DCF001223DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		008D22351FA08DCF001223DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		008D22371FA08DCF001223DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		008D223A1FA08DCF001223DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		008D223C1FA08DCF001223DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		008D22421FA08E14001223DF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		008D22441FA08E1F001223DF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtility.swift; sourceTree = "<group>"; };
+		00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsCollectionViewCell.swift; sourceTree = "<group>"; };
+		00A61D4B1FA8AC5600E1BA84 /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
+		00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
+		00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonClass.swift; sourceTree = "<group>"; };
+		868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TickTok_User.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.release.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.release.xcconfig"; sourceTree = "<group>"; };
+		F5E8178D64C9451D7981A87E /* Pods-TickTok User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +72,98 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7B777FCF387F2C0E09F9630B /* Pods_TickTok_User.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		001151C41FA1E9B600753F55 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				001151C21FA1E9B100753F55 /* SideMenuTableViewController.swift */,
+				001151C51FA1E9EC00753F55 /* MainHeaderTableViewCell.swift */,
+				001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		0025D0B01FA1AE6400167FCD /* HomeVC */ = {
+			isa = PBXGroup;
+			children = (
+				0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */,
+				00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */,
+				0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */,
+			);
+			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		0051AAA11FB04FF500C187F1 /* TripDetailsVC */ = {
+			isa = PBXGroup;
+			children = (
+				0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */,
+				0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */,
+			);
+			path = TripDetailsVC;
+			sourceTree = "<group>";
+		};
+		0061F2DE1FA6FA470017DF02 /* RadioButton */ = {
+			isa = PBXGroup;
+			children = (
+				0079BFA81FA3673600EFB38D /* AKRadioButtonsController.swift */,
+			);
+			path = RadioButton;
+			sourceTree = "<group>";
+		};
+		0079BF9D1FA35E0400EFB38D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				008D22471FA08E5A001223DF /* LoginVC */,
+				008D22461FA08E4F001223DF /* RegisterVC */,
+				0025D0B01FA1AE6400167FCD /* HomeVC */,
+				0051AAA11FB04FF500C187F1 /* TripDetailsVC */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		0079BF9E1FA35E0F00EFB38D /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				0061F2DE1FA6FA470017DF02 /* RadioButton */,
+				001151C41FA1E9B600753F55 /* SideMenu */,
+			);
+			path = ThirdParty;
+			sourceTree = "<group>";
+		};
+		0079BFA51FA35E9F00EFB38D /* WebserviceFiles */ = {
+			isa = PBXGroup;
+			children = (
+				0079BFA11FA35E8D00EFB38D /* WebserviceSubClass.swift */,
+				0079BFA31FA35E9900EFB38D /* WebserviceMainClass.swift */,
+			);
+			path = WebserviceFiles;
+			sourceTree = "<group>";
+		};
+		0079BFA71FA35EAE00EFB38D /* UtilityClass */ = {
+			isa = PBXGroup;
+			children = (
+				0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */,
+				00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */,
+				00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */,
+				00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */,
+			);
+			path = UtilityClass;
+			sourceTree = "<group>";
+		};
 		008D22241FA08DCF001223DF = {
 			isa = PBXGroup;
 			children = (
+				00A61D4B1FA8AC5600E1BA84 /* Location.gpx */,
 				008D222F1FA08DCF001223DF /* TickTok User */,
 				008D222E1FA08DCF001223DF /* Products */,
+				5DE7D0CBCFE96E734E733E60 /* Pods */,
+				14E5FA47CD1F47CAAE3FBCCD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -54,14 +178,61 @@
 		008D222F1FA08DCF001223DF /* TickTok User */ = {
 			isa = PBXGroup;
 			children = (
-				008D22301FA08DCF001223DF /* AppDelegate.swift */,
-				008D22321FA08DCF001223DF /* ViewController.swift */,
+				008D22481FA08E7F001223DF /* AppDelegate */,
+				0079BF9D1FA35E0400EFB38D /* ViewControllers */,
+				0079BF9E1FA35E0F00EFB38D /* ThirdParty */,
+				0079BFA71FA35EAE00EFB38D /* UtilityClass */,
+				0079BFA51FA35E9F00EFB38D /* WebserviceFiles */,
 				008D22341FA08DCF001223DF /* Main.storyboard */,
 				008D22371FA08DCF001223DF /* Assets.xcassets */,
 				008D22391FA08DCF001223DF /* LaunchScreen.storyboard */,
 				008D223C1FA08DCF001223DF /* Info.plist */,
+				0061785C1FAC59D80094651F /* TempData.swift */,
 			);
 			path = "TickTok User";
+			sourceTree = "<group>";
+		};
+		008D22461FA08E4F001223DF /* RegisterVC */ = {
+			isa = PBXGroup;
+			children = (
+				001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */,
+				008D22441FA08E1F001223DF /* RegisterViewController.swift */,
+				001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */,
+			);
+			path = RegisterVC;
+			sourceTree = "<group>";
+		};
+		008D22471FA08E5A001223DF /* LoginVC */ = {
+			isa = PBXGroup;
+			children = (
+				008D22421FA08E14001223DF /* LoginViewController.swift */,
+			);
+			path = LoginVC;
+			sourceTree = "<group>";
+		};
+		008D22481FA08E7F001223DF /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				008D22301FA08DCF001223DF /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
+			sourceTree = "<group>";
+		};
+		14E5FA47CD1F47CAAE3FBCCD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5DE7D0CBCFE96E734E733E60 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F5E8178D64C9451D7981A87E /* Pods-TickTok User.debug.xcconfig */,
+				8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -71,9 +242,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 008D223F1FA08DCF001223DF /* Build configuration list for PBXNativeTarget "TickTok User" */;
 			buildPhases = (
+				9B2149097BFB38C9959DC4A9 /* [CP] Check Pods Manifest.lock */,
 				008D22291FA08DCF001223DF /* Sources */,
 				008D222A1FA08DCF001223DF /* Frameworks */,
 				008D222B1FA08DCF001223DF /* Resources */,
+				A2933852BD74F8C0D508A763 /* [CP] Embed Pods Frameworks */,
+				0F3CCE603DFCC1C63FAF5F5C /* [CP] Copy Pods Resources */,
+				00A61D481FA881AC00E1BA84 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -131,13 +306,125 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		00A61D481FA881AC00E1BA84 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 14a43f19af433e25667bd2c0d03a5aa6e886a728 2340430a2873285f1c9628d9b46f95a0a23165a6305e01fc1529cbcacd067e65";
+		};
+		0F3CCE603DFCC1C63FAF5F5C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User-resources.sh",
+				"${PODS_ROOT}/GoogleMaps/Maps/Frameworks/GoogleMaps.framework/Resources/GoogleMaps.bundle",
+				"${PODS_ROOT}/GooglePlaces/Frameworks/GooglePlaces.framework/Resources/GooglePlaces.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9B2149097BFB38C9959DC4A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TickTok User-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A2933852BD74F8C0D508A763 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ACFloatingTextfield-Swift/ACFloatingTextfield_Swift.framework",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
+				"${BUILT_PRODUCTS_DIR}/DOAlertController/DOAlertController.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACFloatingTextfield_Swift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DOAlertController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		008D22291FA08DCF001223DF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				008D22331FA08DCF001223DF /* ViewController.swift in Sources */,
+				008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */,
+				001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */,
+				0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */,
+				00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */,
+				0079BFA91FA3673600EFB38D /* AKRadioButtonsController.swift in Sources */,
+				0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */,
+				008D22431FA08E14001223DF /* LoginViewController.swift in Sources */,
+				00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */,
+				0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */,
 				008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */,
+				0061785D1FAC59D80094651F /* TempData.swift in Sources */,
+				0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */,
+				001151C61FA1E9EC00753F55 /* MainHeaderTableViewCell.swift in Sources */,
+				001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */,
+				0079BFA21FA35E8D00EFB38D /* WebserviceSubClass.swift in Sources */,
+				001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */,
+				00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */,
+				0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */,
+				0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */,
+				00A61D471FA87E0600E1BA84 /* ButtonUtility.swift in Sources */,
+				001151C31FA1E9B100753F55 /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +481,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -272,31 +559,37 @@
 		};
 		008D22401FA08DCF001223DF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F5E8178D64C9451D7981A87E /* Pods-TickTok User.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LNR2265795;
+				DEVELOPMENT_TEAM = J94YJVUHB7;
 				INFOPLIST_FILE = "TickTok User/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "EWW.TickTok-User";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
 		008D22411FA08DCF001223DF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LNR2265795;
+				DEVELOPMENT_TEAM = J94YJVUHB7;
 				INFOPLIST_FILE = "TickTok User/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "EWW.TickTok-User";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

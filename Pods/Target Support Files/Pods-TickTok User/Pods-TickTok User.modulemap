@@ -1,0 +1,6 @@
+framework module Pods_TickTok_User {
+  umbrella header "Pods-TickTok User-umbrella.h"
+
+  export *
+  module * { export * }
+}
