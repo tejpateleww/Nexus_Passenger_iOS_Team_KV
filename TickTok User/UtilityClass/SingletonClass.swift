@@ -13,7 +13,7 @@ class SingletonClass: NSObject {
     var dictProfile = NSDictionary()
     var strPassengerID = String()
     var isUserLoggedIN = Bool()
-    
+    var arrCarLists = NSMutableArray()
     static let sharedInstance = SingletonClass()
     
     var bookedDetails = NSDictionary()

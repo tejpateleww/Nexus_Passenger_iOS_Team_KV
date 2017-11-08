@@ -102,9 +102,15 @@ class LoginViewController: UIViewController {
                     // .normal
                     self.btnLogin.stopAnimation(animationStyle: .normal, completion: {
                         SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
-                        SingletonClass.sharedInstance.isUserLoggedIN = true
+                        SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
                         SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)//as! String
+                        SingletonClass.sharedInstance.isUserLoggedIN = true
+                        
+                        
                         UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
+                        UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+
+                        
                         self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
                     })
                 })
