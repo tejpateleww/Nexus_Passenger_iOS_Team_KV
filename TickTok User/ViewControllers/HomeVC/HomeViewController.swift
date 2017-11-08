@@ -32,6 +32,11 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     var arrTotalNumberOfCars = NSMutableArray()
     var arrNumberOfOnlineCars = NSMutableArray()
     var dictCars = NSMutableDictionary()
+    var strCarModelClass = String()
+    
+    var strCarModelID = String()
+    
+    var strNavigateCarModel = String()
     
     //MARK:- Driver Details
     @IBOutlet weak var lblDriverName: UILabel!
@@ -235,6 +240,21 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     }
     
     @IBAction func btnBookLater(_ sender: Any) {
+        
+        if strCarModelID == "" {
+            UtilityClass.showAlert("", message: "Select Car", vc: self)
+        }
+        else {
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "BookLaterViewController") as! BookLaterViewController
+            
+            next.strModelId = strCarModelID
+            next.strCarModelURL = strNavigateCarModel
+            next.strCarName = strCarModelClass
+            
+            self.navigationController?.pushViewController(next, animated: true)
+
+        }
+        
     }
     @IBAction func btnGetFareEstimate(_ sender: Any) {
     }
@@ -328,18 +348,36 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         
         let dictOnlineCarData = (arrNumberOfOnlineCars.object(at: indexPath.row) as! NSDictionary)
         
+        print("dictOnlineCarData: \(dictOnlineCarData)")
+        
         let available = dictOnlineCarData.object(forKey: "carCount") as! Int
         let checkAvailabla = String(available)
+        
+        let carModelID = dictOnlineCarData.object(forKey: "Id") as? String
+        let carModelIDConverString: String = carModelID!
+        
+        let strCarName: String = dictOnlineCarData.object(forKey: "carName") as! String
+        
+        strCarModelClass = strCarName
+        
         
         
         let cell = collectionView.cellForItem(at: indexPath) as! CarsCollectionViewCell
         cell.imgCars.layer.borderColor = UIColor.red.cgColor
         
+        let imageURL = (self.arrTotalNumberOfCars.object(at: indexPath.row) as! NSDictionary).object(forKey: "Image") as! String
+        
+        strNavigateCarModel = imageURL
+        
+        strCarModelID = carModelIDConverString
+        
         if checkAvailabla != "0" {
             strModelId = dictOnlineCarData.object(forKey: "Id") as! String
+     
         }
         else {
             strModelId = "0"
+            
         }
     }
     
@@ -614,6 +652,15 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func btnClearPickupLocation(_ sender: UIButton) {
+        txtCurrentLocation.text = ""
+    }
+    
+    @IBAction func btnClearDropOffLocation(_ sender: UIButton) {
+        txtDestinationLocation.text = ""
+    
+    }
+    
     
 }
 
@@ -670,4 +717,6 @@ extension HomeViewController: CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
         print("Error: \(error)")
     }
+    
+    
 }

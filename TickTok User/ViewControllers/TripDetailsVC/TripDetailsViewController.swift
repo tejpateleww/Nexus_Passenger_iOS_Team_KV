@@ -24,7 +24,7 @@ class TripDetailsViewController: UIViewController,UITableViewDelegate,UITableVie
 
         let dict = NSMutableDictionary(dictionary: arrData.object(at: 0) as! NSDictionary) as NSMutableDictionary
         dictData.setObject(dict.object(forKey: "PickupLocation")!, forKey: "Pickup Location" as NSCopying)
-        dictData.setObject(dict.object(forKey: "l")!, forKey: "Dropoff Location" as NSCopying)
+        dictData.setObject(dict.object(forKey: "DropoffLocation")!, forKey: "Dropoff Location" as NSCopying)
         dictData.setObject(dict.object(forKey: "NightFare")!, forKey: "Night Fee" as NSCopying)
         dictData.setObject(dict.object(forKey: "TripFare")!, forKey: "Trip Fee" as NSCopying)
         dictData.setObject(dict.object(forKey: "WaitingTimeCost")!, forKey: "Waiting Cost" as NSCopying)

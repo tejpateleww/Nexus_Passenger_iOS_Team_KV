@@ -13,6 +13,14 @@
 		001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */; };
 		001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */; };
 		0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */; };
+		004620AC1FB1B5C5002EB388 /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A51FB1B490002EB388 /* Duration.swift */; };
+		004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A31FB1B48F002EB388 /* Int+Timepiece.swift */; };
+		004620AE1FB1B5C5002EB388 /* NSCalendar+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A61FB1B491002EB388 /* NSCalendar+Timepiece.swift */; };
+		004620AF1FB1B5C5002EB388 /* NSDate+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A91FB1B492002EB388 /* NSDate+Timepiece.swift */; };
+		004620B01FB1B5C5002EB388 /* NSDateComponents+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A81FB1B492002EB388 /* NSDateComponents+Timepiece.swift */; };
+		004620B11FB1B5C5002EB388 /* String+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A41FB1B490002EB388 /* String+Timepiece.swift */; };
+		004620B21FB1B5C5002EB388 /* WWCalendarTimeSelector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 004620A71FB1B491002EB388 /* WWCalendarTimeSelector.storyboard */; };
+		004620B31FB1B5C5002EB388 /* WWCalendarTimeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620AB1FB1B56A002EB388 /* WWCalendarTimeSelector.swift */; };
 		0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */; };
 		0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */; };
 		0061785D1FAC59D80094651F /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061785C1FAC59D80094651F /* TempData.swift */; };
@@ -27,6 +35,7 @@
 		008D223B1FA08DCF001223DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 008D22391FA08DCF001223DF /* LaunchScreen.storyboard */; };
 		008D22431FA08E14001223DF /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22421FA08E14001223DF /* LoginViewController.swift */; };
 		008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008D22441FA08E1F001223DF /* RegisterViewController.swift */; };
+		00A462ED1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A462EC1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift */; };
 		00A61D471FA87E0600E1BA84 /* ButtonUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */; };
 		00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */; };
 		00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */; };
@@ -41,6 +50,14 @@
 		001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContainerViewController.swift; sourceTree = "<group>"; };
 		001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationNewViewController.swift; sourceTree = "<group>"; };
 		0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		004620A31FB1B48F002EB388 /* Int+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Timepiece.swift"; sourceTree = "<group>"; };
+		004620A41FB1B490002EB388 /* String+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Timepiece.swift"; sourceTree = "<group>"; };
+		004620A51FB1B490002EB388 /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duration.swift; sourceTree = "<group>"; };
+		004620A61FB1B491002EB388 /* NSCalendar+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCalendar+Timepiece.swift"; sourceTree = "<group>"; };
+		004620A71FB1B491002EB388 /* WWCalendarTimeSelector.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = WWCalendarTimeSelector.storyboard; sourceTree = "<group>"; };
+		004620A81FB1B492002EB388 /* NSDateComponents+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDateComponents+Timepiece.swift"; sourceTree = "<group>"; };
+		004620A91FB1B492002EB388 /* NSDate+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Timepiece.swift"; sourceTree = "<group>"; };
+		004620AB1FB1B56A002EB388 /* WWCalendarTimeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelector.swift; sourceTree = "<group>"; };
 		0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsTableViewCell.swift; sourceTree = "<group>"; };
 		0061785C1FAC59D80094651F /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
@@ -57,6 +74,7 @@
 		008D223C1FA08DCF001223DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		008D22421FA08E14001223DF /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		008D22441FA08E1F001223DF /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		00A462EC1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllDriversOnMapViewController.swift; sourceTree = "<group>"; };
 		00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonUtility.swift; sourceTree = "<group>"; };
 		00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarsCollectionViewCell.swift; sourceTree = "<group>"; };
 		00A61D4B1FA8AC5600E1BA84 /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
@@ -95,8 +113,24 @@
 				0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */,
 				00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */,
 				0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */,
+				00A462EC1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift */,
 			);
 			path = HomeVC;
+			sourceTree = "<group>";
+		};
+		004620A21FB1B476002EB388 /* WWCalendarTimeSelector */ = {
+			isa = PBXGroup;
+			children = (
+				004620A51FB1B490002EB388 /* Duration.swift */,
+				004620A31FB1B48F002EB388 /* Int+Timepiece.swift */,
+				004620A61FB1B491002EB388 /* NSCalendar+Timepiece.swift */,
+				004620A91FB1B492002EB388 /* NSDate+Timepiece.swift */,
+				004620A81FB1B492002EB388 /* NSDateComponents+Timepiece.swift */,
+				004620A41FB1B490002EB388 /* String+Timepiece.swift */,
+				004620A71FB1B491002EB388 /* WWCalendarTimeSelector.storyboard */,
+				004620AB1FB1B56A002EB388 /* WWCalendarTimeSelector.swift */,
+			);
+			path = WWCalendarTimeSelector;
 			sourceTree = "<group>";
 		};
 		0051AAA11FB04FF500C187F1 /* TripDetailsVC */ = {
@@ -130,6 +164,7 @@
 		0079BF9E1FA35E0F00EFB38D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				004620A21FB1B476002EB388 /* WWCalendarTimeSelector */,
 				0061F2DE1FA6FA470017DF02 /* RadioButton */,
 				001151C41FA1E9B600753F55 /* SideMenu */,
 			);
@@ -298,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004620B21FB1B5C5002EB388 /* WWCalendarTimeSelector.storyboard in Resources */,
 				008D223B1FA08DCF001223DF /* LaunchScreen.storyboard in Resources */,
 				008D22381FA08DCF001223DF /* Assets.xcassets in Resources */,
 				008D22361FA08DCF001223DF /* Main.storyboard in Resources */,
@@ -404,23 +440,31 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004620B11FB1B5C5002EB388 /* String+Timepiece.swift in Sources */,
+				004620B01FB1B5C5002EB388 /* NSDateComponents+Timepiece.swift in Sources */,
 				008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */,
+				004620AC1FB1B5C5002EB388 /* Duration.swift in Sources */,
 				001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */,
 				0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */,
 				00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */,
 				0079BFA91FA3673600EFB38D /* AKRadioButtonsController.swift in Sources */,
+				004620AF1FB1B5C5002EB388 /* NSDate+Timepiece.swift in Sources */,
 				0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */,
 				008D22431FA08E14001223DF /* LoginViewController.swift in Sources */,
+				004620AE1FB1B5C5002EB388 /* NSCalendar+Timepiece.swift in Sources */,
 				00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */,
 				0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */,
+				00A462ED1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift in Sources */,
 				008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */,
 				0061785D1FAC59D80094651F /* TempData.swift in Sources */,
 				0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */,
+				004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */,
 				001151C61FA1E9EC00753F55 /* MainHeaderTableViewCell.swift in Sources */,
 				001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */,
 				0079BFA21FA35E8D00EFB38D /* WebserviceSubClass.swift in Sources */,
 				001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */,
 				00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */,
+				004620B31FB1B5C5002EB388 /* WWCalendarTimeSelector.swift in Sources */,
 				0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */,
 				0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */,
 				00A61D471FA87E0600E1BA84 /* ButtonUtility.swift in Sources */,

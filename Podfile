@@ -18,6 +18,7 @@ target 'TickTok User' do
   pod 'Crashlytics'
   pod 'SDWebImage', '~> 4.0'
   pod 'M13Checkbox'
+  # pod 'WWCalendarTimeSelector'
   pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'
   # Pods for TickTok User
 

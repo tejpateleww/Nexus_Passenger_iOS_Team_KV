@@ -14,7 +14,8 @@ let Registration =  WebserviceURLs.kDriverRegister
 let ForgotPassword =  WebserviceURLs.kForgotPassword
 let CarLists =  WebserviceURLs.kGetCarList
 let MakeBookingRequest = WebserviceURLs.kMakeBookingRequest
-
+let bookLater = WebserviceURLs.kAdvancedBooking
+let driverList = WebserviceURLs.kDriver
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Registration
@@ -66,4 +67,27 @@ func webserviceForTaxiRequest(_ dictParams: AnyObject, completion: @escaping(_ r
     let url = MakeBookingRequest
     postData(dictParams, nsURL: url, completion: completion)
 }
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Book Later
+//-------------------------------------------------------------
+
+func webserviceForBookLater(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = bookLater
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For All Drivers List
+//-------------------------------------------------------------
+
+func webserviceForAllDriversList(completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = driverList
+    getData([] as AnyObject, nsURL: url, completion: completion)
+}
+
+
+
 

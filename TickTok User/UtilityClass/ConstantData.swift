@@ -19,6 +19,8 @@ struct WebserviceURLs {
     static let kForgotPassword                          = "ForgotPassword"
     static let kGetCarList                              = "GetCarClass"
     static let kMakeBookingRequest                      = "SubmitBookingRequest"
+    static let kAdvancedBooking                         = "AdvancedBooking"
+    static let kDriver                                  = "Driver"
 
 }
 
