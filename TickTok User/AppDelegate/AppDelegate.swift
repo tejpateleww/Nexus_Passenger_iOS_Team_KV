@@ -38,6 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         {
             SingletonClass.sharedInstance.dictProfile = UserDefaults.standard.object(forKey: "profileData") as! NSMutableDictionary
             SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)
+            SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array:  UserDefaults.standard.object(forKey: "carLists") as! NSArray)
             SingletonClass.sharedInstance.isUserLoggedIN = true
         }
         else

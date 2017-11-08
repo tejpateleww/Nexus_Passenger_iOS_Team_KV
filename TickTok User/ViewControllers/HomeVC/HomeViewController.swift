@@ -76,34 +76,34 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         
         viewDestinationLocation.layer.shadowOpacity = 0.3
         viewDestinationLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
-        
+
         self.setupSideMenu()
-        webserviceCallForGettingCarLists()
+//        webserviceCallForGettingCarLists()
         
-      
-        
+       
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        
-   
+        self.arrTotalNumberOfCars = NSMutableArray(array: SingletonClass.sharedInstance.arrCarLists)
+
+        self.setupGoogleMap()
+
         
     }
     
-    //MARK:- Webservice Call for Get Car lists
-    func webserviceCallForGettingCarLists()
-    {
-        UtilityClass.showHUD()
-        webserviceForCarList { (result, status) in
-            if(result.object(forKey: "status") as! Int == 1)
-            {
-                self.arrTotalNumberOfCars = NSMutableArray(array: (result.object(forKey: "car_class") as! NSArray))
-            }
-            UtilityClass.hideHUD()
-            self.setupGoogleMap()
-        }
-    }
+//    //MARK:- Webservice Call for Get Car lists
+//    func webserviceCallForGettingCarLists()
+//    {
+//        UtilityClass.showHUD()
+//        webserviceForCarList { (result, status) in
+//            if(result.object(forKey: "status") as! Int == 1)
+//            {
+//            }
+//            UtilityClass.hideHUD()
+////            self.setupGoogleMap()
+//        }
+//    }
     
     //MARK:- Webservice Call for Booking Requests
     func webserviceCallForBookingCar()
@@ -247,7 +247,10 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
     //MARK:- Collectionview Delegate and Datasource methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-
+        if (self.arrNumberOfOnlineCars.count == 0)
+        {
+            return 6
+        }
         return self.arrNumberOfOnlineCars.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
@@ -263,9 +266,7 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
         cell.imgCars.layer.borderWidth = 2.0
         cell.imgCars.layer.borderColor = UIColor.black.cgColor
         cell.imgCars.layer.masksToBounds = true
-        
-
-
+  
         if (self.arrNumberOfOnlineCars.count != 0)
         {
             let dictOnlineCarData = (arrNumberOfOnlineCars.object(at: indexPath.row) as! NSDictionary)
@@ -278,18 +279,23 @@ class HomeViewController: UIViewController,UICollectionViewDelegate,UICollection
             cell.imgCars.sd_setIndicatorStyle(.gray)
          
             cell.imgCars.sd_setImage(with: URL(string: imageURL), completed: { (image, error, cacheType, url) in
-                
-                
-//                if self.selectedIndexPath != nil && indexPath == self.selectedIndexPath {
-//                    cell.imgCars.sd_setShowActivityIndicatorView(false)
-//
-//                }else{
-                
                     cell.imgCars.sd_setShowActivityIndicatorView(false)
-//                }
-
-            })
+                })
+        }
+        else
+        {
             
+            let imageURL = (self.arrTotalNumberOfCars.object(at: indexPath.row) as! NSDictionary).object(forKey: "Image") as! String
+            
+            cell.imgCars.sd_addActivityIndicator()
+            cell.imgCars.sd_setShowActivityIndicatorView(true)
+            cell.imgCars.sd_showActivityIndicatorView()
+            cell.imgCars.sd_setIndicatorStyle(.gray)
+            
+            cell.imgCars.sd_setImage(with: URL(string: imageURL), completed: { (image, error, cacheType, url) in
+                cell.imgCars.sd_setShowActivityIndicatorView(false)
+            })
+
         }
         return cell
 
