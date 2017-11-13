@@ -36,11 +36,11 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         viewMySelf.boxType = .square
         viewMySelf.checkState = .checked
         viewOthers.boxType = .square
-        
+        strPassengerType = "myself"
         viewFlightNumber.boxType = .square
-
-
         
+        txtDataAndTimeFromCalendar.isUserInteractionEnabled = false
+
         viewCurrentLocation.layer.shadowOpacity = 0.3
         viewCurrentLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
         
@@ -196,8 +196,7 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         
         // 3. Then you simply present it from your view controller when necessary!
         self.present(selector, animated: true, completion: nil)
-        
-        
+   
     }
     
     
@@ -271,7 +270,7 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         myDateFormatter.dateFormat = "dd/MM/yyyy hh:mm"
         
         let dateOfPostToApi: DateFormatter = DateFormatter()
-        dateOfPostToApi.dateFormat = "yyyy-MM-dd hh:mm:ss"
+        dateOfPostToApi.dateFormat = "yyyy-MM-dd hh:mm:ss a"
         
         convertDateToString = dateOfPostToApi.string(from: date)
         
