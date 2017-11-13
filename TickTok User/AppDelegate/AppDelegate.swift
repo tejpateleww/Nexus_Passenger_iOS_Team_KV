@@ -12,6 +12,7 @@ import GoogleMaps
 import GooglePlaces
 import Fabric
 import Crashlytics
+import SideMenuController
 
 
 
@@ -33,6 +34,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Fabric.with([Crashlytics.self])
         // TODO: Move this to where you establish a user session
      //   self.logUser()
+        
+        // ------------------------------------------------------------
+        
+        SideMenuController.preferences.drawing.menuButtonImage = UIImage(named: "menu")
+        SideMenuController.preferences.drawing.sidePanelPosition = .overCenterPanelLeft
+        SideMenuController.preferences.drawing.sidePanelWidth = (((window?.frame.width)! / 2) + ((window?.frame.width)! / 4) / 2)
+        SideMenuController.preferences.drawing.centerPanelShadow = true
+        SideMenuController.preferences.animating.statusBarBehaviour = .showUnderlay
+        
+        
+        // ------------------------------------------------------------
 
         if ((UserDefaults.standard.object(forKey: "profileData")) != nil)
         {

@@ -17,5 +17,18 @@ class SingletonClass: NSObject {
     static let sharedInstance = SingletonClass()
     
     var bookedDetails = NSDictionary()
+    
+    var aryHistory = NSArray()
+    var aryOnGoing = NSArray()
+    var aryUpComming = NSArray()
+    var aryPastBooking = NSArray()
+    
+    var boolIsFromPrevious = Bool()
+    
+    var bookingId = String()
+    
+    var dictIsFromPrevious = NSDictionary()
+    
+    
 
 }

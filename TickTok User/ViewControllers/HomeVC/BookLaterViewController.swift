@@ -79,7 +79,6 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     @IBOutlet weak var txtPickupLocation: UITextField!
     @IBOutlet weak var txtDropOffLocation: UITextField!
     
-    
     @IBOutlet weak var txtFullName: UITextField!
     @IBOutlet weak var txtMobileNumber: UITextField!
     @IBOutlet weak var txtDataAndTimeFromCalendar: UITextField!
@@ -210,7 +209,7 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             
             UtilityClass.showAlert("Missing", message: "All fields are required...", vc: self)
         }
-        else if viewMySelf.checkState == .unchecked || viewOthers.checkState == .unchecked {
+        else if viewMySelf.checkState == .unchecked && viewOthers.checkState == .unchecked {
             
             UtilityClass.showAlert("Missing", message: "Please Checked Myself or Other", vc: self)
         }
@@ -319,6 +318,14 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             
             if (status) {
                 print(result)
+                
+                let alert = UIAlertController(title: nil, message: "Booking Successful", preferredStyle: .alert)
+                
+                let ok = UIAlertAction(title: "OK", style: .default, handler: nil)
+                
+                alert.addAction(ok)
+                
+                self.present(alert, animated: true, completion: nil)
  /*
                 {
                     info =     {

@@ -9,7 +9,7 @@
 import UIKit
 import TransitionButton
 import ACFloatingTextfield_Swift
-import SideMenu
+//import SideMenu
 import NVActivityIndicatorView
 class LoginViewController: UIViewController {
     
@@ -22,6 +22,13 @@ class LoginViewController: UIViewController {
         super.loadView()
         if(SingletonClass.sharedInstance.isUserLoggedIN)
         {
+            
+           // self.performSegue(withIdentifier: "loadAllDriverList", sender: nil)
+            
+         //   let next = self.storyboard?.instantiateViewController(withIdentifier: "AllDriversOnMapViewController") as! AllDriversOnMapViewController
+            
+           // self.present(next, animated: true, completion: nil)
+            
             self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
         }
     }
@@ -36,7 +43,7 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    
+/*
     fileprivate func setupSideMenu() {
         // Define the menus
         SideMenuManager.default.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
@@ -55,7 +62,7 @@ class LoginViewController: UIViewController {
         // Set up a cool background image for demo purposes
         //SideMenuManager.default.menuAnimationBackgroundColor = UIColor(patternImage: UIImage(named: "background")!)
     }
-    
+*/
     //MARK: - Validation
     
     func checkValidation() -> Bool
@@ -109,6 +116,10 @@ class LoginViewController: UIViewController {
                         
                         UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                         UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+
+                        
+//                        let next = self.storyboard?.instantiateViewController(withIdentifier: "AllDriversOnMapViewController") as! AllDriversOnMapViewController
+//                        self.present(next, animated: true, completion: nil)
 
                         
                         self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)

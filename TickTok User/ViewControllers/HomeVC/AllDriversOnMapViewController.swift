@@ -26,7 +26,8 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
+        locationManager.requestAlwaysAuthorization()
         webserviceForAllDrivers()
         
         
@@ -39,15 +40,14 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
                 {
                     locationManager.startUpdatingLocation()
                     locationManager.delegate = self
-                    
-                    
+
                 }
                 
                 //                manager.startUpdatingLocation()
             }
         }
         
-        let camera = GMSCameraPosition.camera(withLatitude: (locationManager.location?.coordinate.latitude)!, longitude: (locationManager.location?.coordinate.longitude)!, zoom: zoomLevel)
+        let camera = GMSCameraPosition.camera(withLatitude: defaultLocation.coordinate.latitude, longitude: defaultLocation.coordinate.longitude, zoom: zoomLevel)
         mapView = GMSMapView.map(withFrame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), camera: camera)
         mapView.isMyLocationEnabled = false
 //        mapView.settings.myLocationButton = true
@@ -63,6 +63,8 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
         
         
     }
+    
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -70,6 +72,10 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     
    
     @IBAction func btnClose(_ sender: UIButton) {
+       
+        self.dismiss(animated: true, completion: nil)
+        
+     //   self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
         
     }
 

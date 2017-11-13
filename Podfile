@@ -12,12 +12,14 @@ target 'TickTok User' do
   pod 'GooglePlaces'
   pod 'Alamofire'
   pod 'Socket.IO-Client-Swift'
-  pod 'SideMenu'
+  # pod 'SideMenu'
   pod 'NVActivityIndicatorView'
   pod 'Fabric'
   pod 'Crashlytics'
   pod 'SDWebImage', '~> 4.0'
   pod 'M13Checkbox'
+  pod 'SideMenuController'
+
   # pod 'WWCalendarTimeSelector'
   pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'
   # Pods for TickTok User

@@ -8,6 +8,8 @@
 
 import Foundation
 /*
+ // Accept Request by Driver
+ 
 func temp()
 {
     data is [{
@@ -82,4 +84,83 @@ func temp()
         type = Notification;
     }]
 }
+*/
+
+//-------------------------------------------------------------
+// MARK: - Get Estimate Fare Response
+//-------------------------------------------------------------
+
+/*
+{
+    "estimate_fare" =     (
+        {
+            "base_fare" = 25;
+            "booking_fee" = 2;
+            duration = 8;
+            id = 1;
+            km = "4.2";
+            name = "Business Class";
+            "per_km_charge" = 0;
+            total = "27.2";
+            "trip_fare" = 25;
+    },
+        {
+            "base_fare" = "20.2";
+            "booking_fee" = 2;
+            duration = 8;
+            id = 2;
+            km = "4.2";
+            name = Disability;
+            "per_km_charge" = "2.75";
+            total = 31;
+            "trip_fare" = 29;
+    },
+        {
+            "base_fare" = "4.2";
+            "booking_fee" = 2;
+            duration = 8;
+            id = 3;
+            km = "4.2";
+            name = Taxi;
+            "per_km_charge" = "1.62";
+            total = "11.384";
+            "trip_fare" = "9.384";
+    },
+        {
+            "base_fare" = 35;
+            "booking_fee" = 2;
+            duration = 8;
+            id = 4;
+            km = "4.2";
+            name = "First Class";
+            "per_km_charge" = 0;
+            total = "37.2";
+            "trip_fare" = 35;
+    },
+        {
+            "base_fare" = 40;
+            "booking_fee" = 2;
+            duration = 8;
+            id = 5;
+            km = "4.2";
+            name = "LUX-VAN";
+            "per_km_charge" = 0;
+            total = 42;
+            "trip_fare" = 40;
+    },
+        {
+            "base_fare" = 5;
+            "booking_fee" = 2;
+            duration = 8;
+            id = 6;
+            km = "4.2";
+            name = Economy;
+            "per_km_charge" = "0.5";
+            total = "7.6";
+            "trip_fare" = "5.6";
+    }
+    );
+    status = 1;
+}
+
 */

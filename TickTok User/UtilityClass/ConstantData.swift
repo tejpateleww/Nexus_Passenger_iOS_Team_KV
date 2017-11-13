@@ -9,7 +9,6 @@
 import UIKit
 import Foundation
 
-
 struct WebserviceURLs {
     static let kBaseURL                                 = "http://54.206.55.185/web/Passenger_Api/"
     static let kDriverRegister                          = "Register"
@@ -21,6 +20,8 @@ struct WebserviceURLs {
     static let kMakeBookingRequest                      = "SubmitBookingRequest"
     static let kAdvancedBooking                         = "AdvancedBooking"
     static let kDriver                                  = "Driver"
+    static let kBookingHistory                          = "BookingHistory/"
+    static let kGetEstimateFare                         = "GetEstimateFare"
 
 }
 
@@ -33,7 +34,15 @@ struct SocketData {
     static let kRejectBookingRequestNotification            = "RejectBookingRequestNotification"
     static let kPickupPassengerNotification                 = "PickupPassengerNotification"
     static let kBookingCompletedNotification                = "BookingDetails"
-
+    static let kCancelTripByPassenger                       = "CancelTripByPassenger"
+    
+    static let kAcceptAdvancedBookingRequestNotification    = "AcceptAdvancedBookingRequestNotification"
+    static let kRejectAdvancedBookingRequestNotification    = "RejectAdvancedBookingRequestNotification"
+    static let kAdvancedBookingPickupPassengerNotification  = "AdvancedBookingPickupPassengerNotification"
+    static let kAdvancedBookingTripHoldNotification         = "AdvancedBookingTripHoldNotification"
+    static let kAdvancedBookingDetails                      = "AdvancedBookingDetails"
+    static let kAdvancedBookingCancelTripByPassenger        = "AdvancedBookingCancelTripByPassenger"
+    
 }
 
 
@@ -49,5 +58,15 @@ struct SubmitBookingRequest {
     static let kPickupLng               = "PickupLng"
     static let kDropOffLat              = "DropOffLat"
     static let kDropOffLon              = "DropOffLon"
+}
+
+struct NotificationCenterName {
+    
+    // Define identifier
+    static let keyForOnGoing   = "keyForOnGoing"
+    static let keyForUpComming = "keyForUpComming"
+    static let keyForPastBooking = "keyForPastBooking"
+    
+
 }
 

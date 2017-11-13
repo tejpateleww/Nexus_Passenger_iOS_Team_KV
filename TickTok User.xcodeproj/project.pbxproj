@@ -12,6 +12,8 @@
 		001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */; };
 		001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */; };
 		001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */; };
+		0020FA221FB6BF760054B09B /* CustomSideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0020FA211FB6BF720054B09B /* CustomSideMenuViewController.swift */; };
+		0020FA241FB6F0600054B09B /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0020FA231FB6F0600054B09B /* ChangePasswordVC.swift */; };
 		0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */; };
 		004620AC1FB1B5C5002EB388 /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A51FB1B490002EB388 /* Duration.swift */; };
 		004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A31FB1B48F002EB388 /* Int+Timepiece.swift */; };
@@ -21,8 +23,16 @@
 		004620B11FB1B5C5002EB388 /* String+Timepiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620A41FB1B490002EB388 /* String+Timepiece.swift */; };
 		004620B21FB1B5C5002EB388 /* WWCalendarTimeSelector.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 004620A71FB1B491002EB388 /* WWCalendarTimeSelector.storyboard */; };
 		004620B31FB1B5C5002EB388 /* WWCalendarTimeSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004620AB1FB1B56A002EB388 /* WWCalendarTimeSelector.swift */; };
+		004B7D471FB9645500369EDF /* UpdateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 004B7D461FB9645500369EDF /* UpdateProfileViewController.swift */; };
 		0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */; };
 		0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */; };
+		005B640A1FB4182400029EA2 /* MyBookingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64091FB4182400029EA2 /* MyBookingViewController.swift */; };
+		005B640C1FB4186000029EA2 /* OnGoingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B640B1FB4186000029EA2 /* OnGoingVC.swift */; };
+		005B640E1FB4188900029EA2 /* UpCommingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B640D1FB4188900029EA2 /* UpCommingVC.swift */; };
+		005B64101FB418BA00029EA2 /* PastBookingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B640F1FB418BA00029EA2 /* PastBookingVC.swift */; };
+		005B64121FB418EF00029EA2 /* OnGoingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64111FB418EF00029EA2 /* OnGoingTableViewCell.swift */; };
+		005B64141FB4190900029EA2 /* UpCommingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64131FB4190900029EA2 /* UpCommingTableViewCell.swift */; };
+		005B64161FB4191E00029EA2 /* PastBooingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64151FB4191E00029EA2 /* PastBooingTableViewCell.swift */; };
 		0061785D1FAC59D80094651F /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061785C1FAC59D80094651F /* TempData.swift */; };
 		0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */; };
 		0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */; };
@@ -49,6 +59,8 @@
 		001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewCell.swift; sourceTree = "<group>"; };
 		001151C91FA1FC0500753F55 /* RegistrationContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationContainerViewController.swift; sourceTree = "<group>"; };
 		001151CB1FA1FC3100753F55 /* RegistrationNewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationNewViewController.swift; sourceTree = "<group>"; };
+		0020FA211FB6BF720054B09B /* CustomSideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSideMenuViewController.swift; sourceTree = "<group>"; };
+		0020FA231FB6F0600054B09B /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		0025D0AE1FA1AE6000167FCD /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		004620A31FB1B48F002EB388 /* Int+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Timepiece.swift"; sourceTree = "<group>"; };
 		004620A41FB1B490002EB388 /* String+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Timepiece.swift"; sourceTree = "<group>"; };
@@ -58,8 +70,16 @@
 		004620A81FB1B492002EB388 /* NSDateComponents+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDateComponents+Timepiece.swift"; sourceTree = "<group>"; };
 		004620A91FB1B492002EB388 /* NSDate+Timepiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSDate+Timepiece.swift"; sourceTree = "<group>"; };
 		004620AB1FB1B56A002EB388 /* WWCalendarTimeSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WWCalendarTimeSelector.swift; sourceTree = "<group>"; };
+		004B7D461FB9645500369EDF /* UpdateProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileViewController.swift; sourceTree = "<group>"; };
 		0051AA9F1FB04FE500C187F1 /* TripDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsViewController.swift; sourceTree = "<group>"; };
 		0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		005B64091FB4182400029EA2 /* MyBookingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookingViewController.swift; sourceTree = "<group>"; };
+		005B640B1FB4186000029EA2 /* OnGoingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnGoingVC.swift; sourceTree = "<group>"; };
+		005B640D1FB4188900029EA2 /* UpCommingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCommingVC.swift; sourceTree = "<group>"; };
+		005B640F1FB418BA00029EA2 /* PastBookingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastBookingVC.swift; sourceTree = "<group>"; };
+		005B64111FB418EF00029EA2 /* OnGoingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnGoingTableViewCell.swift; sourceTree = "<group>"; };
+		005B64131FB4190900029EA2 /* UpCommingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCommingTableViewCell.swift; sourceTree = "<group>"; };
+		005B64151FB4191E00029EA2 /* PastBooingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastBooingTableViewCell.swift; sourceTree = "<group>"; };
 		0061785C1FAC59D80094651F /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
 		0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLaterViewController.swift; sourceTree = "<group>"; };
 		0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityClass.swift; sourceTree = "<group>"; };
@@ -107,6 +127,14 @@
 			path = SideMenu;
 			sourceTree = "<group>";
 		};
+		0020FA201FB6BF200054B09B /* SideMenuVC */ = {
+			isa = PBXGroup;
+			children = (
+				0020FA211FB6BF720054B09B /* CustomSideMenuViewController.swift */,
+			);
+			path = SideMenuVC;
+			sourceTree = "<group>";
+		};
 		0025D0B01FA1AE6400167FCD /* HomeVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -133,6 +161,15 @@
 			path = WWCalendarTimeSelector;
 			sourceTree = "<group>";
 		};
+		004B7D451FB9641B00369EDF /* UpdateProfileVC */ = {
+			isa = PBXGroup;
+			children = (
+				0020FA231FB6F0600054B09B /* ChangePasswordVC.swift */,
+				004B7D461FB9645500369EDF /* UpdateProfileViewController.swift */,
+			);
+			path = UpdateProfileVC;
+			sourceTree = "<group>";
+		};
 		0051AAA11FB04FF500C187F1 /* TripDetailsVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -140,6 +177,20 @@
 				0051AAA21FB0501C00C187F1 /* TripDetailsTableViewCell.swift */,
 			);
 			path = TripDetailsVC;
+			sourceTree = "<group>";
+		};
+		005B64081FB417F600029EA2 /* MyBookingVC */ = {
+			isa = PBXGroup;
+			children = (
+				005B64091FB4182400029EA2 /* MyBookingViewController.swift */,
+				005B640B1FB4186000029EA2 /* OnGoingVC.swift */,
+				005B64111FB418EF00029EA2 /* OnGoingTableViewCell.swift */,
+				005B640D1FB4188900029EA2 /* UpCommingVC.swift */,
+				005B64131FB4190900029EA2 /* UpCommingTableViewCell.swift */,
+				005B640F1FB418BA00029EA2 /* PastBookingVC.swift */,
+				005B64151FB4191E00029EA2 /* PastBooingTableViewCell.swift */,
+			);
+			path = MyBookingVC;
 			sourceTree = "<group>";
 		};
 		0061F2DE1FA6FA470017DF02 /* RadioButton */ = {
@@ -153,6 +204,8 @@
 		0079BF9D1FA35E0400EFB38D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				004B7D451FB9641B00369EDF /* UpdateProfileVC */,
+				005B64081FB417F600029EA2 /* MyBookingVC */,
 				008D22471FA08E5A001223DF /* LoginVC */,
 				008D22461FA08E4F001223DF /* RegisterVC */,
 				0025D0B01FA1AE6400167FCD /* HomeVC */,
@@ -213,6 +266,7 @@
 		008D222F1FA08DCF001223DF /* TickTok User */ = {
 			isa = PBXGroup;
 			children = (
+				0020FA201FB6BF200054B09B /* SideMenuVC */,
 				008D22481FA08E7F001223DF /* AppDelegate */,
 				0079BF9D1FA35E0400EFB38D /* ViewControllers */,
 				0079BF9E1FA35E0F00EFB38D /* ThirdParty */,
@@ -408,7 +462,7 @@
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
-				"${BUILT_PRODUCTS_DIR}/SideMenu/SideMenu.framework",
+				"${BUILT_PRODUCTS_DIR}/SideMenuController/SideMenuController.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
@@ -423,7 +477,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenu.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenuController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
@@ -440,26 +494,36 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				004B7D471FB9645500369EDF /* UpdateProfileViewController.swift in Sources */,
 				004620B11FB1B5C5002EB388 /* String+Timepiece.swift in Sources */,
 				004620B01FB1B5C5002EB388 /* NSDateComponents+Timepiece.swift in Sources */,
 				008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */,
 				004620AC1FB1B5C5002EB388 /* Duration.swift in Sources */,
 				001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */,
 				0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */,
+				005B640A1FB4182400029EA2 /* MyBookingViewController.swift in Sources */,
 				00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */,
 				0079BFA91FA3673600EFB38D /* AKRadioButtonsController.swift in Sources */,
 				004620AF1FB1B5C5002EB388 /* NSDate+Timepiece.swift in Sources */,
 				0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */,
 				008D22431FA08E14001223DF /* LoginViewController.swift in Sources */,
 				004620AE1FB1B5C5002EB388 /* NSCalendar+Timepiece.swift in Sources */,
+				005B64161FB4191E00029EA2 /* PastBooingTableViewCell.swift in Sources */,
 				00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */,
+				005B64141FB4190900029EA2 /* UpCommingTableViewCell.swift in Sources */,
 				0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */,
+				0020FA221FB6BF760054B09B /* CustomSideMenuViewController.swift in Sources */,
 				00A462ED1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift in Sources */,
+				0020FA241FB6F0600054B09B /* ChangePasswordVC.swift in Sources */,
 				008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */,
 				0061785D1FAC59D80094651F /* TempData.swift in Sources */,
 				0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */,
 				004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */,
+				005B640E1FB4188900029EA2 /* UpCommingVC.swift in Sources */,
 				001151C61FA1E9EC00753F55 /* MainHeaderTableViewCell.swift in Sources */,
+				005B64101FB418BA00029EA2 /* PastBookingVC.swift in Sources */,
+				005B64121FB418EF00029EA2 /* OnGoingTableViewCell.swift in Sources */,
+				005B640C1FB4186000029EA2 /* OnGoingVC.swift in Sources */,
 				001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */,
 				0079BFA21FA35E8D00EFB38D /* WebserviceSubClass.swift in Sources */,
 				001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */,
@@ -607,15 +671,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J94YJVUHB7;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "TickTok User/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "EWW.TickTok-User";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ticktocp.passenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -625,15 +694,20 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = J94YJVUHB7;
+				ENABLE_TESTABILITY = YES;
 				INFOPLIST_FILE = "TickTok User/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "EWW.TickTok-User";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ticktocp.passenger;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

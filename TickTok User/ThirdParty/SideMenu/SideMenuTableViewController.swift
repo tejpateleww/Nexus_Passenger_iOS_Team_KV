@@ -11,6 +11,7 @@ import UIKit
 class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
   
     
+    var ProfileData = NSDictionary()
     
     var arrMenuIcons = NSMutableArray()
     var arrMenuTitle = NSMutableArray()
@@ -19,6 +20,8 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        ProfileData = SingletonClass.sharedInstance.dictProfile
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -60,6 +63,12 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         if (indexPath.section == 0)
         {
             let cellHeader = tableView.dequeueReusableCell(withIdentifier: "MainHeaderTableViewCell") as! MainHeaderTableViewCell
+            
+            cellHeader.imgProfile.layer.cornerRadius = cellHeader.imgProfile.frame.width / 2
+            cellHeader.imgProfile.layer.masksToBounds = true
+            
+            cellHeader.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
+            cellHeader.lblName.text = ProfileData.object(forKey: "Fullname") as? String
 
             return cellHeader
         }
@@ -83,14 +92,31 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     
      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if indexPath.section == 0 {
+            
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "UpdateProfileViewController") as! UpdateProfileViewController
+            self.navigationController?.pushViewController(next, animated: true)
+
+        }
+        
         if (indexPath.section == 1)
         {
+            if indexPath.row == 0
+            {
+                self.performSegue(withIdentifier: "segueMyBooking", sender: self)
+
+//                let next = self.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController") as! MyBookingViewController
+//                self.navigationController?.pushViewController(next, animated: true)
+                
+                
+            }
+            
             if (indexPath.row == arrMenuTitle.count - 1)
             {
                 self.performSegue(withIdentifier: "unwindToContainerVC", sender: self)
                 UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
             }
-            else
+            else if (indexPath.row == arrMenuTitle.count - 2)
             {
                 self.performSegue(withIdentifier: "pushToBlank", sender: self)
             }
@@ -108,15 +134,5 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             return 42
         }
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    
 }
