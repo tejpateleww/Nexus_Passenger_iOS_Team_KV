@@ -33,6 +33,7 @@
 		005B64121FB418EF00029EA2 /* OnGoingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64111FB418EF00029EA2 /* OnGoingTableViewCell.swift */; };
 		005B64141FB4190900029EA2 /* UpCommingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64131FB4190900029EA2 /* UpCommingTableViewCell.swift */; };
 		005B64161FB4191E00029EA2 /* PastBooingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 005B64151FB4191E00029EA2 /* PastBooingTableViewCell.swift */; };
+		006057181FF52197004CA5DE /* CustomViewForShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006057171FF52197004CA5DE /* CustomViewForShadow.swift */; };
 		0061785D1FAC59D80094651F /* TempData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0061785C1FAC59D80094651F /* TempData.swift */; };
 		0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */; };
 		0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */; };
@@ -50,6 +51,73 @@
 		00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */; };
 		00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */; };
 		00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */; };
+		211D535B1FDAB49B0039A801 /* DriverInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D535A1FDAB49B0039A801 /* DriverInfoViewController.swift */; };
+		2127EE3C1FE100A1004E27C3 /* ACHUD+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE381FE100A0004E27C3 /* ACHUD+Animation.swift */; };
+		2127EE3D1FE100A1004E27C3 /* ACProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE391FE100A0004E27C3 /* ACProgressHUD.swift */; };
+		2127EE3E1FE100A1004E27C3 /* ACProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE3A1FE100A0004E27C3 /* ACProgressView.swift */; };
+		2127EE3F1FE100A1004E27C3 /* ACProgressView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2127EE3B1FE100A0004E27C3 /* ACProgressView.xib */; };
+		2127EE411FE122A6004E27C3 /* InviteDriverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE401FE122A6004E27C3 /* InviteDriverViewController.swift */; };
+		2127EE431FE12922004E27C3 /* MyReceiptsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE421FE12922004E27C3 /* MyReceiptsViewController.swift */; };
+		2127EE451FE129FA004E27C3 /* MyRecepitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE441FE129FA004E27C3 /* MyRecepitTableViewCell.swift */; };
+		2127EE471FE12F71004E27C3 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE461FE12F71004E27C3 /* FavoriteViewController.swift */; };
+		2127EE491FE137BD004E27C3 /* BarsAndClubsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE481FE137BD004E27C3 /* BarsAndClubsViewController.swift */; };
+		2127EE4C1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE4B1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift */; };
+		2127EE4E1FE14F14004E27C3 /* HotelReservationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE4D1FE14F14004E27C3 /* HotelReservationViewController.swift */; };
+		2127EE501FE14F30004E27C3 /* HotelReservationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE4F1FE14F30004E27C3 /* HotelReservationTableViewCell.swift */; };
+		2127EE521FE1548E004E27C3 /* FloatRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE511FE1548D004E27C3 /* FloatRatingView.swift */; };
+		2127EE541FE15B19004E27C3 /* BookTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE531FE15B19004E27C3 /* BookTableViewController.swift */; };
+		2127EE571FE15B59004E27C3 /* BookTableCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE561FE15B59004E27C3 /* BookTableCollectionViewCell.swift */; };
+		212BC5831FEA3615008498D3 /* IGABrand.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 212BC5811FEA360F008498D3 /* IGABrand.jpg */; };
+		212BC5841FEA3615008498D3 /* costcoWholesale.png in Resources */ = {isa = PBXBuildFile; fileRef = 212BC5821FEA3615008498D3 /* costcoWholesale.png */; };
+		213C8C331FEB7F5E002C59AA /* TickPayRegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 213C8C321FEB7F5E002C59AA /* TickPayRegistrationViewController.swift */; };
+		21468B5E1FED438400B203EC /* SetPasscodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21468B5D1FED438400B203EC /* SetPasscodeViewController.swift */; };
+		21468B601FED43A000B203EC /* VerifyPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21468B5F1FED43A000B203EC /* VerifyPasswordViewController.swift */; };
+		214706631FF36F510009E39A /* ARCarMovement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214706621FF36F510009E39A /* ARCarMovement.swift */; };
+		214706651FF3CE7D0009E39A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 214706641FF3CE7B0009E39A /* GoogleService-Info.plist */; };
+		21690C8B1FEE1D8000F89B40 /* coordinates.json in Resources */ = {isa = PBXBuildFile; fileRef = 21690C8A1FEE1D7F00F89B40 /* coordinates.json */; };
+		21690C8E1FEE460300F89B40 /* EditProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21690C8D1FEE460300F89B40 /* EditProfileViewController.swift */; };
+		21690C901FEE4ED900F89B40 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21690C8F1FEE4ED900F89B40 /* EditAccountViewController.swift */; };
+		21690C921FEE511B00F89B40 /* GiveRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21690C911FEE511B00F89B40 /* GiveRatingViewController.swift */; };
+		2174B61C1FDFFE5C00462E91 /* WalletAddCardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6121FDFFE5B00462E91 /* WalletAddCardsViewController.swift */; };
+		2174B61D1FDFFE5C00462E91 /* WalletBalanceMainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6131FDFFE5B00462E91 /* WalletBalanceMainVC.swift */; };
+		2174B61E1FDFFE5C00462E91 /* WalletCardsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6141FDFFE5B00462E91 /* WalletCardsVC.swift */; };
+		2174B61F1FDFFE5C00462E91 /* WalletCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6151FDFFE5B00462E91 /* WalletCollectionViewCell.swift */; };
+		2174B6201FDFFE5C00462E91 /* WalletHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6161FDFFE5B00462E91 /* WalletHistoryViewController.swift */; };
+		2174B6211FDFFE5C00462E91 /* WalletTopUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6171FDFFE5B00462E91 /* WalletTopUpVC.swift */; };
+		2174B6221FDFFE5C00462E91 /* WalletTransferToBankVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6181FDFFE5B00462E91 /* WalletTransferToBankVC.swift */; };
+		2174B6231FDFFE5C00462E91 /* WalletTransferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6191FDFFE5B00462E91 /* WalletTransferViewController.swift */; };
+		2174B6241FDFFE5C00462E91 /* WalletViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B61A1FDFFE5B00462E91 /* WalletViewController.swift */; };
+		2174B6251FDFFE5C00462E91 /* webViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B61B1FDFFE5B00462E91 /* webViewVC.swift */; };
+		2174B62B1FE002D300462E91 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6281FE002D200462E91 /* HeaderView.swift */; };
+		2174B62C1FE002D300462E91 /* HeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2174B6291FE002D200462E91 /* HeaderView.xib */; };
+		2174B62D1FE002D300462E91 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B62A1FE002D200462E91 /* ParentViewController.swift */; };
+		2174B6331FE003D200462E91 /* WalletBalanceMainTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6301FE003D100462E91 /* WalletBalanceMainTableViewCell.swift */; };
+		2174B6341FE003D200462E91 /* WalletCardsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6311FE003D100462E91 /* WalletCardsTableViewCell.swift */; };
+		2174B6351FE003D200462E91 /* WalletHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6321FE003D100462E91 /* WalletHistoryTableViewCell.swift */; };
+		2174B63A1FE0122500462E91 /* CreditCardValidationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6381FE0122500462E91 /* CreditCardValidationType.swift */; };
+		2174B63B1FE0122500462E91 /* CreditCardValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2174B6391FE0122500462E91 /* CreditCardValidator.swift */; };
+		217F254E1FE390030084F6C8 /* MyFavouriteTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F254D1FE390030084F6C8 /* MyFavouriteTableViewCell.swift */; };
+		217F25501FE39C7E0084F6C8 /* ShoppingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F254F1FE39C7E0084F6C8 /* ShoppingViewController.swift */; };
+		217F25521FE3A3ED0084F6C8 /* ShoppingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F25511FE3A3ED0084F6C8 /* ShoppingTableViewCell.swift */; };
+		217F25541FE3A5480084F6C8 /* ShoppingDetailsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F25531FE3A5480084F6C8 /* ShoppingDetailsVC.swift */; };
+		217F25591FE3C6DB0084F6C8 /* amazon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 217F25551FE3C6BF0084F6C8 /* amazon.jpg */; };
+		217F255A1FE3C6DB0084F6C8 /* aldi.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 217F25561FE3C6CA0084F6C8 /* aldi.jpg */; };
+		217F255B1FE3C6DB0084F6C8 /* woolworths.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 217F25571FE3C6CE0084F6C8 /* woolworths.jpg */; };
+		217F255C1FE3C6DB0084F6C8 /* coles.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 217F25581FE3C6D30084F6C8 /* coles.jpg */; };
+		217F255E1FE3CC0C0084F6C8 /* GroceriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 217F255D1FE3CC0C0084F6C8 /* GroceriesViewController.swift */; };
+		218B903C1FDA902400422DC1 /* MTRipple.swift in Sources */ = {isa = PBXBuildFile; fileRef = 218B903B1FDA902400422DC1 /* MTRipple.swift */; };
+		218B90411FDA9A0400422DC1 /* circle.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B903D1FDA99F400422DC1 /* circle.png */; };
+		218B90421FDA9A0400422DC1 /* circle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B903E1FDA99F800422DC1 /* circle@2x.png */; };
+		218B90431FDA9A0400422DC1 /* circle1.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B903F1FDA99FC00422DC1 /* circle1.png */; };
+		218B90441FDA9A0400422DC1 /* circle2.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B90401FDA99FF00422DC1 /* circle2.png */; };
+		218B90461FDA9D4C00422DC1 /* round.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B90451FDA9D4800422DC1 /* round.png */; };
+		218B90491FDAADF200422DC1 /* startHere.png in Resources */ = {isa = PBXBuildFile; fileRef = 218B90481FDAADEA00422DC1 /* startHere.png */; };
+		21AA8AE91FE175F200210E2D /* BookTableSelectedDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA8AE81FE175F200210E2D /* BookTableSelectedDataViewController.swift */; };
+		21AA8AEB1FE175FF00210E2D /* BookTableSelectedDataTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA8AEA1FE175FF00210E2D /* BookTableSelectedDataTableViewCell.swift */; };
+		21AA8AEE1FE17AD400210E2D /* PayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA8AED1FE17AD400210E2D /* PayViewController.swift */; };
+		21AA8AF01FE17B2C00210E2D /* InVoiceReceiptViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA8AEF1FE17B2C00210E2D /* InVoiceReceiptViewController.swift */; };
+		21AA8AF21FE17C1200210E2D /* TickPayAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21AA8AF11FE17C1100210E2D /* TickPayAlertViewController.swift */; };
+		21DA90D31FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA90D21FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift */; };
 		7B777FCF387F2C0E09F9630B /* Pods_TickTok_User.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */; };
 /* End PBXBuildFile section */
 
@@ -80,6 +148,7 @@
 		005B64111FB418EF00029EA2 /* OnGoingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnGoingTableViewCell.swift; sourceTree = "<group>"; };
 		005B64131FB4190900029EA2 /* UpCommingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpCommingTableViewCell.swift; sourceTree = "<group>"; };
 		005B64151FB4191E00029EA2 /* PastBooingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastBooingTableViewCell.swift; sourceTree = "<group>"; };
+		006057171FF52197004CA5DE /* CustomViewForShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomViewForShadow.swift; sourceTree = "<group>"; };
 		0061785C1FAC59D80094651F /* TempData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempData.swift; sourceTree = "<group>"; };
 		0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookLaterViewController.swift; sourceTree = "<group>"; };
 		0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilityClass.swift; sourceTree = "<group>"; };
@@ -100,6 +169,75 @@
 		00A61D4B1FA8AC5600E1BA84 /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
 		00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonClass.swift; sourceTree = "<group>"; };
+		211D535A1FDAB49B0039A801 /* DriverInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverInfoViewController.swift; sourceTree = "<group>"; };
+		2127EE381FE100A0004E27C3 /* ACHUD+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ACHUD+Animation.swift"; sourceTree = "<group>"; };
+		2127EE391FE100A0004E27C3 /* ACProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACProgressHUD.swift; sourceTree = "<group>"; };
+		2127EE3A1FE100A0004E27C3 /* ACProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACProgressView.swift; sourceTree = "<group>"; };
+		2127EE3B1FE100A0004E27C3 /* ACProgressView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ACProgressView.xib; sourceTree = "<group>"; };
+		2127EE401FE122A6004E27C3 /* InviteDriverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteDriverViewController.swift; sourceTree = "<group>"; };
+		2127EE421FE12922004E27C3 /* MyReceiptsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReceiptsViewController.swift; sourceTree = "<group>"; };
+		2127EE441FE129FA004E27C3 /* MyRecepitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyRecepitTableViewCell.swift; sourceTree = "<group>"; };
+		2127EE461FE12F71004E27C3 /* FavoriteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
+		2127EE481FE137BD004E27C3 /* BarsAndClubsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAndClubsViewController.swift; sourceTree = "<group>"; };
+		2127EE4B1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarsAndClubsTableViewCell.swift; sourceTree = "<group>"; };
+		2127EE4D1FE14F14004E27C3 /* HotelReservationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelReservationViewController.swift; sourceTree = "<group>"; };
+		2127EE4F1FE14F30004E27C3 /* HotelReservationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotelReservationTableViewCell.swift; sourceTree = "<group>"; };
+		2127EE511FE1548D004E27C3 /* FloatRatingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FloatRatingView.swift; sourceTree = "<group>"; };
+		2127EE531FE15B19004E27C3 /* BookTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewController.swift; sourceTree = "<group>"; };
+		2127EE561FE15B59004E27C3 /* BookTableCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableCollectionViewCell.swift; sourceTree = "<group>"; };
+		212BC5811FEA360F008498D3 /* IGABrand.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IGABrand.jpg; sourceTree = "<group>"; };
+		212BC5821FEA3615008498D3 /* costcoWholesale.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = costcoWholesale.png; sourceTree = "<group>"; };
+		213C8C321FEB7F5E002C59AA /* TickPayRegistrationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickPayRegistrationViewController.swift; sourceTree = "<group>"; };
+		21468B5D1FED438400B203EC /* SetPasscodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetPasscodeViewController.swift; sourceTree = "<group>"; };
+		21468B5F1FED43A000B203EC /* VerifyPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyPasswordViewController.swift; sourceTree = "<group>"; };
+		214706621FF36F510009E39A /* ARCarMovement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARCarMovement.swift; sourceTree = "<group>"; };
+		214706641FF3CE7B0009E39A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2153C9661FF24A4A00E54168 /* TickTok User.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "TickTok User.entitlements"; sourceTree = "<group>"; };
+		21690C8A1FEE1D7F00F89B40 /* coordinates.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = coordinates.json; sourceTree = "<group>"; };
+		21690C8D1FEE460300F89B40 /* EditProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewController.swift; sourceTree = "<group>"; };
+		21690C8F1FEE4ED900F89B40 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		21690C911FEE511B00F89B40 /* GiveRatingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GiveRatingViewController.swift; sourceTree = "<group>"; };
+		2174B6121FDFFE5B00462E91 /* WalletAddCardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletAddCardsViewController.swift; sourceTree = "<group>"; };
+		2174B6131FDFFE5B00462E91 /* WalletBalanceMainVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBalanceMainVC.swift; sourceTree = "<group>"; };
+		2174B6141FDFFE5B00462E91 /* WalletCardsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCardsVC.swift; sourceTree = "<group>"; };
+		2174B6151FDFFE5B00462E91 /* WalletCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCollectionViewCell.swift; sourceTree = "<group>"; };
+		2174B6161FDFFE5B00462E91 /* WalletHistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletHistoryViewController.swift; sourceTree = "<group>"; };
+		2174B6171FDFFE5B00462E91 /* WalletTopUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTopUpVC.swift; sourceTree = "<group>"; };
+		2174B6181FDFFE5B00462E91 /* WalletTransferToBankVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransferToBankVC.swift; sourceTree = "<group>"; };
+		2174B6191FDFFE5B00462E91 /* WalletTransferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletTransferViewController.swift; sourceTree = "<group>"; };
+		2174B61A1FDFFE5B00462E91 /* WalletViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletViewController.swift; sourceTree = "<group>"; };
+		2174B61B1FDFFE5B00462E91 /* webViewVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = webViewVC.swift; sourceTree = "<group>"; };
+		2174B6281FE002D200462E91 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		2174B6291FE002D200462E91 /* HeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HeaderView.xib; sourceTree = "<group>"; };
+		2174B62A1FE002D200462E91 /* ParentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
+		2174B6301FE003D100462E91 /* WalletBalanceMainTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletBalanceMainTableViewCell.swift; sourceTree = "<group>"; };
+		2174B6311FE003D100462E91 /* WalletCardsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletCardsTableViewCell.swift; sourceTree = "<group>"; };
+		2174B6321FE003D100462E91 /* WalletHistoryTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		2174B6361FE00DF500462E91 /* TickTok User-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TickTok User-Bridging-Header.h"; sourceTree = "<group>"; };
+		2174B6381FE0122500462E91 /* CreditCardValidationType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidationType.swift; sourceTree = "<group>"; };
+		2174B6391FE0122500462E91 /* CreditCardValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreditCardValidator.swift; sourceTree = "<group>"; };
+		217F254D1FE390030084F6C8 /* MyFavouriteTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyFavouriteTableViewCell.swift; sourceTree = "<group>"; };
+		217F254F1FE39C7E0084F6C8 /* ShoppingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewController.swift; sourceTree = "<group>"; };
+		217F25511FE3A3ED0084F6C8 /* ShoppingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingTableViewCell.swift; sourceTree = "<group>"; };
+		217F25531FE3A5480084F6C8 /* ShoppingDetailsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingDetailsVC.swift; sourceTree = "<group>"; };
+		217F25551FE3C6BF0084F6C8 /* amazon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amazon.jpg; sourceTree = "<group>"; };
+		217F25561FE3C6CA0084F6C8 /* aldi.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = aldi.jpg; sourceTree = "<group>"; };
+		217F25571FE3C6CE0084F6C8 /* woolworths.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woolworths.jpg; sourceTree = "<group>"; };
+		217F25581FE3C6D30084F6C8 /* coles.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = coles.jpg; sourceTree = "<group>"; };
+		217F255D1FE3CC0C0084F6C8 /* GroceriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceriesViewController.swift; sourceTree = "<group>"; };
+		218B903B1FDA902400422DC1 /* MTRipple.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTRipple.swift; sourceTree = "<group>"; };
+		218B903D1FDA99F400422DC1 /* circle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle.png; sourceTree = "<group>"; };
+		218B903E1FDA99F800422DC1 /* circle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "circle@2x.png"; sourceTree = "<group>"; };
+		218B903F1FDA99FC00422DC1 /* circle1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle1.png; sourceTree = "<group>"; };
+		218B90401FDA99FF00422DC1 /* circle2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = circle2.png; sourceTree = "<group>"; };
+		218B90451FDA9D4800422DC1 /* round.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = round.png; sourceTree = "<group>"; };
+		218B90481FDAADEA00422DC1 /* startHere.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = startHere.png; sourceTree = "<group>"; };
+		21AA8AE81FE175F200210E2D /* BookTableSelectedDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableSelectedDataViewController.swift; sourceTree = "<group>"; };
+		21AA8AEA1FE175FF00210E2D /* BookTableSelectedDataTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableSelectedDataTableViewCell.swift; sourceTree = "<group>"; };
+		21AA8AED1FE17AD400210E2D /* PayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PayViewController.swift; sourceTree = "<group>"; };
+		21AA8AEF1FE17B2C00210E2D /* InVoiceReceiptViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InVoiceReceiptViewController.swift; sourceTree = "<group>"; };
+		21AA8AF11FE17C1100210E2D /* TickPayAlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TickPayAlertViewController.swift; sourceTree = "<group>"; };
+		21DA90D21FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiCKPayNeedToVarifyViewController.swift; sourceTree = "<group>"; };
 		868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TickTok_User.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.release.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.release.xcconfig"; sourceTree = "<group>"; };
 		F5E8178D64C9451D7981A87E /* Pods-TickTok User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.debug.xcconfig"; sourceTree = "<group>"; };
@@ -120,9 +258,6 @@
 		001151C41FA1E9B600753F55 /* SideMenu */ = {
 			isa = PBXGroup;
 			children = (
-				001151C21FA1E9B100753F55 /* SideMenuTableViewController.swift */,
-				001151C51FA1E9EC00753F55 /* MainHeaderTableViewCell.swift */,
-				001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */,
 			);
 			path = SideMenu;
 			sourceTree = "<group>";
@@ -130,7 +265,23 @@
 		0020FA201FB6BF200054B09B /* SideMenuVC */ = {
 			isa = PBXGroup;
 			children = (
+				21690C8C1FEE45D300F89B40 /* EditProfile */,
+				21468B5C1FED435D00B203EC /* Passcode */,
+				21AA8AEC1FE17ABA00210E2D /* TiCKPay */,
 				0020FA211FB6BF720054B09B /* CustomSideMenuViewController.swift */,
+				001151C21FA1E9B100753F55 /* SideMenuTableViewController.swift */,
+				001151C51FA1E9EC00753F55 /* MainHeaderTableViewCell.swift */,
+				001151C71FA1E9F800753F55 /* ContentTableViewCell.swift */,
+				2127EE401FE122A6004E27C3 /* InviteDriverViewController.swift */,
+				2127EE421FE12922004E27C3 /* MyReceiptsViewController.swift */,
+				2127EE461FE12F71004E27C3 /* FavoriteViewController.swift */,
+				2127EE4D1FE14F14004E27C3 /* HotelReservationViewController.swift */,
+				2127EE481FE137BD004E27C3 /* BarsAndClubsViewController.swift */,
+				2127EE531FE15B19004E27C3 /* BookTableViewController.swift */,
+				21AA8AE81FE175F200210E2D /* BookTableSelectedDataViewController.swift */,
+				217F25531FE3A5480084F6C8 /* ShoppingDetailsVC.swift */,
+				217F254F1FE39C7E0084F6C8 /* ShoppingViewController.swift */,
+				217F255D1FE3CC0C0084F6C8 /* GroceriesViewController.swift */,
 			);
 			path = SideMenuVC;
 			sourceTree = "<group>";
@@ -142,6 +293,8 @@
 				00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */,
 				0076BF941FAD8AD400718F72 /* BookLaterViewController.swift */,
 				00A462EC1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift */,
+				211D535A1FDAB49B0039A801 /* DriverInfoViewController.swift */,
+				21690C911FEE511B00F89B40 /* GiveRatingViewController.swift */,
 			);
 			path = HomeVC;
 			sourceTree = "<group>";
@@ -204,6 +357,7 @@
 		0079BF9D1FA35E0400EFB38D /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				2174B6111FDFFE5B00462E91 /* Wallet */,
 				004B7D451FB9641B00369EDF /* UpdateProfileVC */,
 				005B64081FB417F600029EA2 /* MyBookingVC */,
 				008D22471FA08E5A001223DF /* LoginVC */,
@@ -217,6 +371,11 @@
 		0079BF9E1FA35E0F00EFB38D /* ThirdParty */ = {
 			isa = PBXGroup;
 			children = (
+				214706621FF36F510009E39A /* ARCarMovement.swift */,
+				2127EE511FE1548D004E27C3 /* FloatRatingView.swift */,
+				2127EE361FE100A0004E27C3 /* ACProgressHUD-Swift */,
+				2174B6371FE0122500462E91 /* CreditCardValidator */,
+				218B903A1FDA901100422DC1 /* Ripple */,
 				004620A21FB1B476002EB388 /* WWCalendarTimeSelector */,
 				0061F2DE1FA6FA470017DF02 /* RadioButton */,
 				001151C41FA1E9B600753F55 /* SideMenu */,
@@ -240,6 +399,7 @@
 				00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */,
 				00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */,
 				00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */,
+				006057171FF52197004CA5DE /* CustomViewForShadow.swift */,
 			);
 			path = UtilityClass;
 			sourceTree = "<group>";
@@ -266,17 +426,24 @@
 		008D222F1FA08DCF001223DF /* TickTok User */ = {
 			isa = PBXGroup;
 			children = (
+				2153C9661FF24A4A00E54168 /* TickTok User.entitlements */,
+				2127EE551FE15B25004E27C3 /* CollectionCell */,
+				2174B62E1FE003B500462E91 /* TableviewCell */,
+				218B90471FDAADCD00422DC1 /* iCons */,
 				0020FA201FB6BF200054B09B /* SideMenuVC */,
 				008D22481FA08E7F001223DF /* AppDelegate */,
+				2174B6271FE002D200462E91 /* HeaderVC */,
 				0079BF9D1FA35E0400EFB38D /* ViewControllers */,
 				0079BF9E1FA35E0F00EFB38D /* ThirdParty */,
 				0079BFA71FA35EAE00EFB38D /* UtilityClass */,
 				0079BFA51FA35E9F00EFB38D /* WebserviceFiles */,
 				008D22341FA08DCF001223DF /* Main.storyboard */,
+				2174B6361FE00DF500462E91 /* TickTok User-Bridging-Header.h */,
 				008D22371FA08DCF001223DF /* Assets.xcassets */,
 				008D22391FA08DCF001223DF /* LaunchScreen.storyboard */,
 				008D223C1FA08DCF001223DF /* Info.plist */,
 				0061785C1FAC59D80094651F /* TempData.swift */,
+				21690C8A1FEE1D7F00F89B40 /* coordinates.json */,
 			);
 			path = "TickTok User";
 			sourceTree = "<group>";
@@ -303,6 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				008D22301FA08DCF001223DF /* AppDelegate.swift */,
+				214706641FF3CE7B0009E39A /* GoogleService-Info.plist */,
 			);
 			path = AppDelegate;
 			sourceTree = "<group>";
@@ -313,6 +481,158 @@
 				868F7762E6BD63494B3716EB /* Pods_TickTok_User.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2127EE361FE100A0004E27C3 /* ACProgressHUD-Swift */ = {
+			isa = PBXGroup;
+			children = (
+				2127EE371FE100A0004E27C3 /* Source */,
+			);
+			path = "ACProgressHUD-Swift";
+			sourceTree = "<group>";
+		};
+		2127EE371FE100A0004E27C3 /* Source */ = {
+			isa = PBXGroup;
+			children = (
+				2127EE381FE100A0004E27C3 /* ACHUD+Animation.swift */,
+				2127EE391FE100A0004E27C3 /* ACProgressHUD.swift */,
+				2127EE3A1FE100A0004E27C3 /* ACProgressView.swift */,
+				2127EE3B1FE100A0004E27C3 /* ACProgressView.xib */,
+			);
+			path = Source;
+			sourceTree = "<group>";
+		};
+		2127EE4A1FE137CC004E27C3 /* SideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				2127EE441FE129FA004E27C3 /* MyRecepitTableViewCell.swift */,
+				2127EE4B1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift */,
+				2127EE4F1FE14F30004E27C3 /* HotelReservationTableViewCell.swift */,
+				21AA8AEA1FE175FF00210E2D /* BookTableSelectedDataTableViewCell.swift */,
+				217F254D1FE390030084F6C8 /* MyFavouriteTableViewCell.swift */,
+				217F25511FE3A3ED0084F6C8 /* ShoppingTableViewCell.swift */,
+			);
+			path = SideMenu;
+			sourceTree = "<group>";
+		};
+		2127EE551FE15B25004E27C3 /* CollectionCell */ = {
+			isa = PBXGroup;
+			children = (
+				2127EE561FE15B59004E27C3 /* BookTableCollectionViewCell.swift */,
+			);
+			path = CollectionCell;
+			sourceTree = "<group>";
+		};
+		21468B5C1FED435D00B203EC /* Passcode */ = {
+			isa = PBXGroup;
+			children = (
+				21468B5D1FED438400B203EC /* SetPasscodeViewController.swift */,
+				21468B5F1FED43A000B203EC /* VerifyPasswordViewController.swift */,
+			);
+			path = Passcode;
+			sourceTree = "<group>";
+		};
+		21690C8C1FEE45D300F89B40 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				21690C8D1FEE460300F89B40 /* EditProfileViewController.swift */,
+				21690C8F1FEE4ED900F89B40 /* EditAccountViewController.swift */,
+			);
+			path = EditProfile;
+			sourceTree = "<group>";
+		};
+		2174B6111FDFFE5B00462E91 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				2174B6121FDFFE5B00462E91 /* WalletAddCardsViewController.swift */,
+				2174B6131FDFFE5B00462E91 /* WalletBalanceMainVC.swift */,
+				2174B6141FDFFE5B00462E91 /* WalletCardsVC.swift */,
+				2174B6151FDFFE5B00462E91 /* WalletCollectionViewCell.swift */,
+				2174B6161FDFFE5B00462E91 /* WalletHistoryViewController.swift */,
+				2174B6171FDFFE5B00462E91 /* WalletTopUpVC.swift */,
+				2174B6181FDFFE5B00462E91 /* WalletTransferToBankVC.swift */,
+				2174B6191FDFFE5B00462E91 /* WalletTransferViewController.swift */,
+				2174B61A1FDFFE5B00462E91 /* WalletViewController.swift */,
+				2174B61B1FDFFE5B00462E91 /* webViewVC.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		2174B6271FE002D200462E91 /* HeaderVC */ = {
+			isa = PBXGroup;
+			children = (
+				2174B6281FE002D200462E91 /* HeaderView.swift */,
+				2174B6291FE002D200462E91 /* HeaderView.xib */,
+				2174B62A1FE002D200462E91 /* ParentViewController.swift */,
+			);
+			path = HeaderVC;
+			sourceTree = "<group>";
+		};
+		2174B62E1FE003B500462E91 /* TableviewCell */ = {
+			isa = PBXGroup;
+			children = (
+				2127EE4A1FE137CC004E27C3 /* SideMenu */,
+				2174B62F1FE003D100462E91 /* Wallet */,
+			);
+			path = TableviewCell;
+			sourceTree = "<group>";
+		};
+		2174B62F1FE003D100462E91 /* Wallet */ = {
+			isa = PBXGroup;
+			children = (
+				2174B6301FE003D100462E91 /* WalletBalanceMainTableViewCell.swift */,
+				2174B6311FE003D100462E91 /* WalletCardsTableViewCell.swift */,
+				2174B6321FE003D100462E91 /* WalletHistoryTableViewCell.swift */,
+			);
+			path = Wallet;
+			sourceTree = "<group>";
+		};
+		2174B6371FE0122500462E91 /* CreditCardValidator */ = {
+			isa = PBXGroup;
+			children = (
+				2174B6381FE0122500462E91 /* CreditCardValidationType.swift */,
+				2174B6391FE0122500462E91 /* CreditCardValidator.swift */,
+			);
+			path = CreditCardValidator;
+			sourceTree = "<group>";
+		};
+		218B903A1FDA901100422DC1 /* Ripple */ = {
+			isa = PBXGroup;
+			children = (
+				218B903B1FDA902400422DC1 /* MTRipple.swift */,
+				218B90451FDA9D4800422DC1 /* round.png */,
+				218B903D1FDA99F400422DC1 /* circle.png */,
+				218B903E1FDA99F800422DC1 /* circle@2x.png */,
+				218B903F1FDA99FC00422DC1 /* circle1.png */,
+				218B90401FDA99FF00422DC1 /* circle2.png */,
+			);
+			path = Ripple;
+			sourceTree = "<group>";
+		};
+		218B90471FDAADCD00422DC1 /* iCons */ = {
+			isa = PBXGroup;
+			children = (
+				218B90481FDAADEA00422DC1 /* startHere.png */,
+				217F25561FE3C6CA0084F6C8 /* aldi.jpg */,
+				217F25551FE3C6BF0084F6C8 /* amazon.jpg */,
+				217F25581FE3C6D30084F6C8 /* coles.jpg */,
+				217F25571FE3C6CE0084F6C8 /* woolworths.jpg */,
+				212BC5821FEA3615008498D3 /* costcoWholesale.png */,
+				212BC5811FEA360F008498D3 /* IGABrand.jpg */,
+			);
+			path = iCons;
+			sourceTree = "<group>";
+		};
+		21AA8AEC1FE17ABA00210E2D /* TiCKPay */ = {
+			isa = PBXGroup;
+			children = (
+				213C8C321FEB7F5E002C59AA /* TickPayRegistrationViewController.swift */,
+				21AA8AED1FE17AD400210E2D /* PayViewController.swift */,
+				21AA8AEF1FE17B2C00210E2D /* InVoiceReceiptViewController.swift */,
+				21AA8AF11FE17C1100210E2D /* TickPayAlertViewController.swift */,
+				21DA90D21FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift */,
+			);
+			path = TiCKPay;
 			sourceTree = "<group>";
 		};
 		5DE7D0CBCFE96E734E733E60 /* Pods */ = {
@@ -361,6 +681,14 @@
 					008D222C1FA08DCF001223DF = {
 						CreatedOnToolsVersion = 9.1;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -389,8 +717,24 @@
 			files = (
 				004620B21FB1B5C5002EB388 /* WWCalendarTimeSelector.storyboard in Resources */,
 				008D223B1FA08DCF001223DF /* LaunchScreen.storyboard in Resources */,
+				218B90441FDA9A0400422DC1 /* circle2.png in Resources */,
+				2127EE3F1FE100A1004E27C3 /* ACProgressView.xib in Resources */,
+				2174B62C1FE002D300462E91 /* HeaderView.xib in Resources */,
+				218B90461FDA9D4C00422DC1 /* round.png in Resources */,
+				217F25591FE3C6DB0084F6C8 /* amazon.jpg in Resources */,
+				214706651FF3CE7D0009E39A /* GoogleService-Info.plist in Resources */,
+				217F255A1FE3C6DB0084F6C8 /* aldi.jpg in Resources */,
+				218B90411FDA9A0400422DC1 /* circle.png in Resources */,
+				21690C8B1FEE1D8000F89B40 /* coordinates.json in Resources */,
 				008D22381FA08DCF001223DF /* Assets.xcassets in Resources */,
+				218B90491FDAADF200422DC1 /* startHere.png in Resources */,
+				218B90431FDA9A0400422DC1 /* circle1.png in Resources */,
+				218B90421FDA9A0400422DC1 /* circle@2x.png in Resources */,
+				212BC5841FEA3615008498D3 /* costcoWholesale.png in Resources */,
 				008D22361FA08DCF001223DF /* Main.storyboard in Resources */,
+				217F255C1FE3C6DB0084F6C8 /* coles.jpg in Resources */,
+				217F255B1FE3C6DB0084F6C8 /* woolworths.jpg in Resources */,
+				212BC5831FEA3615008498D3 /* IGABrand.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -457,30 +801,42 @@
 				"${BUILT_PRODUCTS_DIR}/ACFloatingTextfield-Swift/ACFloatingTextfield_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
+				"${BUILT_PRODUCTS_DIR}/CreditCardForm/CreditCardForm.framework",
 				"${BUILT_PRODUCTS_DIR}/DOAlertController/DOAlertController.framework",
+				"${BUILT_PRODUCTS_DIR}/FormTextField/FormTextField.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
 				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
+				"${BUILT_PRODUCTS_DIR}/Pulsator/Pulsator.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenuController/SideMenuController.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACFloatingTextfield_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardForm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DOAlertController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FormTextField.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pulsator.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenuController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -494,45 +850,97 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				21468B5E1FED438400B203EC /* SetPasscodeViewController.swift in Sources */,
+				2174B6251FDFFE5C00462E91 /* webViewVC.swift in Sources */,
 				004B7D471FB9645500369EDF /* UpdateProfileViewController.swift in Sources */,
 				004620B11FB1B5C5002EB388 /* String+Timepiece.swift in Sources */,
+				217F25521FE3A3ED0084F6C8 /* ShoppingTableViewCell.swift in Sources */,
 				004620B01FB1B5C5002EB388 /* NSDateComponents+Timepiece.swift in Sources */,
 				008D22451FA08E1F001223DF /* RegisterViewController.swift in Sources */,
+				217F254E1FE390030084F6C8 /* MyFavouriteTableViewCell.swift in Sources */,
+				2174B61D1FDFFE5C00462E91 /* WalletBalanceMainVC.swift in Sources */,
+				2174B62B1FE002D300462E91 /* HeaderView.swift in Sources */,
 				004620AC1FB1B5C5002EB388 /* Duration.swift in Sources */,
+				211D535B1FDAB49B0039A801 /* DriverInfoViewController.swift in Sources */,
+				2174B6341FE003D200462E91 /* WalletCardsTableViewCell.swift in Sources */,
+				2174B6201FDFFE5C00462E91 /* WalletHistoryViewController.swift in Sources */,
 				001151CA1FA1FC0500753F55 /* RegistrationContainerViewController.swift in Sources */,
+				217F25501FE39C7E0084F6C8 /* ShoppingViewController.swift in Sources */,
+				2127EE3E1FE100A1004E27C3 /* ACProgressView.swift in Sources */,
+				2174B6351FE003D200462E91 /* WalletHistoryTableViewCell.swift in Sources */,
 				0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */,
 				005B640A1FB4182400029EA2 /* MyBookingViewController.swift in Sources */,
+				2127EE3C1FE100A1004E27C3 /* ACHUD+Animation.swift in Sources */,
 				00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */,
+				2127EE521FE1548E004E27C3 /* FloatRatingView.swift in Sources */,
+				2127EE491FE137BD004E27C3 /* BarsAndClubsViewController.swift in Sources */,
 				0079BFA91FA3673600EFB38D /* AKRadioButtonsController.swift in Sources */,
+				2127EE3D1FE100A1004E27C3 /* ACProgressHUD.swift in Sources */,
 				004620AF1FB1B5C5002EB388 /* NSDate+Timepiece.swift in Sources */,
+				2127EE501FE14F30004E27C3 /* HotelReservationTableViewCell.swift in Sources */,
+				2127EE471FE12F71004E27C3 /* FavoriteViewController.swift in Sources */,
 				0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */,
+				214706631FF36F510009E39A /* ARCarMovement.swift in Sources */,
+				2174B61C1FDFFE5C00462E91 /* WalletAddCardsViewController.swift in Sources */,
+				21690C8E1FEE460300F89B40 /* EditProfileViewController.swift in Sources */,
 				008D22431FA08E14001223DF /* LoginViewController.swift in Sources */,
+				2127EE4E1FE14F14004E27C3 /* HotelReservationViewController.swift in Sources */,
 				004620AE1FB1B5C5002EB388 /* NSCalendar+Timepiece.swift in Sources */,
+				21AA8AEE1FE17AD400210E2D /* PayViewController.swift in Sources */,
 				005B64161FB4191E00029EA2 /* PastBooingTableViewCell.swift in Sources */,
+				006057181FF52197004CA5DE /* CustomViewForShadow.swift in Sources */,
 				00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */,
 				005B64141FB4190900029EA2 /* UpCommingTableViewCell.swift in Sources */,
 				0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */,
 				0020FA221FB6BF760054B09B /* CustomSideMenuViewController.swift in Sources */,
+				2127EE571FE15B59004E27C3 /* BookTableCollectionViewCell.swift in Sources */,
+				2174B62D1FE002D300462E91 /* ParentViewController.swift in Sources */,
+				2174B61F1FDFFE5C00462E91 /* WalletCollectionViewCell.swift in Sources */,
+				217F255E1FE3CC0C0084F6C8 /* GroceriesViewController.swift in Sources */,
+				217F25541FE3A5480084F6C8 /* ShoppingDetailsVC.swift in Sources */,
+				213C8C331FEB7F5E002C59AA /* TickPayRegistrationViewController.swift in Sources */,
+				21AA8AF21FE17C1200210E2D /* TickPayAlertViewController.swift in Sources */,
 				00A462ED1FB3072C005BF6D3 /* AllDriversOnMapViewController.swift in Sources */,
+				21AA8AF01FE17B2C00210E2D /* InVoiceReceiptViewController.swift in Sources */,
+				2174B6331FE003D200462E91 /* WalletBalanceMainTableViewCell.swift in Sources */,
 				0020FA241FB6F0600054B09B /* ChangePasswordVC.swift in Sources */,
+				2174B63B1FE0122500462E91 /* CreditCardValidator.swift in Sources */,
+				21AA8AE91FE175F200210E2D /* BookTableSelectedDataViewController.swift in Sources */,
 				008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */,
+				21690C921FEE511B00F89B40 /* GiveRatingViewController.swift in Sources */,
+				2174B6231FDFFE5C00462E91 /* WalletTransferViewController.swift in Sources */,
+				2127EE4C1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift in Sources */,
 				0061785D1FAC59D80094651F /* TempData.swift in Sources */,
 				0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */,
+				2174B6221FDFFE5C00462E91 /* WalletTransferToBankVC.swift in Sources */,
 				004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */,
 				005B640E1FB4188900029EA2 /* UpCommingVC.swift in Sources */,
 				001151C61FA1E9EC00753F55 /* MainHeaderTableViewCell.swift in Sources */,
 				005B64101FB418BA00029EA2 /* PastBookingVC.swift in Sources */,
+				21DA90D31FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift in Sources */,
 				005B64121FB418EF00029EA2 /* OnGoingTableViewCell.swift in Sources */,
 				005B640C1FB4186000029EA2 /* OnGoingVC.swift in Sources */,
+				21468B601FED43A000B203EC /* VerifyPasswordViewController.swift in Sources */,
 				001151C81FA1E9F800753F55 /* ContentTableViewCell.swift in Sources */,
 				0079BFA21FA35E8D00EFB38D /* WebserviceSubClass.swift in Sources */,
+				21690C901FEE4ED900F89B40 /* EditAccountViewController.swift in Sources */,
 				001151CC1FA1FC3100753F55 /* RegistrationNewViewController.swift in Sources */,
 				00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */,
+				2127EE541FE15B19004E27C3 /* BookTableViewController.swift in Sources */,
+				2174B6211FDFFE5C00462E91 /* WalletTopUpVC.swift in Sources */,
+				2127EE411FE122A6004E27C3 /* InviteDriverViewController.swift in Sources */,
 				004620B31FB1B5C5002EB388 /* WWCalendarTimeSelector.swift in Sources */,
+				2127EE451FE129FA004E27C3 /* MyRecepitTableViewCell.swift in Sources */,
+				218B903C1FDA902400422DC1 /* MTRipple.swift in Sources */,
+				2174B61E1FDFFE5C00462E91 /* WalletCardsVC.swift in Sources */,
 				0025D0AF1FA1AE6000167FCD /* HomeViewController.swift in Sources */,
+				2174B6241FDFFE5C00462E91 /* WalletViewController.swift in Sources */,
+				21AA8AEB1FE175FF00210E2D /* BookTableSelectedDataTableViewCell.swift in Sources */,
 				0076BF951FAD8AD400718F72 /* BookLaterViewController.swift in Sources */,
 				00A61D471FA87E0600E1BA84 /* ButtonUtility.swift in Sources */,
+				2127EE431FE12922004E27C3 /* MyReceiptsViewController.swift in Sources */,
 				001151C31FA1E9B100753F55 /* SideMenuTableViewController.swift in Sources */,
+				2174B63A1FE0122500462E91 /* CreditCardValidationType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,6 +1079,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "TickTok User/TickTok User.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -683,8 +1092,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/TickTok User/TickTok User-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -694,6 +1104,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = "TickTok User/TickTok User.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -706,8 +1117,9 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/TickTok User/TickTok User-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

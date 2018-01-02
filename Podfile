@@ -19,6 +19,13 @@ target 'TickTok User' do
   pod 'SDWebImage', '~> 4.0'
   pod 'M13Checkbox'
   pod 'SideMenuController'
+  pod "Pulsator"
+  pod 'CardIO'
+#  pod 'ACProgressHUD-Swift'
+  pod 'CreditCardForm'
+  pod 'FormTextField'
+  pod 'Firebase/Core'
+  pod 'Firebase/Messaging'
 
   # pod 'WWCalendarTimeSelector'
   pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'

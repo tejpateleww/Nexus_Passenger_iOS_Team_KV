@@ -7,82 +7,131 @@
 //
 
 import Foundation
-/*
+
  // Accept Request by Driver
- 
-func temp()
+/*
+func Accept Request by Driver()
 {
-    data is [{
+    [{
+        BookingInfo =     (
+            {
+                AdminAmount = "";
+                BookingCharge = "";
+                BookingType = "";
+                ByDriverAmount = "";
+                ByDriverId = 0;
+                CardId = 0;
+                CompanyAmount = "";
+                CreatedDate = "2017-12-07T11:05:18.000Z";
+                Discount = "";
+                DistanceFare = "";
+                DriverId = 21;
+                DropOffLat = "23.030513";
+                DropOffLon = "72.5075401";
+                DropTime = "";
+                DropoffLocation = "Near Rajpath Club, SG Highway, Bodakdev, Ahmedabad, Gujarat 380054, India";
+                GrandTotal = "";
+                Id = 182;
+                ModelId = 1;
+                NightFare = "";
+                NightFareApplicable = 0;
+                Notes = "";
+                PassengerContact = "";
+                PassengerEmail = "";
+                PassengerId = 44;
+                PassengerName = "";
+                PaymentStatus = "";
+                PaymentType = "";
+                PickupLat = "23.0734427";
+                PickupLng = "72.5170918";
+                PickupLocation = "35, Sola Gam Rd, Sola, Ahmedabad, Gujarat 380060, India";
+                PickupTime = "";
+                PromoCode = "";
+                Reason = "";
+                Status = accepted;
+                SubTotal = "";
+                Tax = "";
+                TollFee = "";
+                TransactionId = "";
+                TripDistance = "";
+                TripDuration = "";
+                TripFare = "";
+                WaitingTime = "";
+                WaitingTimeCost = "";
+            }
+        );
         CarInfo =     (
             {
-                Color = shave;
-                Company = "subs Gd";
-                CompanyId = 2;
+                Color = Black;
+                Company = Hummer;
+                CompanyId = 1;
                 Description = "";
-                DriverId = 13;
-                Id = 139;
-                RegistrationCertificate = "images/driver/13/image.jpeg";
-                RegistrationCertificateExpire = "2017-11-22T00:00:00.000Z";
-                VehicleImage = "images/driver/13/image2.jpeg";
-                VehicleInsuranceCertificate = "images/driver/13/image1.jpeg";
-                VehicleInsuranceCertificateExpire = "2017-12-27T00:00:00.000Z";
-                VehicleModel = 1;
-                VehicleRegistrationNo = "favs sugar hshs";
+                DriverId = 21;
+                Id = 659;
+                RegistrationCertificate = "images/driver/21/image5.jpeg";
+                RegistrationCertificateExpire = "2017-12-04T00:00:00.000Z";
+                VehicleImage = "images/driver/21/image1.jpeg";
+                VehicleInsuranceCertificate = "images/driver/21/image4.jpeg";
+                VehicleInsuranceCertificateExpire = "2017-12-04T00:00:00.000Z";
+                VehicleModel = 4;
+                VehicleRegistrationNo = "GJ-01-B-9999";
             }
         );
         Details =     (
             {
-                BookingId = 144;
-                Distance = "4.729100763706385";
-                DriverId = 13;
-                Lat = "23.030513";
-                Long = "72.5075401";
-                PassengerId = 11;
+                BookingId = 182;
+                BookingType = BookNow;
+                Distance = "0.125931449550502";
+                DriverId = 21;
+                Lat = "23.0734427";
+                Long = "72.5170918";
+                PassengerId = 44;
                 Status = 2;
-                UpdateTime = 1509695945;
-                UpdatedDate = "2017-11-03 07:59:05";
-                "_id" = 59fc21c9a1123e67a4638295;
+                UpdateTime = 1512624918;
+                UpdatedDate = "2017-12-07 05:35:18";
+                "_id" = 5a28d316f2e81b701909cf0f;
             }
         );
         DriverInfo =     (
             {
-                ABN = 2342342737;
-                AccreditationCertificate = "images/driver/13/image5.jpeg";
-                AccreditationCertificateExpire = "2017-11-13T00:00:00.000Z";
-                Address = Surat;
+                ABN = 1234556;
+                AccreditationCertificate = "images/driver/21/image2.jpeg";
+                AccreditationCertificateExpire = "2017-12-04T00:00:00.000Z";
+                Address = Prahladnagar;
                 Availability = 1;
-                BSB = 234234234;
-                BankAcNo = 165156165;
-                BankHolderName = "John Cena";
+                BSB = qwerty;
+                BankAcNo = 12345678900987;
+                BankHolderName = Bhavesh;
                 BankName = HDFC;
-                City = Surat;
-                CompanyId = 2;
+                City = Ahmedabad;
+                CompanyId = 1;
                 Country = India;
                 DCNumber = "";
                 DispatcherId = 0;
                 DriverDuty = 1;
-                DriverLicense = "images/driver/13/image6.jpeg";
-                DriverLicenseExpire = "2017-11-08T00:00:00.000Z";
-                Email = "johncena@gmail.com";
-                Fullname = Ganpat;
+                DriverLicense = "images/driver/21/image.jpeg";
+                DriverLicenseExpire = "2017-11-21T00:00:00.000Z";
+                Email = "bhavesh@excellentwebworld.info";
+                Fullname = "Bhavesh developer";
                 Gender = Male;
-                Id = 13;
-                Image = "images/driver/13/image1.png";
-                Lat = "23.07226334538042";
-                Lng = "72.5163064481778";
-                MobileNo = 1234567890;
+                Id = 21;
+                Image = "images/driver/21/image10037.png";
+                Lat = "23.07290128000603";
+                Lng = "72.51691108496337";
+                MobileNo = 9876543210;
                 Password = 25d55ad283aa400af464c76d713c07ad;
                 ProfileComplete = 1;
-                ReferralCode = tktc13Gan;
+                QRCode = "images/qrcode/jsbS2dDmzpxpaWlfiJyVnKQ=.png";
+                ReferralCode = tktc21Bha;
                 State = Gujarat;
                 Status = 1;
-                SubUrb = Gujart;
-                ZipCode = 265845;
+                SubUrb = Ahm;
+                ZipCode = 123456;
             }
         );
         message = "Your booking request has been confirmed";
         type = Notification;
-    }]
+        }]
 }
 */
 

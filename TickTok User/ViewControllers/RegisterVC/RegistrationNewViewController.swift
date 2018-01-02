@@ -14,6 +14,10 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
  
     
 
+    //-------------------------------------------------------------
+    // MARK: - Outlets
+    //-------------------------------------------------------------
+    
     var radioButtonsController: AKRadioButtonsController!
     @IBOutlet var radioButtons: [AKRadioButton]!
     @IBOutlet weak var txtFirstName: ACFloatingTextfield!
@@ -25,6 +29,11 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     var strPhoneNumber = String()
     var strEmail = String()
     var strPassword = String()
+    var gender = String()
+    
+    //-------------------------------------------------------------
+    // MARK: - Base Methods
+    //-------------------------------------------------------------
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +59,19 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     
     func selectedButton(sender: AKRadioButton) {
 
+        print(sender.currentTitle!)
+        
+        switch sender.currentTitle! {
+            
+        case "Male":
+            gender = "male"
+        case "Female":
+            gender = "female"
+        case "Other":
+            gender = "other"
+        default:
+            gender = "male"
+        }
         
     }
     
@@ -164,15 +186,16 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     
     func webServiceCallForRegister()
     {
+
         let dictParams = NSMutableDictionary()
         dictParams.setObject(txtFirstName.text!, forKey: "Firstname" as NSCopying)
         dictParams.setObject(txtLastName.text!, forKey: "Lastname" as NSCopying)
         dictParams.setObject(strPhoneNumber, forKey: "MobileNo" as NSCopying)
         dictParams.setObject(strEmail, forKey: "Email" as NSCopying)
         dictParams.setObject(strPassword, forKey: "Password" as NSCopying)
-        dictParams.setObject("Token", forKey: "Token" as NSCopying)
+        dictParams.setObject(SingletonClass.sharedInstance.deviceToken, forKey: "Token" as NSCopying)
         dictParams.setObject("1", forKey: "DeviceType" as NSCopying)
-        dictParams.setObject("male", forKey: "Gender" as NSCopying)
+        dictParams.setObject(gender, forKey: "Gender" as NSCopying)
         dictParams.setObject("12376152367", forKey: "Lat" as NSCopying)
         dictParams.setObject("2348273489", forKey: "Lng" as NSCopying)
         
@@ -189,9 +212,12 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
                     
                     self.btnSignUp.stopAnimation(animationStyle: .normal, completion: {
                         
-                        SingletonClass.sharedInstance.dictProfile = (result as! NSDictionary).object(forKey: "profile") as! NSDictionary
+                        SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)   
                         SingletonClass.sharedInstance.isUserLoggedIN = true
                         SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)
+                        SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
+                        UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+
                         UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                         self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
                     })

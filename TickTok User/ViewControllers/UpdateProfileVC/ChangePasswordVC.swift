@@ -8,18 +8,21 @@
 
 import UIKit
 import NVActivityIndicatorView
+import ACFloatingTextfield_Swift
 
 class ChangePasswordVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        btnSubmit.layer.cornerRadius = 5
+        btnSubmit.layer.masksToBounds = true
+       
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
 
@@ -27,8 +30,9 @@ class ChangePasswordVC: UIViewController {
     // MARK: - Outlets
     //-------------------------------------------------------------
     
-    @IBOutlet weak var txtNewPassword: UITextField!
-    @IBOutlet weak var txtConfirmPassword: UITextField!
+    @IBOutlet weak var txtNewPassword: ACFloatingTextfield!
+    @IBOutlet weak var txtConfirmPassword: ACFloatingTextfield!
+    @IBOutlet weak var btnSubmit: UIButton!
     
     
     @IBAction func btnSubmit(_ sender: UIButton) {
@@ -37,7 +41,7 @@ class ChangePasswordVC: UIViewController {
         
         if txtNewPassword.text == txtConfirmPassword.text {
         
-            if str!.characters.count >= 8  {
+            if str!.count >= 8  {
                 webserviceOfChangePassword()
             }
             else {

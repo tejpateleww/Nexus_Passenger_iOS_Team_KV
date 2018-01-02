@@ -11,8 +11,6 @@ import Alamofire
 
 
 
-
-
 var request : Request!
 
 
@@ -26,6 +24,7 @@ func postData(_ dictParams: AnyObject, nsURL: String, completion: @escaping (_ r
 {
     let url = WebserviceURLs.kBaseURL + nsURL
 
+    UtilityClass.showACProgressHUD()
     
     Alamofire.request(url, method: .post, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
         .validate()
@@ -36,11 +35,23 @@ func postData(_ dictParams: AnyObject, nsURL: String, completion: @escaping (_ r
                 if (JSON as AnyObject).object(forKey:("status")) as! Bool == false
                 {
                     completion(JSON as AnyObject, false)
+                    UtilityClass.hideACProgressHUD()
                 }
                 else
                 {
                     completion(JSON as AnyObject, true)
+                     UtilityClass.hideACProgressHUD()
                 }
+            }
+            else {
+                UtilityClass.hideACProgressHUD()
+                
+//                    let alert = UIAlertController(title: nil, message: res, preferredStyle: .alert)
+//                    let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+//                    alert.addAction(OK)
+//                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                
+             
             }
     }
 }
@@ -54,7 +65,7 @@ func getData(_ dictParams: AnyObject, nsURL: String,  completion: @escaping (_ r
 {
     let url = WebserviceURLs.kBaseURL + nsURL
 
-    
+    UtilityClass.showACProgressHUD()
     
     Alamofire.request(url, method: .get, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
         .validate()
@@ -68,23 +79,22 @@ func getData(_ dictParams: AnyObject, nsURL: String,  completion: @escaping (_ r
                 {
                     completion(JSON as AnyObject, false)
                     //                    HUD.flash(HUDContentType.systemActivity, delay: 0.0)
+                    UtilityClass.hideACProgressHUD()
                 }
                 else
                 {
                     completion(JSON as AnyObject, true)
+                    UtilityClass.hideACProgressHUD()
                     
                 }
             }
             else
             {
                 print("Data not Found")
+                UtilityClass.hideACProgressHUD()
             }
-            
     }
 }
-
-
-
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Send Image Method
@@ -93,6 +103,8 @@ func getData(_ dictParams: AnyObject, nsURL: String,  completion: @escaping (_ r
 func sendImage(_ dictParams: [String:AnyObject], image1: UIImage, nsURL: String, completion: @escaping (_ result: AnyObject, _ success: Bool) -> Void) {
     
     let url = WebserviceURLs.kBaseURL + nsURL
+    
+    UtilityClass.showACProgressHUD()
     
     Alamofire.upload(multipartFormData: { (multipartFormData) in
         
@@ -121,26 +133,191 @@ func sendImage(_ dictParams: [String:AnyObject], image1: UIImage, nsURL: String,
                     {
                         completion(JSON as AnyObject, true)
                         print("If JSON")
+                        UtilityClass.hideACProgressHUD()
                         
                     }
                     else
                     {
                         completion(JSON as AnyObject, false)
                         print("else JSON")
+                        UtilityClass.hideACProgressHUD()
                     }
                 }
                 else
                 {
                     print("ERROR")
+                    UtilityClass.hideACProgressHUD()
                 }
                 
                 
             }
         case .failure( _):
             print("failure")
+            UtilityClass.hideACProgressHUD()
             
             break
         }
     }
 }
 
+//-------------------------------------------------------------
+// MARK: - Webservice For Bar And Clubs
+//-------------------------------------------------------------
+
+func BarsAndClubs(_ dictParams: AnyObject, Location: String, Type: String,  completion: @escaping (_ result: NSDictionary, _ success: Bool) -> Void)
+{
+    let CurrentLocation = Location
+    let types = Type
+    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    
+    UtilityClass.showACProgressHUD()
+    
+    Alamofire.request(url, method: .get, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
+        .validate()
+        .responseJSON
+        { (response) in
+            
+            if let JSON = response.result.value
+            {
+                
+                if ((JSON as! NSDictionary).object(forKey:("status"))) as! String == "OK"
+                {
+                    completion(JSON as! NSDictionary, true)
+                    //                    HUD.flash(HUDContentType.systemActivity, delay: 0.0)
+                    UtilityClass.hideACProgressHUD()
+                }
+                else
+                {
+                    completion(JSON as! NSDictionary, false)
+                    UtilityClass.hideACProgressHUD()
+                    
+                }
+            }
+            else
+            {
+                print("Data not Found")
+                UtilityClass.hideACProgressHUD()
+            }
+    }
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Book Table
+//-------------------------------------------------------------
+
+func BookTable(_ dictParams: AnyObject, Location: String, Type: String, Item: String ,completion: @escaping (_ result: NSDictionary, _ success: Bool) -> Void)
+{
+    let CurrentLocation = Location
+    let types = Type
+    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&keyword=\(Item)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    
+    UtilityClass.showACProgressHUD()
+    
+    Alamofire.request(url, method: .get, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
+        .validate()
+        .responseJSON
+        { (response) in
+            
+            if let JSON = response.result.value
+            {
+                
+                if ((JSON as! NSDictionary).object(forKey:("status"))) as! String == "OK"
+                {
+                    completion(JSON as! NSDictionary, true)
+                    //                    HUD.flash(HUDContentType.systemActivity, delay: 0.0)
+                    UtilityClass.hideACProgressHUD()
+                }
+                else
+                {
+                    completion(JSON as! NSDictionary, false)
+                    UtilityClass.hideACProgressHUD()
+                    
+                }
+            }
+            else
+            {
+                print("Data not Found")
+                UtilityClass.hideACProgressHUD()
+            }
+    }
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Shopping
+//-------------------------------------------------------------
+
+func ShoppingListOfGoogle(_ dictParams: AnyObject, Location: String, Type: String ,completion: @escaping (_ result: NSDictionary, _ success: Bool) -> Void)
+{
+    let CurrentLocation = Location
+    let types = Type
+    let url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(types)\(CurrentLocation)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    
+    UtilityClass.showACProgressHUD()
+    
+    Alamofire.request(url, method: .get, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
+        .validate()
+        .responseJSON
+        { (response) in
+            
+            if let JSON = response.result.value
+            {
+                
+                if ((JSON as! NSDictionary).object(forKey:("status"))) as! String == "OK"
+                {
+                    completion(JSON as! NSDictionary, true)
+                    //                    HUD.flash(HUDContentType.systemActivity, delay: 0.0)
+                    UtilityClass.hideACProgressHUD()
+                }
+                else
+                {
+                    completion(JSON as! NSDictionary, false)
+                    UtilityClass.hideACProgressHUD()
+                    
+                }
+            }
+            else
+            {
+                print("Data not Found")
+                UtilityClass.hideACProgressHUD()
+            }
+    }
+    
+    
+}
+
+
+func estimateMethod(_ dictParams: AnyObject, nsURL: String, completion: @escaping (_ result: AnyObject, _ sucess: Bool) -> Void)
+{
+    let url = WebserviceURLs.kBaseURL + nsURL
+    
+//    UtilityClass.showACProgressHUD()
+    
+    Alamofire.request(url, method: .post, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
+        .validate()
+        .responseJSON
+        { (response) in
+            if let JSON = response.result.value
+            {
+                if (JSON as AnyObject).object(forKey:("status")) as! Bool == false
+                {
+                    completion(JSON as AnyObject, false)
+//                    UtilityClass.hideACProgressHUD()
+                }
+                else
+                {
+                    completion(JSON as AnyObject, true)
+//                    UtilityClass.hideACProgressHUD()
+                }
+            }
+            else {
+//                UtilityClass.hideACProgressHUD()
+                
+                //                    let alert = UIAlertController(title: nil, message: res, preferredStyle: .alert)
+                //                    let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                //                    alert.addAction(OK)
+                //                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                
+                
+            }
+    }
+}

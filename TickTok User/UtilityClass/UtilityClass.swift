@@ -8,6 +8,8 @@
 
 import UIKit
 import NVActivityIndicatorView
+
+
 typealias CompletionHandler = (_ success:Bool) -> Void
 
 class UtilityClass: NSObject {
@@ -23,7 +25,7 @@ class UtilityClass: NSObject {
         
         alert.addAction(cancelAction)
         //vc will be the view controller on which you will present your alert as you cannot use self because this method is static.
-        vc.present(alert, animated: true, completion: nil)
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
     }
     
     class func showAlertWithCompletion(_ title: String, message: String, vc: UIViewController,completionHandler: @escaping CompletionHandler) -> Void
@@ -37,7 +39,7 @@ class UtilityClass: NSObject {
             completionHandler(true)
         }))
         //vc will be the view controller on which you will present your alert as you cannot use self because this method is static.
-        vc.present(alert, animated: true, completion: nil)
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
 
     }
     
@@ -64,4 +66,39 @@ class UtilityClass: NSObject {
         NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
 
     }
+    class func showACProgressHUD() {
+        
+        let progressView = ACProgressHUD.shared
+        /*
+         ACProgressHUD.shared.configureStyle(withProgressText: "", progressTextColor: .black, progressTextFont: <#T##UIFont#>, shadowColor: UIColor.black, shadowRadius: 3, cornerRadius: 5, indicatorColor: UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0), hudBackgroundColor: .white, enableBackground: false, backgroundColor: UIColor.black, backgroundColorAlpha: 0.3, enableBlurBackground: false, showHudAnimation: .growIn, dismissHudAnimation: .growOut)
+         */
+        progressView.progressText = ""
+        
+        progressView.hudBackgroundColor = .black
+        
+        progressView.indicatorColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        //        progressView.shadowRadius = 0.5
+        
+        progressView.showHUD()
+        
+    }
+    
+    class func hideACProgressHUD() {
+        
+        ACProgressHUD.shared.hideHUD()
+    }
+
 }
+
+extension UILabel {
+    func underlineToLabel() {
+        if let textString = self.text {
+            let attributedString = NSMutableAttributedString(string: textString)
+            attributedString.addAttribute(NSAttributedStringKey.underlineStyle,
+                                          value: NSUnderlineStyle.styleSingle.rawValue,
+                                          range: NSRange(location: 0, length: attributedString.length))
+            attributedText = attributedString
+        }
+    }
+}
+

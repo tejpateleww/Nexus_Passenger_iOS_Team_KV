@@ -1,6 +1,7 @@
 PODS:
   - ACFloatingTextfield-Swift (1.5)
   - Alamofire (4.5.1)
+  - CardIO (5.4.1)
   - CHIPageControl (0.1.4):
     - CHIPageControl/Aji (= 0.1.4)
     - CHIPageControl/Aleppo (= 0.1.4)
@@ -20,8 +21,30 @@ PODS:
   - CHIPageControl/Puya (0.1.4)
   - Crashlytics (3.9.3):
     - Fabric (~> 1.7.2)
+  - CreditCardForm (0.1.5)
   - DOAlertController (2.0)
   - Fabric (1.7.2)
+  - Firebase/Core (4.7.0):
+    - FirebaseAnalytics (= 4.0.5)
+    - FirebaseCore (= 4.0.12)
+  - Firebase/Messaging (4.7.0):
+    - Firebase/Core
+    - FirebaseMessaging (= 2.0.7)
+  - FirebaseAnalytics (4.0.5):
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseCore (4.0.12):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseInstanceID (2.0.7)
+  - FirebaseMessaging (2.0.7):
+    - FirebaseAnalytics (~> 4.0)
+    - FirebaseCore (~> 4.0)
+    - FirebaseInstanceID (~> 2.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
+  - FormTextField (2.0.0)
   - GoogleMaps (2.5.0):
     - GoogleMaps/Maps (= 2.5.0)
   - GoogleMaps/Base (2.5.0)
@@ -29,11 +52,23 @@ PODS:
     - GoogleMaps/Base
   - GooglePlaces (2.5.0):
     - GoogleMaps/Base (= 2.5.0)
+  - GoogleToolboxForMac/Defines (2.1.3)
+  - GoogleToolboxForMac/Logger (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
+  - GoogleToolboxForMac/NSData+zlib (2.1.3):
+    - GoogleToolboxForMac/Defines (= 2.1.3)
   - IQKeyboardManagerSwift (5.0.6)
   - M13Checkbox (3.2.1)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
   - NVActivityIndicatorView (4.0.0):
     - NVActivityIndicatorView/Presenter (= 4.0.0)
   - NVActivityIndicatorView/Presenter (4.0.0)
+  - Protobuf (3.5.0)
+  - Pulsator (0.4.0)
   - SDWebImage (4.2.1):
     - SDWebImage/Core (= 4.2.1)
   - SDWebImage/Core (4.2.1)
@@ -46,15 +81,21 @@ PODS:
 DEPENDENCIES:
   - ACFloatingTextfield-Swift
   - Alamofire
+  - CardIO
   - CHIPageControl
   - Crashlytics
+  - CreditCardForm
   - DOAlertController (from `https://github.com/okmr-d/DOAlertController.git`, branch `master`)
   - Fabric
+  - Firebase/Core
+  - Firebase/Messaging
+  - FormTextField
   - GoogleMaps
   - GooglePlaces
   - IQKeyboardManagerSwift
   - M13Checkbox
   - NVActivityIndicatorView
+  - Pulsator
   - SDWebImage (~> 4.0)
   - SideMenuController
   - Socket.IO-Client-Swift
@@ -73,21 +114,33 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ACFloatingTextfield-Swift: ebcfb892acbce8545576dd224df7b1b7473a4bbd
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   CHIPageControl: 032b5ab68506c00711d5a61bd83e9fdf2a7ecb22
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
+  CreditCardForm: 9ae830341997229abb0e284e66f301f834afe942
   DOAlertController: 4d4ee33bbf1656271895da4a3cac4fbaa1d3217e
   Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
+  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
+  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
+  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
+  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
+  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
+  FormTextField: 40016d44fc3371410be6c5a0c968498e43f00d33
   GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
   GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
+  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
   IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
   M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  Pulsator: a0e7c006790a576de63280b2f0552ea1c1b83ce0
   SDWebImage: 1fa4c9edf525b744f002db89f3f5a38b3cd4c541
   SideMenuController: b463d2b3aa58e2afe57f57a07938fa9a647894ca
   Socket.IO-Client-Swift: ba3cb1c4bf0a6ca90080406a2c22685c25ad1f60
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
   TransitionButton: 0bf7e5ffe80030f9d10d57983a04acf2f511998a
 
-PODFILE CHECKSUM: e216bf6e33ee79b5491d7b1cd24636fdf345400e
+PODFILE CHECKSUM: fa9f3b1232d5c90583ecc1e4de44c8ef1e749f72
 
 COCOAPODS: 1.3.1

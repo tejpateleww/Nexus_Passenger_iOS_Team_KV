@@ -19,8 +19,26 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     var strDropoffLat = String()
     var strDropoffLng = String()
     
+    var expandedCellPaths = Set<IndexPath>()
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(self.handleRefresh(_:)),
+                                 for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = UIColor.red
+        
+        return refreshControl
+    }()
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
+        self.tableView.addSubview(self.refreshControl)
+        
 
         // Register to receive notification
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadTableView), name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
@@ -36,6 +54,13 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         self.aryData = SingletonClass.sharedInstance.aryPastBooking
         self.tableView.reloadData()
     }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        
+        tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
+    
     
     //-------------------------------------------------------------
     // MARK: - Outlets
@@ -59,32 +84,47 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         
         if aryData.count > 0 {
             
-            cell.lblStatusValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Status") as? String
-            cell.lblDriverNameValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String
+            
+            cell.selectionStyle = .none
+            
+            if let name = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String {
+                
+                if name == "" {
+                    cell.lblDriverName.text = "NULL"
+                }
+                else {
+                    cell.lblDriverName.text = name
+                }
+                
+            }
+            else {
+                cell.lblDriverName.text = "NULL"
+            }
+            
+            
+            cell.lblBookingID.text = "Booking Id: (\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!)))"
+            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
+            
             cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
             cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
             
-            strPickupLat = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLng") as! String
-            strPickupLng = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLng") as! String
+            cell.lblPickupTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String
+            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
+            cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
+            cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
+            cell.lblTripFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
+            cell.lblNightFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "NightFare") as? String
+            cell.lblTollFee.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TollFee") as? String
+            cell.lblWaitingCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "WaitingTimeCost") as? String
+            cell.lblBookingCharge.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingCharge") as? String
+            cell.lblTax.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Tax") as? String
+            cell.lblDiscount.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Discount") as? String
+            cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
+            cell.lblTotalCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "GrandTotal") as? String
             
-            strDropoffLat = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropOffLat") as! String
-            strDropoffLng = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropOffLon") as! String
             
-            if ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CarDetails") != nil) {
-                
-                cell.lblCompanyValue.text = ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CarDetails") as! NSDictionary).object(forKey: "Company") as? String
-                
-                let url = ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CarDetails") as! NSDictionary).object(forKey: "VehicleImage") as! String
-                let urlString = "http://54.206.55.185/web/\(url)"
-                cell.imgDriver.sd_setImage(with: URL(string: urlString), completed: nil)
-                
-            }
+            cell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
             
-            cell.lblTotalValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "GrandTotal") as? String
-            cell.lblBookingChargeValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingCharge") as? String
-            cell.lblWaitingCostValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "WaitingTimeCost") as? String
-            cell.lblTripFareValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
-            cell.lblNightFareValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "NightFare") as? String
             
             
         }
@@ -94,12 +134,24 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
+        if let cell = tableView.cellForRow(at: indexPath) as? PastBooingTableViewCell {
+            cell.viewDetails.isHidden = !cell.viewDetails.isHidden
+            if cell.viewDetails.isHidden {
+                expandedCellPaths.remove(indexPath)
+            } else {
+                expandedCellPaths.insert(indexPath)
+            }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+        }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
-        return 290
-    }
+    //-------------------------------------------------------------
+    // MARK: - Webservice Methods
+    //-------------------------------------------------------------
+    
+    
 
     
     

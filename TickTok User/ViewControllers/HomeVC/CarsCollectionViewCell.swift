@@ -16,4 +16,5 @@ class CarsCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var lblMinutes: UILabel!
     @IBOutlet weak var lblPrices: UILabel!
     
+    @IBOutlet weak var viewOfImage: UIView!
 }

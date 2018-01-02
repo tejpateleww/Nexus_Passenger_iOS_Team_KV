@@ -25,26 +25,14 @@ class UpCommingTableViewCell: UITableViewCell {
     // MARK: - Outlets
     //-------------------------------------------------------------
 
-    @IBOutlet weak var lblPickup: UILabel!
+    @IBOutlet weak var lblDropoffAddress: UILabel!
+    @IBOutlet weak var lblDateAndTime: UILabel!
+    
     @IBOutlet weak var lblPickupAddress: UILabel!
     
-    @IBOutlet weak var lblDropoff: UILabel!
-    @IBOutlet weak var lblDropoffAddress: UILabel!
+    @IBOutlet weak var lblPaymentType: UILabel!
     
-    @IBOutlet weak var lblDistance: UILabel!
-    @IBOutlet weak var lblDistanceValue: UILabel!
+    @IBOutlet weak var btnCancelRequest: UIButton!
     
-    @IBOutlet weak var lblPickupDate: UILabel!
-    @IBOutlet weak var lblPickupDateValue: UILabel!
-    
-    @IBOutlet weak var lblPickupTime: UILabel!
-    @IBOutlet weak var lblPickupTimeValue: UILabel!
-    
-    @IBOutlet weak var lblModel: UILabel!
-    @IBOutlet weak var lblModelValue: UILabel!
-    
-    @IBOutlet weak var lblStatus: UILabel!
-    @IBOutlet weak var lblStatusValue: UILabel!
-    
-
+    @IBOutlet weak var viewDetails: UIView!
 }

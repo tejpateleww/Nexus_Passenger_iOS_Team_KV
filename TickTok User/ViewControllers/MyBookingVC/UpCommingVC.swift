@@ -19,18 +19,37 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     var strDropoffLat = String()
     var strDropoffLng = String()
     
+    var bookinType = String()
+    
+    var expandedCellPaths = Set<IndexPath>()
+    
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(self.handleRefresh(_:)),
+                                 for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = UIColor.red
+        
+        return refreshControl
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.isScrollEnabled = true
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView()
         
-        self.tableView.isUserInteractionEnabled = true
-        self.view.isUserInteractionEnabled = true
-        
-        
+        self.tableView.addSubview(self.refreshControl)
         
         // Register to receive notification
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadDataTableView), name: NSNotification.Name(rawValue: NotificationCenterName.keyForUpComming), object: nil)
+    }
+    
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        
+        tableView.reloadData()
+        refreshControl.endRefreshing()
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,7 +61,7 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     {
         self.aryData = SingletonClass.sharedInstance.aryUpComming
         self.tableView.reloadData()
-        self.tableView.frame.size = tableView.contentSize
+//        self.tableView.frame.size = tableView.contentSize
     }
     
     //-------------------------------------------------------------
@@ -68,40 +87,81 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
         if aryData.count > 0 {
 
-
+cell.selectionStyle = .none
             cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
             cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
-            cell.lblDistanceValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
-            
-            strPickupLat = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLng") as! String
-            strPickupLng = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLng") as! String
-            
-            strDropoffLat = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropOffLat") as! String
-            strDropoffLng = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropOffLon") as! String
-            
-            if (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") != nil {
-                cell.lblModelValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
+            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
+       
+            cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
+  
+            if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? String {
+                cell.btnCancelRequest.tag = Int(bookingID)!
+            }
+            else if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? Int {
+                cell.btnCancelRequest.tag = bookingID
             }
             
-            cell.lblStatusValue.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Status") as? String
-  
+            bookinType = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingType") as! String
+            cell.btnCancelRequest.addTarget(self, action: #selector(self.CancelRequest), for: .touchUpInside)
+            
+            cell.btnCancelRequest.layer.cornerRadius = 5
+            cell.btnCancelRequest.layer.masksToBounds = true
+            
+            cell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
         }
         
         return cell
     }
     
+  
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+     
+        if let cell = tableView.cellForRow(at: indexPath) as? UpCommingTableViewCell {
+            cell.viewDetails.isHidden = !cell.viewDetails.isHidden
+            if cell.viewDetails.isHidden {
+                expandedCellPaths.remove(indexPath)
+            } else {
+                expandedCellPaths.insert(indexPath)
+            }
+            tableView.beginUpdates()
+            tableView.endUpdates()
+            
+        }
+    }
+    
+    
+    @objc func CancelRequest(sender: UIButton) {
         
+        let bookingID = sender.tag
+        
+        
+        let socketData = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController).socket
+        let showTopView = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController)
+        
+        if bookinType == "Book Now" {
+            let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+            socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
+            
+            showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+            
+            UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+                self.navigationController?.popViewController(animated: true)
+            })
+           
+        }
+        else {
+            let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+            socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
+            
+            UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+                self.navigationController?.popViewController(animated: true)
+            })
+            
+            
+        }
+       
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-
-        return 209
-    }
-
-    
-    
-    
-    
-
+   
 }

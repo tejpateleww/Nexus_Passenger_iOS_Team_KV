@@ -7,22 +7,35 @@
 //
 
 import UIKit
-import NVActivityIndicatorView
+//import NVActivityIndicatorView
 
 class MyBookingViewController: UIViewController, UIScrollViewDelegate {
 
     
     var aryHistory = NSArray()
     
+    let bottomBorderOnGoing = CALayer()
+    let bottomBorderUpComming = CALayer()
+    let bottomBorderPastBooking = CALayer()
+    
+    var heightOfLayer = CGFloat()
+    var heighMinusFromY = CGFloat()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        heightOfLayer = 2.0
+        heighMinusFromY = 2.0
         
         webserviceOfBookingHistory()
+        
+        scrollObject.isUserInteractionEnabled = true
         
         scrollObject.delegate = self
         scrollObject.layoutIfNeeded()
         scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        
+       PastBooking()
         
         // Do any additional setup after loading the view.
     }
@@ -44,10 +57,6 @@ class MyBookingViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollObject: UIScrollView!
     
     
-    
-    
-    
-    
     //-------------------------------------------------------------
     // MARK: - Actions
     //-------------------------------------------------------------
@@ -57,27 +66,82 @@ class MyBookingViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @IBAction func lblOnGoing(_ sender: UIButton) {
+        OnGoing()
         
-        lblOnGoing.backgroundColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1.0)
-        btnUpComming.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
-        btnPastBooking.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
-        scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
     @IBAction func btnUpComming(_ sender: UIButton) {
+        Upcomming()
+       
+    }
 
-        btnUpComming.backgroundColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1.0)
-        lblOnGoing.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
-        btnPastBooking.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
+    func OnGoing() {
+        
+
+        bottomBorderOnGoing.frame = CGRect(x: 0.0, y: lblOnGoing.frame.size.height - heighMinusFromY, width: lblOnGoing.frame.size.width, height: heightOfLayer)
+        bottomBorderOnGoing.backgroundColor = UIColor.init(red: 204/255, green: 4/255, blue: 0, alpha: 1.0).cgColor
+        lblOnGoing.layer.addSublayer(bottomBorderOnGoing)
+        
+        
+        bottomBorderUpComming.removeFromSuperlayer()
+        bottomBorderPastBooking.removeFromSuperlayer()
+        
+        
+        scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
+    func Upcomming() {
+        
+       
+        bottomBorderUpComming.frame = CGRect(x: 0.0, y: btnUpComming.frame.size.height - heighMinusFromY, width: btnUpComming.frame.size.width, height: heightOfLayer)
+        bottomBorderUpComming.backgroundColor = UIColor.init(red: 204/255, green: 4/255, blue: 0, alpha: 1.0).cgColor
+        btnUpComming.layer.addSublayer(bottomBorderUpComming)
+        
+        
+        bottomBorderOnGoing.removeFromSuperlayer()
+        bottomBorderPastBooking.removeFromSuperlayer()
+        
+        
+        
+        
+//        lblOnGoing.backgroundColor = UIColor.white
+////        btnUpComming.backgroundColor = UIColor.init(red: 204/255, green: 4/255, blue: 0, alpha: 1.0)
+//        btnPastBooking.backgroundColor = UIColor.white
+//
+//        lblOnGoing.setTitleColor(UIColor.black, for: .normal)
+//        btnUpComming.setTitleColor(UIColor.black, for: .normal)
+//        btnPastBooking.setTitleColor(UIColor.black, for: .normal)
+        
         scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
     }
     
-    @IBAction func btnPastBooking(_ sender: UIButton) {
+    func PastBooking() {
         
-        btnPastBooking.backgroundColor = UIColor(red: 121/255, green: 121/255, blue: 121/255, alpha: 1.0)
-        lblOnGoing.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
-        btnUpComming.backgroundColor = UIColor(red: 169/255, green: 169/255, blue: 169/255, alpha: 1.0)
+        
+        bottomBorderPastBooking.frame = CGRect(x: 0.0, y: btnPastBooking.frame.size.height - heighMinusFromY, width: btnPastBooking.frame.size.width, height: heightOfLayer)
+        bottomBorderPastBooking.backgroundColor = UIColor.init(red: 204/255, green: 4/255, blue: 0, alpha: 1.0).cgColor
+        btnPastBooking.layer.addSublayer(bottomBorderPastBooking)
+        
+        
+        bottomBorderUpComming.removeFromSuperlayer()
+        bottomBorderOnGoing.removeFromSuperlayer()
+        
+        
+//        lblOnGoing.backgroundColor = UIColor.white
+//        btnUpComming.backgroundColor = UIColor.white
+////        btnPastBooking.backgroundColor = UIColor.init(red: 204/255, green: 4/255, blue: 0, alpha: 1.0)
+//
+//        lblOnGoing.setTitleColor(UIColor.black, for: .normal)
+//        btnUpComming.setTitleColor(UIColor.black, for: .normal)
+//        btnPastBooking.setTitleColor(UIColor.black, for: .normal)
+        
         scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width * 2, y: 0), animated: true)
+    }
+    
+    @IBAction func btnPastBooking(_ sender: UIButton) {
+       
+        PastBooking()
+        
     }
     
     //-------------------------------------------------------------
@@ -101,10 +165,10 @@ class MyBookingViewController: UIViewController, UIScrollViewDelegate {
     
     func webserviceOfBookingHistory()
     {
-        let activityData = ActivityData()
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
-        
-        webserviceForBookingHistory("29" as AnyObject) { (result, status) in
+//        let activityData = ActivityData()
+//        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+//
+        webserviceForBookingHistory(SingletonClass.sharedInstance.strPassengerID as AnyObject) { (result, status) in
             
             if (status) {
                 
@@ -157,7 +221,7 @@ class MyBookingViewController: UIViewController, UIScrollViewDelegate {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
                 // ------------------------------------------------------------
                 
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+//                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             }
             else {
                 
