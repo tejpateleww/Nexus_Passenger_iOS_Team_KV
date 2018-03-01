@@ -23,6 +23,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
+       
 
         let profileData = SingletonClass.sharedInstance.dictProfile
 
@@ -33,7 +34,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         
         if let RefarMoney = profileData.object(forKey: "ReferralAmount") as? Double {
             strReferralMoney = String(RefarMoney)
-            self.lblReferralMoney.text = "$ \(strReferralMoney)"
+            self.lblReferralMoney.text = "\(currencySign) \(strReferralMoney)"
         }
 
         if let imgProfile = (profileData).object(forKey: "Image") as? String {
@@ -92,6 +93,10 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         // Dispose of any resources that can be recreated.
     }
     
+    
+    
+   
+
   
     //-------------------------------------------------------------
     // MARK: - Outlets
@@ -120,28 +125,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
     //-------------------------------------------------------------
     
     @IBAction func btnFacebook(_ sender: UIButton) {
-//        var facebookURL = URL(string: "fb://profile/<profile-ID>")
-//         var facebookURL = URL(string: "fb://app")
-//        if UIApplication.shared.canOpenURL(facebookURL!) {
-//            UIApplication.shared.openURL(facebookURL!)
-//        }
-//        else {
-//            UtilityClass.showAlert("", message: "Please install WhatsApp app", vc: self)
-//        }
-        
-//        if(SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook)) {
-//
-//            let socialController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-//
-//            socialController?.setInitialText("Check out TiCKTOC, taxi booking app for Australia by TiCKTOCK, Your Referral Code is '\(strReferralCode)'")
-//
-//            self.present(socialController!, animated: true, completion: nil)
-//        }
-//        else {
-//            UtilityClass.showAlert("", message: "Please install Facebook app", vc: self)
-//
-//        }
-        
+
         var fbController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         
         if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
@@ -157,7 +141,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
                 }
             }
 //            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
-            fbController?.setInitialText("Check out this article.")
+            fbController?.setInitialText(codeToSend())
 //            fbController.add(URL(string: "URLString")!)
             fbController?.completionHandler = completionHandler
             self.present(fbController!, animated: true) { [weak self] in }
@@ -168,28 +152,17 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
                 self.present(fbSignInDialog, animated: false) { [weak self] in }
         }
             else {
-                UtilityClass.showAlert("", message: "Please install Facebook app", vc: self)
+                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Facebook app") { (index, title) in
+                }
             }
         }
+
+//        commingSoon()
         
     }
     
     @IBAction func btnTwitter(_ sender: UIButton) {
-        
-//        if(SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter)) {
-//
-//            let socialController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-//
-//            socialController?.setInitialText("Check out TiCKTOC, taxi booking app for Australia by TiCKTOCK, Your Referral Code is '\(strReferralCode)'")
-//
-//            self.present(socialController!, animated: true, completion: nil)
-//        }
-//        else {
-//
-//            UtilityClass.showAlert("", message: "Please install Twitter app", vc: self)
-//
-//        }
-        
+
         var TWController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         
         if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
@@ -205,7 +178,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
                 }
             }
             //            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
-            TWController?.setInitialText("Check out this article.")
+            TWController?.setInitialText(codeToSend())
             //            fbController.add(URL(string: "URLString")!)
             TWController?.completionHandler = completionHandler
             self.present(TWController!, animated: true) { [weak self] in }
@@ -213,21 +186,25 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         else {
             if let twitterSignInDialog = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
             
-                twitterSignInDialog.setInitialText("")
+                twitterSignInDialog.setInitialText(codeToSend())
                 
                 if twitterSignInDialog.serviceType == SLServiceTypeTwitter {
                      self.present(twitterSignInDialog, animated: false)
                 }
                 else {
-                    UtilityClass.showAlert("", message: "Please install Twitter app", vc: self)
+                   
+                    UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
+                    }
                 }
                 
             }
             else {
-               UtilityClass.showAlert("", message: "Please install Twitter app", vc: self)
+                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
+                }
             }
-            
         }
+ 
+//        commingSoon()
     }
     
     @IBAction func btnEmail(_ sender: UIButton) {
@@ -238,43 +215,49 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         var mc: MFMailComposeViewController = MFMailComposeViewController()
         mc.mailComposeDelegate = self
         mc.setSubject(emailTitle)
-        mc.setMessageBody(messageBody, isHTML: false)
+        mc.setMessageBody(codeToSend(), isHTML: false)
         mc.setToRecipients(toRecipents)
-        
+
         self.present(mc, animated: true, completion: nil)
 
+        
+//        commingSoon()
     }
     
     @IBAction func btnWhatsApp(_ sender: UIButton) {
-        
-//        let attrs = [NSFontAttributeName : UIFont.boldSystemFont(ofSize: 15)]
-//        var boldString = NSMutableAttributedString(string:strReferralCode, attributes:attrs)
 
-
-        let urlString = ""
+        let urlString = codeToSend()
         let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        let url  = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
+        let url = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
         
         if UIApplication.shared.canOpenURL(url! as URL) {
             UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
         } else {
             
-            UtilityClass.showAlert("", message: "Please install WhatsApp app", vc: self)
-            
-//            let errorAlert = UIAlertView(title: "Cannot Send Message", message: "Your device is not able to send WhatsApp messages.", delegate: self, cancelButtonTitle: "OK")
-//            errorAlert.show()
+            UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install WhatsApp app") { (index, title) in
+            }
+
         }
+
+//      commingSoon()
     }
     
     @IBAction func btnSMS(_ sender: UIButton) {
         
         if (MFMessageComposeViewController.canSendText()) {
             let controller = MFMessageComposeViewController()
-            controller.body = ""
+            controller.body = codeToSend()
             controller.recipients = [""]
             controller.messageComposeDelegate = self
             self.present(controller, animated: true, completion: nil)
         }
+        
+//        commingSoon()
+    }
+    
+    func commingSoon() {
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "CommingSoonViewController") as! CommingSoonViewController
+        self.navigationController?.pushViewController(next, animated: true)
     }
     
     //-------------------------------------------------------------
@@ -285,18 +268,28 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         switch result {
         case MFMailComposeResult.cancelled:
             print("Mail cancelled")
-            UtilityClass.showAlert("", message: "Mail cancelled", vc: self)
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            }
+
         case MFMailComposeResult.saved:
             print("Mail saved")
-            UtilityClass.showAlert("", message: "Mail saved", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail saved") { (index, title) in
+            }
         case MFMailComposeResult.sent:
             print("Mail sent")
-            UtilityClass.showAlert("", message: "Mail sent", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+            }
         case MFMailComposeResult.failed:
             print("Mail sent failure: \(String(describing: error?.localizedDescription))")
-            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
+      
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
+            }
         default:
-             UtilityClass.showAlert("", message: "Something went wrong", vc: self)
+            
+             UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+             }
             break
         }
         self.dismiss(animated: true, completion: nil)
@@ -307,21 +300,47 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         switch result {
         case MessageComposeResult.cancelled:
             print("Mail cancelled")
-            UtilityClass.showAlert("", message: "Mail cancelled", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            }
         case MessageComposeResult.sent:
             print("Mail sent")
-            UtilityClass.showAlert("", message: "Mail sent", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+            }
         case MessageComposeResult.failed:
             print("Mail sent failure")
-//            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure") { (index, title) in
+            }
         default:
-             UtilityClass.showAlert("", message: "Something went wrong", vc: self)
+
+             UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+             }
             break
         }
         self.dismiss(animated: true, completion: nil)
     }
 
+    //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
     
     
+    func codeToSend() -> String
+    {
+        let profile = SingletonClass.sharedInstance.dictProfile
+        let driverFullName = profile.object(forKey: "Fullname") as! String
+        let messageBody = "\(driverFullName) has invited you to become a \(appName) user"
+        let androidLink = "Android click \("")"
+ 
+        let iosLink = "iOS click \("https://goo.gl/L6XLqx")"
+        
+        let yourInviteCode = "Your invite code is: \(strReferralCode)"
+        let urlOfTick = "http://www.pickngo.lk/ https://www.facebook.com/PickNGoSrilanka/"
+        
+        let urlString = "\(messageBody) \n \(androidLink) \n \(iosLink) \n \(yourInviteCode) \n \(urlOfTick)" as String
+        return urlString
+    }
     
 }

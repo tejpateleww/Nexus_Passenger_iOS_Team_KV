@@ -25,7 +25,7 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -54,6 +54,8 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         super.didReceiveMemoryWarning()
         
     }
+    
+    
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         
@@ -176,37 +178,53 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         switch result {
         case MFMailComposeResult.cancelled:
             print("Mail cancelled")
-            UtilityClass.showAlert("", message: "Mail cancelled", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            }
         case MFMailComposeResult.saved:
             print("Mail saved")
-            UtilityClass.showAlert("", message: "Mail saved", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail saved") { (index, title) in
+            }
         case MFMailComposeResult.sent:
             print("Mail sent")
-            UtilityClass.showAlert("", message: "Mail sent", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+            }
         case MFMailComposeResult.failed:
             print("Mail sent failure: \(String(describing: error?.localizedDescription))")
-            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
+            }
         default:
-            UtilityClass.showAlert("", message: "Something went wrong", vc: self)
+        
+            UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+            }
             break
         }
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         //... handle sms screen actions
         switch result {
         case MessageComposeResult.cancelled:
             print("Mail cancelled")
-            UtilityClass.showAlert("", message: "Mail cancelled", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            }
         case MessageComposeResult.sent:
             print("Mail sent")
-            UtilityClass.showAlert("", message: "Mail sent", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+            }
         case MessageComposeResult.failed:
             print("Mail sent failure")
         //            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
         default:
-            UtilityClass.showAlert("", message: "Something went wrong", vc: self)
+//            UtilityClass.showAlert("", message: "Something went wrong", vc: self)
+            UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+            }
             break
         }
         self.dismiss(animated: true, completion: nil)
@@ -251,14 +269,18 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
             else {
                 print(result)
                 
+                
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }

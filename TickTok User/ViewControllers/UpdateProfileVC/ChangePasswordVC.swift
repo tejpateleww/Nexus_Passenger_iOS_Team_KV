@@ -12,6 +12,11 @@ import ACFloatingTextfield_Swift
 
 class ChangePasswordVC: UIViewController {
 
+    
+    //-------------------------------------------------------------
+    // MARK: - Base Methods
+    //-------------------------------------------------------------
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +28,12 @@ class ChangePasswordVC: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
     }
     
 
@@ -45,11 +56,13 @@ class ChangePasswordVC: UIViewController {
                 webserviceOfChangePassword()
             }
             else {
-                UtilityClass.showAlert("Missing", message: "Password should be minimum 8 characters.", vc: self)
+                UtilityClass.setCustomAlert(title: "Missing", message: "Password should be minimum 8 characters.") { (index, title) in
+            }
             }
         }
         else {
-             UtilityClass.showAlert("Password did not match", message: "Please re-enter password", vc: self)
+            UtilityClass.setCustomAlert(title: "Password did not match", message: "Please re-enter password") { (index, title) in
+            }
         }
         
     }
@@ -82,13 +95,21 @@ class ChangePasswordVC: UIViewController {
                 
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
                 
-                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
+                
+//                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
                 
                 self.navigationController?.popViewController(animated: true)
                 
             }
             else {
                  print(result)
+                
+//                UtilityClass.setCustomAlert(title: <#T##String#>, message: <#T##String#>, completionHandler: { (<#Int#>, <#String#>) in
+//                    <#code#>
+//                })
+                
             }
         }
         

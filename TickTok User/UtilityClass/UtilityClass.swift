@@ -8,11 +8,13 @@
 
 import UIKit
 import NVActivityIndicatorView
-
+import Alamofire
 
 typealias CompletionHandler = (_ success:Bool) -> Void
 
-class UtilityClass: NSObject {
+class UtilityClass: NSObject, alertViewMethodsDelegates {
+    
+    var delegateOfAlert : alertViewMethodsDelegates!
 
     class func showAlert(_ title: String, message: String, vc: UIViewController) -> Void
     {
@@ -23,9 +25,24 @@ class UtilityClass: NSObject {
         let cancelAction = UIAlertAction(title: "OK",
                                          style: .cancel, handler: nil)
         
+        
+        
         alert.addAction(cancelAction)
+        
+        if((UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.presentedViewController != nil)
+        {
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.dismiss(animated: true, completion: {
+//                vc.present(alert, animated: true, completion: nil)
+                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+            })
+        }
+        else {
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+        
+        
         //vc will be the view controller on which you will present your alert as you cannot use self because this method is static.
-        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+        
     }
     
     class func showAlertWithCompletion(_ title: String, message: String, vc: UIViewController,completionHandler: @escaping CompletionHandler) -> Void
@@ -38,27 +55,71 @@ class UtilityClass: NSObject {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
             completionHandler(true)
         }))
-        //vc will be the view controller on which you will present your alert as you cannot use self because this method is static.
-        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+        
+        if((UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.presentedViewController != nil)
+        {
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.dismiss(animated: true, completion: {
+                //                vc.present(alert, animated: true, completion: nil)
+                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+            })
+        }
+        else {
+            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
 
     }
     
     
-//    func showAlert(title: String, message: String, callback: @escaping () -> ()) {
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
-//        alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: {
-//            alertAction in
-//            callback()
-//        }))
-//
-////        self.present(alert, animated: true, completion: nil)
+    class func CustomAlertViewMethod(_ title: String, message: String, vc: UIViewController, completionHandler: @escaping CompletionHandler) -> Void {
+        
+        let next = vc.storyboard?.instantiateViewController(withIdentifier: "CustomAlertsViewController") as! CustomAlertsViewController
+        
+//        next.delegateOfAlertView = vc as! alertViewMethodsDelegates
+        next.strTitle = title
+        next.strMessage = message
+        
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(next, animated: false, completion: nil)
+        
+    }
+    
+    typealias alertCompletionBlockAJ = ((Int, String) -> Void)?
+    
+    class func setCustomAlert(title: String, message: String,completionHandler: alertCompletionBlockAJ) -> Void {
+       
+        AJAlertController.initialization().showAlertWithOkButton(aStrTitle: title, aStrMessage: message) { (index,title) in
+            
+            if index == 0 {
+                completionHandler!(0,title)
+                
+            }
+            else if index == 2 {
+                completionHandler!(2,title)
+                
+            }
+            
+        }
+        
+    }
+    
+    
+//    convenience init(title: String, message: String, buttons buttonArray: [Any], completion block: @escaping (_ buttonIndex: Int) -> Void) {
+//        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        for buttonTitle: String in buttonArray {
+//            let action = UIAlertAction(title: buttonTitle, style: .default, handler: {(_ action: UIAlertAction) -> Void in
+//                let index: Int = (buttonArray as NSArray).index(of: action.title ?? "")
+//                block(index)
+//            })
+//            alertController.addAction(action)
+//        }
+//        self.topMostController().present(alertController, animated: true) {() -> Void in }
 //    }
-
     
     class func showHUD()
     {
         let activityData = ActivityData()
+        
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        
     }
     
     class func hideHUD()
@@ -76,8 +137,9 @@ class UtilityClass: NSObject {
         
         progressView.hudBackgroundColor = .black
         
-        progressView.indicatorColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        progressView.indicatorColor = themeYellowColor
         //        progressView.shadowRadius = 0.5
+        
         
         progressView.showHUD()
         
@@ -99,6 +161,17 @@ extension UILabel {
                                           range: NSRange(location: 0, length: attributedString.length))
             attributedText = attributedString
         }
+    }
+}
+
+
+//-------------------------------------------------------------
+// MARK: - Internet Connection Check Methods
+//-------------------------------------------------------------
+
+class Connectivity {
+    class func isConnectedToInternet() ->Bool {
+        return NetworkReachabilityManager()!.isReachable
     }
 }
 

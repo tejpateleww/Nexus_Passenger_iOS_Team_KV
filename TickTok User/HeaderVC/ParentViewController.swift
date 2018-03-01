@@ -13,7 +13,12 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
     
 //    let socket = SocketIOClient(socketURL: URL(string: "http://54.206.55.185:8080")!, config: [.log(false), .compress])
     
+    let heightWithoutLabel : Int = 54
+    let heightWithoutLabelForX : Int = 114
     
+    
+    let heightWithLabel : Int = 94
+    let heightWithLabelForX : Int = 144
     @IBInspectable var showsBackButton: Bool = false
     @IBInspectable var showTitleLabelView : Bool = false
 //    @IBInspectable var hideSwitchButton: Bool = false
@@ -80,8 +85,12 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
     }
     func BackButtonClicked()     //  Back Button
     {
+
         if isModal() {
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: {
+                NotificationCenter.default.post(name: Notification.Name("CallToRating"), object: nil)
+
+            })
             
         }
         else {
@@ -132,17 +141,38 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
     // ------------------------------------------------------------
     
     func createHeaderView() {
+        
+        UIApplication.shared.statusBarView?.backgroundColor = UIColor.clear
+        
+         
+        
         let screenRect: CGRect = UIScreen.main.bounds
         let screenWidth: CGFloat = screenRect.size.width
         let hView = HeaderView.headerView(withDelegate: self)
         
-        var frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: screenWidth, height: CGFloat(44))
-        
+        var frame = CGRect(x: CGFloat(0), y: CGFloat(20), width: screenWidth, height: CGFloat(heightWithoutLabel))
         hView.bottomView.isHidden = !showTitleLabelView
         if (showTitleLabelView)
         {
-            frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: screenWidth, height: CGFloat(94))
+            frame = CGRect(x: CGFloat(0), y: CGFloat(20), width: screenWidth, height: CGFloat(heightWithLabel))
             hView.lblHeaderTitle.text = strHeaderTitle
+        }
+
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 2436:
+                frame = CGRect(x: CGFloat(0), y: CGFloat(-20), width: screenWidth, height: CGFloat(heightWithoutLabelForX))
+                hView.contraintLabelCentr.constant = 10
+
+                if (showTitleLabelView)
+                {
+                    frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: screenWidth, height: CGFloat(heightWithLabelForX))
+                    hView.lblHeaderTitle.text = strHeaderTitle
+                }
+            default:
+                print("unknown")
+            }
         }
         
         headerView?.lblTitle.isHidden = true

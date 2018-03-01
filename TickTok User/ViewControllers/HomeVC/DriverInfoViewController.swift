@@ -92,7 +92,9 @@ class DriverInfoViewController: UIViewController {
         let contactNumber = strPassengerMobileNumber
         
         if contactNumber == "" {
-            UtilityClass.showAlert("", message: "Contact number  is not available", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
+            }
         }
         else {
             callNumber(phoneNumber: contactNumber)
@@ -123,9 +125,14 @@ class DriverInfoViewController: UIViewController {
         lblPickupLocation.text = strPickupLocation
         lblDropoffLocation.text = strDropoffLocation
         lblDriverName.text = strDriverName
-        
        
-        lblCarClassModel.text = carClass(strClass: strCarClass)
+        if strCarClass.count == 1 {
+            lblCarClassModel.text = carClass(strClass: strCarClass)
+        }
+        else {
+            lblCarClassModel.text = strCarClass
+        }
+        
       
         
     }
@@ -134,7 +141,9 @@ class DriverInfoViewController: UIViewController {
         let contactNumber = strPassengerMobileNumber
         
         if contactNumber == "" {
-            UtilityClass.showAlert("", message: "Contact number  is not available", vc: self)
+    
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
+            }
         }
         else {
             callNumber(phoneNumber: contactNumber)
@@ -157,27 +166,27 @@ class DriverInfoViewController: UIViewController {
         
         switch strClass {
         case "1":
-            return "Business Class"
+            return "Premium"
         case "2":
-            return "Disability"
+            return "Mini Car"
         case "3":
-            return "Taxi"
+            return "VAN"
         case "4":
-            return "First Class"
+            return "Nano"
         case "5":
-            return "LUX-VAN"
+            return "Tuk Tuk"
         case "6":
-            return "Economy"
-        case "9":
-            return "Bicycle"
-        case "10":
-            return "Motorbike"
-        case "11":
-            return "Car Delivery"
-        case "12":
-            return "Van / Trays"
-        case "13":
-            return "3T truck"
+            return "Breakdown Services"
+        case "7":
+            return "Bus"
+//        case "8":
+//            return "Motorbike"
+//        case "9":
+//            return "Car Delivery"
+//        case "10":
+//            return "Van / Trays"
+//        case "11":
+//            return "3T truck"
         default:
             return ""
         }

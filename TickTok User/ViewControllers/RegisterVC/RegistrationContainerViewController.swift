@@ -18,13 +18,23 @@ class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollObject.delegate = self
-
-        // Do any additional setup after loading the view.
+  
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+//        UIApplication.shared.isStatusBarHidden = true
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+   
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
     }
     
     @IBAction func btnBack(_ sender: Any) {
@@ -33,16 +43,18 @@ class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate
 //        self.pageControl.set(progress: Int(0), animated: true)
         let currentPage = self.scrollObject.contentOffset.x / self.scrollObject.frame.size.width
 
-         if (currentPage == 0)
-         {
+        if (currentPage == 0)
+        {
               self.navigationController?.popViewController(animated: true)
         }
+        else if (currentPage == 1){
+            self.scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+            self.pageControl.set(progress: 0, animated: true)
+        }
         else
-         {
-        
-        self.scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-        self.pageControl.set(progress: 0, animated: true)
-       
+        {
+            self.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
+            self.pageControl.set(progress: 0, animated: true)
         }
 
     }

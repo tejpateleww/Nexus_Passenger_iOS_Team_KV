@@ -1,7 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" systemVersion="17A277" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -13,7 +18,38 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyE-hB-rV5">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgBackground" translatesAutoresizingMaskIntoConstraints="NO" id="mz5-nM-SMl">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconNewLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pEP-sf-6UP">
+                                        <rect key="frame" x="112" y="258.5" width="150" height="150"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="pEP-sf-6UP" secondAttribute="height" multiplier="1:1" id="qvU-bC-mUC"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="mz5-nM-SMl" secondAttribute="bottom" id="6U0-zs-azC"/>
+                                    <constraint firstItem="pEP-sf-6UP" firstAttribute="centerX" secondItem="pyE-hB-rV5" secondAttribute="centerX" id="F3f-le-7bq"/>
+                                    <constraint firstItem="pEP-sf-6UP" firstAttribute="centerY" secondItem="pyE-hB-rV5" secondAttribute="centerY" id="IVj-Bn-t8Q"/>
+                                    <constraint firstItem="mz5-nM-SMl" firstAttribute="top" secondItem="pyE-hB-rV5" secondAttribute="top" id="R24-wi-Jby"/>
+                                    <constraint firstItem="mz5-nM-SMl" firstAttribute="leading" secondItem="pyE-hB-rV5" secondAttribute="leading" id="UgL-oR-FJb"/>
+                                    <constraint firstAttribute="trailing" secondItem="mz5-nM-SMl" secondAttribute="trailing" id="ZaK-E2-BW2"/>
+                                </constraints>
+                            </view>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pyE-hB-rV5" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="2th-J6-Pw7"/>
+                            <constraint firstItem="pyE-hB-rV5" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cfK-g9-lAk"/>
+                            <constraint firstAttribute="bottom" secondItem="pyE-hB-rV5" secondAttribute="bottom" id="f5V-rA-zrH"/>
+                            <constraint firstItem="pyE-hB-rV5" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="zq6-vE-04S"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                 </viewController>
@@ -22,4 +58,8 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="iconNewLogo" width="150" height="150"/>
+        <image name="imgBackground" width="384" height="682"/>
+    </resources>
 </document>

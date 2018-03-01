@@ -28,6 +28,7 @@ public extension SideMenuController {
         case fadeAnimation
         case horizontalPan
         case showUnderlay
+        case none
         
         var statusBarAnimation: UIStatusBarAnimation {
             switch self {
@@ -35,6 +36,8 @@ public extension SideMenuController {
                 return .fade
             case .slideAnimation:
                 return .slide
+            case .none:
+                return .none
             default:
                 return .none
             }

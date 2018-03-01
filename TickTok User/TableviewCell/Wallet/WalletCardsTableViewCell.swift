@@ -39,11 +39,14 @@ class WalletCardsTableViewCell: UITableViewCell {
     @IBOutlet weak var lblCardNumber: UILabel!
     
     @IBOutlet weak var imgCard: UIImageView!
+    @IBOutlet weak var lblMonthExpiry: UILabel!
+    @IBOutlet weak var lblYearExpiry: UILabel!
     
     // Section 1
     
     @IBOutlet weak var lblAddCard: UILabel!
     
+    @IBOutlet weak var btnArrow: UIImageView!
     
     
 }

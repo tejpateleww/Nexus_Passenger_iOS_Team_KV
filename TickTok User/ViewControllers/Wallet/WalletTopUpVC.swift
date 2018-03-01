@@ -43,6 +43,12 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
@@ -70,10 +76,14 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
     @IBAction func btnAddFunds(_ sender: UIButton) {
         
         if strCardId == "" {
-            UtilityClass.showAlert("", message: "Please reselect card", vc: self)
+ 
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please reselect card") { (index, title) in
+            }
         }
         else if txtAmount.text == "" {
-            UtilityClass.showAlert("", message: "Please Enter Amount", vc: self)
+     
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Amount") { (index, title) in
+            }
         }
         else {
             webserviceOFTopUp()
@@ -91,7 +101,13 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
             let unfiltered1 = amountString   //  "!   !! yuahl! !"
             
             // Array of Characters to remove
-            let removal1: [Character] = ["$"," "]    // ["!"," "]
+            
+            let spaceAdd = " "
+        
+            let insertCurrencySymboleInString = "\(currencySign),\(spaceAdd)"
+            let insertcurrencySymboleInCharacter = [Character](insertCurrencySymboleInString)
+            
+            let removal1: [Character] = insertcurrencySymboleInCharacter    // ["!"," "]
             
             // turn the string into an Array
             let unfilteredCharacters1 = unfiltered1.characters
@@ -110,13 +126,18 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
             txtAmount.text = String(unfiltered1.characters.filter { !removal1.contains($0) })
             
             
+            let space = " "
+            let comma = " "
+            let currencySymboleInString = "\(currencySign),\(comma),\(space)"
+            let currencySymboleInCharacter = [Character](currencySymboleInString)
+            
             
             // ----------------------------------------------------------------------
             // ----------------------------------------------------------------------
             let unfiltered = amountString   //  "!   !! yuahl! !"
             
             // Array of Characters to remove
-            let removal: [Character] = ["$",","," "]    // ["!"," "]
+            let removal: [Character] = currencySymboleInCharacter    // ["!"," "]
             
             // turn the string into an Array
             let unfilteredCharacters = unfiltered.characters
@@ -178,7 +199,9 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
                 
                 self.txtAmount.text = ""
                 
-                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                UtilityClass.setCustomAlert(title: "Done", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                }
+                
                 
                 SingletonClass.sharedInstance.strCurrentBalance = ((result as! NSDictionary).object(forKey: "walletBalance") as AnyObject).doubleValue
                 
@@ -189,13 +212,16 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
                 self.txtAmount.text = ""
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                
             }

@@ -59,6 +59,8 @@ public struct Validation {
 
         return valid
     }
+    
+   
 }
 
 extension CharacterSet {

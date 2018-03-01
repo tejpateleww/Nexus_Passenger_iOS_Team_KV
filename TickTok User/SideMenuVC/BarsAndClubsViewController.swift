@@ -96,10 +96,10 @@ class BarsAndClubsViewController: ParentViewController, UITableViewDataSource, U
                 
                 let km = (distanceInMeters / 1000)
                 
-                cell.lblDistanceKM.text = "\(km.rounded(toPlaces: 2)) KM"
+                cell.lblDistanceKM.text = "\(km.rounded(toPlaces: 2)) km"
             }
             else {
-                cell.lblDistanceKM.text = "\(distanceInMeters.rounded(toPlaces: 2)) M"
+                cell.lblDistanceKM.text = "\(distanceInMeters.rounded(toPlaces: 2)) m"
             }
             
         }
@@ -130,14 +130,81 @@ class BarsAndClubsViewController: ParentViewController, UITableViewDataSource, U
         
         let BookCarNow = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Book Car Now") { (action , indexPath ) -> Void in
             
-            self.isEditing = false
             print("Book Car Now")
+            
+            let params = self.aryBarsAndClubs[indexPath.row]
+            
+            var dictParam = [String:AnyObject]()
+            
+            if let address = params["vicinity"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            else if let address = params["formatted_address"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+
+            if let geometry = params["geometry"] as? NSDictionary {
+                
+                if let locat = geometry.object(forKey: "location") as? NSDictionary {
+                    if let lati = locat.object(forKey: "lat") as? Double {
+                        
+                        dictParam["lat"] = lati as AnyObject
+                    }
+                    if let longi = locat.object(forKey: "lng") as? Double {
+                        
+                        dictParam["lng"] = longi as AnyObject
+                    }
+                }
+            }
+            
+            NotificationCenter.default.post(name: NotificationBookNow, object: nil, userInfo: dictParam)
+            
+            for controller in self.navigationController!.viewControllers as Array {
+                if controller.isKind(of: CustomSideMenuViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
+            }
+
         }
-        
         
         let BookCarLater = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Book Car Later") { (action , indexPath) -> Void in
             self.isEditing = false
             print("Book Car Later")
+            
+            let params = self.aryBarsAndClubs[indexPath.row]
+            var dictParam = [String:AnyObject]()
+            
+            if let address = params["vicinity"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            else if let address = params["formatted_address"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            
+            if let geometry = params["geometry"] as? NSDictionary {
+                if let locat = geometry.object(forKey: "location") as? NSDictionary {
+                    if let lati = locat.object(forKey: "lat") as? Double {
+                        
+                        dictParam["lat"] = lati as AnyObject
+                    }
+                    if let longi = locat.object(forKey: "lng") as? Double {
+                        
+                        dictParam["lng"] = longi as AnyObject
+                    }
+                }
+            }
+            
+            NotificationCenter.default.post(name: NotificationBookLater, object: nil, userInfo: dictParam)
+            
+            SingletonClass.sharedInstance.isFromNotificationBookLater = true
+            for controller in self.navigationController!.viewControllers as Array {
+                if controller.isKind(of: CustomSideMenuViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
+            }
+            
         }
         
         BookCarLater.backgroundColor = UIColor.black
@@ -157,7 +224,10 @@ class BarsAndClubsViewController: ParentViewController, UITableViewDataSource, U
         
        
         if SingletonClass.sharedInstance.currentLatitude == "" || SingletonClass.sharedInstance.currentLongitude == "" {
-            UtilityClass.showAlert("", message: "Your Current Location Not Found", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Location Not Found", message: "Your Current Location Not Found") { (index, title) in
+            }
+            
         }
         else {
             let creentLocation = "\(SingletonClass.sharedInstance.currentLatitude),\(SingletonClass.sharedInstance.currentLongitude)"
@@ -181,6 +251,57 @@ class BarsAndClubsViewController: ParentViewController, UITableViewDataSource, U
         
     }
     
+    //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
+    
+    func pickingToBookNow() {
+        
+    }
+    
+    func pickingToBookLater() {
+        
+    }
+/*
+    func data() {
+        ["geometry": {
+            location =     {
+                lat = "23.046417";
+                lng = "72.53102539999999";
+            };
+            viewport =     {
+                northeast =         {
+                    lat = "23.0477659802915";
+                    lng = "72.5323743802915";
+                };
+                southwest =         {
+                    lat = "23.0450680197085";
+                    lng = "72.52967641970848";
+                };
+            };
+            }, "icon": https://maps.gstatic.com/mapfiles/place_api/icons/school-71.png, "reference": CmRSAAAARG3Vmw7wafb6Y-iDO2dZvc2nGwpnkU2PFhr2RYj1Z97l_jvqI6AiwSFDeJHTR9Wdk-0Q_-edUJqk3pSofdZmb4RzOJAiWCCJ6Y-7R3_XtGdSofwSO_f-bnmhQ_fElVffEhANPO7ka4NQi5bvJF-1IkeyGhQdMGa_d9A1C2ra3UeswMwG_qZ_yA, "name": Kush Banker, "id": e7a5484c2a21983f7a669a7983c0ba98fab182b1, "types": <__NSArrayI 0x107be5f90>(
+            night_club,
+            bar,
+            point_of_interest,
+            establishment
+            )
+            , "place_id": ChIJ-f3F5q-EXjkRVDMmIH9Kk_E, "rating": 4.7, "scope": GOOGLE, "opening_hours": {
+                "open_now" = 1;
+                "weekday_text" =     (
+                );
+            }, "vicinity": Drive In Road, Nilmani Society, Gurukul, Ahmedabad, "photos": <__NSSingleObjectArrayI 0x10f605300>(
+            {
+            height = 3456;
+            "html_attributions" =     (
+            "<a href=\"https://maps.google.com/maps/contrib/111277320969678676825/photos\">Kush Banker Dance Classes and Academy</a>"
+            );
+            "photo_reference" = "CmRaAAAAZOqBgV_Mf341YpJGi4Tv77mq93aYrbHSNxmU6K_1Imgw8fESNo-cme7UCbxzWroDz3SnG0cuF-b_IN0_4fut94T0H_xVgjSPy5-dZvxa01Gdiqc0iEVqUDA-ntpUrVe3EhDapvHrPj5NOpBWoZkGH3hVGhR3MS15_MoVxQSYj9oKd2P36mlL3A";
+            width = 5184;
+            }
+            )
+        ]
+    }
+  */
     
 }
 

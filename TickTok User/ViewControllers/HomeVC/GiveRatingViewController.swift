@@ -8,13 +8,17 @@
 
 import UIKit
 
-class GiveRatingViewController: UIViewController {
+class GiveRatingViewController: UIViewController, FloatRatingViewDelegate {
 
+    
+    var ProfileData = NSDictionary()
+    
+   
     
     var ratingToDriver = Float()
     var commentToDriver = String()
     var strBookingType = String()
-    var delegate: CompleterTripInfoDelegate!
+//    var delegate: CompleterTripInfoDelegate!
     
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -22,12 +26,19 @@ class GiveRatingViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        giveRating.delegate = self
+        
+        ProfileData = SingletonClass.sharedInstance.dictDriverProfile
+//        ProfileData.object(forKey: "Fullname") as? String
 
+        lblMessageToShow.text = "How was your experience with \(ProfileData.object(forKey: "Fullname")!)"
+        
         viewSubFinalRating.layer.cornerRadius = 5
         viewSubFinalRating.layer.masksToBounds = true
         
-        btnSubmit.layer.cornerRadius = 5
-        btnSubmit.layer.masksToBounds = true
+//        btnSubmit.layer.cornerRadius = 5
+//        btnSubmit.layer.masksToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,6 +58,7 @@ class GiveRatingViewController: UIViewController {
     @IBOutlet weak var giveRating: FloatRatingView!
     @IBOutlet weak var btnSubmit: UIButton!
     
+    @IBOutlet weak var lblMessageToShow: UILabel!
     
     //-------------------------------------------------------------
     // MARK: - Custom Methods
@@ -91,22 +103,28 @@ class GiveRatingViewController: UIViewController {
                 
                 //                self.completeTripInfo()
                 
-                self.delegate.didRatingCompleted()
+//                self.delegate.didRatingCompleted()
+                
+                
+                NotificationCenter.default.removeObserver("CallToRating")
                 
                 self.dismiss(animated: true, completion: nil)
                 
             }
             else {
                 print(result)
-                
+              
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }

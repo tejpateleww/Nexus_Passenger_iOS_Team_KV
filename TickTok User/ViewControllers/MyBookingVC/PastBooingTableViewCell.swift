@@ -32,30 +32,52 @@ class PastBooingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDriverName: UILabel!
     @IBOutlet weak var lblBookingID: UILabel!
     
-    @IBOutlet weak var lblDropoffAddress: UILabel!
+
+    @IBOutlet weak var lblDropoffAddress: UILabel!  // DropOff Address is PickupAddress
+    
+
     @IBOutlet weak var lblDateAndTime: UILabel!
     
-    @IBOutlet weak var lblPickupAddress: UILabel!
+
+    @IBOutlet weak var lblPickupAddress: UILabel! // Pickup Address is PickupAddress
     
+    @IBOutlet weak var stackViewPickupTime: UIStackView!
     @IBOutlet weak var lblPickupTime: UILabel!
+
+    @IBOutlet weak var stackViewDropoffTime: UIStackView!
     @IBOutlet weak var lblDropoffTime: UILabel!
     
+    @IBOutlet weak var stackViewVehicleType: UIStackView!
     @IBOutlet weak var lblVehicleType: UILabel!
     
+    @IBOutlet weak var stackViewDistanceTravelled: UIStackView!
     @IBOutlet weak var lblDistanceTravelled: UILabel!
+    
+    @IBOutlet weak var stackViewTripFare: UIStackView!
     @IBOutlet weak var lblTripFare: UILabel!
     
+    @IBOutlet weak var stackViewNightFare: UIStackView!
     @IBOutlet weak var lblNightFare: UILabel!
+    
+    @IBOutlet weak var stackViewTollFee: UIStackView!
     @IBOutlet weak var lblTollFee: UILabel!
     
+    @IBOutlet weak var stackViewWaitingCost: UIStackView!
     @IBOutlet weak var lblWaitingCost: UILabel!
     
+    @IBOutlet weak var stackViewBookingCharge: UIStackView!
     @IBOutlet weak var lblBookingCharge: UILabel!
     
+    @IBOutlet weak var stackViewTax: UIStackView!
     @IBOutlet weak var lblTax: UILabel!
+    
+    @IBOutlet weak var stackViewDiscount: UIStackView!
     @IBOutlet weak var lblDiscount: UILabel!
     
+    @IBOutlet weak var stackViewPaymentType: UIStackView!
     @IBOutlet weak var lblPaymentType: UILabel!
+    
+    @IBOutlet weak var stackViewTotalCost: UIStackView!
     @IBOutlet weak var lblTotalCost: UILabel!
    
 }

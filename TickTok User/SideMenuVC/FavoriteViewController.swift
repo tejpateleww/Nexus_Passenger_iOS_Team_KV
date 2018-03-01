@@ -28,6 +28,9 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
+         
+         
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -184,13 +187,16 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -211,26 +217,33 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Deleted Record", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Deleted Record", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Deleted Record", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
+                
             }
             
         }

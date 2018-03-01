@@ -18,16 +18,16 @@ class WalletViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        viewTop.layer.cornerRadius = 5
-        viewTop.layer.masksToBounds = true
- 
-        viewOptions.layer.cornerRadius = 5
-        viewOptions.layer.masksToBounds = true
+//        viewTop.layer.cornerRadius = 5
+//        viewTop.layer.masksToBounds = true
+//
+//        viewOptions.layer.cornerRadius = 5
+//        viewOptions.layer.masksToBounds = true
         
-        scrollObj.delegate = self
-        scrollObj.isScrollEnabled = false
+//        scrollObj.delegate = self
+//        scrollObj.isScrollEnabled = false
         
-        bPaySelected()
+//        bPaySelected()
         
         webserviceOfTransactionHistory()
 
@@ -48,9 +48,9 @@ class WalletViewController: UIViewController, UIScrollViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-         bPaySelected()
+//         bPaySelected()
         
-        self.lblCurrentBalance.text = "$\(SingletonClass.sharedInstance.strCurrentBalance)"
+        self.lblCurrentBalance.text = "Balance: \(currencySign) \(SingletonClass.sharedInstance.strCurrentBalance)"
         
     }
     
@@ -122,21 +122,21 @@ class WalletViewController: UIViewController, UIScrollViewDelegate {
     
     @IBAction func btnBpay(_ sender: UIButton) {
         
-        bPaySelected()
+//        bPaySelected()
         
         
     }
     
     @IBAction func btnTravel(_ sender: UIButton) {
         
-        travelSelected()
+//        travelSelected()
         
         
     }
     
     @IBAction func btnEntertainment(_ sender: UIButton) {
         
-        entertainmentSelected()
+//        entertainmentSelected()
         
        
     }
@@ -193,7 +193,7 @@ class WalletViewController: UIViewController, UIScrollViewDelegate {
                 print(result)
                 
                 SingletonClass.sharedInstance.strCurrentBalance = ((result as! NSDictionary).object(forKey: "walletBalance") as AnyObject).doubleValue
-                self.lblCurrentBalance.text = "$\(SingletonClass.sharedInstance.strCurrentBalance)"
+                self.lblCurrentBalance.text = "Balance: \(currencySign) \(SingletonClass.sharedInstance.strCurrentBalance)"
 
                 
                 SingletonClass.sharedInstance.walletHistoryData = (result as! NSDictionary).object(forKey: "history") as! [[String:AnyObject]]
@@ -205,13 +205,16 @@ class WalletViewController: UIViewController, UIScrollViewDelegate {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: (resDict).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: ((resAry).object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 
             }
@@ -317,10 +320,47 @@ class TravelVC: UIViewController {
     
     @IBAction func btnAction(_ sender: UIButton) {
         
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "CommingSoonViewController") as! CommingSoonViewController
+        self.navigationController?.pushViewController(next, animated: true)
+        
+        /*
+        switch sender.tag {
+        case 1:
+            showWebSite(strHeager: "TRAIN", strURL: "http://www.metrotrains.com.au/")
+            
+        case 2:
+             showWebSite(strHeager: "BUS", strURL: "https://www.ptv.vic.gov.au/projects/buses")
+            
+        case 3:
+            showWebSite(strHeager: "TRAM", strURL: "https://www.ptv.vic.gov.au/getting-around/maps/metropolitan-trams/")
+            
+        case 4:
+            showWebSite(strHeager: "VLINE", strURL: "https://www.vline.com.au/")
+            
+        case 5:
+            showWebSite(strHeager: "FERRY", strURL: "https://www.ptv.vic.gov.au/getting-around/ferries/")
+            
+        case 6:
+            showWebSite(strHeager: "FLIGHT", strURL: "https://www.virginaustralia.com/au/en/bookings/flights/make-a-booking/")
+            
+        default: break
+            
+        }
+       */
+       
+        
 //        let next = self.storyboard?.instantiateViewController(withIdentifier: "webViewVC") as! webViewVC
 //        self.navigationController?.pushViewController(next, animated: true)
     }
     
+    
+    func showWebSite(strHeager: String, strURL: String) {
+        
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "webViewVC") as! webViewVC
+        next.headerName = strHeager
+        next.strURL = strURL
+        self.navigationController?.present(next, animated: true, completion: nil)
+    }
     
 }
 
@@ -351,9 +391,42 @@ class EntertainmentVC: UIViewController {
     //-------------------------------------------------------------
    
     @IBAction func btnActions(_ sender: UIButton) {
+
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "CommingSoonViewController") as! CommingSoonViewController
+        self.navigationController?.pushViewController(next, animated: true)
         
-//        let next = self.storyboard?.instantiateViewController(withIdentifier: "webViewVC") as! webViewVC
-//        self.navigationController?.pushViewController(next, animated: true)
+        /*
+        switch sender.tag {
+        case 11:
+            showWebSite(strHeager: "MOVIE", strURL: "https://www.hoyts.com.au/")
+            
+        case 12:
+            showWebSite(strHeager: "GROCERIES", strURL: "https://www.coles.com.au/")
+            
+        case 13:
+            showWebSite(strHeager: "RETAILS", strURL: "https://www.chadstone.com.au/")
+            
+        case 14:
+            showWebSite(strHeager: "DISCOUNT", strURL: "https://www.chadstone.com.au/whats-on")
+            
+        case 15:
+            showWebSite(strHeager: "GIFT CARD", strURL: "https://www.chadstone.com.au/services-facilities/services/gift-card")
+            
+        case 16:
+            showWebSite(strHeager: "FESTIVAL", strURL: "https://www.festival.melbourne/2017/")
+            
+        default: break
+            
+        }
+        */
+    }
+    
+    func showWebSite(strHeager: String, strURL: String) {
+        
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "webViewVC") as! webViewVC
+        next.headerName = strHeager
+        next.strURL = strURL
+        self.navigationController?.present(next, animated: true, completion: nil)
     }
     
     

@@ -213,3 +213,65 @@ func Accept Request by Driver()
 }
 
 */
+/*
+(
+    {
+        AbovePerKmCharge = "1.85";
+        BaseFare = 20;
+        BelowAndAboveKmLimit = 21;
+        BelowPerKmCharge = "1.90";
+        BookingFee = 2;
+        CancellationFee = 10;
+        Capacity = 4;
+        CategoryId = 1;
+        Description = "Caprice, Genesis, Lexus, Mercedes E, BMW 5 Series, VW Touareg, Audi A6, Chrysler 300C. etc";
+        Id = 1;
+        Image = "http://54.206.55.185/web/images/model/BUSINESS_12.png";
+        Lat = "23.072664";
+        Lng = "72.516199";
+        MinKm = 3;
+        MinuteFare = "0.45";
+        Name = "Business Class";
+        NightCharge = 10;
+        NightChargeApplicable = 1;
+        NightTimeFrom = "23:00:00";
+        NightTimeTo = "05:00:00";
+        Sort = 2;
+        SpecialEventSurcharge = 5;
+        SpecialEventTimeFrom = "18:00:00";
+        SpecialEventTimeTo = "23:59:59";
+        Status = 1;
+        WaitingTimePerMinuteCharge = 1;
+        carCount = 2;
+},
+    {
+        AbovePerKmCharge = "2.75";
+        BaseFare = "20.2";
+        BelowAndAboveKmLimit = 25;
+        BelowPerKmCharge = "2.75";
+        BookingFee = 2;
+        CancellationFee = 10;
+        Capacity = 12;
+        CategoryId = 1;
+        Description = "(fitted with wheelchair access)";
+        Id = 2;
+        Image = "http://54.206.55.185/web/images/model/DISABILITY_15.png";
+        Lat = "23.072664";
+        Lng = "72.516199";
+        MinKm = 1;
+        MinuteFare = "0.92";
+        Name = Disability;
+        NightCharge = "11.22";
+        NightChargeApplicable = 1;
+        NightTimeFrom = "17:00:00";
+        NightTimeTo = "09:00:00";
+        Sort = 6;
+        SpecialEventSurcharge = "3.75";
+        SpecialEventTimeFrom = "18:00:00";
+        SpecialEventTimeTo = "23:59:59";
+        Status = 1;
+        WaitingTimePerMinuteCharge = 1;
+        carCount = 1;
+}
+)
+ */

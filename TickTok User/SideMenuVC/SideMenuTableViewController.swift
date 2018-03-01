@@ -8,8 +8,14 @@
 
 import UIKit
 
-class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate {
+protocol delegateForTiCKPayVerifyStatus {
+    
+    func didRegisterCompleted()
+}
+
+class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITableViewDelegate, delegateForTiCKPayVerifyStatus {
   
+    @IBOutlet weak var tableView: UITableView!
     
     var ProfileData = NSDictionary()
     
@@ -23,6 +29,10 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        giveGradientColor()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.SetRating), name: NSNotification.Name(rawValue: "rating"), object: nil)
+
         webserviceOfTickPayStatus()
         
         ProfileData = SingletonClass.sharedInstance.dictProfile
@@ -30,9 +40,11 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
-        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconPay","iconFavourites","iconMyreceipts","iconInviteFriends","iconBars&Club","iconHotelReservation","iconBookaTable","iconShopping","iconLogOut"]
+
         
-        arrMenuTitle = ["My Booking","Payment Options","Wallet","Pay","Favourites","My Receipts","Invite Friends","Bars & Clubs", "Hotel Reservations", "Book a Table", "Shopping","LogOut"]
+        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconStarOfSideMenu","iconMyreceipts","iconInviteFriends","iconSettings","iconMyBooking","iconLogOut"]
+        
+        arrMenuTitle = ["My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","Become a \(appName) Driver","LogOut"]
         
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -42,6 +54,42 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        giveGradientColor()
+        
+//        UIApplication.shared.isStatusBarHidden = true
+//        UIApplication.shared.statusBarStyle = .lightContent
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//
+//
+    }
+    
+    
+    @objc func SetRating() {
+        
+        
+        self.tableView.reloadData()
+    }
+    
+    func giveGradientColor() {
+        
+        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
+        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor
+        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
+        gradientLayer.locations = [ 0.0, 0.5, 1.0]
+        gradientLayer.frame = self.view.bounds
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
     }
 
     // MARK: - Table view data source
@@ -72,11 +120,14 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             
             cellHeader.imgProfile.layer.cornerRadius = cellHeader.imgProfile.frame.width / 2
              cellHeader.imgProfile.layer.borderWidth = 1.0
-             cellHeader.imgProfile.layer.borderColor = UIColor.red.cgColor
+             cellHeader.imgProfile.layer.borderColor = UIColor.white.cgColor
             cellHeader.imgProfile.layer.masksToBounds = true
             
             cellHeader.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
             cellHeader.lblName.text = ProfileData.object(forKey: "Fullname") as? String
+            
+            cellHeader.lblMobileNumber.text = ProfileData.object(forKey: "MobileNo") as? String
+            cellHeader.lblRating.text = SingletonClass.sharedInstance.passengerRating
 
             return cellHeader
         }
@@ -102,12 +153,14 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         
         if indexPath.section == 0 {
             
+//            let next = self.storyboard?.instantiateViewController(withIdentifier: "CommingSoonViewController") as! CommingSoonViewController
+//            self.navigationController?.pushViewController(next, animated: true)
+            
             let next = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
             self.navigationController?.pushViewController(next, animated: true)
 
         }
-        
-        if (indexPath.section == 1)
+        else if (indexPath.section == 1)
         {
             if indexPath.row == 0
             {
@@ -121,14 +174,14 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             
             if indexPath.row == 1 {
                 
-                if SingletonClass.sharedInstance.setPasscode == "" {
-                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-                else {
-                
-                    if (SingletonClass.sharedInstance.passwordFirstTime) {
-                    
+//                if SingletonClass.sharedInstance.setPasscode == "" {
+//                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+//                }
+//                else {
+//
+//                    if (SingletonClass.sharedInstance.passwordFirstTime) {
+//
                         if SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0 {
                             let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
                             self.navigationController?.pushViewController(next, animated: true)
@@ -137,107 +190,78 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                             let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletCardsVC") as! WalletCardsVC
                             self.navigationController?.pushViewController(next, animated: true)
                         }
-                    }
-                    else {
-                        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
-                        self.navigationController?.pushViewController(viewController, animated: true)
-                        
-                    }
-                }
+//                    }
+//                    else {
+//                        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
+//                        self.navigationController?.pushViewController(viewController, animated: true)
+//
+//                    }
+//                }
                 
             }
             else if indexPath.row == 2 {
                 
-                if SingletonClass.sharedInstance.setPasscode == "" {
-                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
-                    viewController.strStatusToNavigate = "Wallet"
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-                else {
-                
-                    if (SingletonClass.sharedInstance.passwordFirstTime) {
+                if (SingletonClass.sharedInstance.isPasscodeON) {
                     
-                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as! WalletViewController
-                        self.navigationController?.pushViewController(next, animated: true)
-                        
-                    }
-                    else {
-                        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
+                    if SingletonClass.sharedInstance.setPasscode == "" {
+                        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
                         viewController.strStatusToNavigate = "Wallet"
                         self.navigationController?.pushViewController(viewController, animated: true)
-                        
-                    }
-                }
-            }
-            else if indexPath.row == 3 {
-                
-                if SingletonClass.sharedInstance.setPasscode == "" {
-                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
-                    
-                    viewController.strStatusToNavigate = "\(self.varifyKey)"
-                    self.navigationController?.pushViewController(viewController, animated: true)
-                }
-                else {
-                
-                    if (SingletonClass.sharedInstance.passwordFirstTime) {
-                        
-                        if self.varifyKey == 0 {
-                            let next = self.storyboard?.instantiateViewController(withIdentifier: "TickPayRegistrationViewController") as! TickPayRegistrationViewController
-                            self.navigationController?.pushViewController(next, animated: true)
-                        }
-                            
-                        else if self.varifyKey == 1 {
-                            let next = self.storyboard?.instantiateViewController(withIdentifier: "TiCKPayNeedToVarifyViewController") as! TiCKPayNeedToVarifyViewController
-                            self.navigationController?.pushViewController(next, animated: true)
-                        }
-                            
-                        else if self.varifyKey == 2 {
-                            let next = self.storyboard?.instantiateViewController(withIdentifier: "PayViewController") as! PayViewController
-                            self.navigationController?.pushViewController(next, animated: true)
-                        }
                     }
                     else {
-                        let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
                         
-                        viewController.strStatusToNavigate = "\(self.varifyKey)"
-                        self.navigationController?.pushViewController(viewController, animated: true)
-                    
+//                        if (SingletonClass.sharedInstance.passwordFirstTime) {
+//
+//                            let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as! WalletViewController
+//                            self.navigationController?.pushViewController(next, animated: true)
+//
+//                        }
+//                        else {
+                            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
+                            viewController.strStatusToNavigate = "Wallet"
+                            self.navigationController?.pushViewController(viewController, animated: true)
+                            
+//                        }
                     }
+                }
+                else {
+                    let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as! WalletViewController
+                    self.navigationController?.pushViewController(next, animated: true)
                 }
                 
             }
-            else if indexPath.row == 4 {
+            else if indexPath.row == 3 {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
                 
-                let homeVC = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).childViewControllers[0] as! HomeViewController
+//                let homeVC = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).childViewControllers[0] as! HomeViewController
+                var homeVC : HomeViewController!
+                for controller in self.navigationController!.viewControllers as Array {
+                    if controller.isKind(of: CustomSideMenuViewController.self) {
+                        
+                        homeVC = (controller.childViewControllers[0] as! UINavigationController).childViewControllers[0] as! HomeViewController
+                        self.navigationController!.popToViewController(controller, animated: true)
+                        break
+                    }
+                }
                 
-                next.delegateForFavourite = homeVC.self
+                next.delegateForFavourite = homeVC.self as? FavouriteLocationDelegate!
                 
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 5 {
+            else if indexPath.row == 4 {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "MyReceiptsViewController") as! MyReceiptsViewController
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 6 {
+            else if indexPath.row == 5 {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "InviteDriverViewController") as! InviteDriverViewController
                 self.navigationController?.pushViewController(next, animated: true)
             }
+            else if indexPath.row == 6 {
+                let next = self.storyboard?.instantiateViewController(withIdentifier: "SettingPasscodeVC") as! SettingPasscodeVC
+                self.navigationController?.pushViewController(next, animated: true)
+            }
             else if indexPath.row == 7 {
-                let next = self.storyboard?.instantiateViewController(withIdentifier: "BarsAndClubsViewController") as! BarsAndClubsViewController
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-            else if indexPath.row == 8 {
-                let next = self.storyboard?.instantiateViewController(withIdentifier: "HotelReservationViewController") as! HotelReservationViewController
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-            else if indexPath.row == 9 {
-                let next = self.storyboard?.instantiateViewController(withIdentifier: "BookTableViewController") as! BookTableViewController
-                self.navigationController?.pushViewController(next, animated: true)
-            }
-            else if indexPath.row == 10 {
-                let next = self.storyboard?.instantiateViewController(withIdentifier: "ShoppingViewController") as! ShoppingViewController
-                self.navigationController?.pushViewController(next, animated: true)
+                UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
             }
             
             
@@ -245,12 +269,21 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             {
                 self.performSegue(withIdentifier: "unwindToContainerVC", sender: self)
                 UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+                
+                UserDefaults.standard.removeObject(forKey: "Passcode")
+                SingletonClass.sharedInstance.setPasscode = ""
+                
+                UserDefaults.standard.removeObject(forKey: "isPasscodeON")
+                SingletonClass.sharedInstance.isPasscodeON = false
+                
             }
 //            else if (indexPath.row == arrMenuTitle.count - 2)
 //            {
 //                self.performSegue(withIdentifier: "pushToBlank", sender: self)
 //            }
         }
+
+        
     }
     
     
@@ -265,6 +298,37 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         }
     }
     
+    func didRegisterCompleted() {
+        
+        webserviceOfTickPayStatus()
+    }
+    
+    //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
+    
+    func navigateToTiCKPay() {
+//        webserviceOfTickPayStatus()
+        
+        if self.varifyKey == 0 {
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "TickPayRegistrationViewController") as! TickPayRegistrationViewController
+            next.delegateForVerifyStatus = self
+            self.navigationController?.pushViewController(next, animated: true)
+        }
+            
+        else if self.varifyKey == 1 {
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "TiCKPayNeedToVarifyViewController") as! TiCKPayNeedToVarifyViewController
+            self.navigationController?.pushViewController(next, animated: true)
+        }
+            
+        else if self.varifyKey == 2 {
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "PayViewController") as! PayViewController
+            self.navigationController?.pushViewController(next, animated: true)
+        }
+    }
+    
+    
+    
     //-------------------------------------------------------------
     // MARK: - Webservice Methods
     //-------------------------------------------------------------
@@ -278,9 +342,13 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                 print(result)
                 
                 if let id = (result as! [String:AnyObject])["Verify"] as? String {
+                    
+//                    SingletonClass.sharedInstance.TiCKPayVarifyKey = Int(id)!
                     self.varifyKey = Int(id)!
                 }
                 else if let id = (result as! [String:AnyObject])["Verify"] as? Int {
+                    
+//                    SingletonClass.sharedInstance.TiCKPayVarifyKey = id
                     self.varifyKey = id
                 }
 

@@ -17,17 +17,8 @@ class webViewVC: ParentViewController, UIWebViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
         UtilityClass.showACProgressHUD()
         
-        let url = strURL
-        
-        let requestURL = URL(string: url)
-        let request = URLRequest(url: requestURL! as URL)
-        webView.loadRequest(request)
-        
-       
     }
 
     override func didReceiveMemoryWarning() {
@@ -41,6 +32,12 @@ class webViewVC: ParentViewController, UIWebViewDelegate {
         if headerName != "" {
             headerView?.lblTitle.text = headerName
         }
+        
+        let url = strURL
+        
+        let requestURL = URL(string: url)
+        let request = URLRequest(url: requestURL! as URL)
+        webView.loadRequest(request)
         
     }
     

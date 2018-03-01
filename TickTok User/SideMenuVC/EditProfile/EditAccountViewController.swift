@@ -26,6 +26,11 @@ class EditAccountViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+   
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
@@ -61,23 +66,28 @@ class EditAccountViewController: UIViewController {
     func validationForUpdateBankAccountDetails() -> Bool {
         
         if (txtAccountHolderName.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter Account Holeder Name", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Account Holeder Name") { (index, title) in
+            }
             return false
         }
-        else if (txtABN.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter ABN Number", vc: self)
-            return false
-        }
+//        else if (txtABN.text!.count == 0) {
+//            UtilityClass.setCustomAlert(title: "Missing", message: "Enter ABN Number") { (index, title) in
+//            }
+//            return false
+//        }
         else if (txtBankName.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter Bank Name", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Name") { (index, title) in
+            }
             return false
         }
         else if (txtBSB.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter BSB Number", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter BSB Number") { (index, title) in
+            }
             return false
         }
         else if (txtBankAccount.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter Bank Account Number", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Account Number") { (index, title) in
+            }
             return false
         }
 //        else if (txtNote.text!.count == 0) {
@@ -90,8 +100,8 @@ class EditAccountViewController: UIViewController {
     
     func setData() {
         let profileData = SingletonClass.sharedInstance.dictProfile
-        txtNote.text = profileData.object(forKey: "Description") as? String
-        txtABN.text = profileData.object(forKey: "ABN") as? String
+//        txtNote.text = profileData.object(forKey: "Description") as? String
+//        txtABN.text = profileData.object(forKey: "ABN") as? String
         txtBSB.text = profileData.object(forKey: "BSB") as? String
         txtBankName.text = profileData.object(forKey: "BankName") as? String
         txtBankAccount.text = profileData.object(forKey: "BankAccountNo") as? String
@@ -109,11 +119,11 @@ class EditAccountViewController: UIViewController {
         var param = [String:AnyObject]()
         param["PassengerId"] = SingletonClass.sharedInstance.strPassengerID as AnyObject
         param["AccountHolderName"] = txtAccountHolderName.text as AnyObject
-        param["ABN"] = txtABN.text as AnyObject
+//        param["ABN"] = txtABN.text as AnyObject
         param["BankName"] = txtBankName.text as AnyObject
         param["BSB"] = txtBSB.text as AnyObject
         param["BankAccountNo"] = txtBankAccount.text as AnyObject
-        param["Description"] = txtNote.text as AnyObject
+//        param["Description"] = txtNote.text as AnyObject
         
         
         webserviceForUpdateBankAccountDetails(param as AnyObject) { (result, status) in
@@ -121,7 +131,10 @@ class EditAccountViewController: UIViewController {
             if (status) {
                 print(result)
                 
-                UtilityClass.showAlert("", message: "Update Successfully.", vc: self)
+//                UtilityClass.showAlert("", message: "Update Successfully.", vc: self)
+                
+                UtilityClass.setCustomAlert(title: "Profile", message: "Update Successfully.") { (index, title) in
+            }
                 
                 SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
                 
@@ -165,14 +178,20 @@ class EditAccountViewController: UIViewController {
             }
             else {
                 print(result)
+                
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+            }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+            }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
                 }
             }
         }

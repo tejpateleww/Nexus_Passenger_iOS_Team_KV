@@ -15,7 +15,7 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -49,7 +49,7 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
         }
         else {
             aryData = SingletonClass.sharedInstance.walletHistoryData
-            self.lblAvailableFundsDesc.text = "$\(SingletonClass.sharedInstance.strCurrentBalance)"
+            self.lblAvailableFundsDesc.text = "\(currencySign) \(SingletonClass.sharedInstance.strCurrentBalance)"
         }
        
     }
@@ -105,7 +105,12 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        if aryData.count >= 5 {
+           return 5
+        }
+        else {
+           return aryData.count
+        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -219,7 +224,7 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
                 print(result)
                 
                 SingletonClass.sharedInstance.strCurrentBalance = ((result as! NSDictionary).object(forKey: "walletBalance") as AnyObject).doubleValue
-                self.lblAvailableFundsDesc.text = "$\(SingletonClass.sharedInstance.strCurrentBalance)"
+                self.lblAvailableFundsDesc.text = "\(currencySign) \(SingletonClass.sharedInstance.strCurrentBalance)"
                 
                 
                 SingletonClass.sharedInstance.walletHistoryData = (result as! NSDictionary).object(forKey: "history") as! [[String:AnyObject]]
@@ -247,14 +252,18 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
             else {
                 print(result)
                 
+                
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: (resDict).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: ((resAry).object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 
             }

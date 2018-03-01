@@ -45,6 +45,8 @@ let GetTickpayApprovalStatus = WebserviceURLs.kGetTickpayApprovalStatus
 let TransferToBank = WebserviceURLs.kTransferToBank
 let UpdateBankAccountDetails = WebserviceURLs.kUpdateBankAccountDetails
 
+let OTPVerify = WebserviceURLs.kOtpForRegister
+
 //-------------------------------------------------------------
 // MARK: - Webservice For Registration
 //-------------------------------------------------------------
@@ -281,10 +283,11 @@ func webserviceForDeleteAddress(_ dictParams: AnyObject, completion: @escaping(_
 // MARK: - Webservice For Varify Passenger
 //-------------------------------------------------------------
 
-func webserviceForVarifyPassenger(_ dictParams: [String:AnyObject], image1: UIImage, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+func webserviceForVarifyPassenger(_ dictParams: [String:AnyObject], image1: UIImage, image2: UIImage, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
 {
     let url = VarifyUser
-    sendImage(dictParams, image1: image1, nsURL: url, completion: completion)
+//    sendImage(dictParams, image1: image1, nsURL: url, completion: completion)
+    postTwoImageMethod(dictParams, image1: image1, image2: image2, nsURL: url, completion: completion)
 }
 
 //-------------------------------------------------------------
@@ -386,3 +389,14 @@ func webserviceForUpdateBankAccountDetails(_ dictParams: AnyObject, completion: 
     let url = UpdateBankAccountDetails
     postData(dictParams, nsURL: url, completion: completion)
 }
+
+//-------------------------------------------------------------
+// MARK: - Webservice For OTP Register
+//-------------------------------------------------------------
+
+func webserviceForOTPRegister(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = OTPVerify
+    postData(dictParams, nsURL: url, completion: completion)
+}
+

@@ -20,9 +20,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     var fullName = String()
     var gender = String()
     
-    @IBOutlet var viewChangePassword: UIView!
-    @IBOutlet var btnChangePassword: UIButton!
-    @IBOutlet var btnProfile: UIButton!
+
     //-------------------------------------------------------------
     // MARK: - Base Methods
     //-------------------------------------------------------------
@@ -31,9 +29,6 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         super.viewDidLoad()
 
         setData()
-        
-        
-       
         
         btnSave.layer.cornerRadius = 5
         btnSave.layer.masksToBounds = true
@@ -44,13 +39,19 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         super.viewDidLayoutSubviews()
         imgProfile.layer.cornerRadius = imgProfile.frame.width / 2
         imgProfile.layer.borderWidth = 1.0
-        imgProfile.layer.borderColor = UIColor.red.cgColor
+        imgProfile.layer.borderColor = themeYellowColor.cgColor
         imgProfile.layer.masksToBounds = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
     }
     
     //-------------------------------------------------------------
@@ -64,11 +65,16 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBOutlet weak var txtFirstName: ACFloatingTextfield!
     @IBOutlet weak var txtLastName: ACFloatingTextfield!
     @IBOutlet weak var txtAddress: ACFloatingTextfield!
+    @IBOutlet weak var txtDateOfBirth: ACFloatingTextfield!
     
     @IBOutlet weak var viewMale: M13Checkbox!
     @IBOutlet weak var viewFemale: M13Checkbox!
   
     @IBOutlet weak var btnSave: UIButton!
+    
+    @IBOutlet var viewChangePassword: UIView!
+    @IBOutlet var btnChangePassword: UIButton!
+    @IBOutlet var btnProfile: UIButton!
     
     
     //-------------------------------------------------------------
@@ -78,7 +84,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func btnMale(_ sender: UIButton) {
         
         viewMale.checkState = .checked
-        viewMale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        viewMale.tintColor = themeYellowColor
         viewFemale.checkState = .unchecked
         
         gender = "Male"
@@ -86,13 +92,28 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func btnFemale(_ sender: UIButton) {
         
         viewFemale.checkState = .checked
-        viewFemale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        viewFemale.tintColor = themeYellowColor
         viewMale.checkState = .unchecked
         
         gender = "Female"
     }
     
+    @IBAction func txtDateOfBirthAction(_ sender: ACFloatingTextfield) {
+        
+        
+        let datePickerView:UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(self.pickupdateMethod(_:)), for: UIControlEvents.valueChanged)
+    }
     
+    @objc func pickupdateMethod(_ sender: UIDatePicker)
+    {
+        let dateFormaterView = DateFormatter()
+        dateFormaterView.dateFormat = "yyyy-MM-dd"
+        
+        txtDateOfBirth.text = dateFormaterView.string(from: sender.date)
+    }
     
     @IBAction func btnChangePassword(_ sender: UIButton) {
         
@@ -103,9 +124,11 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func btnSubmit(_ sender: UIButton) {
 
-        if txtAddress.text == "" || txtFirstName.text == "" || txtLastName.text == "" || gender == "" || imgProfile.image == nil {
+        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" || imgProfile.image == nil {
             
-            UtilityClass.showAlert("Misssing", message: "Please fill all details", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Misssing", message: "Please fill all details") { (index, title) in
+            }
         }
         else {
             webserviceOfUpdateProfile()
@@ -188,6 +211,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         lblEmailId.text = getData.object(forKey: "Email") as? String
         lblContactNumber.text = getData.object(forKey: "MobileNo") as? String
+        txtDateOfBirth.text = getData.object(forKey: "DOB") as? String
         
         fullName = getData.object(forKey: "Fullname") as! String
   
@@ -196,20 +220,20 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         firstName = fullNameArr[0]
         lastName = fullNameArr[1]
 
-        txtFirstName.text = firstName
-        txtLastName.text = lastName
+        txtFirstName.text = fullName
+//        txtLastName.text = lastName
         txtAddress.text = getData.object(forKey: "Address") as? String
         
         gender = getData.object(forKey: "Gender") as! String
         
         if gender == "male" || gender == "Male" {
             viewMale.checkState = .checked
-            viewMale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+            viewMale.tintColor = themeYellowColor
             viewFemale.checkState = .unchecked
         }
         else {
             viewMale.checkState = .unchecked
-            viewFemale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+            viewFemale.tintColor = themeYellowColor
             viewFemale.checkState = .checked
         }
     }
@@ -217,7 +241,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func viewMale(_ sender: M13Checkbox) {
         
 //        viewMale.checkState = .checked
-//        viewMale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+//        viewMale.tintColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)
 //        viewFemale.checkState = .unchecked
 //
 //        gender = "Male"
@@ -227,7 +251,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func viewFemale(_ sender: M13Checkbox) {
         
         viewFemale.checkState = .checked
-        viewFemale.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        viewFemale.tintColor = themeYellowColor
         viewMale.checkState = .unchecked
         
         gender = "Female"
@@ -254,6 +278,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         dictData["Fullname"] = fullName as AnyObject
         dictData["Gender"] = gender as AnyObject
         dictData["Address"] = txtAddress.text as AnyObject
+        dictData["DOB"] = txtDateOfBirth.text as AnyObject
         
         let activityData = ActivityData()
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
@@ -270,7 +295,9 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
                 
                 UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                 
-                UtilityClass.showAlert("", message: "Update Profile Successfully", vc: self)
+               
+                UtilityClass.setCustomAlert(title: "Done", message: "Update Profile Successfully") { (index, title) in
+                }
                 
                 
             }

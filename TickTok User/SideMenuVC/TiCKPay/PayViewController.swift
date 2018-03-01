@@ -41,10 +41,13 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     var aryTempMonth = [String]()
     var aryTempYear = [String]()
     
+    var strTransactionFee = String()
     var steGetTickPayRate = String()
     var strAmountOfTotal = String()
     
     var sendAmount = String()
+    
+    var dummytxtCreditCardNumber = UITextField()
     
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -53,6 +56,9 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         webserviceOFGetTickpayRate()
+        
+//        txtCardNumber.delegate = self
+
         
         SingletonClass.sharedInstance.strIsFirstTimeTickPay = "first"
         
@@ -107,10 +113,10 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         
         
         aryMonths = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-        aryYears = ["2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+        aryYears = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
         
         aryTempMonth = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-        aryTempYear = ["2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+        aryTempYear = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
         creditCardValidator = CreditCardValidator()
         pickerView.delegate = self
         
@@ -130,7 +136,7 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         
         let profileData = SingletonClass.sharedInstance.dictProfile
         self.txtABNNumber.text = (profileData).object(forKey: "ABN") as? String
-        self.txtCompanyName.text = (profileData).object(forKey: "Fullname") as? String
+        self.txtCompanyName.text = (profileData).object(forKey: "CompanyName") as? String
         
         txtCVV.isHidden = true
         
@@ -154,9 +160,24 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         let characterSet = NSMutableCharacterSet.decimalDigit()
         characterSet.addCharacters(in: " ")
         validation.characterSet = characterSet as CharacterSet
-        inputValidator = InputValidator(validation: validation)
         
+        inputValidator = InputValidator(validation: validation)
+
         txtCardNumber.inputValidator = inputValidator
+        
+        let cardNumber = FormTextField()
+        cardNumber.inputValidator = inputValidator
+        
+        
+        let data = txtCardNumber.text?.suffix(4)
+        
+        let strCardNumber = txtCardNumber.text!
+        print("strCardNumber : \(strCardNumber)")
+        
+        let changeToX = maskNumber(strCardNumber)
+        
+         print("changeToX : \(changeToX)")
+        
     }
     
     func cardExpiry() {
@@ -233,12 +254,33 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     @IBAction func btnBackToNavigate(_ sender: UIButton) {
         
-        for vc in (self.navigationController?.viewControllers ?? []) {
-            if vc is CustomSideMenuViewController {
-                _ = self.navigationController?.popToViewController(vc, animated: true)
-                break
+        if isModal() {
+            self.dismiss(animated: true, completion: {
+                
+            })
+        }
+        else {
+            
+            for vc in (self.navigationController?.viewControllers ?? []) {
+                if vc is CustomSideMenuViewController {
+                    _ = self.navigationController?.popToViewController(vc, animated: true)
+                    break
+                }
             }
         }
+    }
+    
+    func isModal() -> Bool {
+        if (presentingViewController != nil) {
+            return true
+        }
+        if navigationController?.presentingViewController?.presentedViewController == navigationController {
+            return true
+        }
+        if (tabBarController?.presentingViewController is UITabBarController) {
+            return true
+        }
+        return false
     }
     
     
@@ -277,7 +319,9 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 
 
         if txtCardNumber.text == "" {
-            UtilityClass.showAlert("Missing", message: "Please Enter Card Number", vc: self)
+//            UtilityClass.showAlert("Missing", message: "Please Enter Card Number", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Card Number") { (index, title) in
+            }
         }
 //        else if isCreditCardValid == false {
 //            UtilityClass.showAlert("Sorry", message: "Card Number is invalid", vc: self)
@@ -290,21 +334,31 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 //        }
         else if txtCompanyName.text == ""
         {
-            UtilityClass.showAlert("Missing", message: "Please Enter Company Name / Name", vc: self)
+//            UtilityClass.showAlert("Missing", message: "Please Enter Company Name / Name", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Company Name / Name") { (index, title) in
+            }
         }
         else if txtAmount.text == "" {
-            UtilityClass.showAlert("Missing", message: "Please Enter Amount", vc: self)
+//            UtilityClass.showAlert("Missing", message: "Please Enter Amount", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Amount") { (index, title) in
+            }
         }
         else if txtExpiryDate.text == "" {
-            UtilityClass.showAlert("Missing", message: "Please Enter Expiry Date", vc: self)
+//            UtilityClass.showAlert("Missing", message: "Please Enter Expiry Date", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Expiry Date") { (index, title) in
+            }
         }
         else if txtCVV.isHidden == false {
             
             if txtCVV.text == "" {
-                UtilityClass.showAlert("Missing", message: "Please enter CVV Number", vc: self)
+//                UtilityClass.showAlert("Missing", message: "Please enter CVV Number", vc: self)
+                UtilityClass.setCustomAlert(title: "Missing", message: "Please enter CVV Number") { (index, title) in
+                }
             }
             else if txtCVV.text!.count != 3 {
-                UtilityClass.showAlert("", message: "Please enter valid CVV Number", vc: self)
+//                UtilityClass.showAlert("", message: "Please enter valid CVV Number", vc: self)
+                UtilityClass.setCustomAlert(title: "Missing", message: "Please enter valid CVV Number") { (index, title) in
+                }
             }
         }
         else {
@@ -449,7 +503,9 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
             
             var finalValue = ((strAmount as NSString).doubleValue)
             
-            txtFinalMount.text = "\(finalValue + countPercenteage)"
+            let total = finalValue + countPercenteage
+            
+            txtFinalMount.text = "$\(String(format: "%.2f", total))"  // "$\(finalValue + countPercenteage)"
             strAmountOfTotal = "\(finalValue + countPercenteage)"
             
         }
@@ -458,6 +514,7 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     
     
     @IBAction func txtCardNumber(_ sender: UITextField) {
+        
     }
     
     func validateCardNumber(number: String) {
@@ -574,11 +631,30 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
     }
     
     //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
+    
+    func maskNumber(_ num: String) -> String {
+        let twelveX = "XXXXXXXXXXXX"
+        if (num.count ?? 0) < (twelveX.count ?? 0) {
+            return ((twelveX as? NSString)?.substring(to: (num.count ?? 0))) ?? ""
+        }
+        else {
+            return twelveX + (((num as? NSString)?.substring(from: (twelveX.count ?? 0))) ?? "")
+        }
+    }
+  
+    var cardNumStr = String()
+    
+
+    
+    
+    //-------------------------------------------------------------
     // MARK: - Webservice Methods
     //-------------------------------------------------------------
     
     func webserviceofTiCKPay() {
-//        PassengerId,Name,ABN,Amount,CardNo,CVV,Expiry
+//        PassengerId,Name,ABN,Amount,CardNo,CVV,Expiry,Passport
         
         print("strAmount : \(strAmount)")
 //        strAmount.removeFirst()
@@ -624,6 +700,8 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         }
         
         SingletonClass.sharedInstance.strAmoutOFTickPay = strAmountOfTotal.trimmingCharacters(in: .whitespacesAndNewlines)
+        
+        SingletonClass.sharedInstance.strAmoutOFTickPayOriginal = strAmount.trimmingCharacters(in: .whitespacesAndNewlines)
        
         
         webserviceForTickPay(param as AnyObject) { (result, status) in
@@ -663,11 +741,18 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 DispatchQueue.main.async {
                     
                     if let res = result as? String {
-                        UtilityClass.showAlert("", message: res, vc: self)
+                      
+                        UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                        }
+                        
                     }
                     else {
-                        UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                        
+                        UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                        }
                     }
+                    
+                    
                 }
             }
         }
@@ -683,24 +768,28 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 print(result)
                 if let res = result as? NSDictionary {
                     self.steGetTickPayRate = res.object(forKey: "rate") as! String
-                    self.lblCredirAndDebitRate.text = "\(self.steGetTickPayRate)% Service fee"
-                   
-                    
+                    self.strTransactionFee = res.object(forKey: "TransactionFee") as! String
+                    self.lblCredirAndDebitRate.text = "\(self.steGetTickPayRate)% Service fee \n$\(self.strTransactionFee) Transaction fee"
+  
                 }
-                
-                
+
             }
             else {
                 print(result)
+                
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
+                
             }
         }
     }

@@ -22,8 +22,10 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     
     weak var delegateAddCard: AddCadsDelegate!
     
-    var creditCardValidator: CreditCardValidator!
+    var delegateAddCardFromHomeVC: addCardFromHomeVCDelegate!
+    var delegateAddCardFromBookLater: isHaveCardFromBookLaterDelegate!
     
+    var creditCardValidator: CreditCardValidator!
     var isCreditCardValid = Bool()
     
     var cardTypeLabel = String()
@@ -58,11 +60,10 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
 //        aryMonths = ["January","February","March","April","May","June","July","August","September","October","November","December"]
 //        aryMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
         aryMonth = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-        
-        aryYear = ["2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+        aryYear = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
         
         aryTempMonth = ["01","02","03","04","05","06","07","08","09","10","11","12"]
-        aryTempYear = ["2017","2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+        aryTempYear = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
 
         // Do any additional setup after loading the view.
     }
@@ -74,6 +75,9 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+         
+         
         
         cardNum()
         cardExpiry()
@@ -202,13 +206,23 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         txtCardNumber.inputType = .integer
         txtCardNumber.formatter = CardNumberFormatter()
         txtCardNumber.placeholder = "Card Number"
-
+        txtCardNumber.leftMargin = 0
+        txtCardNumber.cornerRadius = 5
+//        txtCardNumber.backgroundColor = UIColor.white
+//        txtCardNumber.activeBackgroundColor = UIColor.white
+//        txtCardNumber.enabledBackgroundColor = UIColor.white
+//        txtCardNumber.invalidBackgroundColor = UIColor.white
+//        txtCardNumber.disabledBackgroundColor = UIColor.white
+//        txtCardNumber.inactiveBackgroundColor = UIColor.white
+        
         validation.maximumLength = 19
         validation.minimumLength = 14
         let characterSet = NSMutableCharacterSet.decimalDigit()
         characterSet.addCharacters(in: " ")
         validation.characterSet = characterSet as CharacterSet
+        
         inputValidator = InputValidator(validation: validation)
+        
         
         txtCardNumber.inputValidator = inputValidator
     }
@@ -333,17 +347,29 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     func ValidationForAddPaymentMethod() -> Bool {
         
         if (txtCardNumber.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter Card Number", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Card Number") { (index, title) in
+            }
             return false
         }
         else if (txtValidThrough.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter Expiry Date", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Expiry Date") { (index, title) in
+            }
             return false
         }
         else if (txtCVVNumber.text!.count == 0) {
-            UtilityClass.showAlert("", message: "Enter CVV Number", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter CVV Number") { (index, title) in
+            }
             return false
         }
+//        else if (txtAlies.text!.count == 0) {
+//
+//            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Name") { (index, title) in
+//            }
+//            return false
+//        }
         
         return true
     }
@@ -362,10 +388,18 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         var dictData = [String:AnyObject]()
  
         dictData["PassengerId"] = SingletonClass.sharedInstance.strPassengerID as AnyObject
-        dictData["CardNo"] = txtCardNumber.text!.replacingOccurrences(of: " ", with: "") as AnyObject
+        
+        if CardNumber != "" {
+            dictData["CardNo"] = CardNumber as AnyObject
+        }
+        else {
+            dictData["CardNo"] = txtCardNumber.text!.replacingOccurrences(of: " ", with: "") as AnyObject
+        }
+        
+        
         dictData["Cvv"] = txtCVVNumber.text!.trimmingCharacters(in: .whitespacesAndNewlines) as AnyObject
         dictData["Expiry"] = txtValidThrough.text!.trimmingCharacters(in: .whitespacesAndNewlines) as AnyObject
-        dictData["Alias"] = txtAlies.text as AnyObject
+//        dictData["Alias"] = txtAlies.text as AnyObject
         
         
         webserviceForAddCards(dictData as AnyObject) { (result, status) in
@@ -381,33 +415,62 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
                 
                 SingletonClass.sharedInstance.CardsVCHaveAryData = self.aryData
                 
-                
+                // Post notification
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CardListReload"), object: nil)
+
                 let alert = UIAlertController(title: nil, message: (result as! NSDictionary).object(forKey: "message") as? String, preferredStyle: .alert)
                 let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
                 
-                    self.navigationController?.popViewController(animated: true)
+                    if self.checkPresentation() {
+                        
+                        self.delegateAddCardFromHomeVC?.didAddCardFromHomeVC()
+                        
+                        self.delegateAddCardFromBookLater?.didHaveCards()
+                        
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    else {
+                        self.navigationController?.popViewController(animated: true)
+                        
+                    }
                 })
             
                 alert.addAction(OK)
                 self.present(alert, animated: true, completion: nil)
-                
                 
             }
             else {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
+                
             }
         }
     
+    }
+    
+    func checkPresentation() -> Bool {
+        if (presentingViewController != nil) {
+            return true
+        }
+        if navigationController?.presentingViewController?.presentedViewController == navigationController {
+            return true
+        }
+        if (tabBarController?.presentingViewController is UITabBarController) {
+            return true
+        }
+        return false
     }
     
     //-------------------------------------------------------------
@@ -442,8 +505,8 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
             print("Removed Year : \(years)")
             
 
-//            txtCardNumber.text = customStringFormatting(of: info.redactedCardNumber)
-            txtCardNumber.text = info.cardNumber
+            txtCardNumber.text = customStringFormatting(of: info.redactedCardNumber)
+//            txtCardNumber.text = info.cardNumber
             txtValidThrough.text = "\(info.expiryMonth)/\(years)"
             txtCVVNumber.text = info.cvv
             
@@ -467,8 +530,8 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         if let info = cardInfo {
             let str = NSString(format: "Received card info.\n Number: %@\n expiry: %02lu/%lu\n cvv: %@.", info.redactedCardNumber, info.expiryMonth, info.expiryYear, info.cvv)
             //            resultLabel.text = str as String
-//            txtCardNumber.text = info.redactedCardNumber
-//            txtExpiryDate.text = "\(info.expiryMonth)/\(info.expiryYear)"
+            txtCardNumber.text = info.redactedCardNumber
+            txtValidThrough.text = "\(info.expiryMonth)/\(info.expiryYear)"
         }
         paymentViewController?.dismiss(animated: true, completion: nil)
     }

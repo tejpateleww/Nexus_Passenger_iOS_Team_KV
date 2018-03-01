@@ -22,6 +22,7 @@ class HeaderView: UIView {
     
     weak var delegate: HeaderViewDelegate?
     
+    @IBOutlet weak var contraintLabelCentr: NSLayoutConstraint!
     override func draw(_ rect: CGRect) {
         
 //        btnSwitch.transform = CGAffineTransform(scaleX: 0.75, y: 0.75)

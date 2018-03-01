@@ -16,6 +16,8 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
     var validation = Validation()
     var inputValidator = InputValidator()
     
+    var delegateForVerifyStatus: delegateForTiCKPayVerifyStatus!
+    
     var CardNumber = String()
     var strMonth = String()
     var strYear = String()
@@ -45,8 +47,15 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         txtAliasbank.leftView = PadingtxtAliasbank
         txtAliasbank.leftViewMode = .always
         
+        if SingletonClass.sharedInstance.dictProfile.count != 0 {
+            
+            if let profileData = SingletonClass.sharedInstance.dictProfile as? [String:AnyObject] {
+                txtCompanysName.text = profileData["CompanyName"] as? String
+                txtABN.text = profileData["ABN"] as? String
+            }
+        }
         
-
+       
         if SingletonClass.sharedInstance.CardsVCHaveAryData.count != 0 {
             
             cardViewStack.isHidden = true
@@ -106,7 +115,9 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
     //-------------------------------------------------------------
     @IBOutlet weak var UploadLicenceStackView: UIView!
     @IBOutlet weak var btnLicence: UIButton!
-   
+    @IBOutlet weak var btnUploadPassport: UIButton!
+    
+    
     @IBOutlet var txtExpireyDate: FormTextField!
     @IBOutlet var txtCompanysName: UITextField!
     @IBOutlet var txtABN: UITextField!
@@ -114,6 +125,7 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
     @IBOutlet var txtCvv: FormTextField!
     @IBOutlet var txtAliasbank: UITextField!
     @IBOutlet var btnImgCameras: UIButton!
+    @IBOutlet weak var btnimgCameraForPassport: UIButton!
     
     @IBOutlet weak var cardViewStack: UIStackView!
     
@@ -165,10 +177,10 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         let alert = UIAlertController(title: "Choose Options", message: nil, preferredStyle: .alert)
         
         let Gallery = UIAlertAction(title: "Gallery", style: .default, handler: { ACTION in
-            self.PickingImageFromGallery()
+            self.PickingImageFromGallery(sender: "Licence")
         })
         let Camera  = UIAlertAction(title: "Camera", style: .default, handler: { ACTION in
-            self.PickingImageFromCamera()
+            self.PickingImageFromCamera(sender: "Licence")
         })
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
@@ -178,19 +190,47 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func btnUploadPassport(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "Choose Options", message: nil, preferredStyle: .alert)
+        
+        let Gallery = UIAlertAction(title: "Gallery", style: .default, handler: { ACTION in
+            self.PickingImageFromGallery(sender: "Passport")
+        })
+        let Camera  = UIAlertAction(title: "Camera", style: .default, handler: { ACTION in
+            self.PickingImageFromCamera(sender: "Passport")
+        })
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alert.addAction(Gallery)
+        alert.addAction(Camera)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    
     func validations() -> Bool {
         
 //        CardNo,Cvv,Expiry,Alias,CompanyName,ABN(optional),Image
         
         if(txtCompanysName.text?.count == 0)
         {
-            UtilityClass.showAlert("", message: "Please Insert Company Name", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Insert Company Name") { (index, title) in
+            }
             return false
         }
-        
-        else if(btnImgCameras.imageView?.image == nil)
+        //iconCamera
+        else if(btnImgCameras.imageView?.image == nil && btnImgCameras.imageView?.image == UIImage(named: "iconCamera"))
         {
-            UtilityClass.showAlert("", message: "Please Driving Licence Image", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Upload Driving Licence Image") { (index, title) in
+            }
+            return false
+        }
+        else if(btnimgCameraForPassport.imageView?.image == nil && btnimgCameraForPassport.imageView?.image == UIImage(named: "iconCamera"))
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Upload Passport Image") { (index, title) in
+            }
             return false
         }
         
@@ -199,24 +239,28 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
     
     func validationIfCardsNotAvailable() -> Bool {
         
-        if(txtCvv.text?.count == 0)
+        if(txtCardNumbers.text?.count == 0)
         {
-            UtilityClass.showAlert("", message: "Please Insert CVV Number", vc: self)
-            return false
-        }
-        else if(txtCardNumbers.text?.count == 0)
-        {
-            UtilityClass.showAlert("", message: "Please Insert Card Number", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Card Number") { (index, title) in
+            }
             return false
         }
         else if(txtExpireyDate.text?.count == 0)
         {
-            UtilityClass.showAlert("", message: "Please Insert Expiry Date", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Expiry Date") { (index, title) in
+            }
+            return false
+        }
+        else if(txtCvv.text?.count == 0)
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter CVV Number") { (index, title) in
+            }
             return false
         }
         else if(txtAliasbank.text?.count == 0)
         {
-            UtilityClass.showAlert("", message: "Please Insert Alias", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Bank Name") { (index, title) in
+            }
             return false
         }
         
@@ -227,8 +271,8 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
     
     //MARK:- Image picker Delegate
     
-    
-    func PickingImageFromGallery()
+    var imagePicked = String()
+    func PickingImageFromGallery(sender: String)
     {
         let picker = UIImagePickerController()
         picker.delegate = self
@@ -236,12 +280,14 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         picker.allowsEditing = false
         picker.sourceType = .photoLibrary
         
+        imagePicked = sender
+        
         // picker.stopVideoCapture()
         picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         present(picker, animated: true, completion: nil)
     }
     
-    func PickingImageFromCamera()
+    func PickingImageFromCamera(sender: String)
     {
         let picker = UIImagePickerController()
         
@@ -250,14 +296,25 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         picker.sourceType = .camera
         picker.cameraCaptureMode = .photo
         
+        imagePicked = sender
+        
         present(picker, animated: true, completion: nil)
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.btnImgCameras.setImage(pickedImage, for: .normal)
-            self.btnImgCameras.imageView?.contentMode = .scaleAspectFit
+            
+            if imagePicked == "Licence" {
+                self.btnImgCameras.setImage(pickedImage, for: .normal)
+                self.btnImgCameras.imageView?.contentMode = .scaleAspectFit
+            }
+            else {
+                self.btnimgCameraForPassport.setImage(pickedImage, for: .normal)
+                self.btnimgCameraForPassport.imageView?.contentMode = .scaleAspectFit
+            }
+            
+            
 //            imgVehicle.contentMode = .scaleToFill
 //            imgVehicle.image = pickedImage
         }
@@ -431,14 +488,16 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
             param["Alias"] = txtAliasbank.text as AnyObject
         }
         
-        
-        webserviceForVarifyPassenger(param, image1: (btnImgCameras.imageView?.image)!) { (result, status) in
+        webserviceForVarifyPassenger(param, image1: (btnImgCameras.imageView?.image)!, image2: (btnimgCameraForPassport.imageView?.image)!) { (result, status) in
+//        webserviceForVarifyPassenger(param, image1: (btnImgCameras.imageView?.image)!) { (result, status) in
             
             if (status) {
                 print(result)
                 if let res = result as? NSDictionary {
+                    
+                    self.delegateForVerifyStatus?.didRegisterCompleted()
                 
-                    let alert = UIAlertController(title: nil, message: "TickPay register successfully.", preferredStyle: .alert)
+                    let alert = UIAlertController(title: nil, message: "\(appName) register successfully.", preferredStyle: .alert)
                     let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
                         
                         let next = self.storyboard?.instantiateViewController(withIdentifier: "TiCKPayNeedToVarifyViewController") as! TiCKPayNeedToVarifyViewController
@@ -454,13 +513,18 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }

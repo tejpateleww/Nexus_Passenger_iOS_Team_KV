@@ -31,6 +31,8 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
         setData()
 
         
+        headerView?.btnBack.addTarget(self, action: #selector(self.btnBackAction), for: .touchUpInside)
+        
         viewMain.layer.cornerRadius = 5
         viewMain.layer.masksToBounds = true
         
@@ -40,7 +42,7 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
       
         lblCurrentBalanceTitle.text = "\(SingletonClass.sharedInstance.strCurrentBalance)"
         
-        
+        txtAmount.becomeFirstResponder()
         
     }
 
@@ -49,24 +51,58 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
       
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         
         txtAccountHolderName.lineColor = .black
-        txtABN.lineColor = .black
+//        txtABN.lineColor = .black
         txtBankName.lineColor = .black
         txtBankAccountNo.lineColor = .black
         txtBSB.lineColor = .black
     }
     
+    @objc func btnBackAction() {
+        
+        if isModal() {
+            self.dismiss(animated: true, completion: {
+                
+            })
+            
+        }
+        else {
+            
+            self.navigationController?.popViewController(animated: true)
+        }
+        
+    }
+    
+    override func isModal() -> Bool {
+        if (presentingViewController != nil) {
+            return true
+        }
+        if navigationController?.presentingViewController?.presentedViewController == navigationController {
+            return true
+        }
+        if (tabBarController?.presentingViewController is UITabBarController) {
+            return true
+        }
+        return false
+    }
+    
     func clearTextFields() {
         txtAccountHolderName.text = ""
-        txtABN.text = ""
+//        txtABN.text = ""
         txtBankName.text = ""
         txtBankAccountNo.text = ""
         txtBSB.text = ""
         strAmt = ""
-        txtABN.text = ""
+        
     }
 
     //-------------------------------------------------------------
@@ -113,7 +149,7 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
         
         let profileData = SingletonClass.sharedInstance.dictProfile
 //        txtNote.text = profileData.object(forKey: "Description") as? String
-        txtABN.text = profileData.object(forKey: "ABN") as? String
+//        txtABN.text = profileData.object(forKey: "ABN") as? String
         txtBSB.text = profileData.object(forKey: "BSB") as? String
         txtBankName.text = profileData.object(forKey: "BankName") as? String
         txtBankAccountNo.text = profileData.object(forKey: "BankAccountNo") as? String
@@ -157,8 +193,12 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
             
             let unfiltered1 = amountString   //  "!   !! yuahl! !"
             
-            // Array of Characters to remove
-            let removal1: [Character] = ["$"," "]    // ["!"," "]
+            let spaceAdd = " "
+            
+            let insertCurrencySymboleInString = "\(currencySign),\(spaceAdd)"
+            let insertcurrencySymboleInCharacter = [Character](insertCurrencySymboleInString)
+            
+            let removal1: [Character] = insertcurrencySymboleInCharacter    // ["!"," "]
             
             // turn the string into an Array
             let unfilteredCharacters1 = unfiltered1.characters
@@ -177,13 +217,18 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
             txtAmount.text = String(unfiltered1.characters.filter { !removal1.contains($0) })
             
             
+            let space = " "
+            let comma = " "
+            let currencySymboleInString = "\(currencySign),\(comma),\(space)"
+            let currencySymboleInCharacter = [Character](currencySymboleInString)
+            
             
             // ----------------------------------------------------------------------
             // ----------------------------------------------------------------------
             let unfiltered = amountString   //  "!   !! yuahl! !"
             
             // Array of Characters to remove
-            let removal: [Character] = ["$",","," "]    // ["!"," "]
+            let removal: [Character] = currencySymboleInCharacter    // ["!"," "]
             
             // turn the string into an Array
             let unfilteredCharacters = unfiltered.characters
@@ -217,32 +262,45 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
         strAmt = strAmt.trimmingCharacters(in: .whitespacesAndNewlines)
         strAmt = strAmt.replacingOccurrences(of: " ", with: "")
         
-        if txtABN.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter ABN Number", vc: self)
-            return false
-        }
-        else if txtBSB.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter BSB Number", vc: self)
+//        if txtABN.text!.count == 0 {
+//            
+//            UtilityClass.setCustomAlert(title: "Missing", message: "Enter ABN Number") { (index, title) in
+//            }
+//            return false
+//        }
+        if txtBSB.text!.count == 0 {
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter BSB Number") { (index, title) in
+            }
             return false
         }
         else if txtAmount.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter Amount", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Amount") { (index, title) in
+            }
             return false
         }
         else if txtBankName.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter Bank Name", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Name") { (index, title) in
+            }
             return false
         }
         else if txtBankAccountNo.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter Bank Account Number", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Account Number") { (index, title) in
+            }
             return false
         }
         else if txtAccountHolderName.text!.count == 0 {
-            UtilityClass.showAlert("", message: "Enter Account Holder Name", vc: self)
+    
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Account Holder Name") { (index, title) in
+            }
             return false
         }
         else if Double(strAmt)! > SingletonClass.sharedInstance.strCurrentBalance {
-            UtilityClass.showAlert("", message: "Entered amout is more than current balance", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Entered amout is more than current balance") { (index, title) in
+            }
             return false
         }
         
@@ -273,30 +331,38 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
             
             if (status) {
                 print(result)
-                
+              
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Done", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Done", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Done", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
+                
                 self.webserviceOfTransactionHistory()
                 
             }
             else {
                 print(result)
+               
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -322,13 +388,16 @@ class WalletTransferToBankVC: ParentViewController, SelectBankCardDelegate {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: (resDict).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: ((resAry).object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 
             }

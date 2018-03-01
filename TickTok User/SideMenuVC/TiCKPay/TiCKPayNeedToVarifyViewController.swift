@@ -17,7 +17,7 @@ class TiCKPayNeedToVarifyViewController: UIViewController {
         super.viewDidLoad()
 
         if strMSG == "" {
-            lblMessage.text = "You TiCKPAY is in Pending for Approval, Once Admin Approve your Profile then you will able to receive Money from TiCKPAY."
+            lblMessage.text = "You \(appName)is in Pending for Approval, Once Admin Approve your Profile then you will able to receive Money from \(appName)."
         }
         else {
             lblMessage.text = strMSG

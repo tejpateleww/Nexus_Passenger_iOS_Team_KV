@@ -21,7 +21,7 @@ class BookTableViewController: ParentViewController, UICollectionViewDataSource,
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        aryData = ["Asia","Italian","Mexican","Seafood","Indian","Japanese","Eastern","Burgers","Pizza","French","Greek","Mediterranean"]
+        aryData = ["Asia","Italian","Mexican","Seafood","Indian","Japanese","Middle Eastern","Burgers","Pizza","French","Greek","Mediterranean"]
         aryDataImages = ["iconAsian","iconItalian","iconMexican","iconSeafood","iconIndian","iconJapanese","iconEstrern","iconBurgers","iconPizza","iconFrench","iconGreek","iconMediterranean"]
         collectionView.dataSource = self
         collectionView.delegate = self
@@ -79,7 +79,9 @@ class BookTableViewController: ParentViewController, UICollectionViewDataSource,
     func webserviceOfBookTable(str: String) {
         
         if SingletonClass.sharedInstance.currentLatitude == "" || SingletonClass.sharedInstance.currentLongitude == "" {
-            UtilityClass.showAlert("", message: "Your Current Location Not Found", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Location Not Found", message: "Your Current Location Not Found") { (index, title) in
+            }
         }
         else {
             let creentLocation = "\(SingletonClass.sharedInstance.currentLatitude),\(SingletonClass.sharedInstance.currentLongitude)"

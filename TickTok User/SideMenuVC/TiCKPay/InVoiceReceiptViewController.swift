@@ -157,7 +157,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
     
     func setEmail() {
         viewEmail.checkState = .checked
-        viewEmail.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        viewEmail.tintColor = themeYellowColor
         viewSMS.checkState = .unchecked
         
         txtPhoneNumber.isHidden = true
@@ -168,7 +168,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
     
     func setSMS() {
         viewSMS.checkState = .checked
-        viewSMS.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+        viewSMS.tintColor = themeYellowColor
         viewEmail.checkState = .unchecked
         
         txtPhoneNumber.isHidden = false
@@ -183,7 +183,11 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
     }
     @IBAction func btnSend(_ sender: UIButton) {
    
-        webserviceOFSendInvoice()
+        if (validations()) {
+            webserviceOFSendInvoice()
+        }
+        
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -196,6 +200,85 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         
     }
     
+    func validations() -> Bool
+    {
+        let isEmailAddressValid = isValidEmailAddress(emailID: txtEmailId.text!)
+        //        let providePassword = txtPassword.text
+        
+        //        let isPasswordValid = isPwdLenth(password: providePassword!)
+        
+        if (txtPhoneNumber.isHidden == true)
+        {
+            if txtEmailId.text!.count == 0
+            {
+                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Email Id") { (index, title) in
+                }
+                return false
+            }
+            else if (!isEmailAddressValid)
+            {
+
+                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Valid Email ID") { (index, title) in
+                }
+                
+                return false
+            }
+        }
+        else
+        {
+            if txtPhoneNumber.text!.count == 0
+            {
+  
+                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Phone number") { (index, title) in
+                }
+                
+                return false
+            }
+        }
+        
+        
+        
+        if txtCustomerName.text!.count == 0 {
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter customer name") { (index, title) in
+            }
+            return false
+        }
+        else if txtDescription.text!.count == 0 {
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter description") { (index, title) in
+            }
+            return false
+        }
+        
+        
+        return true
+    }
+    
+    
+    func isValidEmailAddress(emailID: String) -> Bool
+    {
+        var returnValue = true
+        let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z)-9.-]+\\.[A-Za-z]{2,3}"
+        
+        do{
+            let regex = try NSRegularExpression(pattern: emailRegEx)
+            let nsString = emailID as NSString
+            let results = regex.matches(in: emailID, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0
+            {
+                returnValue = false
+            }
+        }
+        catch _ as NSError
+        {
+            returnValue = false
+        }
+        
+        return returnValue
+    }
+    
     func webserviceOFSendInvoice() {
         
 //        TickpayId,InvoiceType,CustomerName,Notes,Amount,Email,MobileNo(InvoiceType : SMS/Email)
@@ -205,7 +288,8 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         strTiCKPayId = SingletonClass.sharedInstance.strTickPayId
         
         if strInvoiceType == "" {
-            UtilityClass.showAlert("", message: "Select Invoice Type", vc: self)
+            UtilityClass.setCustomAlert(title: "Missing", message: "Select Invoice Type") { (index, title) in
+            }
         }
         else {
             param["InvoiceType"] = strInvoiceType as AnyObject
@@ -223,7 +307,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         
         param["CustomerName"] = txtCustomerName.text as AnyObject
         param["Notes"] = txtDescription.text as AnyObject
-        param["Amount"] = txtTotalAmount.text as AnyObject
+        param["Amount"] = SingletonClass.sharedInstance.strAmoutOFTickPayOriginal as AnyObject
         
         
         webserviceForSendInvoice(param as AnyObject) { (result, status) in
@@ -240,15 +324,17 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
             else{
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
-                
             }
         }
     }

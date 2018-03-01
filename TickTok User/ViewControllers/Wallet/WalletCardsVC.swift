@@ -26,7 +26,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -80,6 +80,24 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+    
+   
+    func setImageColorOfImage(name: String) -> UIImage {
+        
+        var imageView = UIImageView()
+        
+        let img = UIImage(named: name)
+        imageView.image = img?.maskWithColor(color: UIColor.white)
+        
+        
+        return imageView.image!
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
@@ -118,29 +136,49 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         if indexPath.section == 0 {
             
             let dictData = aryData[indexPath.row] as [String:AnyObject]
-            
+//["Expiry": 02/20,"CardNum2": xxxx xxxx xxxx 4242,"Id": 64,"Type": visa,"Alias":,"CardNum": 4242424242424242]
             cell.lblCardType.text = "Credit Card"
+            
+            let expiryDate = (dictData["Expiry"] as! String).split(separator: "/")
+            let month = expiryDate.first
+            let year = expiryDate.last
+            cell.lblMonthExpiry.text = String(describing: month!)
+            cell.lblYearExpiry.text = String(describing: year!)
             
             cell.viewCards.layer.cornerRadius = 5
             cell.viewCards.layer.masksToBounds = true
             
+            cell.viewCards.dropShadowToCardView(color: .gray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
+            
             let type = dictData["Type"] as! String
             
             cell.imgCardIcon.image = UIImage(named: setCreditCardImage(str: type))
-            
-            if (indexPath.row % 2) == 0 {
-                cell.viewCards.backgroundColor = UIColor.orange
+
+//                cell.viewCards.backgroundColor = UIColor.orange
                 cell.lblBankName.text = dictData["Alias"] as? String
                 cell.lblCardNumber.text = dictData["CardNum2"] as? String
 //                cell.imgCardIcon.image = UIImage(named: "MasterCard")
+
+            if type == "discover" || type == "mastercard" {
+                // orange
+            }
+            else if type == "diners" {
+                // gray
             }
             else {
-                cell.viewCards.backgroundColor = UIColor.init(red: 0, green: 145/255, blue: 147/255, alpha: 1.0)
-                cell.lblBankName.text = dictData["Alias"] as? String
-                cell.lblCardNumber.text = dictData["CardNum2"] as? String
-//                cell.imgCardIcon.image = UIImage(named: "Visa")
-                
+                //
             }
+            
+            let colorTop =  UIColor(red: 78/255, green: 202/255, blue:237, alpha: 1.0).cgColor
+            let colorMiddle =  UIColor(red: 187/255, green: 241/255, blue: 239/255, alpha: 0.5).cgColor
+//            let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
+            
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [colorTop, colorMiddle]
+            gradientLayer.locations = [ 0.0, 0.5]
+            gradientLayer.frame = self.view.bounds
+            cell.viewCards.layer.insertSublayer(gradientLayer, at: 0)
+            
             
          /*
           //   visa , mastercard , amex , diners , discover , jcb , other
@@ -162,6 +200,8 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
         else {
             
+//            let img = UIImage(named: "iconArrowGrey")
+//            cell2.btnArrow.image = img?.maskWithColor(color: themeYellowColor)
             return cell2
         }
     }
@@ -199,7 +239,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         if indexPath.section == 0 {
-            return 120
+            return 164
         }
         else {
             return 75
@@ -297,6 +337,21 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         tableView.reloadData()
     }
     
+    func giveGradientColor() {
+        
+        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
+        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor
+        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
+        gradientLayer.locations = [ 0.0, 0.5, 1.0]
+        gradientLayer.frame = self.view.bounds
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
+        
+    }
+    
+   
     //-------------------------------------------------------------
     // MARK: - Webservice Methods For All Cards
     //-------------------------------------------------------------
@@ -328,14 +383,19 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             else {
                 
                 print(result)
+             
+                
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -366,6 +426,10 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 SingletonClass.sharedInstance.isCardsVCFirstTimeLoad = false
                 
                 
+                // Post notification
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "CardListReload"), object: nil)
+
+                
                 if SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0 {
              
                     self.navigationController?.popViewController(animated: true)
@@ -374,19 +438,24 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 
                 self.tableView.reloadData()
                 
-                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+        
+                UtilityClass.setCustomAlert(title: "Removed", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                }
             }
             else {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -396,5 +465,18 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
 }
 
-
+extension UIView {
+    
+    func dropShadowToCardView(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowOffset = offSet
+        layer.shadowRadius = radius
+        
+        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+    }
+}
 

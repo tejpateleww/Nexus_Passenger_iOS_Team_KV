@@ -37,6 +37,12 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
@@ -63,17 +69,28 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
             print("currrentBalance : \(currrentBalance)")
             
             if enterdAmount > currrentBalance {
-                UtilityClass.showAlert("", message: "Your current balance is lower then entered amount", vc: self)
+               
+                UtilityClass.setCustomAlert(title: "Missing", message: "Your current balance is lower then entered amount") { (index, title) in
+                }
             }
             else {
                 self.webserviceOfSendMoney()
             }
         }
         else if SingletonClass.sharedInstance.strQRCodeForSendMoney == "" {
-            UtilityClass.showAlert("", message: "Please Scan QR Code", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Scan QR Code") { (index, title) in
+            }
+        }
+        else if txtEnterMoney.text!.count == 0 {
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter amount") { (index, title) in
+            }
         }
         else {
-            UtilityClass.showAlert("", message: "Please enter amount", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter amount") { (index, title) in
+            }
         }
     
     }
@@ -86,8 +103,20 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
             
             let unfiltered = amountString   //  "!   !! yuahl! !"
             
+            
+            let space = " "
+            let comma = " "
+            let currencySymboleInString = "\(currencySign),\(comma),\(space)"
+            let currencySymboleInCharacter = [Character](currencySymboleInString)
+            
+            
             // Array of Characters to remove
-            let removal: [Character] = ["$",","," "]    // ["!"," "]
+            let removal: [Character] = currencySymboleInCharacter    // ["!"," "]
+            
+            
+            
+            // Array of Characters to remove
+//            let removal: [Character] = ["$",","," "]    // ["!"," "]
             
             // turn the string into an Array
             let unfilteredCharacters = unfiltered.characters
@@ -162,7 +191,9 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                   
+                    UtilityClass.setCustomAlert(title: "Done", message: res) { (index, title) in
+                    }
                 }
                 else {
                     
@@ -174,8 +205,8 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
                     
                     SingletonClass.sharedInstance.isSendMoneySuccessFully = true
                     
-                   
-                    UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message")! as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Transaction", message: (result as! NSDictionary).object(forKey: "message")! as! String) { (index, title) in
+                    }
                     
                 }
   
@@ -184,13 +215,16 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 
             }
@@ -211,7 +245,7 @@ extension String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
 //        formatter.numberStyle = .currencyAccounting
-        formatter.currencySymbol = "$"
+        formatter.currencySymbol = "\(currencySign)"
         formatter.maximumFractionDigits = 2
         formatter.minimumFractionDigits = 2
         

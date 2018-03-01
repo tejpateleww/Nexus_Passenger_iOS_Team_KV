@@ -13,6 +13,8 @@ import TransitionButton
 class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
  
     
+    
+    var strDateOfBirth = String()
 
     //-------------------------------------------------------------
     // MARK: - Outlets
@@ -23,6 +25,9 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     @IBOutlet weak var txtFirstName: ACFloatingTextfield!
     @IBOutlet weak var txtLastName: ACFloatingTextfield!
     @IBOutlet weak var btnSignUp: TransitionButton!
+    
+    @IBOutlet weak var txtDateOfBirth: ACFloatingTextfield!
+    @IBOutlet weak var txtRafarralCode: ACFloatingTextfield!
     
     @IBOutlet weak var imgProfile: UIImageView!
 
@@ -41,9 +46,9 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         // Do any additional setup after loading the view.
         
         self.radioButtonsController = AKRadioButtonsController(radioButtons: self.radioButtons)
-        self.radioButtonsController.strokeColor = UIColor.red
-        self.radioButtonsController.startGradColorForSelected = UIColor.red
-        self.radioButtonsController.endGradColorForSelected = UIColor.red
+        self.radioButtonsController.strokeColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
+        self.radioButtonsController.startGradColorForSelected = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
+        self.radioButtonsController.endGradColorForSelected = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
         self.radioButtonsController.selectedIndex = 2
         self.radioButtonsController.delegate = self //class should implement AKRadioButtonsControllerDelegate
     
@@ -67,8 +72,6 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             gender = "male"
         case "Female":
             gender = "female"
-        case "Other":
-            gender = "other"
         default:
             gender = "male"
         }
@@ -138,6 +141,24 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         dismiss(animated: true, completion: nil)
     }
     
+    @IBAction func txtDateOfBirth(_ sender: ACFloatingTextfield) {
+        
+        let datePickerView:UIDatePicker = UIDatePicker()
+        datePickerView.datePickerMode = UIDatePickerMode.date
+        sender.inputView = datePickerView
+        datePickerView.addTarget(self, action: #selector(self.pickupdateMethod(_:)), for: UIControlEvents.valueChanged)
+    }
+    
+    @objc func pickupdateMethod(_ sender: UIDatePicker)
+    {
+        let dateFormaterView = DateFormatter()
+        dateFormaterView.dateFormat = "yyyy-MM-dd"
+        txtDateOfBirth.text = dateFormaterView.string(from: sender.date)
+        strDateOfBirth = txtDateOfBirth.text!
+        
+    }
+
+    
    
     
     //MARK: - Validation
@@ -146,12 +167,35 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     {
         if (txtFirstName.text?.count == 0)
         {
-            UtilityClass.showAlert("Enter First Name", message: "", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter First Name") { (index, title) in
+            }
             return false
         }
         else if (txtLastName.text?.count == 0)
         {
-            UtilityClass.showAlert("Enter Last Name", message: "", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Last Name") { (index, title) in
+            }
+            return false
+        }
+        else if imgProfile.image == UIImage(named: "iconProfilePicBlank")
+        {
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose profile picture") { (index, title) in
+            }
+            return false
+        }
+        else if strDateOfBirth == "" {
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose Date of Birth") { (index, title) in
+            }
+            return false
+        }
+        else if gender == "" {
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose Gender") { (index, title) in
+            }
             return false
         }
         return true
@@ -190,6 +234,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         let dictParams = NSMutableDictionary()
         dictParams.setObject(txtFirstName.text!, forKey: "Firstname" as NSCopying)
         dictParams.setObject(txtLastName.text!, forKey: "Lastname" as NSCopying)
+        dictParams.setObject(txtRafarralCode.text!, forKey: "ReferralCode" as NSCopying)
         dictParams.setObject(strPhoneNumber, forKey: "MobileNo" as NSCopying)
         dictParams.setObject(strEmail, forKey: "Email" as NSCopying)
         dictParams.setObject(strPassword, forKey: "Password" as NSCopying)
@@ -198,6 +243,8 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         dictParams.setObject(gender, forKey: "Gender" as NSCopying)
         dictParams.setObject("12376152367", forKey: "Lat" as NSCopying)
         dictParams.setObject("2348273489", forKey: "Lng" as NSCopying)
+        dictParams.setObject(strDateOfBirth, forKey: "DOB" as NSCopying)
+        
         
         
         webserviceForRegistrationForUser(dictParams, image1: imgProfile.image!) { (result, status) in
@@ -227,7 +274,9 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             else
             {
                 self.btnSignUp.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
-                    UtilityClass.showAlert("Error", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                  
+                    UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                     
                 })
             }

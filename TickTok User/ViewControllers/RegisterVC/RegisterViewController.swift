@@ -9,65 +9,49 @@
 import UIKit
 import ACFloatingTextfield_Swift
 
-class RegisterViewController: UIViewController {
+class RegisterViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var txtPhoneNumber: ACFloatingTextfield!
     @IBOutlet weak var txtEmail: ACFloatingTextfield!
     @IBOutlet weak var txtPassword: ACFloatingTextfield!
     @IBOutlet weak var txtConfirmPassword: ACFloatingTextfield!
     
-    
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        txtPhoneNumber.delegate = self
         
         //        txtPhoneNumber.text = "1234567890"
         //        txtEmail.text = "rahul.bbit@gmail.com"
         //        txtPassword.text = "12345678"
         //        txtConfirmPassword.text = "12345678"
+        
+        
+//        txtPhoneNumber.placeHolderColor = UIColor.red
         // Do any additional setup after loading the view.
     }
     
-    //MARK: - Validation
+    //-------------------------------------------------------------
+    // MARK: - TextField Delegate Method
+    //-------------------------------------------------------------
     
-    func checkValidation() -> Bool
-    {
-        if (txtPhoneNumber.text?.count == 0)
-        {
-            UtilityClass.showAlert("Enter Phone Number", message: "", vc: self)
-            return false
-        }
-        else if ((txtPhoneNumber.text?.count)! > 10)
-        {
-            UtilityClass.showAlert("Phone Number should be less than 10 digits", message: "", vc: self)
-            return false
-        }
-        else if (txtEmail.text?.count == 0)
-        {
-            UtilityClass.showAlert("Enter Email Address", message: "", vc: self)
-            return false
-        }
-        else if (txtPassword.text?.count == 0)
-        {
-            UtilityClass.showAlert("Enter Password", message: "", vc: self)
-            return false
-        }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        
+        if textField == txtPhoneNumber {
+            let resultText: String? = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
             
-        else if ((txtPassword.text?.count)! < 6)
-        {
-            UtilityClass.showAlert("Password should be of more than 6 characters", message: "", vc: self)
-            return false
+            if resultText!.count >= 11 {
+                return false
+            }
+            else {
+                return true
+            }
         }
-        else if (txtPassword.text != txtConfirmPassword.text)
-        {
-            UtilityClass.showAlert("Password and Confirm Password does not match", message: "", vc: self)
-            return false
-        }
+        
         return true
     }
-    
     
     
     
@@ -76,12 +60,13 @@ class RegisterViewController: UIViewController {
     
     @IBAction func btnNext(_ sender: Any) {
         
-        if (checkValidation())
+        if (validateAllFields())
         {
-            let registrationContainerVC = self.navigationController?.viewControllers.last as! RegistrationContainerViewController
-            registrationContainerVC.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
-            registrationContainerVC.pageControl.set(progress: 1, animated: true)
+
+            webserviceForGetOTPCode(email: txtEmail.text!, mobile: txtPhoneNumber.text!)
+
         }
+        
     }
     
     
@@ -97,5 +82,176 @@ class RegisterViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    //-------------------------------------------------------------
+    // MARK: - validation Email Methods
+    //-------------------------------------------------------------
+    
+    func validateAllFields() -> Bool
+    {
+     
+        let isEmailAddressValid = isValidEmailAddress(emailID: txtEmail.text!)
+        
+        if (txtPhoneNumber.text?.count == 0)
+        {
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Phone Number") { (index, title) in
+            }
+
+            return false
+        }
+        else if ((txtPhoneNumber.text?.count)! < 10)
+        {
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Phone Number should 10 digits") { (index, title) in
+            }
+
+            return false
+        }
+        else if (txtEmail.text?.count == 0)
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Email Address") { (index, title) in
+            }
+
+            return false
+        }
+        else if (!isEmailAddressValid)
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Valid Email ID") { (index, title) in
+            }
+
+            return false
+        }
+        else if (txtPassword.text?.count == 0)
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Password") { (index, title) in
+            }
+
+            return false
+        }
+            
+        else if ((txtPassword.text?.count)! < 6)
+        {
+            UtilityClass.setCustomAlert(title: "Required", message: "Password should be of more than 6 characters") { (index, title) in
+            }
+
+            return false
+        }
+        else if (txtPassword.text != txtConfirmPassword.text)
+        {
+            UtilityClass.setCustomAlert(title: "Missing", message: "Password and Confirm Password does not match") { (index, title) in
+            }
+
+            return false
+        }
+       
+        
+        return true
+    }
+    
+    
+    func isValidEmailAddress(emailID: String) -> Bool
+    {
+        var returnValue = true
+        let emailRegEx = "[A-Z0-9a-z.-_]+@[A-Za-z)-9.-]+\\.[A-Za-z]{2,3}"
+        
+        do{
+            let regex = try NSRegularExpression(pattern: emailRegEx)
+            let nsString = emailID as NSString
+            let results = regex.matches(in: emailID, range: NSRange(location: 0, length: nsString.length))
+            
+            if results.count == 0
+            {
+                returnValue = false
+            }
+        }
+        catch _ as NSError
+        {
+            returnValue = false
+        }
+        
+        return returnValue
+    }
+    
+    func setCustomAlert(title: String, message: String) {
+        AJAlertController.initialization().showAlertWithOkButton(aStrTitle: title, aStrMessage: message) { (index,title) in
+        }
+     
+    }
+    
+    func webserviceForGetOTPCode(email: String, mobile: String) {
+        
+//        Param : MobileNo,Email
+
+        
+        var param = [String:AnyObject]()
+        param["MobileNo"] = mobile as AnyObject
+        param["Email"] = email as AnyObject
+        
+        var boolForOTP = Bool()
+        
+        webserviceForOTPRegister(param as AnyObject) { (result, status) in
+            
+            if (status) {
+                print(result)
+                
+                let datas = (result as! [String:AnyObject])
+                
+                
+                UtilityClass.showAlertWithCompletion("OTP Code", message: datas["message"] as! String, vc: self, completionHandler: { ACTION in
+                    
+                    if let otp = datas["otp"] as? String {
+                        SingletonClass.sharedInstance.otpCode = otp
+                    }
+                    else if let otp = datas["otp"] as? Int {
+                        SingletonClass.sharedInstance.otpCode = "\(otp)"
+                    }
+                    
+                    
+                    let registrationContainerVC = self.navigationController?.viewControllers.last as! RegistrationContainerViewController
+                    registrationContainerVC.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
+                    registrationContainerVC.pageControl.set(progress: 1, animated: true)
+                    
+                })
+                
+//                UtilityClass.setCustomAlert(title: "OTP Code", message: datas["message"] as! String, completionHandler: { (index, title) in
+//
+//                    if let otp = datas["otp"] as? String {
+//                        SingletonClass.sharedInstance.otpCode = otp
+//                    }
+//                    else if let otp = datas["otp"] as? Int {
+//                        SingletonClass.sharedInstance.otpCode = "\(otp)"
+//                    }
+//
+//
+//                    let registrationContainerVC = self.navigationController?.viewControllers.last as! RegistrationContainerViewController
+//                    registrationContainerVC.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
+//                    registrationContainerVC.pageControl.set(progress: 1, animated: true)
+//
+//
+//                    let registrationContainerVC = self.navigationController?.viewControllers.last as! RegistrationContainerViewController
+//                    registrationContainerVC.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
+//                    registrationContainerVC.pageControl.set(progress: 1, animated: true)
+      
+                
+            }
+            else {
+                 print(result)
+                
+                if let res = result as? String {
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
+                }
+                else if let resDict = result as? NSDictionary {
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+                else if let resAry = result as? NSArray {
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+                
+            }
+        }
+    }
     
 }

@@ -18,27 +18,36 @@ import UserNotifications
 import Firebase
 
 
-let googlApiKey = "AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
-let googlPlacesApiKey = "AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
+let googlApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" //"AIzaSyBpHWct2Dal71hBjPis6R1CU0OHZNfMgCw"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
+let googlPlacesApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" // "AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 
 //AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     var window: UIWindow?
+    
+    
 
-     let SocketManager = SocketIOClient(socketURL: URL(string: "http://54.206.55.185:8080")!, config: [.log(false), .compress])
+     let SocketManager = SocketIOClient(socketURL: URL(string: SocketData.kBaseURL)!, config: [.log(false), .compress])
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+
+        
+        // Firebase
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
 
         
         IQKeyboardManager.sharedManager().enable = true
+        
+        
         GMSServices.provideAPIKey(googlApiKey)
-        GMSPlacesClient.provideAPIKey(googlPlacesApiKey)
+        GMSPlacesClient.provideAPIKey(googlApiKey)
+        
+        
         Fabric.with([Crashlytics.self])
         // TODO: Move this to where you establish a user session
      //   self.logUser()
@@ -50,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         SideMenuController.preferences.drawing.sidePanelWidth = (((window?.frame.width)! / 2) + ((window?.frame.width)! / 4))
         SideMenuController.preferences.drawing.centerPanelShadow = true
         SideMenuController.preferences.animating.statusBarBehaviour = .showUnderlay
+        
+        
         
         
         // ------------------------------------------------------------
@@ -66,17 +77,46 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             SingletonClass.sharedInstance.isUserLoggedIN = false
         }
         
-        
-        if UserDefaults.standard.object(forKey: "Passcode") as? String == nil {
+         // For Passcode Set
+        if UserDefaults.standard.object(forKey: "Passcode") as? String == nil || UserDefaults.standard.object(forKey: "Passcode") as? String == "" {
             SingletonClass.sharedInstance.setPasscode = ""
+            UserDefaults.standard.set(SingletonClass.sharedInstance.setPasscode, forKey: "Passcode")
         }
         else {
             SingletonClass.sharedInstance.setPasscode = UserDefaults.standard.object(forKey: "Passcode") as! String
         }
         
+        // For Passcode Switch
+        if let isSwitchOn = UserDefaults.standard.object(forKey: "isPasscodeON") as? Bool {
+            
+            SingletonClass.sharedInstance.isPasscodeON = isSwitchOn
+            UserDefaults.standard.set(SingletonClass.sharedInstance.isPasscodeON, forKey: "isPasscodeON")
+        }
+        else {
+            SingletonClass.sharedInstance.isPasscodeON = false
+            UserDefaults.standard.set(SingletonClass.sharedInstance.isPasscodeON, forKey: "isPasscodeON")
+        }
+
+        
+        
         
         // Push Notification Code
         registerForPushNotification()
+        
+        let remoteNotif = launchOptions?[UIApplicationLaunchOptionsKey.remoteNotification] as? NSDictionary
+        
+        if remoteNotif != nil {
+            let key = (remoteNotif as! NSDictionary).object(forKey: "gcm.notification.type")!
+            NSLog("\n Custom: \(String(describing: key))")
+            self.pushAfterReceiveNotification(typeKey: key as! String)
+        }
+        else {
+            //            let aps = remoteNotif!["aps" as NSString] as? [String:AnyObject]
+            NSLog("//////////////////////////Normal launch")
+            //            self.pushAfterReceiveNotification(typeKey: "")
+            
+        }
+        
         /*
          if let notification = launchOptions?[.remoteNotification] as? [String:AnyObject] {
          
@@ -120,6 +160,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+        let isSwitchOn = UserDefaults.standard.object(forKey: "isPasscodeON") as? Bool
+        let passCode = SingletonClass.sharedInstance.setPasscode
+        
+        SingletonClass.sharedInstance.isPasscodeON = isSwitchOn!
+        
+        if (passCode != "" && SingletonClass.sharedInstance.isPasscodeON) {
+            
+            let mainStoryboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let initialViewController = mainStoryboard.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
+            
+            initialViewController.isFromAppDelegate = true
+            self.window?.rootViewController?.present(initialViewController, animated: true, completion: nil)
+        }
+        
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
@@ -170,31 +225,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     }
     
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-        /*
-         //        let aps = userInfo["aps"] as! [String:AnyObject]
-         // 1
-         if aps["content-available"] as? Int == 1 {
-         let podcastStore = PodcastStore.sharedStore
-         // Refresh Podcast
-         // 2
-         podcastStore.refreshItems { didLoadNewItems in
-         // 3
-         completionHandler(didLoadNewItems ? .newData : .noData)
-         }
-         } else  {
-         // News
-         // 4
-         //        _ = NewsItems.makeNewsItems(aps)
-         completionHandler(.newData)
-         }
-         */
-        /*
-         {
-         "aps": {
-         "content-available": 1
-         }
-         }
-         */
+        
+        let key = (userInfo as NSDictionary).object(forKey: "gcm.notification.type")!
+        
+        if(application.applicationState == .background)
+        {
+            self.pushAfterReceiveNotification(typeKey: key as! String)
+        }
+        
+
         
         // Let FCM know about the message for analytics etc.
         Messaging.messaging().appDidReceiveMessage(userInfo)
@@ -256,7 +295,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
             UNUserNotificationCenter.current().setNotificationCategories([newsCategory])
 */
             self.getNotificationSettings()
-            
+
         })
         
         /*        {
@@ -269,6 +308,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
          }
          */
     }
+
     
     func getNotificationSettings() {
         
@@ -301,7 +341,129 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         print("FCM token: \(token ?? "")")
         
     }
-  
+    
+    //-------------------------------------------------------------
+    // MARK: - Actions On Push Notifications
+    //-------------------------------------------------------------
+    
+    func pushAfterReceiveNotification(typeKey : String)
+    {
+        
+        if(typeKey == "AddMoney")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController: UIViewController? = navController?.storyboard?.instantiateViewController(withIdentifier: "WalletHistoryViewController")
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "TransferMoney")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController: UIViewController? = navController?.storyboard?.instantiateViewController(withIdentifier: "WalletHistoryViewController")
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "Tickpay")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController: UIViewController? = navController?.storyboard?.instantiateViewController(withIdentifier: "PayViewController")
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "AcceptBooking")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController = navController?.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController") as! MyBookingViewController
+                notificationController.bookingType = "accept"
+                notificationController.isFromPushNotification = true
+                
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "RejectBooking")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController = navController?.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController")  as! MyBookingViewController
+                notificationController.bookingType = "reject"
+                notificationController.isFromPushNotification = true
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "OnTheWay")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController = navController?.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController") as! MyBookingViewController
+                notificationController.bookingType = "accept"
+                notificationController.isFromPushNotification = true
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "Booking")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController = navController?.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController")  as! MyBookingViewController
+                notificationController.bookingType = "reject"
+                notificationController.isFromPushNotification = true
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        else if(typeKey == "AdvanceBooking")
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                let navController = self.window?.rootViewController as? UINavigationController
+                let notificationController = navController?.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController")  as! MyBookingViewController
+                notificationController.bookingType = "reject"
+                notificationController.isFromPushNotification = true
+                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+                    
+                })
+            }
+        }
+        
+//        else if(typeKey == "RejectDispatchJobRequest")
+//        {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                let navController = self.window?.rootViewController as? UINavigationController
+//                let notificationController: UIViewController? = navController?.storyboard?.instantiateViewController(withIdentifier: "PastJobsListVC")
+//                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+//
+//                })
+//            }
+//        }
+//        else if(typeKey == "BookLaterDriverNotify")
+//        {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+//                let navController = self.window?.rootViewController as? UINavigationController
+//                let notificationController: UIViewController? = navController?.storyboard?.instantiateViewController(withIdentifier: "FutureBookingVC")
+//                navController?.present(notificationController ?? UIViewController(), animated: true, completion: {
+//
+//                })
+//            }
+//        }
+    }
+    
+   
 
 }
 

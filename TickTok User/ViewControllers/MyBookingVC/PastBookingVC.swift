@@ -26,7 +26,7 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -90,28 +90,110 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             if let name = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String {
                 
                 if name == "" {
-                    cell.lblDriverName.text = "NULL"
+                    cell.lblDriverName.isHidden = true
                 }
                 else {
                     cell.lblDriverName.text = name
                 }
+            }
+           
+            let formattedString = NSMutableAttributedString()
+            formattedString
+                .normal("Booking Id: ")
+                .bold("\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))", 14)
+            
+            let lbl = UILabel()
+            lbl.attributedText = formattedString
+            
+            cell.lblBookingID.attributedText = formattedString
+            
+//            cell.lblBookingID.text = "Booking Id: \(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))"
+            
+            if let dateAndTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String {
+                
+                if dateAndTime == "" {
+                    cell.lblDateAndTime.isHidden = true
+                }
+                else {
+                    cell.lblDateAndTime.text = dateAndTime
+                }
                 
             }
-            else {
-                cell.lblDriverName.text = "NULL"
+//            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
+            
+            // DropOff Address is PickupAddress
+            // Pickup Address is DropOffAddress
+            
+            if let pickupAddress = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String {
+//                DropoffLocation
+                if pickupAddress == "" {
+                     cell.lblPickupAddress.isHidden = true
+                    
+                }
+                else {
+                    cell.lblPickupAddress.text = pickupAddress
+                }
+            }
+           
+            if let dropoffAddress = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String {
+//                PickupLocation
+                if dropoffAddress == "" {
+                    cell.lblDropoffAddress.isHidden = true
+                }
+                else {
+                    cell.lblDropoffAddress.text = dropoffAddress
+                }
             }
             
+//            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
+//            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
             
-            cell.lblBookingID.text = "Booking Id: (\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!)))"
-            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
+            if let pickupTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String {
+                if pickupTime == "" {
+                    cell.lblPickupTime.isHidden = true
+                    cell.stackViewPickupTime.isHidden = true
+                }
+                else {
+                    cell.lblPickupTime.text = setTimeStampToDate(timeStamp: pickupTime)
+                }
+            }
             
-            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
-            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
+            if let DropoffTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String {
+                if DropoffTime == "" {
+                    cell.lblDropoffTime.isHidden = true
+                    cell.stackViewDropoffTime.isHidden = true
+                }
+                else {
+                    cell.lblDropoffTime.text = setTimeStampToDate(timeStamp: DropoffTime)
+                }
+            }
             
-            cell.lblPickupTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String
-            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
-            cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
-            cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
+//            cell.lblPickupTime.text = setTimeStampToDate(timeStamp: ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String)!)
+//            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
+            
+            if let strModel = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String {
+                if strModel == "" {
+                    cell.lblVehicleType.isHidden = true
+                    cell.stackViewVehicleType.isHidden = true
+                }
+                else {
+                    cell.lblVehicleType.text = strModel
+                }
+            }
+//            cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
+            if let strTripDistance = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String {
+                if strTripDistance == "" {
+                    cell.lblDistanceTravelled.isHidden = true
+                    cell.stackViewDistanceTravelled.isHidden = true
+                }
+                else {
+                    cell.lblDistanceTravelled.text = strTripDistance
+                }
+            }
+//            cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
+            
+            
+            
             cell.lblTripFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
             cell.lblNightFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "NightFare") as? String
             cell.lblTollFee.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TollFee") as? String
@@ -148,13 +230,40 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     //-------------------------------------------------------------
-    // MARK: - Webservice Methods
+    // MARK: - Custom Methods
     //-------------------------------------------------------------
     
-    
+    func setTimeStampToDate(timeStamp: String) -> String {
+        
+        let unixTimestamp = Double(timeStamp)
+        //        let date = Date(timeIntervalSince1970: unixTimestamp)
+        
+        let date = Date(timeIntervalSince1970: unixTimestamp!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current //Set timezone that you want
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd" //Specify your format that you want
+        let strDate: String = dateFormatter.string(from: date)
+        
+        return strDate
+    }
 
-    
-    
-    
+}
 
+
+extension NSMutableAttributedString {
+    @discardableResult func bold(_ text: String, _ fontSize: CGFloat) -> NSMutableAttributedString {
+        let attrs: [NSAttributedStringKey: Any] = [.font: UIFont(name: "AvenirNext-Medium", size: fontSize)!]
+        let boldString = NSMutableAttributedString(string:text, attributes: attrs)
+        append(boldString)
+        
+        return self
+    }
+    
+    @discardableResult func normal(_ text: String) -> NSMutableAttributedString {
+        let normal = NSAttributedString(string: text)
+        append(normal)
+        
+        return self
+    }
 }

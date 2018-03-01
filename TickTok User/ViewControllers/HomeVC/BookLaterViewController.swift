@@ -12,9 +12,23 @@ import GoogleMaps
 import GooglePlaces
 import SDWebImage
 import FormTextField
+import ACFloatingTextfield_Swift
+import IQKeyboardManagerSwift
+
+protocol isHaveCardFromBookLaterDelegate {
+    
+    func didHaveCards()
+}
+
+extension UIApplication {
+    var statusBarView: UIView? {
+        
+        return value(forKey: "statusBar") as? UIView
+    }
+}
 
 
-class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDelegate, UINavigationControllerDelegate, WWCalendarTimeSelectorProtocol, UIPickerViewDelegate, UIPickerViewDataSource {
+class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDelegate, UINavigationControllerDelegate, WWCalendarTimeSelectorProtocol, UIPickerViewDelegate, UIPickerViewDataSource, isHaveCardFromBookLaterDelegate, UITextFieldDelegate {
    
     
 
@@ -46,6 +60,28 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        txtDropOffLocation.delegate = self
+        
+//        UIApplication.shared.statusBarView?.backgroundColor = UIColor.black
+         
+         
+        
+        if #available(iOS 11.0, *) {
+            if (UIApplication.shared.keyWindow?.safeAreaInsets.top)! > 0.0 {
+                
+                print("iPhone X")
+            }
+            else {
+                print("Not iPhone X ")
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+    
+        txtDropOffLocation.text = strDropoffLocation
+
+        
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         txtFullName.leftView = paddingView
         txtFullName.leftViewMode = .always
@@ -60,8 +96,7 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         
         viewProocode.isHidden = true
         
-        constantHavePromoCodeTop.constant = 0
-        constantNoteHeight.constant = 0
+
         
         webserviceOfCardList()
         
@@ -85,18 +120,67 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         checkMobileNumber()
         
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+         
+          
+        gaveCornerRadius()
+        
+        if SingletonClass.sharedInstance.CardsVCHaveAryData.count != 0 {
+            pickerView.reloadAllComponents()
+            txtSelectPaymentMethod.text = ""
+            imgPaymentOption.image = UIImage(named: "iconDummyCard")
+//            paymentType = "cash"
+           pickerView.selectedRow(inComponent: 0)
+            txtSelectPaymentMethod.becomeFirstResponder()
+            txtSelectPaymentMethod.resignFirstResponder()
+ 
+        }
+        
+       txtSelectPaymentMethod.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(self.IQKeyboardmanagerDoneMethod))
+        
+        fillTextFields()
+        
+//        getPlaceFromLatLong()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func fillTextFields() {
+        txtPickupLocation.text = strPickupLocation
+        txtDropOffLocation.text = strDropoffLocation
+        
+    }
+    
+    func gaveCornerRadius() {
+        
+        viewCurrentLocation.layer.cornerRadius = 5
+        viewDestinationLocation.layer.cornerRadius = 5
+        
+        viewCurrentLocation.layer.borderWidth = 1
+        viewDestinationLocation.layer.borderWidth = 1
+        
+        viewDestinationLocation.layer.borderColor = UIColor.black.cgColor
+        viewDestinationLocation.layer.borderColor = UIColor.black.cgColor
+        
+        viewCurrentLocation.layer.masksToBounds = true
+        viewDestinationLocation.layer.masksToBounds = true
+        
+    }
 
     func setViewDidLoad() {
         
-        viewMySelf.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        viewOthers.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        viewFlightNumber.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        btnNotes.tintColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+//        let themeColor: UIColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)
+        
+        viewMySelf.tintColor = themeYellowColor
+        viewOthers.tintColor = themeYellowColor
+        viewFlightNumber.tintColor = themeYellowColor
+        btnNotes.tintColor = themeYellowColor
         
         
         viewMySelf.stateChangeAnimation = .fill
@@ -114,7 +198,17 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         
         constraintsHeightOFtxtFlightNumber.constant = 0 // 30 Height
         constaintsOfTxtFlightNumber.constant = 0
+        imgViewLineForFlightNumberHeight.constant = 0
+        
+        constantHavePromoCodeTop.constant = 0
+        constantNoteHeight.constant = 0
+        imgViewLineForFlightNumberHeight.constant = 0
+        imgViewLineForNotesHeight.constant = 0
+        
         txtFlightNumber.isHidden = true
+        txtFlightNumber.isEnabled = false
+        txtDescription.isEnabled = false
+        
         
         alertView.layer.cornerRadius = 10
         alertView.layer.masksToBounds = true
@@ -133,10 +227,10 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         btnSubmit.layer.cornerRadius = 10
         btnSubmit.layer.masksToBounds = true
         
-        viewCurrentLocation.layer.shadowOpacity = 0.3
-        viewCurrentLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
-        viewDestinationLocation.layer.shadowOpacity = 0.3
-        viewDestinationLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
+//        viewCurrentLocation.layer.shadowOpacity = 0.3
+//        viewCurrentLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
+//        viewDestinationLocation.layer.shadowOpacity = 0.3
+//        viewDestinationLocation.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
     }
     
     //-------------------------------------------------------------
@@ -191,6 +285,10 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     @IBOutlet weak var btnForMySelfAction: UIButton!
     @IBOutlet weak var btnForOthersAction: UIButton!
     
+    @IBOutlet weak var imgViewLineForFlightNumberHeight: NSLayoutConstraint!
+    @IBOutlet weak var imgViewLineForNotesHeight: NSLayoutConstraint!
+    
+    
     //-------------------------------------------------------------
     // MARK: - Button Actions
     //-------------------------------------------------------------
@@ -224,8 +322,6 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         txtPromoCode.becomeFirstResponder()
         viewProocode.isHidden = false
         
-        
-        
 //        UIApplication.shared.keyWindow!.bringSubview(toFront: alertView)
     }
     
@@ -237,14 +333,18 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             
             constantNoteHeight.constant = 40
             constantHavePromoCodeTop.constant = 10
+            imgViewLineForNotesHeight.constant = 1
             txtSelectPaymentMethod.isHidden = false
+             txtDescription.isEnabled = true
         }
         else {
             
             constantNoteHeight.constant = 0
             constantHavePromoCodeTop.constant = 0
+            imgViewLineForNotesHeight.constant = 0
             txtSelectPaymentMethod.isHidden = true
-            
+            txtDescription.isEnabled = false
+
         }
         
     }
@@ -302,20 +402,23 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             
             constraintsHeightOFtxtFlightNumber.constant = 40
             constaintsOfTxtFlightNumber.constant = 10
+            imgViewLineForFlightNumberHeight.constant = 1
             txtFlightNumber.isHidden = false
+            txtFlightNumber.isEnabled = true
         }
         else {
             
             constraintsHeightOFtxtFlightNumber.constant = 0
             constaintsOfTxtFlightNumber.constant = 0
+            imgViewLineForFlightNumberHeight.constant = 0
             txtFlightNumber.isHidden = true
+            txtFlightNumber.isEnabled = false
            
         }
     }
     
     @IBAction func txtPickupLocation(_ sender: UITextField) {
-        
-        
+
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
         
@@ -338,23 +441,37 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     @IBAction func btnCalendar(_ sender: UIButton) {
         
         selector.optionCalendarFontColorPastDates = UIColor.gray
-        selector.optionButtonFontColorDone = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionSelectorPanelBackgroundColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionCalendarBackgroundColorTodayHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionTopPanelBackgroundColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionClockBackgroundColorMinuteHighlightNeedle = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionClockBackgroundColorHourHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionClockBackgroundColorAMPMHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionCalendarBackgroundColorPastDatesHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionCalendarBackgroundColorFutureDatesHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
-        selector.optionClockBackgroundColorMinuteHighlight = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
+
+        selector.optionButtonFontColorDone = themeYellowColor
+        selector.optionSelectorPanelBackgroundColor = themeYellowColor
+        selector.optionCalendarBackgroundColorTodayHighlight = themeYellowColor
+        selector.optionTopPanelBackgroundColor = themeYellowColor
+        selector.optionClockBackgroundColorMinuteHighlightNeedle = themeYellowColor
+        selector.optionClockBackgroundColorHourHighlight = themeYellowColor
+        selector.optionClockBackgroundColorAMPMHighlight = themeYellowColor
+        selector.optionCalendarBackgroundColorPastDatesHighlight = themeYellowColor
+        selector.optionCalendarBackgroundColorFutureDatesHighlight = themeYellowColor
+        selector.optionClockBackgroundColorMinuteHighlight = themeYellowColor
         
         
+        
+//        selector.optionStyles.showDateMonth(true)
+        selector.optionStyles.showYear(false)
+//        selector.optionStyles.showMonth(true)
+        
+        selector.optionStyles.showTime(true)
         
         // 2. You can then set delegate, and any customization options
-        //        selector.delegate = self
+
         selector.optionTopPanelTitle = "Please choose date"
         
+        selector.optionIdentifier = "Time" as AnyObject
+
+        let dateCurrent = Date()
+     
+
+        selector.optionCurrentDate = dateCurrent.addingTimeInterval(30 * 60)
+
         // 3. Then you simply present it from your view controller when necessary!
         self.present(selector, animated: true, completion: nil)
    
@@ -365,13 +482,17 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     @IBAction func btnSubmit(_ sender: UIButton) {
         
        
-        if txtFullName.text == "" || txtMobileNumber.text == "" || txtPickupLocation.text == "" || txtDropOffLocation.text == "" || txtDataAndTimeFromCalendar.text == "" || strPassengerType == ""  {
+        if txtFullName.text == "" || txtMobileNumber.text == "" || txtPickupLocation.text == "" || txtDropOffLocation.text == "" || txtDataAndTimeFromCalendar.text == "" || strPassengerType == "" || paymentType == "" {
             
-            UtilityClass.showAlert("Missing", message: "All fields are required...", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "All fields are required...") { (index, title) in
+            }
         }
         else if viewMySelf.checkState == .unchecked && viewOthers.checkState == .unchecked {
             
-            UtilityClass.showAlert("Missing", message: "Please Checked Myself or Other", vc: self)
+           
+            UtilityClass.setCustomAlert(title: "Missing", message: "Please Checked Myself or Other") { (index, title) in
+            }
         }
         else {
             webserviceOFBookLater()
@@ -395,7 +516,7 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         let inputValidator = InputValidator(validation: validationsMobileNumber)
         txtMobileNumber.inputValidator = inputValidator
         
-        print("txtCVV.text : \(txtMobileNumber.text!)")
+        print("txtMobileNumber : \(txtMobileNumber.text!)")
     }
     
     var strPickupLocation = String()
@@ -443,6 +564,18 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
     //-------------------------------------------------------------
     // MARK: - Custom Methods
     //-------------------------------------------------------------
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
+        if textField == txtDropOffLocation {
+            
+            self.txtDropOffLocation(txtDropOffLocation)
+            
+            return false
+        }
+        
+        return true
+    }
     
     
     func getPlaceFromLatLong()
@@ -498,6 +631,9 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         case "iconWalletBlack":
             CardIcon = "iconWalletBlack"
             return CardIcon
+        case "iconPlusBlack":
+            CardIcon = "iconPlusBlack"
+            return CardIcon
         case "other":
             CardIcon = "iconDummyCard"
             return CardIcon
@@ -506,6 +642,23 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         }
         
     }
+    
+    func didHaveCards() {
+        
+        aryCards.removeAll()
+        webserviceOfCardList()
+    }
+    
+    @objc func IQKeyboardmanagerDoneMethod() {
+        
+        if (isAddCardSelected) {
+             self.addNewCard()
+        }
+        
+//        txtSelectPaymentMethod.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(self.IQKeyboardmanagerDoneMethod))
+    }
+    
+  
     
     //-------------------------------------------------------------
     // MARK: - PickerView Methods
@@ -534,7 +687,10 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         
         let myView = UIView(frame: CGRect(x:0, y:0, width: pickerView.bounds.width - 30, height: 60))
         
-        let myImageView = UIImageView(frame: CGRect(x:0, y:0, width:50, height:50))
+        let centerOfmyView = myView.frame.size.height / 4
+ 
+        
+        let myImageView = UIImageView(frame: CGRect(x:0, y:centerOfmyView, width:40, height:26))
         myImageView.contentMode = .scaleAspectFit
         
         var rowString = String()
@@ -589,12 +745,20 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         return myView
     }
     
+    var isAddCardSelected = Bool()
+    
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         let data = aryCards[row]
         
         imgPaymentOption.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
         txtSelectPaymentMethod.text = data["CardNum2"] as? String
+        
+        if data["CardNum"] as! String == "Add a Card" {
+            
+            isAddCardSelected = true
+//            self.addNewCard()
+        }
         
         let type = data["CardNum"] as! String
         
@@ -610,13 +774,23 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         
         
         if paymentType == "card" {
-            CardID = data["Id"] as! String
+            
+            if data["Id"] as? String != "" {
+                CardID = data["Id"] as! String
+            }
         }
-        
-        
         
         // do something with selected row
     }
+    
+    func addNewCard() {
+        
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
+        next.delegateAddCardFromBookLater = self
+        self.isAddCardSelected = false
+        self.navigationController?.present(next, animated: true, completion: nil)
+    }
+    
     
     //-------------------------------------------------------------
     // MARK: - Calendar Method
@@ -629,34 +803,66 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
        
         if currentDate < date {
             
-            let myDateFormatter: DateFormatter = DateFormatter()
-            myDateFormatter.dateFormat = "dd/MM/yyyy hh:mm"
+//            let calendarDate = Calendar.current
+//            let hour = calendarDate.component(.hour, from: date)
+//            let minutes = calendarDate.component(.minute, from: date)
+   
+            let currentTimeInterval = currentDate.addingTimeInterval(30 * 60)
             
-            let dateOfPostToApi: DateFormatter = DateFormatter()
-            dateOfPostToApi.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            if  date > currentTimeInterval {
+                
+                let myDateFormatter: DateFormatter = DateFormatter()
+                myDateFormatter.dateFormat = "dd/MM/yyyy hh:mm a"
+                
+                let dateOfPostToApi: DateFormatter = DateFormatter()
+                dateOfPostToApi.dateFormat = "yyyy-MM-dd HH:mm:ss"
             
-            //        dateOfPostToApi.locale = Locale(identifier: NSLocale.current.identifier)
-            
-            convertDateToString = dateOfPostToApi.string(from: date)
-            
-            
-            let finalDate = myDateFormatter.string(from: date)
-            
-            // get the date string applied date format
-            let mySelectedDate = String(describing: finalDate)
-            
-            txtDataAndTimeFromCalendar.text = mySelectedDate
+                convertDateToString = dateOfPostToApi.string(from: date)
+                
+                let finalDate = myDateFormatter.string(from: date)
+                
+                // get the date string applied date format
+                let mySelectedDate = String(describing: finalDate)
+                
+                txtDataAndTimeFromCalendar.text = mySelectedDate
+            }
+            else {
+                
+                txtDataAndTimeFromCalendar.text = ""
+                
+                UtilityClass.setCustomAlert(title: "Time should be", message: "Please select 30 minutes greater time from current time!") { (index, title) in
+                }
+
+            }
             
         }
- 
+
+    }
+    
+    func WWCalendarTimeSelectorWillDismiss(_ selector: WWCalendarTimeSelector) {
+        
+        
         
     }
+    
+    func WWCalendarTimeSelectorDidDismiss(_ selector: WWCalendarTimeSelector) {
+        
+    }
+
     
     func WWCalendarTimeSelectorShouldSelectDate(_ selector: WWCalendarTimeSelector, date: Date) -> Bool {
         
         if currentDate < date {
           
-            return true
+            let currentTimeInterval = currentDate.addingTimeInterval(30 * 60)
+            
+            if  date > currentTimeInterval {
+            
+                
+                return true
+            }
+            
+            return false
         }
         
         return false
@@ -696,7 +902,9 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
         dictData["Notes"] = txtDescription.text as AnyObject
        
         if paymentType == "" {
-            UtilityClass.showAlert("", message: "Select Payment Type", vc: self)
+            
+            UtilityClass.setCustomAlert(title: "Missing", message: "Select Payment Type") { (index, title) in
+            }
         }
         else {
             dictData["PaymentType"] = paymentType as AnyObject
@@ -721,13 +929,12 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             
             if (status) {
                 print(result)
-                
-                let alert = UIAlertController(title: nil, message: "Booking Successful", preferredStyle: .alert)
-                let ok = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
+
+                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your ride has been booked.", completionHandler: { (index, title) in
+                    
                     self.navigationController?.popViewController(animated: true)
                 })
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
+                
  /*
                 {
                     info =     {
@@ -747,14 +954,18 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             } else {
                 
                 print(result)
+              
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -795,6 +1006,34 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
                 self.aryCards.append(dict)
                 self.aryCards.append(dict2)
                 
+                if self.aryCards.count == 2 {
+                    var dict3 = [String:AnyObject]()
+                    dict3["Id"] = "000" as AnyObject
+                    dict3["CardNum"] = "Add a Card" as AnyObject
+                    dict3["CardNum2"] = "Add a Card" as AnyObject
+                    dict3["Type"] = "iconPlusBlack" as AnyObject
+                    self.aryCards.append(dict3)
+                    
+                }
+                
+                self.pickerView.selectedRow(inComponent: 0)
+                let data = self.aryCards[0]
+                
+                self.imgPaymentOption.image = UIImage(named: self.setCardIcon(str: data["Type"] as! String))
+                self.txtSelectPaymentMethod.text = data["CardNum2"] as? String
+                
+                let type = data["CardNum"] as! String
+                
+                if type  == "wallet" {
+                    self.paymentType = "wallet"
+                }
+                else if type == "cash" {
+                    self.paymentType = "cash"
+                }
+                else {
+                    self.paymentType = "card"
+                }
+                
                 self.pickerView.reloadAllComponents()
               
                 /*
@@ -817,13 +1056,16 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
                 }
             }
         }
@@ -849,7 +1091,7 @@ extension BookLaterViewController: CLLocationManagerDelegate {
         let location: CLLocation = locations.last!
         print("Location: \(location)")
         
-        self.getPlaceFromLatLong()
+//        self.getPlaceFromLatLong()
      
     }
     

@@ -56,6 +56,7 @@ class SingletonClass: NSObject {
     var strIsFirstTimeTickPay = String()
     var strTickPayId = String()
     var strAmoutOFTickPay = String()
+    var strAmoutOFTickPayOriginal = String()
     
     var strCurrentCity = String()
     
@@ -72,4 +73,23 @@ class SingletonClass: NSObject {
     
     var setPasscode = String()
     var passwordFirstTime = Bool()
+    
+    var passengerRating = String()
+    
+    var isPasscodeON = Bool()
+    
+    var dictDriverProfile = NSDictionary()
+    var dictCarInfo = [String : AnyObject]()
+    var passengerTypeOther = Bool()
+    
+    var driverLocation = [String:AnyObject]()
+    
+    
+    var TiCKPayVarifyKey = Int()
+    var allDiverShowOnBirdView = NSArray()
+    
+    var isFromNotificationBookLater = Bool()
+    
+    var otpCode = String()
+    
 }

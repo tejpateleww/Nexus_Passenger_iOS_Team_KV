@@ -28,8 +28,8 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     var locationManager = CLLocationManager()
     var currentLocation: CLLocation?
     var placesClient: GMSPlacesClient!
-    var defaultLocation = CLLocation(latitude: -33.869405, longitude: 151.199)
-    var zoomLevel: Float = 15.0
+    var defaultLocation = CLLocation() // CLLocation(latitude: -37.814, longitude: 144.96332)// 144.96332
+    var zoomLevel: Float = 5.0
     var viewMap = UIView()
     
     let pulsator = Pulsator()
@@ -42,9 +42,26 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 2436: break
+                
+            default:
+                print("unknown")
+            }
+        }
 
-        startAnimation()
+//        startAnimation()
+        
         webserviceForAllDrivers()
+        
+//        if SingletonClass.sharedInstance.allDiverShowOnBirdView.count != 0 {
+//            webserviceForAllDrivers()
+//        }
+//        else {
+//            self.dictData = SingletonClass.sharedInstance.allDiverShowOnBirdView
+//        }
         
         
         if( CLLocationManager.authorizationStatus() == CLAuthorizationStatus.authorizedWhenInUse ||
@@ -68,9 +85,17 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
   
         subMapView.addSubview(mapView)
         
+         getAllLatandLong()
+        
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+   
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -96,7 +121,7 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
         
         ripple = MTRipple.init(frame:CGRect(x: 0.0, y: 0.0, width: self.animatingView.frame.size.width, height: self.animatingView.frame.size.height)).startViewAniamtion(animationTime: 4.0, animateView: self.animatingView) as! MTRipple
         
-        ripple.setImage(UIImage.init(named: "round.png")!)
+        ripple.setImage(UIImage.init(named: "round30.png")!)
         
         scheduledTimerWithTimeInterval()
     }
@@ -108,7 +133,9 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     @IBAction func btnDismissToHome(_ sender: UIButton) {
         
-        ripple.hideAnimation()
+        if ripple != nil {
+             ripple.hideAnimation()
+        }
         
         self.dismiss(animated: true, completion: nil)
         
@@ -128,7 +155,9 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
     
     @IBAction func btnClose(_ sender: UIButton) {
        
-         ripple.hideAnimation()
+        if ripple != nil {
+             ripple.hideAnimation()
+        }
         
         self.dismiss(animated: true, completion: nil)
         
@@ -152,7 +181,7 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
         
         let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                               longitude: location.coordinate.longitude,
-                                              zoom: 17)
+                                              zoom: zoomLevel)
         mapView.camera = camera
         
         print("Location: \(location)")
@@ -206,6 +235,7 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
 
                 self.dictData = ((result as! NSDictionary).object(forKey: "drivers") as! NSArray)
                 self.getAllLatandLong()
+                self.startAnimation()
            
             }
             else {
@@ -223,21 +253,29 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
             let lat = currentMarkers.object(forKey: "Lat") as! String
             let lng = currentMarkers.object(forKey: "Lng") as! String
             let name = currentMarkers.object(forKey: "Fullname") as! String
-            let img = (currentMarkers.object(forKey: "Models") as! String).first!
+    
+            if currentMarkers.object(forKey: "Models") as! String != "" {
+                
+                let img = (currentMarkers.object(forKey: "Models") as! String).first!
+                
+                if (lat != "" && lng != "") && (lat != "0" && lng != "0") {
+                    let doubleLat = Double(lat)
+                    let doubleLng = Double(lng)
+                    setMarkersOnMap(latitude: doubleLat!, longitude: doubleLng!, name: name, carModel: setCarImage(modelId: img))
+                }
+            }
             
+
+//            let img = (currentMarkers.object(forKey: "Models") as! String).replacingOccurrences(of: ",", with: "")
             
-             
+//            print("img : \(img)")
+//            let strImg = Character("".randomCarModelFromList(length: 1, param: img))
+//            print("strImg : \(strImg)")
+            
             print(lat)
             print(lng)
             
-            if (lat != "" && lng != "") && (lat != "0" && lng != "0") {
-                
-                let doubleLat = Double(lat)
-                let doubleLng = Double(lng)
-                
-                setMarkersOnMap(latitude: doubleLat!, longitude: doubleLng!, name: name, carModel: setCarImage(modelId: img))
-                
-            }
+            
         }
     }
     
@@ -247,28 +285,41 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
        
         switch modelId {
         case "1":
-            CarModel = "iconBusinessClass"
+            CarModel = "imgBusinessClass"
              return CarModel
         case "2":
-            CarModel = "iconDisability"
+            CarModel = "imgDisability"
              return CarModel
         case "3":
-            CarModel = "iconTaxi"
+            CarModel = "imgTaxi"
              return CarModel
         case "4":
-            CarModel = "iconFirstClass"
+            CarModel = "imgFirstClass"
              return CarModel
         case "5":
-            CarModel = "iconLuxVan"
+            CarModel = "imgLUXVAN"
              return CarModel
         case "6":
-            CarModel = "iconEconomy"
+            CarModel = "imgEconomy"
              return CarModel
         default:
-            CarModel = "iconCar"
+            CarModel = "imgTaxi"
              return CarModel
         }
     }
     
 }
 
+extension String {
+    
+    func randomCarModelFromList(length: Int, param: String) -> String {
+        let base = param
+        var randomString: String = ""
+        
+        for _ in 0..<length {
+            let randomValue = arc4random_uniform(UInt32(base.count))
+            randomString += "\(base[base.index(base.startIndex, offsetBy: Int(randomValue))])"
+        }
+        return randomString
+    }
+}

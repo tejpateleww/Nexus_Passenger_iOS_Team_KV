@@ -28,7 +28,7 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -88,10 +88,12 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         if aryData.count > 0 {
 
 cell.selectionStyle = .none
-            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
-            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
+            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String // PickupLocation
+            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String //  DropoffLocation
+            var time = ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String)
+            time!.removeLast(3)
+            
             cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
-       
             cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
   
             if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? String {
@@ -139,28 +141,85 @@ cell.selectionStyle = .none
         let socketData = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController).socket
         let showTopView = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController)
         
-        if bookinType == "Book Now" {
-            let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
-            socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
+        if (SingletonClass.sharedInstance.isTripContinue) {
             
-            showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+//            if (SingletonClass.sharedInstance.bookingId == String(bookingID)) {
             
-            UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
-                self.navigationController?.popViewController(animated: true)
-            })
-           
+            UtilityClass.setCustomAlert(title: "Your trip has started", message: "You cannot cancel this request.") { (index, title) in
+            }
+            
+//            }
+            
         }
         else {
-            let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
-            socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
-            
-            UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
-                self.navigationController?.popViewController(animated: true)
-            })
-            
-            
+            if bookinType == "Book Now" {
+                let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+                socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
+                
+                showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                
+//                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+//                    self.navigationController?.popViewController(animated: true)
+//                })
+                
+                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
+            else {
+                let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+                socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
+                
+//                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+//                    self.navigationController?.popViewController(animated: true)
+//                })
+                
+                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+                    self.navigationController?.popViewController(animated: true)
+                })
+            }
         }
+        
        
+       
+    }
+    
+    //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
+    
+    func setTimeStampToDate(timeStamp: String) -> String {
+        
+        let unixTimestamp = Double(timeStamp)
+        //        let date = Date(timeIntervalSince1970: unixTimestamp)
+        
+        let date = Date(timeIntervalSince1970: unixTimestamp!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current //Set timezone that you want
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm dd/MM/yyyy" //Specify your format that you want
+        let strDate: String = dateFormatter.string(from: date)
+        
+        return strDate
+    }
+    
+    func changeDateAndTimeFormate(dateAndTime: String) -> String {
+        
+       
+        
+        let time = dateAndTime // "22:02:00"
+        
+        let dateFormatter = DateFormatter()
+        
+        dateFormatter.dateFormat = "yyyy-mm-dd HH-mm-ss"
+        
+        var fullDate = dateFormatter.date(from: time)
+        
+        dateFormatter.dateFormat = "yyyy/mm/dd HH:mm"
+        
+        var time2 = dateFormatter.string(from: fullDate!)
+        
+        return time2
     }
     
    

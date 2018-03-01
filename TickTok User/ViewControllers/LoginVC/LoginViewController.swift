@@ -14,7 +14,7 @@ import ACFloatingTextfield_Swift
 import NVActivityIndicatorView
 import CoreLocation
 
-class LoginViewController: UIViewController, CLLocationManagerDelegate {
+class LoginViewController: UIViewController, CLLocationManagerDelegate, alertViewMethodsDelegates {
     
     
     //-------------------------------------------------------------
@@ -25,6 +25,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var txtPassword: ACFloatingTextfield!
     @IBOutlet weak var txtEmail: ACFloatingTextfield!
     @IBOutlet weak var btnLogin: TransitionButton!
+    @IBOutlet weak var btnSignup: TransitionButton!
     
     
     var locationManager = CLLocationManager()
@@ -35,6 +36,18 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     
     override func loadView() {
         super.loadView()
+        
+        if Connectivity.isConnectedToInternet() {
+            print("Yes! internet is available.")
+            // do some tasks..
+        }
+        else {
+
+            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+            }
+        }
+        
+        
         
         webserviceOfAppSetting()
         
@@ -55,31 +68,24 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                 //                manager.startUpdatingLocation()
             }
         }
-        
-//        if(SingletonClass.sharedInstance.isUserLoggedIN)
-//        {
-//            self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
-//        }
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         viewMain.isHidden = true
         
-        txtEmail.lineColor = UIColor.white
-        txtPassword.lineColor = UIColor.white
-        
-        
+//        txtEmail.lineColor = UIColor.white
+//        txtPassword.lineColor = UIColor.white
+
         if UIDevice.current.name == "Bhavesh iPhone" {
             
-            txtEmail.text = "bhavesh@excellentwebworld.info"
+            txtEmail.text = "9879252952"
             txtPassword.text = "12345678"
         }
         
         if UIDevice.current.name == "Excellent Web's iPhone 5s" {
             
-            txtEmail.text = "bhavesh@excellentwebworld.info"
+            txtEmail.text = "9879252952"
             txtPassword.text = "12345678"
         }
 
@@ -94,45 +100,40 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
             txtEmail.text = "bhavesh@excellentwebworld.info"
             txtPassword.text = "12345678"
         }
+
         
-        //        setupSideMenu()
-        // Do any additional setup after loading the view.
     }
     
-/*
-    fileprivate func setupSideMenu() {
-        // Define the menus
-        SideMenuManager.default.menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as? UISideMenuNavigationController
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        // Enable gestures. The left and/or right menus must be set up above for these to work.
-        // Note that these continue to work on the Navigation Controller independent of the View Controller it displays!
-        SideMenuManager.default.menuAddPanGestureToPresent(toView: self.navigationController!.navigationBar)
-        SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view)
-        SideMenuManager.default.menuPresentMode = .menuSlideIn
-        SideMenuManager.default.menuBlurEffectStyle = .dark
-        SideMenuManager.default.menuAnimationBackgroundColor = UIColor.clear
-        SideMenuManager.default.menuFadeStatusBar = true
-        SideMenuManager.default.menuWidth = self.view.frame.size.width - 120
-        SideMenuManager.default.menuEnableSwipeGestures = false
-        SideMenuManager.default.menuPresentingViewControllerUserInteractionEnabled = false
-        // Set up a cool background image for demo purposes
-        //SideMenuManager.default.menuAnimationBackgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        
     }
-*/
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
+    }
+    
+
     //MARK: - Validation
     
     func checkValidation() -> Bool
     {
         if (txtEmail.text?.count == 0)
         {
-            UtilityClass.showAlert("Enter Email Address", message: "", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Mobile Number") { (index, title) in
+            }
+            
              // txtEmail.showErrorWithText(errorText: "Enter Email")
             return false
         }
         else if (txtPassword.text?.count == 0)
         {
-           UtilityClass.showAlert("Enter Password", message: "", vc: self)
-           //   txtPassword.showErrorWithText(errorText: "Enter Password"  )
+
+            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Password") { (index, title) in
+            }
+
             return false
         }
         return true
@@ -143,9 +144,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
     
     func webserviceCallForLogin()
     {
-        
-        
-        
+       
         let dictparam = NSMutableDictionary()
         dictparam.setObject(txtEmail.text!, forKey: "Username" as NSCopying)
         dictparam.setObject(txtPassword.text!, forKey: "Password" as NSCopying)
@@ -159,10 +158,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
             if ((result as! NSDictionary).object(forKey: "status") as! Int == 1)
             {
                 DispatchQueue.main.async(execute: { () -> Void in
-                    // 4: Stop the animation, here you have three options for the `animationStyle` property:
-                    // .expand: useful when the task has been compeletd successfully and you want to expand the button and transit to another view controller in the completion callback
-                    // .shake: when you want to reflect to the user that the task did not complete successfly
-                    // .normal
+
                     self.btnLogin.stopAnimation(animationStyle: .normal, completion: {
                         SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
                         SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
@@ -174,25 +170,59 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                         UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
 
                         
-//                        let next = self.storyboard?.instantiateViewController(withIdentifier: "AllDriversOnMapViewController") as! AllDriversOnMapViewController
-//                        self.present(next, animated: true, completion: nil)
-
+                        self.webserviceForAllDrivers()
                         
-                        self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
+//                        self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
                     })
                 })
             }
             else
             {
-                
                 self.btnLogin.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
-                    UtilityClass.showAlert("Error", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
                     
+//                    let next = self.storyboard?.instantiateViewController(withIdentifier: "CustomAlertsViewController") as! CustomAlertsViewController
+//                    next.delegateOfAlertView = self
+//                    next.strTitle = "Error"
+//                    next.strMessage = (result as! NSDictionary).object(forKey: "message") as! String
+//                    self.navigationController?.present(next, animated: false, completion: nil)
+//
+
+                     UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
+
                 })
             }
         }
-        
     }
+    
+   
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "segueToHomeVC") {
+       
+        }
+    }
+
+    
+    var aryAllDrivers = NSArray()
+    func webserviceForAllDrivers()
+    {
+        webserviceForAllDriversList { (result, status) in
+            
+            if (status) {
+                
+                self.aryAllDrivers = ((result as! NSDictionary).object(forKey: "drivers") as! NSArray)
+                
+                SingletonClass.sharedInstance.allDiverShowOnBirdView = self.aryAllDrivers
+              
+                self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
+            }
+            else {
+                print(result)
+            }
+        }
+    }
+
     
      //MARK: - Webservice Call for Forgot Password
     
@@ -205,16 +235,17 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         webserviceForForgotPassword(dictparam) { (result, status) in
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
 
-            if ((result as! NSDictionary).object(forKey: "status") as! Int == 1)
-            {
-                UtilityClass.showAlert("Success", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+            if ((result as! NSDictionary).object(forKey: "status") as! Int == 1) {
+  
+                 UtilityClass.setCustomAlert(title: "Success", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
             }
-            else
-            {
-                UtilityClass.showAlert("Error", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+            }
+            else {
+
+                 UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
             }
         }
-        
     }
     
     func webserviceOfAppSetting() {
@@ -231,13 +262,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
             
             if (status) {
                 print("result is : \(result)")
-/*
-                {
-                    "status": true,
-                    "update": false,
-                    "message": "Ticktoc app new version available"
-                }
-*/
+
                 self.viewMain.isHidden = false
                 
                 if let update = (result as! NSDictionary).object(forKey: "update") as? Bool {
@@ -245,12 +270,13 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                     let alert = UIAlertController(title: nil, message: (result as! NSDictionary).object(forKey: "message") as? String, preferredStyle: .alert)
                     let UPDATE = UIAlertAction(title: "UPDATE", style: .default, handler: { ACTION in
                         
-                        UIApplication.shared.openURL(NSURL(string: "itms://itunes.apple.com/us/app/ticktoc/id1034261915?ls=1&mt=8")! as URL)
+                        UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
                     })
                     let Cancel = UIAlertAction(title: "Cancel", style: .default, handler: { ACTION in
                         
                         if(SingletonClass.sharedInstance.isUserLoggedIN)
                         {
+//                            self.webserviceForAllDrivers()
                             self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
                         }
                     })
@@ -260,85 +286,70 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
                 }
                 else {
                     
-                    if(SingletonClass.sharedInstance.isUserLoggedIN)
-                    {
+                    if(SingletonClass.sharedInstance.isUserLoggedIN) {
+
                         self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
                     }
-                    
                 }
-           
-//                if(SingletonClass.sharedInstance.isUserLoggedIN)
-//                {
-//                    self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
-//                }
-               
-                
             }
             else {
                 print(result)
-/*
-                {
-                    "status": false,
-                    "update": false,
-                    "maintenance": true,
-                    "message": "Server under maintenance, please try again after some time"
-                }
-*/
+
                 if let update = (result as! NSDictionary).object(forKey: "update") as? Bool {
                     
                     if (update) {
-//                        UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
-                        
+
                         UtilityClass.showAlertWithCompletion("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self, completionHandler: { ACTION in
                             
-                            UIApplication.shared.openURL(NSURL(string: "itms://itunes.apple.com/us/app/ticktoc/id1034261915?ls=1&mt=8")! as URL)
+                            UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
                         })
                     }
                     else {
-                        UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
+
+                         UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
+
                     }
                     
                 }
-/*
-                {
-                    "status": false,
-                    "update": true,
-                    "message": "Ticktoc app new version available, please upgrade your application"
-                }
- */
+
                 if let res = result as? String {
-                    UtilityClass.showAlert("", message: res, vc: self)
+                     UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+            }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.showAlert("", message: resDict.object(forKey: "message") as! String, vc: self)
+
+                     UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+            }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.showAlert("", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+
+                     UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+            }
                 }
             }
         }
-        
     }
     
     //MARK: - IBActions
-    
     
     @IBAction func unwindToVC(segue: UIStoryboardSegue) {
     }
     
     
+    
     @IBAction func btnLogin(_ sender: Any) {
         
-        if (checkValidation())
-        {
+        if (checkValidation()) {
             self.btnLogin.startAnimation()
-            
             self.webserviceCallForLogin()
         }
-        else
-        {
-          
-        }
+    
+    }
+    
+    @IBAction func btnSignup(_ sender: Any) {
+        
+        
     }
     
     
@@ -349,7 +360,8 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
-            textField.placeholder = "E-Mail"
+            
+            textField.placeholder = "Mobile Number"
         }
         
         // 3. Grab the value from the text field, and print it when the user clicks OK.
@@ -364,8 +376,6 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         }))
         
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { (_) in
-            
-            
         }))
         
         // 4. Present the alert.
@@ -408,6 +418,29 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate {
         locationManager.stopUpdatingLocation()
         print("Error: \(error)")
     }
- 
+    
+    func didOKButtonPressed() {
+        
+    }
+    
+    func didCancelButtonPressed() {
+        
+    }
+    
+    
+    func setCustomAlert(title: String, message: String) {
+        AJAlertController.initialization().showAlertWithOkButton(aStrTitle: title, aStrMessage: message) { (index,title) in
+        }
+        
+//        let next = self.storyboard?.instantiateViewController(withIdentifier: "CustomAlertsViewController") as! CustomAlertsViewController
+//
+//        next.delegateOfAlertView = self
+//        next.strTitle = title
+//        next.strMessage = message
+//
+//        self.navigationController?.present(next, animated: false, completion: nil)
+        
+    }
+   
     
 }

@@ -8,8 +8,12 @@
 
 import UIKit
 
-class SetPasscodeViewController: UIViewController {
 
+
+class SetPasscodeViewController: UIViewController {
+    
+    
+    var delegateOfSwitch: checkSwitchIsOnOrOff!
     
     var strStatusToNavigate = String()
     
@@ -34,6 +38,13 @@ class SetPasscodeViewController: UIViewController {
         super.didReceiveMemoryWarning()
 
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         
+         
+    }
+   
     
     //-------------------------------------------------------------
     // MARK: - Outlets
@@ -125,6 +136,20 @@ class SetPasscodeViewController: UIViewController {
                             else if strStatusToNavigate == "Wallet" {
                                 let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as! WalletViewController
                                 self.navigationController?.pushViewController(next, animated: true)
+                            }
+                            else {
+//                                UtilityClass.showAlertWithCompletion("", message: "Passcode set successfully", vc: self, completionHandler: { ACTION in
+//
+//                                    self.delegateOfSwitch.switchIs(param: true)
+//                                    self.navigationController?.popViewController(animated: true)
+//                                })
+                                
+                                UtilityClass.setCustomAlert(title: "\(appName)", message: "Passcode set successfully", completionHandler: { (index, title) in
+                                    
+                                    self.delegateOfSwitch.switchIs(param: true)
+                                    self.navigationController?.popViewController(animated: true)
+                                    
+                                })
                             }
                             
                         }

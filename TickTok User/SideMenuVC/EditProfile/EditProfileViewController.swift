@@ -23,17 +23,21 @@ class EditProfileViewController: UIViewController {
         viewAccount.layer.cornerRadius = 10
         viewAccount.layer.masksToBounds = true
        
-        self.ConstraintEditProfileX.constant = self.view.frame.origin.x - viewEditProfile.frame.size.width - 20
-        self.constraintAccountTailing.constant = -(viewEditProfile.frame.size.width + 20)
-        
+//        self.ConstraintEditProfileX.constant = self.view.frame.origin.x - viewEditProfile.frame.size.width - 20
+//        self.constraintAccountTailing.constant = -(viewEditProfile.frame.size.width + 20)
+//
         
 //        AnimationToView()
 
+        setImageColor()
+        
+        iconProfile.image = setImageColorOfImage(name: "iconEditProfile")
+        iconAccount.image = setImageColorOfImage(name: "iconAccount")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+
 //        ConstraintEditProfileX.constant = -(self.view.frame.size.width)
 //        constraintAccountTailing.constant = -(self.view.frame.size.width)
         
@@ -42,12 +46,30 @@ class EditProfileViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        AnimationToView()
+//        AnimationToView()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
        
+    }
+    
+    func setImageColor() {
+        
+        let img = UIImage(named: "iconArrowGrey")
+        imgArrowProfile.image = img?.maskWithColor(color: UIColor.white)
+        imgArrowAccount.image = img?.maskWithColor(color: UIColor.white)
+    }
+    
+    func setImageColorOfImage(name: String) -> UIImage {
+        
+        var imageView = UIImageView()
+        
+        let img = UIImage(named: name)
+        imageView.image = img?.maskWithColor(color: UIColor.white)
+       
+        
+        return imageView.image!
     }
     
     //-------------------------------------------------------------
@@ -57,12 +79,16 @@ class EditProfileViewController: UIViewController {
     @IBOutlet weak var viewEditProfile: UIView!
     @IBOutlet weak var viewAccount: UIView!
     
-
+    @IBOutlet weak var imgArrowProfile: UIImageView!
+    @IBOutlet weak var imgArrowAccount: UIImageView!
+    
     @IBOutlet weak var ConstraintEditProfileX: NSLayoutConstraint!
     @IBOutlet weak var constraintAccountTailing: NSLayoutConstraint!
     
     @IBOutlet weak var viewMain: UIView!
     
+    @IBOutlet weak var iconProfile: UIImageView!
+    @IBOutlet weak var iconAccount: UIImageView!
     
     //-------------------------------------------------------------
     // MARK: - Actions
@@ -109,4 +135,32 @@ class EditProfileViewController: UIViewController {
     }
     
 
+}
+
+
+extension UIImage {
+    
+    func maskWithColor(color: UIColor) -> UIImage? {
+        let maskImage = cgImage!
+        
+        let width = size.width
+        let height = size.height
+        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
+        
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+        
+        context.clip(to: bounds, mask: maskImage)
+        context.setFillColor(color.cgColor)
+        context.fill(bounds)
+        
+        if let cgImage = context.makeImage() {
+            let coloredImage = UIImage(cgImage: cgImage)
+            return coloredImage
+        } else {
+            return nil
+        }
+    }
+    
 }

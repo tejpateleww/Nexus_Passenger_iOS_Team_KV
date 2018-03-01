@@ -29,7 +29,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = UIColor.red
+        refreshControl.tintColor = themeYellowColor
         
         return refreshControl
     }()
@@ -100,14 +100,39 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             else {
                 cell.lblDriverName.text = "NULL"
             }
-            cell.lblBookingID.text = "Booking Id: (\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!)))"
+            
+            let formattedString = NSMutableAttributedString()
+            formattedString
+                .normal("Booking Id: ")
+                .bold("\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))", 14)
+            
+           
+            cell.lblBookingID.attributedText = formattedString
             cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
             
-            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String
-            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String
+            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String // PickupLocation
+            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String  // DropoffLocation
             
-            cell.lblPickupTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String
-            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
+            if let pickupTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String {
+                if pickupTime == "" {
+                    cell.lblPickupTime.text = "Date and Time not available"
+                }
+                else {
+                    cell.lblPickupTime.text = setTimeStampToDate(timeStamp: pickupTime)
+                }
+            }
+            
+            if let DropoffTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String {
+                if DropoffTime == "" {
+                    cell.lblDropoffTime.text = "Date and Time not available"
+                }
+                else {
+                    cell.lblDropoffTime.text = setTimeStampToDate(timeStamp: DropoffTime)
+                }
+            }
+            
+//            cell.lblPickupTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String
+//            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
             cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
             cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
             cell.lblTripFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
@@ -147,6 +172,26 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @objc func CancelRequest() {
         
     }
+    
+    //-------------------------------------------------------------
+    // MARK: - Custom Methods
+    //-------------------------------------------------------------
+    
+    func setTimeStampToDate(timeStamp: String) -> String {
+        
+        let unixTimestamp = Double(timeStamp)
+        //        let date = Date(timeIntervalSince1970: unixTimestamp)
+        
+        let date = Date(timeIntervalSince1970: unixTimestamp!)
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current //Set timezone that you want
+        dateFormatter.locale = NSLocale.current
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd" //Specify your format that you want
+        let strDate: String = dateFormatter.string(from: date)
+        
+        return strDate
+    }
+    
 /*
     func setMarkersOnMap(PickupLatitude: Double, PickupLongitude: Double, DropoffLatitude: Double, DropoffLongitude: Double, PickupLocation: String, DropoffLocation: String) {
         

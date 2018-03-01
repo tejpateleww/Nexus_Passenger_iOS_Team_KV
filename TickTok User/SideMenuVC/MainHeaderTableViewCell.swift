@@ -9,8 +9,7 @@
 import UIKit
 
 class MainHeaderTableViewCell: UITableViewCell {
-    @IBOutlet weak var imgProfile: UIImageView!
-    @IBOutlet weak var lblName: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,4 +22,17 @@ class MainHeaderTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    //-------------------------------------------------------------
+    // MARK: - Outlets
+    //-------------------------------------------------------------
+    
+    @IBOutlet weak var imgProfile: UIImageView!
+    @IBOutlet weak var lblName: UILabel!
+    
+    @IBOutlet weak var lblRating: UILabel!
+    @IBOutlet weak var imgStar: UIImageView!
+    
+    @IBOutlet weak var lblMobileNumber: UILabel!
+    
+    
 }

@@ -101,10 +101,10 @@ class BookTableSelectedDataViewController: ParentViewController, UITableViewData
                 
                 let km = (distanceInMeters / 1000)
                 
-                cell.lblDistanceKM.text = "\(km.rounded(toPlaces: 2)) KM"
+                cell.lblDistanceKM.text = "\(km.rounded(toPlaces: 2)) km"
             }
             else {
-                cell.lblDistanceKM.text = "\(distanceInMeters.rounded(toPlaces: 2)) M"
+                cell.lblDistanceKM.text = "\(distanceInMeters.rounded(toPlaces: 2)) m"
             }
             
         }
@@ -122,12 +122,96 @@ class BookTableSelectedDataViewController: ParentViewController, UITableViewData
             
             self.isEditing = false
             print("Book Car Now")
+            
+            let params = self.aryBarsAndClubs[indexPath.row]
+            
+            var dictParam = [String:AnyObject]()
+            
+            if let address = params["vicinity"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            else if let address = params["formatted_address"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            
+            if let geometry = params["geometry"] as? NSDictionary {
+                
+                if let locat = geometry.object(forKey: "location") as? NSDictionary {
+                    if let lati = locat.object(forKey: "lat") as? Double {
+                        
+                        dictParam["lat"] = lati as AnyObject
+                    }
+                    if let longi = locat.object(forKey: "lng") as? Double {
+                        
+                        dictParam["lng"] = longi as AnyObject
+                    }
+                }
+            }
+            
+            NotificationCenter.default.post(name: NotificationBookNow, object: nil, userInfo: dictParam)
+            
+            for controller in self.navigationController!.viewControllers as Array {
+                if controller.isKind(of: CustomSideMenuViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
+            }
+        
+            
+//        ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).popViewController(animated: true)
+            
+//            let next = self.storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as! HomeViewController
+            
+//            ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).popViewController(animated: true)
+            
+//            for controller in ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).viewControllers as Array {
+//                if controller.isKind(of: HomeViewController.self) {
+//                    self.navigationController!.popToViewController(controller, animated: true)
+//                    break
+//                }
+//            }
+            
+            
+//            self.navigationController?.popToViewController(((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).childViewControllers[0] as! HomeViewController, animated: true)
+            
         }
         
         
         let BookCarLater = UITableViewRowAction(style: UITableViewRowActionStyle.default, title: "Book Car Later") { (action , indexPath) -> Void in
             self.isEditing = false
             print("Book Car Later")
+            
+            let params = self.aryBarsAndClubs[indexPath.row]
+            var dictParam = [String:AnyObject]()
+            
+            if let address = params["vicinity"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            else if let address = params["formatted_address"] as? String {
+                dictParam["Address"] = address as AnyObject
+            }
+            
+            if let geometry = params["geometry"] as? NSDictionary {
+                if let locat = geometry.object(forKey: "location") as? NSDictionary {
+                    if let lati = locat.object(forKey: "lat") as? Double {
+                        
+                        dictParam["lat"] = lati as AnyObject
+                    }
+                    if let longi = locat.object(forKey: "lng") as? Double {
+                        
+                        dictParam["lng"] = longi as AnyObject
+                    }
+                }
+            }
+            
+            NotificationCenter.default.post(name: NotificationBookLater, object: nil, userInfo: dictParam)
+            SingletonClass.sharedInstance.isFromNotificationBookLater = true
+            for controller in self.navigationController!.viewControllers as Array {
+                if controller.isKind(of: CustomSideMenuViewController.self) {
+                    self.navigationController!.popToViewController(controller, animated: true)
+                    break
+                }
+            }
         }
         
         BookCarLater.backgroundColor = UIColor.black
@@ -144,7 +228,9 @@ class BookTableSelectedDataViewController: ParentViewController, UITableViewData
     func webserviceOfBarAndClubs(str: String) {
         
         if SingletonClass.sharedInstance.currentLatitude == "" || SingletonClass.sharedInstance.currentLongitude == "" {
-            UtilityClass.showAlert("", message: "Your Current Location Not Found", vc: self)
+
+            UtilityClass.setCustomAlert(title: "Location Not Found", message: "Your Current Location Not Found") { (index, title) in
+            }
         }
         else {
             let creentLocation = "\(SingletonClass.sharedInstance.currentLatitude),\(SingletonClass.sharedInstance.currentLongitude)"

@@ -23,7 +23,7 @@ import UIKit
      @IBInspectable open var shakeLineWithError : Bool = true
     
      /// Change Bottom Line Color.
-     @IBInspectable open var lineColor : UIColor = UIColor.white
+     @IBInspectable open var lineColor : UIColor = UIColor.clear
     
      /// Change line color when Editing in textfield
      @IBInspectable open var selectedLineColor : UIColor = UIColor(red: 19/256.0, green: 141/256.0, blue: 117/256.0, alpha: 1.0)
@@ -40,6 +40,7 @@ import UIKit
      /// Change Error Line color.
      @IBInspectable open var errorLineColor : UIColor = UIColor.red
     
+   
     //MARK:- Set Text
     override open var text:String?  {
         didSet {
@@ -163,6 +164,11 @@ fileprivate extension ACFloatingTextfield {
         //Bottom Line UIView Configuration.
         bottomLineView = UIView(frame: CGRect(x:0, y:self.frame.height-1, width:self.frame.width, height:2))
         bottomLineView?.backgroundColor = lineColor;
+        
+//        let bottomLineImageView = UIImageView()
+//        bottomLineImageView.frame = (bottomLineView?.frame)!
+//        bottomLineImageView.image = UIImage(named: "iconLineLeftSide")
+//        bottomLineView?.addSubview(bottomLineImageView)
         
         if bottomLineView != nil {
             self.addSubview(bottomLineView!)

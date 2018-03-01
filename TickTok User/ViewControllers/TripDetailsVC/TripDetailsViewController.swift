@@ -14,6 +14,8 @@ class TripDetailsViewController: ParentViewController {
     let dictData = NSMutableDictionary()
     @IBOutlet weak var tblObject : UITableView!
     
+    var delegate: CompleterTripInfoDelegate!
+    
     
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -40,6 +42,13 @@ class TripDetailsViewController: ParentViewController {
         dictData.setObject(dict.object(forKey: "Status")!, forKey: "Status" as NSCopying)
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+         
+          
     }
     
     //-------------------------------------------------------------
@@ -70,16 +79,18 @@ class TripDetailsViewController: ParentViewController {
     func setData() {
         
         if let data = arrData.object(at: 0) as? NSDictionary {
+            
+            let distanceFare = "\(data.object(forKey: "DistanceFare")!) (\(data.object(forKey: "TripDistance")!) km)"
         
             lblPickupLocation.text = data.object(forKey: "PickupLocation") as? String
             lblDropoffLocation.text = data.object(forKey: "DropoffLocation") as? String
             
             lblBaseFare.text = data.object(forKey: "TripFare") as? String
-            lblDistanceFare.text = data.object(forKey: "DistanceFare") as? String
+            lblDistanceFare.text = distanceFare
             lblNightFare.text = data.object(forKey: "NightFare") as? String
             lblWaitingCost.text = data.object(forKey: "WaitingTimeCost") as? String
             lblTollFee.text = data.object(forKey: "TollFee") as? String
-            lblSubTotal.text = data.object(forKey: "") as? String
+            lblSubTotal.text = data.object(forKey: "SubTotal") as? String
             
             lblBookingCharge.text = data.object(forKey: "BookingCharge") as? String
             lblTax.text = data.object(forKey: "Tax") as? String
@@ -89,6 +100,17 @@ class TripDetailsViewController: ParentViewController {
         
         }
     }
+    @IBAction func btnBackAction(sender: UIButton) {
+        
+//       NotificationCenter.default.addObserver(self, selector: #selector(YourClassName.methodOfReceivedNotification(notification:)), name: Notification.Name("CallToRating"), object: nil)
+        
+//        NotificationCenter.default.post(name: Notification.Name("CallToRating"), object: nil)
+        
+//        self.delegate.didRatingCompleted()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+
     
     
     
