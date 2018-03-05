@@ -131,6 +131,8 @@
 		21F74B12203421F4000F8769 /* AJAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F74B10203421F3000F8769 /* AJAlertController.swift */; };
 		21F74B13203421F4000F8769 /* AJAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21F74B11203421F3000F8769 /* AJAlertController.xib */; };
 		37202F01C483F6CFC0A475E8 /* Pods_PickNGo_User.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C5BB4D02F5DAB560A69DD39 /* Pods_PickNGo_User.framework */; };
+		545B30B7204C22DA0019012F /* PackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545B30B6204C22DA0019012F /* PackageViewController.swift */; };
+		545B30BA204C230B0019012F /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545B30B9204C230B0019012F /* PackageDetailViewController.swift */; };
 		EED6F28A20385CF900C7B2E9 /* PickNGo.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = EED6F28920385CF900C7B2E9 /* PickNGo.mp3 */; };
 /* End PBXBuildFile section */
 
@@ -263,6 +265,8 @@
 		21DA90D21FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TiCKPayNeedToVarifyViewController.swift; sourceTree = "<group>"; };
 		21F74B10203421F3000F8769 /* AJAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJAlertController.swift; sourceTree = "<group>"; };
 		21F74B11203421F3000F8769 /* AJAlertController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AJAlertController.xib; sourceTree = "<group>"; };
+		545B30B6204C22DA0019012F /* PackageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageViewController.swift; sourceTree = "<group>"; };
+		545B30B9204C230B0019012F /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
 		6C5BB4D02F5DAB560A69DD39 /* Pods_PickNGo_User.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PickNGo_User.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.release.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.release.xcconfig"; sourceTree = "<group>"; };
 		CF165D60C84FABB3D6B3E841 /* Pods-PickNGo User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PickNGo User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PickNGo User/Pods-PickNGo User.debug.xcconfig"; sourceTree = "<group>"; };
@@ -394,6 +398,7 @@
 				0025D0B01FA1AE6400167FCD /* HomeVC */,
 				0051AAA11FB04FF500C187F1 /* TripDetailsVC */,
 				219C35722033322B00707F44 /* CommingSoonViewController.swift */,
+				545B30B8204C22DF0019012F /* PackageVC */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -684,6 +689,15 @@
 			path = AlertCustom;
 			sourceTree = "<group>";
 		};
+		545B30B8204C22DF0019012F /* PackageVC */ = {
+			isa = PBXGroup;
+			children = (
+				545B30B6204C22DA0019012F /* PackageViewController.swift */,
+				545B30B9204C230B0019012F /* PackageDetailViewController.swift */,
+			);
+			path = PackageVC;
+			sourceTree = "<group>";
+		};
 		5DE7D0CBCFE96E734E733E60 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -734,7 +748,7 @@
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
-								enabled = 0;
+								enabled = 1;
 							};
 							com.apple.Push = {
 								enabled = 1;
@@ -929,6 +943,7 @@
 				2127EE3E1FE100A1004E27C3 /* ACProgressView.swift in Sources */,
 				2174B6351FE003D200462E91 /* WalletHistoryTableViewCell.swift in Sources */,
 				0079BFA41FA35E9900EFB38D /* WebserviceMainClass.swift in Sources */,
+				545B30BA204C230B0019012F /* PackageDetailViewController.swift in Sources */,
 				005B640A1FB4182400029EA2 /* MyBookingViewController.swift in Sources */,
 				2127EE3C1FE100A1004E27C3 /* ACHUD+Animation.swift in Sources */,
 				00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */,
@@ -975,6 +990,7 @@
 				2174B6231FDFFE5C00462E91 /* WalletTransferViewController.swift in Sources */,
 				2127EE4C1FE137FB004E27C3 /* BarsAndClubsTableViewCell.swift in Sources */,
 				0061785D1FAC59D80094651F /* TempData.swift in Sources */,
+				545B30B7204C22DA0019012F /* PackageViewController.swift in Sources */,
 				0051AAA01FB04FE500C187F1 /* TripDetailsViewController.swift in Sources */,
 				2174B6221FDFFE5C00462E91 /* WalletTransferToBankVC.swift in Sources */,
 				004620AD1FB1B5C5002EB388 /* Int+Timepiece.swift in Sources */,

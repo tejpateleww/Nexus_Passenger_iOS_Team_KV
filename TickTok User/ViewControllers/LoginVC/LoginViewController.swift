@@ -77,30 +77,11 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 //        txtEmail.lineColor = UIColor.white
 //        txtPassword.lineColor = UIColor.white
 
-        if UIDevice.current.name == "Bhavesh iPhone" {
+        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" || UIDevice.current.name == "iPhone"{
             
             txtEmail.text = "9879252952"
             txtPassword.text = "12345678"
         }
-        
-        if UIDevice.current.name == "Excellent Web's iPhone 5s" {
-            
-            txtEmail.text = "9879252952"
-            txtPassword.text = "12345678"
-        }
-
-        if UIDevice.current.name == "Rahul's iPhone" {
-            
-            txtEmail.text = "bhavesh@excellentwebworld.info"
-            txtPassword.text = "12345678"
-        }
-        
-        if UIDevice.current.name == "iPhone" {
-            
-            txtEmail.text = "bhavesh@excellentwebworld.info"
-            txtPassword.text = "12345678"
-        }
-
         
     }
     
