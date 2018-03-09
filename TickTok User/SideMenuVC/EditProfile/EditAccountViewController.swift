@@ -58,6 +58,33 @@ class EditAccountViewController: UIViewController {
         }
        
     }
+    @IBOutlet weak var btnCall: UIButton!
+    @IBAction func btCallClicked(_ sender: UIButton)
+    {
+        
+        let contactNumber = helpLineNumber
+        
+        if contactNumber == "" {
+            
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
+            }
+        }
+        else
+        {
+            callNumber(phoneNumber: contactNumber)
+        }
+    }
+    
+    private func callNumber(phoneNumber:String) {
+        
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
+            
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
     
     //-------------------------------------------------------------
     // MARK: - Custom Methods

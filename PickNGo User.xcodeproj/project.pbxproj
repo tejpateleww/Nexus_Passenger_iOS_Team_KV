@@ -51,6 +51,10 @@
 		00A61D4A1FA8866E00E1BA84 /* CarsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00A61D491FA8866E00E1BA84 /* CarsCollectionViewCell.swift */; };
 		00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */; };
 		00FFCDE21FA4AA4D00073621 /* SingletonClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */; };
+		1149E11D204D2971008CDFAB /* PackageCarListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E11C204D2971008CDFAB /* PackageCarListCollectionViewCell.swift */; };
+		1149E11F204D4C7E008CDFAB /* PacageHoursDaysTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1149E11E204D4C7E008CDFAB /* PacageHoursDaysTableViewCell.swift */; };
+		11F5A7C6204FC0CC00DD0EE0 /* PackageHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A7C5204FC0CC00DD0EE0 /* PackageHistoryViewController.swift */; };
+		11F5A7C8204FEA4600DD0EE0 /* PackageHistoryListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A7C7204FEA4600DD0EE0 /* PackageHistoryListTableViewCell.swift */; };
 		211D535B1FDAB49B0039A801 /* DriverInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211D535A1FDAB49B0039A801 /* DriverInfoViewController.swift */; };
 		2127EE3C1FE100A1004E27C3 /* ACHUD+Animation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE381FE100A0004E27C3 /* ACHUD+Animation.swift */; };
 		2127EE3D1FE100A1004E27C3 /* ACProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2127EE391FE100A0004E27C3 /* ACProgressHUD.swift */; };
@@ -184,6 +188,10 @@
 		00A61D4B1FA8AC5600E1BA84 /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstantData.swift; sourceTree = "<group>"; };
 		00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingletonClass.swift; sourceTree = "<group>"; };
+		1149E11C204D2971008CDFAB /* PackageCarListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCarListCollectionViewCell.swift; sourceTree = "<group>"; };
+		1149E11E204D4C7E008CDFAB /* PacageHoursDaysTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacageHoursDaysTableViewCell.swift; sourceTree = "<group>"; };
+		11F5A7C5204FC0CC00DD0EE0 /* PackageHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageHistoryViewController.swift; sourceTree = "<group>"; };
+		11F5A7C7204FEA4600DD0EE0 /* PackageHistoryListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageHistoryListTableViewCell.swift; sourceTree = "<group>"; };
 		211D535A1FDAB49B0039A801 /* DriverInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverInfoViewController.swift; sourceTree = "<group>"; };
 		2127EE381FE100A0004E27C3 /* ACHUD+Animation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "ACHUD+Animation.swift"; sourceTree = "<group>"; };
 		2127EE391FE100A0004E27C3 /* ACProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACProgressHUD.swift; sourceTree = "<group>"; };
@@ -694,6 +702,10 @@
 			children = (
 				545B30B6204C22DA0019012F /* PackageViewController.swift */,
 				545B30B9204C230B0019012F /* PackageDetailViewController.swift */,
+				1149E11C204D2971008CDFAB /* PackageCarListCollectionViewCell.swift */,
+				1149E11E204D4C7E008CDFAB /* PacageHoursDaysTableViewCell.swift */,
+				11F5A7C5204FC0CC00DD0EE0 /* PackageHistoryViewController.swift */,
+				11F5A7C7204FEA4600DD0EE0 /* PackageHistoryListTableViewCell.swift */,
 			);
 			path = PackageVC;
 			sourceTree = "<group>";
@@ -956,9 +968,11 @@
 				2127EE501FE14F30004E27C3 /* HotelReservationTableViewCell.swift in Sources */,
 				2127EE471FE12F71004E27C3 /* FavoriteViewController.swift in Sources */,
 				0051AAA31FB0501C00C187F1 /* TripDetailsTableViewCell.swift in Sources */,
+				1149E11D204D2971008CDFAB /* PackageCarListCollectionViewCell.swift in Sources */,
 				214706631FF36F510009E39A /* ARCarMovement.swift in Sources */,
 				2174B61C1FDFFE5C00462E91 /* WalletAddCardsViewController.swift in Sources */,
 				21690C8E1FEE460300F89B40 /* EditProfileViewController.swift in Sources */,
+				11F5A7C6204FC0CC00DD0EE0 /* PackageHistoryViewController.swift in Sources */,
 				008D22431FA08E14001223DF /* LoginViewController.swift in Sources */,
 				2127EE4E1FE14F14004E27C3 /* HotelReservationViewController.swift in Sources */,
 				214152641FFF87B500547DFA /* SettingPasscodeVC.swift in Sources */,
@@ -968,6 +982,7 @@
 				006057181FF52197004CA5DE /* CustomViewForShadow.swift in Sources */,
 				00FFCDE01FA4A8AF00073621 /* ConstantData.swift in Sources */,
 				005B64141FB4190900029EA2 /* UpCommingTableViewCell.swift in Sources */,
+				1149E11F204D4C7E008CDFAB /* PacageHoursDaysTableViewCell.swift in Sources */,
 				0079BFA01FA35E7900EFB38D /* UtilityClass.swift in Sources */,
 				0020FA221FB6BF760054B09B /* CustomSideMenuViewController.swift in Sources */,
 				2127EE571FE15B59004E27C3 /* BookTableCollectionViewCell.swift in Sources */,
@@ -1010,6 +1025,7 @@
 				2174B6211FDFFE5C00462E91 /* WalletTopUpVC.swift in Sources */,
 				2127EE411FE122A6004E27C3 /* InviteDriverViewController.swift in Sources */,
 				004620B31FB1B5C5002EB388 /* WWCalendarTimeSelector.swift in Sources */,
+				11F5A7C8204FEA4600DD0EE0 /* PackageHistoryListTableViewCell.swift in Sources */,
 				2127EE451FE129FA004E27C3 /* MyRecepitTableViewCell.swift in Sources */,
 				218B903C1FDA902400422DC1 /* MTRipple.swift in Sources */,
 				2174B61E1FDFFE5C00462E91 /* WalletCardsVC.swift in Sources */,

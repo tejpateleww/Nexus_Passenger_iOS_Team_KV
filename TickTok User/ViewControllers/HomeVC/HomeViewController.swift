@@ -1055,7 +1055,33 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
     }
+    @IBOutlet weak var btnCall: UIButton!
+    @IBAction func btCallClicked(_ sender: UIButton)
+    {
+        
+        let contactNumber = helpLineNumber
+        
+        if contactNumber == "" {
+            
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
+            }
+        }
+        else
+        {
+            callNumber(phoneNumber: contactNumber)
+        }
+    }
     
+    private func callNumber(phoneNumber:String) {
+        
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
+            
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
     func setPaymentType() {
         
         pickerView.selectRow(0, inComponent: 0, animated: true)
@@ -1698,7 +1724,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var cardData = [[String:AnyObject]]()
     
     @IBAction func btnBookNow(_ sender: Any) {
-        if Connectivity.isConnectedToInternet() {
+        if Connectivity.isConnectedToInternet()
+        {
             
             if SingletonClass.sharedInstance.strPassengerID == "" || strModelId == "" || strPickupLocation == "" || strDropoffLocation == "" || doublePickupLat == 0 || doublePickupLng == 0 || doubleDropOffLat == 0 || doubleDropOffLng == 0 || strModelId == "0"
             {
@@ -1896,7 +1923,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     @IBOutlet weak var btnRequest: UIButton!
-    @IBAction func btnRequest(_ sender: UIButton) {
+    @IBAction func btnRequest(_ sender: UIButton)
+    {
         
         if self.strBookingType == "BookLater" {
             CancelBookLaterTripAfterDriverAcceptRequest()
@@ -1920,7 +1948,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         self.viewTripActions.isHidden = true
-        self.viewCarLists.isHidden = false
+        self.viewCarLists.isHidden = true
         self.ConstantViewCarListsHeight.constant = 150
         //        self.constraintTopSpaceViewDriverInfo.constant = 170
         
@@ -2279,8 +2307,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         else
         {
-            let PackageVC = self.storyboard!.instantiateViewController(withIdentifier: "PackageViewController")
+            
+            let PackageVC = self.storyboard?.instantiateViewController(withIdentifier: "PackageViewController")as! PackageViewController
             let navController = UINavigationController(rootViewController: PackageVC) // Creating a navigation controller with VC1 at the root of the navigation stack.
+            
+            PackageVC.strPickupLocation = strPickupLocation
+            PackageVC.doublePickupLat = doublePickupLat
+            PackageVC.doublePickupLng = doublePickupLng
+            
+            
             self.present(navController, animated:true, completion: nil)
 
         }
@@ -3110,6 +3145,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         socket.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
         stopTimer()
         self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+        self.viewCarLists.isHidden = true
         
     }
     // ------------------------------------------------------------

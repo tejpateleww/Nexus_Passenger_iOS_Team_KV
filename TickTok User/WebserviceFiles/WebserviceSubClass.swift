@@ -22,7 +22,8 @@ let ChangePassword = WebserviceURLs.kChangePassword
 let UpdateProfile = WebserviceURLs.kUpdateProfile
 
 let cardsList = WebserviceURLs.kCardsList
-
+let bookPackage = WebserviceURLs.kBookPackage
+let packageHistory = WebserviceURLs.kPackageBookingHistory
 let CurrentBooking = WebserviceURLs.kCurrentBooking
 let AddNewCard = WebserviceURLs.kAddNewCard
 let AddMoney = WebserviceURLs.kAddMoney
@@ -38,6 +39,8 @@ let VarifyUser = WebserviceURLs.kVarifyUser
 let TickpayInvoice = WebserviceURLs.kTickpayInvoice
 let GetTickpayRate = WebserviceURLs.kGetTickpayRate
 let Init = WebserviceURLs.kInit
+
+let GetPackages = WebserviceURLs.kGetPackages
 
 let ReviewRating = WebserviceURLs.kReviewRating
 
@@ -177,6 +180,25 @@ func webserviceForCardList(_ dictParams: AnyObject, completion: @escaping(_ resu
 {
     let url = "\(cardsList)/\(dictParams)"
     getData("" as AnyObject, nsURL: url, completion: completion)
+}
+//-------------------------------------------------------------
+// MARK: - Webservice For Package History
+//-------------------------------------------------------------
+
+func webserviceForPackageHistory(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = "\(packageHistory)/\(dictParams)"
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Package Booking
+//-------------------------------------------------------------
+
+func webserviceForBookPackage(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = bookPackage //"\(bookPackage)\(dictParams)"
+    postData(dictParams, nsURL: url, completion: completion)
 }
 
 //-------------------------------------------------------------
@@ -349,7 +371,15 @@ func webserviceForGetTickpayRate(_ dictParams: AnyObject, completion: @escaping(
     let url = GetTickpayRate + (dictParams as! String)
     getData("" as AnyObject, nsURL: url, completion: completion)
 }
+//-------------------------------------------------------------
+// MARK: - Webservice For Packaging List
+//-------------------------------------------------------------
 
+func webserviceForGetPackages(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = GetPackages
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
 //-------------------------------------------------------------
 // MARK: - Webservice For Rating and Comment
 //-------------------------------------------------------------

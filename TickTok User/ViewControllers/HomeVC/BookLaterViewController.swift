@@ -1033,7 +1033,12 @@ class BookLaterViewController: UIViewController, GMSAutocompleteViewControllerDe
                 else {
                     self.paymentType = "card"
                 }
-                
+                if self.paymentType == "card" {
+                    
+                    if data["Id"] as? String != "" {
+                        self.CardID = data["Id"] as! String
+                    }
+                }
                 self.pickerView.reloadAllComponents()
               
                 /*

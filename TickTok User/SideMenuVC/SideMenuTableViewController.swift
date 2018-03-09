@@ -42,9 +42,9 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         
 
         
-        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconStarOfSideMenu","iconMyreceipts","iconInviteFriends","iconSettings","iconMyBooking","iconLogOut"]
+        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconStarOfSideMenu","iconMyreceipts","iconInviteFriends","iconSettings","iconMyBooking","iconPackageHistory","iconLogOut"]
         
-        arrMenuTitle = ["My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","Become a \(appName) Driver","LogOut"]
+        arrMenuTitle = ["My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","Become a \(appName) Driver","Package History","LogOut"]
         
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -262,6 +262,11 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             }
             else if indexPath.row == 7 {
                 UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
+            }
+            else if indexPath.row == 8
+            {
+                let next = self.storyboard?.instantiateViewController(withIdentifier: "PackageHistoryViewController") as! PackageHistoryViewController
+                self.navigationController?.pushViewController(next, animated: true)
             }
             
             

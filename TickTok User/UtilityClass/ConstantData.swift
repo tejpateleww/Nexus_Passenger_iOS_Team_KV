@@ -14,7 +14,7 @@ let themeGrayColor: UIColor = UIColor.init(red: 114/255, green: 114/255, blue: 1
 
 let currencySign = "LKR"
 let appName = "Pick'N'Go"
-
+let helpLineNumber = "180018001800"
 struct WebserviceURLs {
     static let kBaseURL                                 = "https://pickngolk.info/web/Passenger_Api/" // "http://54.255.222.125/web/Passenger_Api/" // "https://pickngolk.info/web/Passenger_Api/"
     static let kDriverRegister                          = "Register"
@@ -31,7 +31,8 @@ struct WebserviceURLs {
     static let kImageBaseURL                            = "https://pickngolk.info/web/" // "http://54.255.222.125/web/" // "https://pickngolk.info/web/"
     
     static let kCardsList                               = "Cards/"
-    
+    static let kPackageBookingHistory                               = "PackageBookingHistory"
+    static let kBookPackage                             = "BookPackage"
     static let kCurrentBooking                          = "CurrentBooking/"
     static let kAddNewCard                              = "AddNewCard"
     static let kAddMoney                                = "AddMoney"
@@ -53,6 +54,7 @@ struct WebserviceURLs {
     static let kTransferToBank                          = "TransferToBank"
     static let kUpdateBankAccountDetails                = "UpdateBankAccountDetails"
     static let kOtpForRegister                          = "OtpForRegister"
+    static let kGetPackages                          = "Packages"
 //    https://pickngolk.info/web/Passenger_Api/OtpForRegister
     
 }
