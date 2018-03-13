@@ -100,14 +100,16 @@ class SettingPasscodeVC: ParentViewController, checkSwitchIsOnOrOff {
     @IBAction func switchPasscode(_ sender: UISwitch) {
         
         
-        if sender.isOn {
+        if sender.isOn
+        {
             viewChangePasscode.isHidden = false
 
             switchPasscode.thumbTintColor = themeYellowColor
             SingletonClass.sharedInstance.isPasscodeON = true
             UserDefaults.standard.set(SingletonClass.sharedInstance.isPasscodeON, forKey: "isPasscodeON")
             
-            if SingletonClass.sharedInstance.setPasscode == "" {
+            if SingletonClass.sharedInstance.setPasscode == ""
+            {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
                 next.delegateOfSwitch = self
                 sender.isOn = false

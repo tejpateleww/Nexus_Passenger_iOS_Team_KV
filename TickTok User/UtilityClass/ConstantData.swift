@@ -14,7 +14,7 @@ let themeGrayColor: UIColor = UIColor.init(red: 114/255, green: 114/255, blue: 1
 
 let currencySign = "LKR"
 let appName = "Pick'N'Go"
-let helpLineNumber = "180018001800"
+let helpLineNumber = "0772506506"
 struct WebserviceURLs {
     static let kBaseURL                                 = "https://pickngolk.info/web/Passenger_Api/" // "http://54.255.222.125/web/Passenger_Api/" // "https://pickngolk.info/web/Passenger_Api/"
     static let kDriverRegister                          = "Register"

@@ -7235,7 +7235,7 @@ Hours</string>
                                 <rect key="frame" x="0.0" y="20" width="320" height="44"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6cw-Jk-SIs">
-                                        <rect key="frame" x="10" y="9" width="26" height="26"/>
+                                        <rect key="frame" x="0.0" y="9" width="26" height="26"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="26" id="ENC-SZ-BUs"/>
                                             <constraint firstAttribute="width" constant="26" id="rVG-Xg-buC"/>
@@ -7252,7 +7252,7 @@ Hours</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iFu-dc-913">
-                                        <rect key="frame" x="320" y="6" width="30" height="30"/>
+                                        <rect key="frame" x="371" y="6" width="30" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="BAM-n3-kta"/>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="QpG-xv-oFR"/>
@@ -7290,20 +7290,20 @@ Hours</string>
                                                 </constraints>
                                             </view>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ngE-x8-omT">
-                                                <rect key="frame" x="20" y="20" width="90" height="90"/>
+                                                <rect key="frame" x="0.0" y="20" width="90" height="90"/>
                                                 <connections>
                                                     <action selector="btnUploadImage:" destination="qwf-s2-kPF" eventType="touchUpInside" id="ydF-QF-u2c"/>
                                                 </connections>
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="eHu-vi-eYe">
-                                                <rect key="frame" x="20" y="20" width="90" height="90"/>
+                                                <rect key="frame" x="0.0" y="20" width="90" height="90"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="eHu-vi-eYe" secondAttribute="height" multiplier="1:1" id="IcG-dF-dZh"/>
                                                     <constraint firstAttribute="width" constant="90" id="bkH-79-QfK"/>
                                                 </constraints>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="6at-fx-gMS">
-                                                <rect key="frame" x="130" y="45.5" width="320" height="39"/>
+                                                <rect key="frame" x="0.0" y="45.5" width="320" height="39"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="kCl-22-xZu">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="17"/>
@@ -7342,7 +7342,7 @@ Hours</string>
                                                 </subviews>
                                             </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="hcP-vs-dGx">
-                                                <rect key="frame" x="20" y="139" width="320" height="194"/>
+                                                <rect key="frame" x="0.0" y="139" width="320" height="194"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="byW-Wj-oeT">
                                                         <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
@@ -7467,13 +7467,13 @@ Hours</string>
                                                         <rect key="frame" x="0.0" y="153" width="320" height="41"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bkc-PN-Teh">
-                                                                <rect key="frame" x="5" y="11.5" width="51" height="18"/>
+                                                                <rect key="frame" x="0.0" y="11.5" width="51" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TB5-8s-9ll" customClass="M13Checkbox" customModule="M13Checkbox">
-                                                                <rect key="frame" x="76" y="9.5" width="23" height="23"/>
+                                                                <rect key="frame" x="51" y="9.5" width="23" height="23"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="width" secondItem="TB5-8s-9ll" secondAttribute="height" multiplier="1:1" id="Qi6-He-Qwi"/>
@@ -7489,19 +7489,19 @@ Hours</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Male" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CHI-6e-Oyj">
-                                                                <rect key="frame" x="119" y="11.5" width="33" height="18"/>
+                                                                <rect key="frame" x="51" y="11.5" width="33" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhX-7q-EBY">
-                                                                <rect key="frame" x="76" y="9.5" width="76" height="23"/>
+                                                                <rect key="frame" x="51" y="9.5" width="76" height="23"/>
                                                                 <connections>
                                                                     <action selector="btnMale:" destination="qwf-s2-kPF" eventType="touchUpInside" id="7k5-Ff-u9I"/>
                                                                 </connections>
                                                             </button>
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Iyw-dt-lik" customClass="M13Checkbox" customModule="M13Checkbox">
-                                                                <rect key="frame" x="250.5" y="9.5" width="23" height="23"/>
+                                                                <rect key="frame" x="270.5" y="9.5" width="23" height="23"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="23" id="CCh-Ee-bbz"/>
@@ -7517,13 +7517,13 @@ Hours</string>
                                                                 </connections>
                                                             </view>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Female" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pfb-Yt-Yho">
-                                                                <rect key="frame" x="250.5" y="12" width="49.5" height="18"/>
+                                                                <rect key="frame" x="313.5" y="12" width="49.5" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <nil key="textColor"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qfm-vy-DwP">
-                                                                <rect key="frame" x="250.5" y="9.5" width="92.5" height="23"/>
+                                                                <rect key="frame" x="270.5" y="9.5" width="92.5" height="23"/>
                                                                 <connections>
                                                                     <action selector="btnFemale:" destination="qwf-s2-kPF" eventType="touchUpInside" id="ugL-EC-Qqo"/>
                                                                 </connections>
@@ -7580,7 +7580,7 @@ Hours</string>
                                         <rect key="frame" x="0.0" y="333" width="320" height="171"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8lT-s3-dWx">
-                                                <rect key="frame" x="20" y="20" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="20" width="320" height="50"/>
                                                 <color key="backgroundColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="hJV-fP-yFz"/>
@@ -7607,7 +7607,7 @@ Hours</string>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kN0-KU-tvm">
-                                                <rect key="frame" x="20" y="90" width="320" height="50"/>
+                                                <rect key="frame" x="0.0" y="90" width="320" height="50"/>
                                                 <color key="backgroundColor" red="1" green="0.63921568627450975" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="oGt-H5-xGQ"/>
@@ -11285,8 +11285,21 @@ Hours</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bQs-3A-Irh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgBankIcon" translatesAutoresizingMaskIntoConstraints="NO" id="rRr-mQ-dDg">
+                                        <rect key="frame" x="110" y="84" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="bS6-Bi-sDO"/>
+                                            <constraint firstAttribute="height" constant="100" id="lBn-da-Ngw"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Powered by Sampath Bank PLC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gw2-DP-zpN">
+                                        <rect key="frame" x="78" y="190" width="164" height="13.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="V5h-xu-jaI">
-                                        <rect key="frame" x="0.0" y="100" width="320" height="186.5"/>
+                                        <rect key="frame" x="0.0" y="228.5" width="320" height="186.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pkS-8f-4sT">
                                                 <rect key="frame" x="0.0" y="0.0" width="320" height="55.5"/>
@@ -11463,7 +11476,7 @@ Hours</string>
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sZE-7m-0f0">
-                                        <rect key="frame" x="10" y="311.5" width="300" height="40"/>
+                                        <rect key="frame" x="10" y="440" width="300" height="40"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HEn-85-5eo">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="40"/>
@@ -11485,7 +11498,7 @@ Hours</string>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nde-2P-zUR">
-                                        <rect key="frame" x="10" y="376.5" width="300" height="40"/>
+                                        <rect key="frame" x="10" y="505" width="300" height="40"/>
                                         <color key="backgroundColor" red="1" green="0.63921568627450975" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="7Zs-dJ-fnE"/>
@@ -11499,17 +11512,21 @@ Hours</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="sZE-7m-0f0" firstAttribute="top" secondItem="V5h-xu-jaI" secondAttribute="bottom" constant="25" id="254-fZ-Jdp"/>
+                                    <constraint firstItem="rRr-mQ-dDg" firstAttribute="centerX" secondItem="bQs-3A-Irh" secondAttribute="centerX" id="A47-rU-psQ"/>
                                     <constraint firstItem="V5h-xu-jaI" firstAttribute="leading" secondItem="bQs-3A-Irh" secondAttribute="leading" id="CPV-SE-Ngf"/>
                                     <constraint firstAttribute="trailing" secondItem="Nde-2P-zUR" secondAttribute="trailing" constant="10" id="DcA-Po-uiN"/>
+                                    <constraint firstItem="gw2-DP-zpN" firstAttribute="top" secondItem="rRr-mQ-dDg" secondAttribute="bottom" constant="6" id="DjR-r0-jmj"/>
                                     <constraint firstAttribute="trailing" secondItem="V5h-xu-jaI" secondAttribute="trailing" id="FWo-fg-YPc"/>
-                                    <constraint firstItem="V5h-xu-jaI" firstAttribute="top" secondItem="bQs-3A-Irh" secondAttribute="top" constant="100" id="NF2-CI-s50"/>
+                                    <constraint firstItem="V5h-xu-jaI" firstAttribute="top" secondItem="gw2-DP-zpN" secondAttribute="bottom" constant="25" id="NF2-CI-s50"/>
+                                    <constraint firstItem="rRr-mQ-dDg" firstAttribute="top" secondItem="bQs-3A-Irh" secondAttribute="top" constant="84" id="apa-0O-izt"/>
                                     <constraint firstAttribute="trailing" secondItem="sZE-7m-0f0" secondAttribute="trailing" constant="10" id="lkb-ul-x37"/>
                                     <constraint firstItem="Nde-2P-zUR" firstAttribute="top" secondItem="sZE-7m-0f0" secondAttribute="bottom" constant="25" id="vCT-bw-8Xs"/>
                                     <constraint firstItem="sZE-7m-0f0" firstAttribute="leading" secondItem="bQs-3A-Irh" secondAttribute="leading" constant="10" id="xIJ-ma-aq8"/>
                                     <constraint firstItem="Nde-2P-zUR" firstAttribute="leading" secondItem="bQs-3A-Irh" secondAttribute="leading" constant="10" id="xOz-3L-c6c"/>
+                                    <constraint firstItem="gw2-DP-zpN" firstAttribute="centerX" secondItem="bQs-3A-Irh" secondAttribute="centerX" id="y53-M7-a3T"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -11540,7 +11557,7 @@ Hours</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dbY-bk-GMV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5218" y="3936"/>
+            <point key="canvasLocation" x="5216.25" y="3935.9154929577467"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="8em-pt-z6T">
@@ -15508,6 +15525,7 @@ Hours</string>
         <image name="iconVline" width="85" height="85"/>
         <image name="iconWhatsApp" width="64" height="64"/>
         <image name="imgBackground" width="384" height="682"/>
+        <image name="imgBankIcon" width="120" height="120"/>
         <image name="imgLogo" width="150" height="150"/>
         <image name="menu" width="42" height="42"/>
         <image name="roundCard" width="85" height="85"/>

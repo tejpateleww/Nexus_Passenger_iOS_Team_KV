@@ -89,11 +89,15 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         btnAddPaymentMethods.layer.cornerRadius = 5
         btnAddPaymentMethods.layer.masksToBounds = true
         
+     
         viewScanCard.layer.cornerRadius = 5
+        viewScanCard.layer.borderColor = UIColor.darkGray.cgColor
+        viewScanCard.layer.borderWidth = 1.0
         viewScanCard.layer.shadowColor = UIColor.darkGray.cgColor
-        viewScanCard.layer.shadowOpacity = 0.5
-        viewScanCard.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
-        viewScanCard.layer.shadowRadius = 5
+        
+//        viewScanCard.layer.shadowOpacity = 0.5
+//        viewScanCard.layer.shadowOffset = CGSize(width: 3.0, height: 2.0)
+//        viewScanCard.layer.shadowRadius = 5
         
         viewScanCard.layer.shadowPath = UIBezierPath(rect: viewScanCard.bounds).cgPath
         viewScanCard.layer.shouldRasterize = true
