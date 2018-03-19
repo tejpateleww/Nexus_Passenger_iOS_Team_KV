@@ -93,7 +93,14 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     cell.lblDriverName.isHidden = true
                 }
                 else {
-                    cell.lblDriverName.text = name
+                    let attributedString = NSAttributedString(string: name)
+                    let textRange = NSMakeRange(0, attributedString.length)
+                    let underlinedMessage = NSMutableAttributedString(attributedString: attributedString)
+                    underlinedMessage.addAttribute(NSAttributedStringKey.underlineStyle,
+                                                   value:NSUnderlineStyle.styleSingle.rawValue,
+                                                   range: textRange)
+                    cell.lblDriverName.attributedText = underlinedMessage
+//                    cell.lblDriverName.text = name
                 }
             }
            

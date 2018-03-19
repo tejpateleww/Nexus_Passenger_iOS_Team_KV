@@ -210,7 +210,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     func webserviceCallForForgotPassword(strEmail : String)
     {
         let dictparam = NSMutableDictionary()
-        dictparam.setObject(strEmail, forKey: "Email" as NSCopying)
+        dictparam.setObject(strEmail, forKey: "MobileNo" as NSCopying)
         let activityData = ActivityData()
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
         webserviceForForgotPassword(dictparam) { (result, status) in
@@ -337,7 +337,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     @IBAction func btnForgotPassword(_ sender: UIButton) {
         
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Forgot Password?", message: "Enter E-Mail address", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Forgot Password?", message: "Enter Mobile Number", preferredStyle: .alert)
         
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in

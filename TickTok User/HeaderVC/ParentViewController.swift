@@ -20,6 +20,7 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
     let heightWithLabel : Int = 94
     let heightWithLabelForX : Int = 144
     @IBInspectable var showsBackButton: Bool = false
+    @IBInspectable var showsCallButton: Bool = false
     @IBInspectable var showTitleLabelView : Bool = false
 //    @IBInspectable var hideSwitchButton: Bool = false
     @IBInspectable var strHeaderTitle: String?
@@ -66,7 +67,10 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
     {
         SignOutClicked()
     }
-    
+    func didCallClicked()        //  SignOut
+    {
+        CallButtonClicked()
+    }
     func didSwitchOnOFFClicked(isOn: Bool) {
         
         if isOn {
@@ -99,7 +103,30 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
         }
         
     }
-    
+     func CallButtonClicked()     //  Call Button
+    {
+        let contactNumber = helpLineNumber
+        
+        if contactNumber == "" {
+            
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
+            }
+        }
+        else
+        {
+            callNumber(phoneNumber: contactNumber)
+        }
+    }
+    private func callNumber(phoneNumber:String) {
+        
+        if let phoneCallURL = URL(string: "tel://\(phoneNumber)") {
+            
+            let application:UIApplication = UIApplication.shared
+            if (application.canOpenURL(phoneCallURL)) {
+                application.open(phoneCallURL, options: [:], completionHandler: nil)
+            }
+        }
+    }
     func isModal() -> Bool {
         if (presentingViewController != nil) {
             return true
@@ -188,7 +215,7 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
         hView.btnMenu.isHidden = showsBackButton
 //        hView.btnSwitch.isHidden = !hideSwitchButton
 //        hView.btnSignOut.isHidden = !hideSignOut
-        
+        hView.btnCall.isHidden = !showsCallButton
         hView.frame = frame
         headerView = hView
         view.addSubview(hView)

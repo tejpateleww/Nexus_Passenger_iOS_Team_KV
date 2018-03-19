@@ -179,13 +179,13 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             }
             return false
         }
-        else if imgProfile.image == UIImage(named: "iconProfilePicBlank")
-        {
-            
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose profile picture") { (index, title) in
-            }
-            return false
-        }
+//        else if imgProfile.image == UIImage(named: "iconProfilePicBlank")
+//        {
+//
+//            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose profile picture") { (index, title) in
+//            }
+//            return false
+//        }
         else if strDateOfBirth == "" {
            
             UtilityClass.setCustomAlert(title: "Missing", message: "Please choose Date of Birth") { (index, title) in
