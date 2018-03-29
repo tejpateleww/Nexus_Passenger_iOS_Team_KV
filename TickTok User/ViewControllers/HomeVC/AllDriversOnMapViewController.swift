@@ -288,22 +288,22 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
             CarModel = "imgBusinessClass"
              return CarModel
         case "2":
-            CarModel = "imgDisability"
+            CarModel = "imgMIni"
              return CarModel
         case "3":
-            CarModel = "imgTaxi"
+            CarModel = "imgVan"
              return CarModel
         case "4":
-            CarModel = "imgFirstClass"
+            CarModel = "imgNano"
              return CarModel
         case "5":
-            CarModel = "imgLUXVAN"
+            CarModel = "imgTukTuk"
              return CarModel
         case "6":
-            CarModel = "imgEconomy"
+            CarModel = "imgBreakdown"
              return CarModel
         default:
-            CarModel = "imgTaxi"
+            CarModel = "imgBus"
              return CarModel
         }
     }

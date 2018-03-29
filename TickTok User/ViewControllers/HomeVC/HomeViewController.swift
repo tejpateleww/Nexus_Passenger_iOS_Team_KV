@@ -205,23 +205,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var collectionViewCars: UICollectionView!
     
     
-    override func loadView() {
-        super.loadView()
-        
-        if(SingletonClass.sharedInstance.isUserLoggedIN)
-        {
-            
-            let next = self.storyboard?.instantiateViewController(withIdentifier: "AllDriversOnMapViewController") as! AllDriversOnMapViewController
-            //            next.dictData = SingletonClass.sharedInstance.allDiverShowOnBirdView
-            self.navigationController?.present(next, animated: true, completion: { 
-                //                  self.HomeViewGrandParentView.alpha = 1
-                
-            })
-            //            self.performSegue(withIdentifier: "loadAllDriverList", sender: nil)
-        }
-        
-    }
-    
     var dropoffLat = Double()
     var dropoffLng = Double()
     
@@ -237,19 +220,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setLocationFromBarAndClub(_:)), name: NotificationBookNow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setBookLaterDestinationAddress(_:)), name: NotificationBookLater, object: nil)
-        
-        //        if UIDevice().userInterfaceIdiom == .phone {
-        //            switch UIScreen.main.nativeBounds.height {
-        //            case 2436: break
-        //
-        //            default:
-        //                print("unknown")
-        //            }
-        //        }
-        
-        
-        //       HomeViewGrandParentView.alpha = 0
-        
+
         currentLocationMarker.isDraggable = true
         destinationLocationMarker.isDraggable = true
         
@@ -2231,7 +2202,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         let position = CLLocationCoordinate2D(latitude: lati, longitude: longi)
                         self.markerOnlineCars = GMSMarker(position: position)
                         //                        self.markerOnlineCars.tracksViewChanges = false
-                        self.strSelectedCarMarkerIcon = self.markertIcon(index: indexPath.row)
+//                        self.strSelectedCarMarkerIcon = self.markertIcon(index: indexPath.row)
+                        self.strSelectedCarMarkerIcon = self.setCarImage(modelId: dictOnlineCarData.object(forKey: "Id") as! String)
                         //                        self.markerOnlineCars.icon = UIImage(named: self.markertIcon(index: indexPath.row)) // iconCurrentLocation
                         
                         self.aryMarkerOnlineCars.append(self.markerOnlineCars)
@@ -2245,7 +2217,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 for i in 0..<self.aryMarkerOnlineCars.count {
                     
                     self.aryMarkerOnlineCars[i].position = self.aryMarkerOnlineCars[i].position
-                    self.aryMarkerOnlineCars[i].icon = UIImage(named: self.markertIcon(index: indexPath.row))
+                    self.aryMarkerOnlineCars[i].icon = UIImage(named: self.setCarImage(modelId: dictOnlineCarData.object(forKey: "Id") as! String))
                     self.aryMarkerOnlineCars[i].map = self.mapView
                 }
                 
@@ -2336,7 +2308,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     var carLocationsLat = Double()
     var carLocationsLng = Double()
-    
+    //MARK - Set car icons
     func setData()
     {
         var k = 0 as Int
@@ -2456,35 +2428,64 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-    func markertIcon(index: Int) -> String {
+//    func markertIcon(index: Int) -> String {
+//
+//        switch index {
+//        case 0: // "1":
+//            return "imgTaxi"
+//        case 1: // "2":
+//            return "imgTaxi"
+//        case 2: // "3":
+//            return "imgTaxi"
+//        case 3: // "4":
+//            return "imgTaxi"
+//        case 4: // "5":
+//            return "imgTaxi"
+//        case 5: // "6":
+//            return "imgTaxi"
+//        case 6: // "7":
+//            return "imgTaxi"
+//            //        case "8":
+//            //            return "imgTaxi"
+//            //        case "9":
+//            //            return "imgTaxi"
+//            //        case "10":
+//            //            return "imgTaxi"
+//            //        case "11":
+//        //            return "imgTaxi"
+//        default:
+//            return "imgTaxi"
+//        }
+    
+    func setCarImage(modelId : String) -> String {
         
-        switch index {
-        case 0: // "1":
-            return "imgTaxi"
-        case 1: // "2":
-            return "imgTaxi"
-        case 2: // "3":
-            return "imgTaxi"
-        case 3: // "4":
-            return "imgTaxi"
-        case 4: // "5":
-            return "imgTaxi"
-        case 5: // "6":
-            return "imgTaxi"
-        case 6: // "7":
-            return "imgTaxi"
-            //        case "8":
-            //            return "imgTaxi"
-            //        case "9":
-            //            return "imgTaxi"
-            //        case "10":
-            //            return "imgTaxi"
-            //        case "11":
-        //            return "imgTaxi"
+        var CarModel = String()
+        
+        switch modelId {
+        case "1":
+            CarModel = "imgBusinessClass"
+            return CarModel
+        case "2":
+            CarModel = "imgMIni"
+            return CarModel
+        case "3":
+            CarModel = "imgVan"
+            return CarModel
+        case "4":
+            CarModel = "imgNano"
+            return CarModel
+        case "5":
+            CarModel = "imgTukTuk"
+            return CarModel
+        case "6":
+            CarModel = "imgBreakdown"
+            return CarModel
         default:
-            return "imgTaxi"
+            CarModel = "imgBus"
+            return CarModel
         }
-        
+    }
+    
         /*/
          switch index {
          case 0: // "1":
@@ -2531,8 +2532,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //            return ""
         //        }
         
-    }
-    
+
     func uniq<S : Sequence, T : Hashable>(source: S) -> [T] where S.Iterator.Element == T {
         var buffer = [T]()
         var added = Set<T>()
@@ -2665,7 +2665,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     
     @objc func updateCounting(){
-        let myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID, "Lat": defaultLocation.coordinate.latitude, "Long": defaultLocation.coordinate.longitude, "Token" : SingletonClass.sharedInstance.deviceToken] as [String : Any]
+        let myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID, "Lat": doublePickupLat, "Long": doublePickupLng, "Token" : SingletonClass.sharedInstance.deviceToken] as [String : Any]
         socket.emit(SocketData.kUpdatePassengerLatLong , with: [myJSON])
         
     }
@@ -2978,21 +2978,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             self.viewActivity.stopAnimating()
             self.viewMainActivityIndicator.isHidden = true
+
             
-            //            ringTone.mp3
-            //            self.playSound(fileName: "PickNGo", extensionType: "mp3")
-            
-            //            UtilityClass.showAlertWithCompletion("", message: "Your request has been rejected.", vc: self, completionHandler: { ACTION in
-            //
-            //                self.stopSound(fileName: "ringTone", extensionType: "mp3")
-            //                })
-            
-            UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request has been rejected.") { (index, title) in
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "", completionHandler: { (index, title) in
                 
-                //               self.stopSound(fileName: "PickNGo", extensionType: "mp3")
-            }
-            
-            //            UtilityClass.showAlert("", message: "Your request has been rejected.", vc: self)
+            })
+        
         })
     }
     
@@ -3002,19 +2993,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             print("socketMethodForGettingPickUpNotification() is \(data)")
             self.stopTimer()
             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            //            UtilityClass.showAlert("", message: "Your trip has now started.", vc: self)
-            UtilityClass.setCustomAlert(title: "\(appName)", message: "Your trip has now started.") { (index, title) in
-            }
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "", completionHandler: { (index, title) in
+                
+            })
             
             self.btnRequest.isHidden = true
             self.btnCancelStartedTrip.isHidden = true
             
-            //            SingletonClass.sharedInstance.isTripContinue = true
-            
             self.methodAfterStartTrip(tripData: NSArray(array: data))
-            
-            //            self.socket.off(SocketData.kPickupPassengerNotification)
-            
+                        
         })
     }
     
@@ -3308,11 +3295,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                 }
                 
-                self.driverMarker.icon = UIImage(named: self.markerCarIconName(modelId: vehicleID))
-                
-                
-                
-                // ----------------------------------------------------------------------
                 self.driverMarker.icon = UIImage(named: self.markerCarIconName(modelId: vehicleID))
             }
             self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
@@ -3696,7 +3678,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             if let originLocation = origin {
                 if let destinationLocation = destination {
-                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
+                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation + "&key=" + googlApiKey
                     if let routeWaypoints = waypoints {
                         directionsURLString += "&waypoints=optimize:true"
                         
@@ -3884,7 +3866,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             if let originLocation = origin {
                 if let destinationLocation = destination {
-                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
+                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation + "&key=" + googlApiKey
                     if let routeWaypoints = waypoints {
                         directionsURLString += "&waypoints=optimize:true"
                         
@@ -4071,7 +4053,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             if let originLocation = origin {
                 if let destinationLocation = destination {
-                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation
+                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation + "&key=" + googlApiKey
                     if let routeWaypoints = waypoints {
                         directionsURLString += "&waypoints=optimize:true"
                         
@@ -4362,22 +4344,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             CarModel = "imgBusinessClass"
             return CarModel
         case 2:
-            CarModel = "imgDisability"
+            CarModel = "imgMIni"
             return CarModel
         case 3:
-            CarModel = "imgTaxi"
+            CarModel = "imgVan"
             return CarModel
         case 4:
-            CarModel = "imgFirstClass"
+            CarModel = "imgNano"
             return CarModel
         case 5:
-            CarModel = "imgLUXVAN"
+            CarModel = "imgTukTuk"
             return CarModel
         case 6:
-            CarModel = "imgEconomy"
+            CarModel = "imgBreakdown"
             return CarModel
         default:
-            CarModel = "iconActiveDriver"
+            CarModel = "imgBus"
             return CarModel
         }
         
