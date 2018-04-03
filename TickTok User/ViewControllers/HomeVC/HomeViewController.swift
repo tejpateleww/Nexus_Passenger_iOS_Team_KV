@@ -2413,16 +2413,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         //        print(arrNumberOfOnlineCars)
         
-        if checkTempData.count == 0 {
+        if checkTempData.count == 0
+        {
             
             SingletonClass.sharedInstance.isFirstTimeReloadCarList = true
             
             checkTempData = aryTempOnlineCars as NSArray
             
         }
-        else {
+        else
+        {
             
-            for i in 0..<aryTempOnlineCars.count {
+            for i in 0..<aryTempOnlineCars.count
+            {
                 
                 let arySwif = aryTempOnlineCars.object(at: i) as! NSDictionary
                 
