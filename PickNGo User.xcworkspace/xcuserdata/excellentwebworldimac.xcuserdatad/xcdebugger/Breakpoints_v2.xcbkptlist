@@ -95,8 +95,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2002"
             endingLineNumber = "2002"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "btnOffice(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3394"
             endingLineNumber = "3394"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "onAdvanceTripInfoBeforeStartTrip()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -127,8 +127,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3594"
             endingLineNumber = "3594"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "clearCurrentLocation()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -143,8 +143,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1929"
             endingLineNumber = "1929"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "btnDriverInfo(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -159,8 +159,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1947"
             endingLineNumber = "1947"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "swipDownDriverInfo(_:)"
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "Yes"
