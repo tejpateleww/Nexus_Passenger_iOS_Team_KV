@@ -129,25 +129,34 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
     }
     class func showACProgressHUD() {
         
-        let progressView = ACProgressHUD.shared
-        /*
-         ACProgressHUD.shared.configureStyle(withProgressText: "", progressTextColor: .black, progressTextFont: <#T##UIFont#>, shadowColor: UIColor.black, shadowRadius: 3, cornerRadius: 5, indicatorColor: UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0), hudBackgroundColor: .white, enableBackground: false, backgroundColor: UIColor.black, backgroundColorAlpha: 0.3, enableBlurBackground: false, showHudAnimation: .growIn, dismissHudAnimation: .growOut)
-         */
-        progressView.progressText = ""
+//        let progressView = ACProgressHUD.shared
+//        /*
+//         ACProgressHUD.shared.configureStyle(withProgressText: "", progressTextColor: .black, progressTextFont: <#T##UIFont#>, shadowColor: UIColor.black, shadowRadius: 3, cornerRadius: 5, indicatorColor: UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0), hudBackgroundColor: .white, enableBackground: false, backgroundColor: UIColor.black, backgroundColorAlpha: 0.3, enableBlurBackground: false, showHudAnimation: .growIn, dismissHudAnimation: .growOut)
+//         */
+//        progressView.progressText = ""
+//
+//        progressView.hudBackgroundColor = .black
+//
+//        progressView.indicatorColor = themeYellowColor
+//        //        progressView.shadowRadius = 0.5
+//
+//
+//        progressView.showHUD()
         
-        progressView.hudBackgroundColor = .black
-        
-        progressView.indicatorColor = themeYellowColor
-        //        progressView.shadowRadius = 0.5
-        
-        
-        progressView.showHUD()
+        let activityData = ActivityData()
+        NVActivityIndicatorView.DEFAULT_BLOCKER_MINIMUM_DISPLAY_TIME = 55
+        NVActivityIndicatorView.DEFAULT_BLOCKER_DISPLAY_TIME_THRESHOLD = 55
+        NVActivityIndicatorView.DEFAULT_TYPE = .ballRotate
+        NVActivityIndicatorView.DEFAULT_COLOR = themeYellowColor
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
         
     }
     
     class func hideACProgressHUD() {
         
-        ACProgressHUD.shared.hideHUD()
+//        ACProgressHUD.shared.hideHUD()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+
     }
 
 }

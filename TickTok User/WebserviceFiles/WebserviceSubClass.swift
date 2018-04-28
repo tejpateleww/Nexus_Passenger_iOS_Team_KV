@@ -43,7 +43,7 @@ let Init = WebserviceURLs.kInit
 let GetPackages = WebserviceURLs.kGetPackages
 
 let ReviewRating = WebserviceURLs.kReviewRating
-
+let MissBookingRequest = WebserviceURLs.kMissBokkingRequest
 let GetTickpayApprovalStatus = WebserviceURLs.kGetTickpayApprovalStatus
 let TransferToBank = WebserviceURLs.kTransferToBank
 let UpdateBankAccountDetails = WebserviceURLs.kUpdateBankAccountDetails
@@ -429,4 +429,16 @@ func webserviceForOTPRegister(_ dictParams: AnyObject, completion: @escaping(_ r
     let url = OTPVerify
     postData(dictParams, nsURL: url, completion: completion)
 }
+
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Miss Booking Request
+//-------------------------------------------------------------
+
+func webserviceForMissBookingRequest(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = MissBookingRequest
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
 

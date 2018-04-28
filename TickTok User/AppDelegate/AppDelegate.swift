@@ -282,31 +282,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: { (granted, error) in
             
             print("Permissin granted: \(granted)")
-            
-//            guard granted else { return }
- /*
-            // 1
-            let viewAction = UNNotificationAction(identifier: "ViewActionIndentifier", title: "View", options: [.foreground])
-            
-            // 2
-            let newsCategory = UNNotificationCategory(identifier: "newsCategoryIndentifier", actions: [viewAction], intentIdentifiers: [], options: [])
-            
-            // 3
-            UNUserNotificationCenter.current().setNotificationCategories([newsCategory])
-*/
+
             self.getNotificationSettings()
 
         })
         
-        /*        {
-         "aps": {
-         "alert": "Breaking News!",
-         "sound": "default",
-         "link_url": "https://raywenderlich.com",
-         "category": "NEWS_CATEGORY"
-         }
-         }
-         */
     }
 
     

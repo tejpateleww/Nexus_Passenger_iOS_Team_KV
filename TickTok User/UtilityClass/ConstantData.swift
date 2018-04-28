@@ -11,6 +11,7 @@ import Foundation
 
 let themeYellowColor: UIColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)
 let themeGrayColor: UIColor = UIColor.init(red: 114/255, green: 114/255, blue: 114/255, alpha: 1.0)
+//let ThemeYellowColor : UIColor = UIColor.init(hex: "ffa300")
 
 let currencySign = "LKR"
 let appName = "Pick'N'Go"
@@ -31,7 +32,7 @@ struct WebserviceURLs {
     static let kImageBaseURL                            = "https://pickngolk.info/web/" // "http://54.255.222.125/web/" // "https://pickngolk.info/web/"
     
     static let kCardsList                               = "Cards/"
-    static let kPackageBookingHistory                               = "PackageBookingHistory"
+    static let kPackageBookingHistory                   = "PackageBookingHistory"
     static let kBookPackage                             = "BookPackage"
     static let kCurrentBooking                          = "CurrentBooking/"
     static let kAddNewCard                              = "AddNewCard"
@@ -54,7 +55,9 @@ struct WebserviceURLs {
     static let kTransferToBank                          = "TransferToBank"
     static let kUpdateBankAccountDetails                = "UpdateBankAccountDetails"
     static let kOtpForRegister                          = "OtpForRegister"
-    static let kGetPackages                          = "Packages"
+    static let kGetPackages                             = "Packages"
+    static let kMissBokkingRequest                      = "BookingMissRequest"
+    
 //    https://pickngolk.info/web/Passenger_Api/OtpForRegister
     
 }
@@ -69,7 +72,7 @@ struct SocketData {
     static let kPickupPassengerNotification                 = "PickupPassengerNotification"
     static let kBookingCompletedNotification                = "BookingDetails"
     static let kCancelTripByPassenger                       = "CancelTripByPassenger"
-    
+    static let kCancelTripByDriverNotficication             = "PassengerCancelTripNotification"
     static let kSendDriverLocationRequestByPassenger        = "DriverLocation"
     static let kReceiveDriverLocationToPassenger            = "GetDriverLocation"
     static let kReceiveHoldingNotificationToPassenger       = "TripHoldNotification"
@@ -112,7 +115,7 @@ struct SubmitBookingRequest {
     static let kNotes                   = "Notes"
     static let kPaymentType             = "PaymentType"
     static let kCardId                  = "CardId"
-    
+    static let kSpecial                 = "Special"
 }
 
 struct NotificationCenterName {
