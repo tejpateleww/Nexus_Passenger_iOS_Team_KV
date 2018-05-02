@@ -2706,10 +2706,40 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func socketMethods()
     {
         
+       
+        var isSocketConnected = true
+        
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
             
             self.methodsAfterConnectingToSocket()
+            
+            if self.socket.status != .connected {
+                
+                print("socket.status != .connected")
+            }
+            
+            if (isSocketConnected) {
+                isSocketConnected = false
+                
+                self.socketMethodForGettingBookingAcceptNotification()
+                self.socketMethodForGettingBookingRejectNotification()
+                self.socketMethodForGettingPickUpNotification()
+                self.socketMethodForGettingTripCompletedNotification()
+                self.onTripHoldingNotificationForPassengerLater()
+                self.onReceiveDriverLocationToPassenger()
+                self.socketMethodForGettingBookingRejectNotificatioByDriver()
+                self.onAcceptBookLaterBookingRequestNotification()
+                self.onRejectBookLaterBookingRequestNotification()
+                self.onPickupPassengerByDriverInBookLaterRequestNotification()
+                self.onTripHoldingNotificationForPassenger()
+                self.onBookingDetailsAfterCompletedTrip()
+                self.onGetEstimateFare()
+                self.onAdvanceTripInfoBeforeStartTrip()
+                self.onReceiveNotificationWhenDriverAcceptRequest()
+                
+            }
+            
             
             
             self.socket.on(SocketData.kNearByDriverList, callback: { (data, ack) in
@@ -2751,25 +2781,37 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
             
             
-            self.socketMethodForGettingBookingAcceptNotification()
-            self.socketMethodForGettingBookingRejectNotification()
-            self.socketMethodForGettingPickUpNotification()
-            self.socketMethodForGettingTripCompletedNotification()
-            self.onTripHoldingNotificationForPassengerLater()
-            self.onReceiveDriverLocationToPassenger()
-            self.socketMethodForGettingBookingRejectNotificatioByDriver()
-            self.onAcceptBookLaterBookingRequestNotification()
-            self.onRejectBookLaterBookingRequestNotification()
-            self.onPickupPassengerByDriverInBookLaterRequestNotification()
-            self.onTripHoldingNotificationForPassenger()
-            self.onBookingDetailsAfterCompletedTrip()
-            self.onGetEstimateFare()
-            self.onAdvanceTripInfoBeforeStartTrip()
-            self.onReceiveNotificationWhenDriverAcceptRequest()
+//            _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.bookingAcceptNotificationMethodCallInTimer), userInfo: nil, repeats: true)
+            
+//            self.socketMethodForGettingBookingAcceptNotification()
+            
+            
+//            self.socketMethodForGettingBookingRejectNotification()
+//            self.socketMethodForGettingPickUpNotification()
+//            self.socketMethodForGettingTripCompletedNotification()
+//            self.onTripHoldingNotificationForPassengerLater()
+//            self.onReceiveDriverLocationToPassenger()
+//            self.socketMethodForGettingBookingRejectNotificatioByDriver()
+//            self.onAcceptBookLaterBookingRequestNotification()
+//            self.onRejectBookLaterBookingRequestNotification()
+//            self.onPickupPassengerByDriverInBookLaterRequestNotification()
+//            self.onTripHoldingNotificationForPassenger()
+//            self.onBookingDetailsAfterCompletedTrip()
+//            self.onGetEstimateFare()
+//            self.onAdvanceTripInfoBeforeStartTrip()
+//            self.onReceiveNotificationWhenDriverAcceptRequest()
             
         }
         
         socket.connect()
+    }
+    
+    var timesOfAccept = Int()
+    @objc func bookingAcceptNotificationMethodCallInTimer() {
+        timesOfAccept += 1
+        print("ACCCEPT by Timer: \(timesOfAccept)")
+        
+        self.socketMethodForGettingBookingAcceptNotification()
     }
     
     func scheduledTimerWithTimeInterval(){
@@ -2797,6 +2839,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAcceptBookingRequestNotification, callback: { (data, ack) in
             print("AcceptBooking data is \(data)")
             
+            self.socket.off(SocketData.kAcceptBookingRequestNotification)
+            
+            
             //            self.clearMap()
             //            RequestConfirm.mp3
             //            self.playSound(fileName: "RequestConfirm", extensionType: "mp3")
@@ -2812,6 +2857,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
             self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+            
+            
             
         })
     }
