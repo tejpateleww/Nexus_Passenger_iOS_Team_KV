@@ -92,7 +92,7 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
         
          let dataDict = aryAddress[indexPath.row]
         
-        if let address = dataDict["Address"] as? String {
+        if (dataDict["Address"] as? String) != nil {
             
             var dict = [String:AnyObject]()
             dict["Address"] = dataDict["Address"] as AnyObject
@@ -124,7 +124,7 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
                 tableView.endUpdates()
                 
                 if aryAddress.count == 0 {
-                    var dict = [String:AnyObject]()
+                    let dict = [String:AnyObject]()
                     delegateForFavourite?.didEnterFavouriteDestination(Source: dict)
                     self.navigationController?.popViewController(animated: true)
                 }

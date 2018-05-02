@@ -1542,6 +1542,83 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    
+    func onGetEstimateFare() {
+        
+        self.socket.on(SocketData.kReceiveGetEstimateFare, callback: { (data, ack) in
+            //            print("onGetEstimateFare() is \(data)")
+            
+            var estimateData = (data as! [[String:AnyObject]])
+            estimateData =  estimateData[0]["estimate_fare"] as! [[String:AnyObject]]
+            
+            let sortedArray = estimateData.sorted {($0["sort"] as! Int) < ($1["sort"] as! Int)}
+            
+            if self.aryEstimateFareData == self.aryEstimateFareData {
+                
+                let ary1 = self.aryEstimateFareData as! [[String:AnyObject]]
+                let ary2 = sortedArray
+                
+                for i in 0..<self.aryEstimateFareData.count {
+                    
+                    let dict1 = ary1[i] as NSDictionary
+                    let dict2 = ary2[i] as NSDictionary
+                    
+                    if dict1 != dict2 {
+                        
+                        UIView.performWithoutAnimation {
+                            self.collectionViewCars.reloadData()
+                        }
+                    }
+                    
+                }
+                
+                
+            }
+            
+            self.aryEstimateFareData = NSMutableArray(array: sortedArray as NSArray)
+            
+            var count = Int()
+            for i in 0..<self.arrNumberOfOnlineCars.count
+            {
+                let dictOnlineCarData = (self.arrNumberOfOnlineCars.object(at: i) as! NSDictionary)
+                count = count + (dictOnlineCarData["carCount"] as! Int)
+                if (count == 0)
+                {
+                    
+                    if(self.arrNumberOfOnlineCars.count == 0)
+                    {
+                        
+                        let alert = UIAlertController(title: "",
+                                                      message: "Book Now cars not available. Please click OK to Book Later.",
+                                                      preferredStyle: UIAlertControllerStyle.alert)
+                        
+                        
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (action) in
+                            self.btnBookLater((Any).self)
+                        }))
+                        
+                        
+                        alert.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: { (action) in
+                        }))
+                        
+                        
+                        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                        
+                    }
+                    
+                }
+            }
+            
+            
+            
+            //            UIView.performWithoutAnimation {
+            //                self.collectionViewCars.reloadData()
+            //            }
+            
+            
+        })
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Webservice Methods for Add Address to Favourite
     //-------------------------------------------------------------
@@ -1924,7 +2001,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
         else {
             
-            self.webserviceOfGetEstimateFare()
+            self.postPickupAndDropLocationForEstimateFare()
         }
     }
     
@@ -2443,7 +2520,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         SingletonClass.sharedInstance.isFirstTimeReloadCarList = false
                         
                         if txtCurrentLocation.text!.count != 0 && txtDestinationLocation.text!.count != 0 && aryOfOnlineCarsIds.count != 0 {
-                            webserviceOfGetEstimateFare()
+                            postPickupAndDropLocationForEstimateFare()
                         }
                         
                         self.collectionViewCars.reloadData()
@@ -2454,7 +2531,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     checkTempData = aryTempOnlineCars as NSArray
                     
                     if txtCurrentLocation.text!.count != 0 && txtDestinationLocation.text!.count != 0 && aryOfOnlineCarsIds.count != 0 {
-                        webserviceOfGetEstimateFare()
+                        postPickupAndDropLocationForEstimateFare()
                     }
                     
                     
@@ -2686,7 +2763,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.onPickupPassengerByDriverInBookLaterRequestNotification()
             self.onTripHoldingNotificationForPassenger()
             self.onBookingDetailsAfterCompletedTrip()
-            
+            self.onGetEstimateFare()
             self.onAdvanceTripInfoBeforeStartTrip()
             self.onReceiveNotificationWhenDriverAcceptRequest()
             
@@ -3360,7 +3437,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 self.driverMarker.icon = UIImage(named: self.markerCarIconName(modelId: vehicleID))
             }
-            self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
+//            self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
             self.destinationCordinate = DriverCordinate
             self.MarkerCurrntLocation.isHidden = true
             
@@ -3399,6 +3476,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         socket.emit(SocketData.kSendDriverLocationRequestByPassenger , with: [myJSON])
     }
     
+    
+    func postPickupAndDropLocationForEstimateFare()
+    {
+        let driverID = aryOfOnlineCarsIds.compactMap{ $0 }.joined(separator: ",")
+        
+        var myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strDropoffLocation,"DropoffLat" : self.doubleDropOffLat, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID ] as [String : Any]
+        
+        if(strDropoffLocation.count == 0)
+        {
+            myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strPickupLocation,"DropoffLat" : self.doubleDropOffLng, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID ] as [String : Any]
+        }
+        socket.emit(SocketData.kSendRequestForGetEstimateFare , with: [myJSON])
+    }
     
     func onBookingDetailsAfterCompletedTrip() {
         
@@ -3549,7 +3639,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             
             
-            let position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+            _ = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
             
             let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude,longitude: place.coordinate.longitude, zoom: 17.5)
             self.mapView.camera = camera
@@ -3572,7 +3662,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             destinationLocationMarker.map = nil
             
-            let position = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
+            _ = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
             
      
             let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude,longitude: place.coordinate.longitude, zoom: 17.5)
@@ -3580,7 +3670,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             mapView.animate(to: camera)
             
             if txtCurrentLocation.text!.count != 0 && txtDestinationLocation.text!.count != 0 && aryOfOnlineCarsIds.count != 0 {
-                webserviceOfGetEstimateFare()
+                postPickupAndDropLocationForEstimateFare()
             }
             
         }
@@ -4642,7 +4732,7 @@ extension HomeViewController: CLLocationManagerDelegate {
                 driverMarker.map = mapView
             }
             
-            self.moveMent.ARCarMovement(marker: driverMarker, oldCoordinate: destinationCordinate, newCoordinate: currentCordinate, mapView: mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
+//            self.moveMent.ARCarMovement(marker: driverMarker, oldCoordinate: destinationCordinate, newCoordinate: currentCordinate, mapView: mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
             destinationCordinate = currentCordinate
             self.MarkerCurrntLocation.isHidden = true
         }

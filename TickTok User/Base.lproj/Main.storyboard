@@ -656,8 +656,8 @@
                                     </view>
                                 </subviews>
                             </stackView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="L35-J7-kXx">
-                                <rect key="frame" x="320" y="0.0" width="320" height="548"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="L35-J7-kXx">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxC-fA-FqP">
                                         <rect key="frame" x="26.5" y="172" width="267" height="204.5"/>
@@ -862,8 +862,8 @@
                                     <outletCollection property="gestureRecognizers" destination="cTr-o4-GVX" appends="YES" id="njz-dY-kpA"/>
                                 </connections>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nem-pi-6cf">
-                                <rect key="frame" x="320" y="0.0" width="320" height="548"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Nem-pi-6cf">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIb-WE-vNz">
                                         <rect key="frame" x="20" y="119.5" width="280" height="309"/>
@@ -1062,7 +1062,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jp5-Y9-zfl">
-                                <rect key="frame" x="320" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="465" y="0.0" width="320" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P4P-ET-0Sh">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="100"/>
@@ -1106,7 +1106,7 @@
                                 </connections>
                             </view>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MYh-1l-Yi5">
-                                <rect key="frame" x="320" y="0.0" width="320" height="548"/>
+                                <rect key="frame" x="465" y="0.0" width="320" height="548"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qwf-9U-EyB">
                                         <rect key="frame" x="20" y="90.5" width="280" height="367"/>
@@ -1236,7 +1236,7 @@
                             <constraint firstItem="jk6-AX-E83" firstAttribute="trailing" secondItem="JMf-pz-FVv" secondAttribute="trailing" id="1I8-IL-f0X"/>
                             <constraint firstItem="ec7-Fr-2Yp" firstAttribute="leading" secondItem="jk6-AX-E83" secondAttribute="leading" id="1Pb-2E-X2d"/>
                             <constraint firstItem="Jp5-Y9-zfl" firstAttribute="leading" secondItem="04M-Ri-flH" secondAttribute="leading" id="1lO-ht-q8O"/>
-                            <constraint firstItem="jk6-AX-E83" firstAttribute="bottom" secondItem="L35-J7-kXx" secondAttribute="bottom" id="22x-om-ieJ"/>
+                            <constraint firstAttribute="bottom" secondItem="L35-J7-kXx" secondAttribute="bottom" id="22x-om-ieJ"/>
                             <constraint firstAttribute="top" secondItem="gTY-uZ-T0b" secondAttribute="top" id="4L3-Wx-cP3"/>
                             <constraint firstItem="jk6-AX-E83" firstAttribute="trailing" secondItem="Nem-pi-6cf" secondAttribute="trailing" id="4as-gC-Q86"/>
                             <constraint firstItem="JMf-pz-FVv" firstAttribute="top" secondItem="04M-Ri-flH" secondAttribute="top" id="7GT-zU-AIh"/>
@@ -1263,11 +1263,11 @@
                             <constraint firstItem="yJA-sv-5FK" firstAttribute="trailing" secondItem="JMf-pz-FVv" secondAttribute="trailing" constant="-20" id="d3F-ec-BaX"/>
                             <constraint firstItem="jk6-AX-E83" firstAttribute="trailing" secondItem="MYh-1l-Yi5" secondAttribute="trailing" id="dmq-su-Ceq"/>
                             <constraint firstAttribute="trailing" secondItem="Jp5-Y9-zfl" secondAttribute="trailing" id="fKF-eI-hR3"/>
-                            <constraint firstItem="Nem-pi-6cf" firstAttribute="top" secondItem="jk6-AX-E83" secondAttribute="top" constant="-20" id="g6T-Jm-5Jl"/>
+                            <constraint firstItem="Nem-pi-6cf" firstAttribute="top" secondItem="04M-Ri-flH" secondAttribute="top" id="g6T-Jm-5Jl"/>
                             <constraint firstItem="jk6-AX-E83" firstAttribute="bottom" secondItem="Nem-pi-6cf" secondAttribute="bottom" id="iDj-bS-V1E"/>
                             <constraint firstItem="jk6-AX-E83" firstAttribute="trailing" secondItem="NEN-qT-T5c" secondAttribute="trailing" id="jWL-Mi-SVl"/>
                             <constraint firstItem="NEN-qT-T5c" firstAttribute="leading" secondItem="jk6-AX-E83" secondAttribute="leading" id="lO6-Mw-5w8"/>
-                            <constraint firstItem="L35-J7-kXx" firstAttribute="top" secondItem="jk6-AX-E83" secondAttribute="top" constant="-20" id="laZ-dk-oLd"/>
+                            <constraint firstItem="L35-J7-kXx" firstAttribute="top" secondItem="04M-Ri-flH" secondAttribute="top" id="laZ-dk-oLd"/>
                             <constraint firstItem="yLO-op-apP" firstAttribute="centerY" secondItem="04M-Ri-flH" secondAttribute="centerY" id="mdg-yA-BzT"/>
                             <constraint firstItem="jk6-AX-E83" firstAttribute="trailing" secondItem="L35-J7-kXx" secondAttribute="trailing" id="nkT-9L-B8V"/>
                             <constraint firstItem="1mN-Ys-BSz" firstAttribute="height" secondItem="cvy-xK-kh4" secondAttribute="height" id="qcf-pN-I2M"/>
