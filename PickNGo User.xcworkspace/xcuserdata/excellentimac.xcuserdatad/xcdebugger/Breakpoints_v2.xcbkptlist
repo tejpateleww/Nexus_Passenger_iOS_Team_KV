@@ -9,29 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/Wallet/WalletCardsVC.swift"
-            timestampString = "541060850.48853"
+            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
+            timestampString = "546961101.829713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "297"
-            endingLineNumber = "297"
-            landmarkName = "setCreditCardImage(str:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/Wallet/WalletCardsVC.swift"
-            timestampString = "541061030.807695"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "165"
-            endingLineNumber = "165"
-            landmarkName = "tableView(_:cellForRowAt:)"
+            startingLineNumber = "2841"
+            endingLineNumber = "2841"
+            landmarkName = "socketMethodForGettingBookingAcceptNotification()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "541493761.465556"
+            timestampString = "546961101.830838"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1443"
-            endingLineNumber = "1443"
-            landmarkName = "reloadWebserviceOfCardList()"
+            startingLineNumber = "4020"
+            endingLineNumber = "4020"
+            landmarkName = "getDirectionsSeconMethod(origin:destination:waypoints:travelMode:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -58,28 +42,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "541493761.466259"
+            timestampString = "546961101.8313431"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1446"
-            endingLineNumber = "1446"
-            landmarkName = "HomeViewController"
-            landmarkType = "3">
+            startingLineNumber = "4109"
+            endingLineNumber = "4109"
+            landmarkName = "changePolyLine(origin:destination:waypoints:travelMode:completionHandler:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "541493761.466743"
+            timestampString = "546961101.831821"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1428"
-            endingLineNumber = "1428"
-            landmarkName = "callToWebserviceOfCardListViewDidLoad()"
+            startingLineNumber = "4298"
+            endingLineNumber = "4298"
+            landmarkName = "getDirectionsAcceptRequest(origin:destination:waypoints:travelMode:completionHandler:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -90,13 +74,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "541493761.467163"
+            timestampString = "546961101.8324389"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "808"
-            endingLineNumber = "808"
-            landmarkName = "getAddressForLatLng(latitude:longitude:markerType:)"
+            startingLineNumber = "2855"
+            endingLineNumber = "2855"
+            landmarkName = "socketMethodForGettingBookingAcceptNotification()"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Array&lt;Any&gt;, SocketIO.SocketAckEmitter) -&gt; () in PickNGo_User.HomeViewController.socketMethodForGettingBookingAcceptNotification() -&gt; ()"
+                  moduleName = "PickNGo User"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/excellentimac/Documents/Projects/Pick%20N%20Go/Pick%20N%20Go%20Passenger/TickTok%20User/ViewControllers/HomeVC/HomeViewController.swift"
+                  timestampString = "546961102.147135"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2855"
+                  endingLineNumber = "2855"
+                  offsetFromSymbolStart = "624">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Int, Swift.String) -&gt; () in closure #1 (Swift.Array&lt;Any&gt;, SocketIO.SocketAckEmitter) -&gt; () in PickNGo_User.HomeViewController.socketMethodForGettingBookingAcceptNotification() -&gt; ()"
+                  moduleName = "PickNGo User"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/excellentimac/Documents/Projects/Pick%20N%20Go/Pick%20N%20Go%20Passenger/TickTok%20User/ViewControllers/HomeVC/HomeViewController.swift"
+                  timestampString = "546961102.14991"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "2858"
+                  endingLineNumber = "2858"
+                  offsetFromSymbolStart = "28">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -106,12 +122,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "541493761.467574"
+            timestampString = "546961101.832921"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "663"
-            endingLineNumber = "663"
-            landmarkName = "mapView(_:idleAt:)"
+            startingLineNumber = "2717"
+            endingLineNumber = "2717"
+            landmarkName = "socketMethods()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
