@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2476"
             endingLineNumber = "2476"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "setData()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -31,8 +31,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "2208"
             endingLineNumber = "2208"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "collectionView(_:cellForItemAt:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -47,8 +47,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1522"
             endingLineNumber = "1522"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "webserviceOfGetEstimateFare()"
+            landmarkType = "7">
             <Locations>
                <Location
                   shouldBeEnabled = "No"
@@ -95,8 +95,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1524"
             endingLineNumber = "1524"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "webserviceOfGetEstimateFare()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "3490"
             endingLineNumber = "3490"
-            landmarkName = "unknown"
-            landmarkType = "0">
+            landmarkName = "postPickupAndDropLocationForEstimateFare()"
+            landmarkType = "9">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

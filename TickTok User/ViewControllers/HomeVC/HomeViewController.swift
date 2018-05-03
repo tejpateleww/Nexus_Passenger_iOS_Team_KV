@@ -2806,10 +2806,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
             //            })
             
-            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String) { (index, title) in
-                
+ 
                 //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
-            }
+//            }
             
             self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
             
