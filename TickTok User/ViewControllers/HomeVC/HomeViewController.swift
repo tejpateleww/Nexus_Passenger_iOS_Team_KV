@@ -2276,7 +2276,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         {
             
             let dictOnlineCarData = (arrNumberOfOnlineCars.object(at: indexPath.row) as! NSDictionary)
-            strSpecialRequestFareCharge = dictOnlineCarData.object(forKey: "SpecialExtraCharge") as! String
+            strSpecialRequestFareCharge = dictOnlineCarData.object(forKey: "SpecialExtraCharge") as? String ?? ""
             if dictOnlineCarData.object(forKey: "carCount") as! Int != 0 {
                 //                self.clearMap()
                 //       print("dictOnlineCarData: \(dictOnlineCarData)")
@@ -2707,7 +2707,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     {
         
        
-        var isSocketConnected = true
+        var isSocketConnected = Bool()
+        
+        
+        socket.on(clientEvent: .disconnect) { (data, ack) in
+            print ("socket is disconnected please reconnect")
+        }
+        
+        socket.on(clientEvent: .reconnect) { (data, ack) in
+            print ("socket is reconnected please reconnect")
+        }
+        
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
@@ -2719,8 +2729,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("socket.status != .connected")
             }
             
-            if (isSocketConnected) {
-                isSocketConnected = false
+            if (isSocketConnected == false) {
+                isSocketConnected = true
                 
                 self.socketMethodForGettingBookingAcceptNotification()
                 self.socketMethodForGettingBookingRejectNotification()
@@ -2739,7 +2749,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.onReceiveNotificationWhenDriverAcceptRequest()
                 
             }
-            
             
             
             self.socket.on(SocketData.kNearByDriverList, callback: { (data, ack) in
@@ -2780,26 +2789,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             })
             
-            
-//            _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.bookingAcceptNotificationMethodCallInTimer), userInfo: nil, repeats: true)
-            
-//            self.socketMethodForGettingBookingAcceptNotification()
-            
-            
-//            self.socketMethodForGettingBookingRejectNotification()
-//            self.socketMethodForGettingPickUpNotification()
-//            self.socketMethodForGettingTripCompletedNotification()
-//            self.onTripHoldingNotificationForPassengerLater()
-//            self.onReceiveDriverLocationToPassenger()
-//            self.socketMethodForGettingBookingRejectNotificatioByDriver()
-//            self.onAcceptBookLaterBookingRequestNotification()
-//            self.onRejectBookLaterBookingRequestNotification()
-//            self.onPickupPassengerByDriverInBookLaterRequestNotification()
-//            self.onTripHoldingNotificationForPassenger()
-//            self.onBookingDetailsAfterCompletedTrip()
-//            self.onGetEstimateFare()
-//            self.onAdvanceTripInfoBeforeStartTrip()
-//            self.onReceiveNotificationWhenDriverAcceptRequest()
+
             
         }
         
