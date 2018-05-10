@@ -2781,7 +2781,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
             
             
-//            _ = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(self.bookingAcceptNotificationMethodCallInTimer), userInfo: nil, repeats: true)
+
             
 //            self.socketMethodForGettingBookingAcceptNotification()
             
@@ -2805,15 +2805,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         socket.connect()
     }
-    
-    var timesOfAccept = Int()
-    @objc func bookingAcceptNotificationMethodCallInTimer() {
-        timesOfAccept += 1
-        print("ACCCEPT by Timer: \(timesOfAccept)")
         
-        self.socketMethodForGettingBookingAcceptNotification()
-    }
-    
     func scheduledTimerWithTimeInterval(){
         // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
