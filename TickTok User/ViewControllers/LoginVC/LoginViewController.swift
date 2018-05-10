@@ -246,7 +246,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 
                 self.viewMain.isHidden = false
                 
-                if let update = (result as! NSDictionary).object(forKey: "update") as? Bool {
+                if ((result as! NSDictionary).object(forKey: "update") as? Bool) != nil {
                     
                     let alert = UIAlertController(title: nil, message: (result as! NSDictionary).object(forKey: "message") as? String, preferredStyle: .alert)
                     let UPDATE = UIAlertAction(title: "UPDATE", style: .default, handler: { ACTION in
@@ -282,18 +282,26 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 
                         UtilityClass.showAlertWithCompletion("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self, completionHandler: { ACTION in
                             
-                            UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
+                            UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL), options: [:], completionHandler: { (status) in
+                                
+                            })//openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
                         })
                     }
                     else {
 
                          UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
-            }
+                            if (index == 0)
+                            {
+                                UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL), options: [:], completionHandler: { (status) in
+                                    
+                                })
+                            }
+                        }
 
                     }
                     
                 }
-
+/*
                 if let res = result as? String {
                      UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
             }
@@ -308,6 +316,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
                      UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
             }
                 }
+ */
             }
         }
     }

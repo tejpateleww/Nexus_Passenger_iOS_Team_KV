@@ -2276,7 +2276,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         {
             
             let dictOnlineCarData = (arrNumberOfOnlineCars.object(at: indexPath.row) as! NSDictionary)
-            strSpecialRequestFareCharge = dictOnlineCarData.object(forKey: "SpecialExtraCharge") as! String
+            strSpecialRequestFareCharge = dictOnlineCarData.object(forKey: "SpecialExtraCharge") as? String ?? ""
             if dictOnlineCarData.object(forKey: "carCount") as! Int != 0 {
                 //                self.clearMap()
                 //       print("dictOnlineCarData: \(dictOnlineCarData)")
@@ -2707,7 +2707,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     {
         
        
-        var isSocketConnected = true
+        var isSocketConnected = Bool()
+        
+        
+        socket.on(clientEvent: .disconnect) { (data, ack) in
+            print ("socket is disconnected please reconnect")
+        }
+        
+        socket.on(clientEvent: .reconnect) { (data, ack) in
+            print ("socket is reconnected please reconnect")
+        }
+        
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
@@ -2719,8 +2729,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 print("socket.status != .connected")
             }
             
-            if (isSocketConnected) {
-                isSocketConnected = false
+            if (isSocketConnected == false) {
+                isSocketConnected = true
                 
                 self.socketMethodForGettingBookingAcceptNotification()
                 self.socketMethodForGettingBookingRejectNotification()
@@ -2739,7 +2749,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.onReceiveNotificationWhenDriverAcceptRequest()
                 
             }
-            
             
             
             self.socket.on(SocketData.kNearByDriverList, callback: { (data, ack) in
@@ -2780,32 +2789,21 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             })
             
-            
 
-            
-//            self.socketMethodForGettingBookingAcceptNotification()
-            
-            
-//            self.socketMethodForGettingBookingRejectNotification()
-//            self.socketMethodForGettingPickUpNotification()
-//            self.socketMethodForGettingTripCompletedNotification()
-//            self.onTripHoldingNotificationForPassengerLater()
-//            self.onReceiveDriverLocationToPassenger()
-//            self.socketMethodForGettingBookingRejectNotificatioByDriver()
-//            self.onAcceptBookLaterBookingRequestNotification()
-//            self.onRejectBookLaterBookingRequestNotification()
-//            self.onPickupPassengerByDriverInBookLaterRequestNotification()
-//            self.onTripHoldingNotificationForPassenger()
-//            self.onBookingDetailsAfterCompletedTrip()
-//            self.onGetEstimateFare()
-//            self.onAdvanceTripInfoBeforeStartTrip()
-//            self.onReceiveNotificationWhenDriverAcceptRequest()
             
         }
         
         socket.connect()
     }
+    
+    var timesOfAccept = Int()
+    @objc func bookingAcceptNotificationMethodCallInTimer() {
+        timesOfAccept += 1
+        print("ACCCEPT by Timer: \(timesOfAccept)")
         
+        self.socketMethodForGettingBookingAcceptNotification()
+    }
+    
     func scheduledTimerWithTimeInterval(){
         // Scheduling timer to Call the function "updateCounting" with the interval of 1 seconds
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateCounting), userInfo: nil, repeats: true)
@@ -2843,10 +2841,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
             //            })
             
-            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String) { (index, title) in
-                
+ 
                 //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
-            }
+//            }
             
             self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
             
