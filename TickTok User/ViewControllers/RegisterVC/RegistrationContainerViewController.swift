@@ -18,6 +18,7 @@ class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         scrollObject.delegate = self
+        
   
     }
     
