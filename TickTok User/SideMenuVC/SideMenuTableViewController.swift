@@ -19,8 +19,8 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     
     var ProfileData = NSDictionary()
     
-    var arrMenuIcons = NSMutableArray()
-    var arrMenuTitle = NSMutableArray()
+    var arrMenuIcons = [String]()
+    var arrMenuTitle = [String]()
 
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -32,6 +32,11 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
 //        giveGradientColor()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.SetRating), name: NSNotification.Name(rawValue: "rating"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.setNewBookingOnArray), name: NotificationForAddNewBooingOnSideMenu, object: nil)
+        
+        if SingletonClass.sharedInstance.bookingId != "" {
+            setNewBookingOnArray()
+        }
 
         webserviceOfTickPayStatus()
         
@@ -73,7 +78,22 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     
     
     @objc func SetRating() {
+        self.tableView.reloadData()
+    }
+    
+    @objc func setNewBookingOnArray() {
         
+        if SingletonClass.sharedInstance.bookingId == "" {
+            if (arrMenuTitle.contains("New Booking")) {
+                arrMenuIcons.removeFirst()
+                arrMenuTitle.removeFirst()
+            }
+        }
+        
+        if !(arrMenuTitle.contains("New Booking")) && SingletonClass.sharedInstance.bookingId != "" {
+            arrMenuIcons.insert("iconNewBooking", at: 0)
+            arrMenuTitle.insert("New Booking", at: 0)
+        }
         
         self.tableView.reloadData()
     }
@@ -135,10 +155,10 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         {
             let cellMenu = tableView.dequeueReusableCell(withIdentifier: "ContentTableViewCell") as! ContentTableViewCell
 
-            cellMenu.imgDetail?.image = UIImage.init(named:  "\(arrMenuIcons.object(at: indexPath.row ))")
+            cellMenu.imgDetail?.image = UIImage.init(named:  "\(arrMenuIcons[indexPath.row])")
             cellMenu.selectionStyle = .none
             
-            cellMenu.lblTitle.text = arrMenuTitle.object(at: indexPath.row) as? String
+            cellMenu.lblTitle.text = arrMenuTitle[indexPath.row]
             
             return cellMenu
         }
@@ -162,17 +182,22 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         }
         else if (indexPath.section == 1)
         {
-            if indexPath.row == 0
+//            ["New Booking","My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","Become a \(appName) Driver","Package History","LogOut"]
+            if arrMenuTitle[indexPath.row] == "New Booking" {
+                NotificationCenter.default.post(name: NotificationForBookingNewTrip, object: nil)
+                sideMenuController?.toggle()
+                
+            }
+            if arrMenuTitle[indexPath.row] == "My Booking"
             {
 //                self.performSegue(withIdentifier: "segueMyBooking", sender: self)
 
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController") as! MyBookingViewController
                 self.navigationController?.pushViewController(next, animated: true)
                 
-                
             }
             
-            if indexPath.row == 1 {
+            if arrMenuTitle[indexPath.row] == "Payment Options" {
                 
 //                if SingletonClass.sharedInstance.setPasscode == "" {
 //                    let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
@@ -199,7 +224,7 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
 //                }
                 
             }
-            else if indexPath.row == 2 {
+            else if arrMenuTitle[indexPath.row] == "Wallet" {
                 
                 if (SingletonClass.sharedInstance.isPasscodeON) {
                     
@@ -230,7 +255,7 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                 }
                 
             }
-            else if indexPath.row == 3 {
+            else if arrMenuTitle[indexPath.row] == "Favourites" {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
                 
 //                let homeVC = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0] as! UINavigationController).childViewControllers[0] as! HomeViewController
@@ -248,29 +273,29 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                 
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 4 {
+            else if arrMenuTitle[indexPath.row] == "My Receipts" {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "MyReceiptsViewController") as! MyReceiptsViewController
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 5 {
+            else if arrMenuTitle[indexPath.row] == "Invite Friends" {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "InviteDriverViewController") as! InviteDriverViewController
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 6 {
+            else if arrMenuTitle[indexPath.row] == "Settings" {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "SettingPasscodeVC") as! SettingPasscodeVC
                 self.navigationController?.pushViewController(next, animated: true)
             }
-            else if indexPath.row == 7 {
+            else if arrMenuTitle[indexPath.row] == "Become a \(appName) Driver" {
                 UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
             }
-            else if indexPath.row == 8
+            else if arrMenuTitle[indexPath.row] == "Package History"
             {
                 let next = self.storyboard?.instantiateViewController(withIdentifier: "PackageHistoryViewController") as! PackageHistoryViewController
                 self.navigationController?.pushViewController(next, animated: true)
             }
             
             
-            if (indexPath.row == arrMenuTitle.count - 1)
+            if (arrMenuTitle[indexPath.row] == "LogOut")
             {
                 self.performSegue(withIdentifier: "unwindToContainerVC", sender: self)
                 UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)

@@ -29,6 +29,8 @@ class OnGoingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblDriverName: UILabel!
     @IBOutlet weak var lblBookingID: UILabel!
     
+    @IBOutlet weak var btnTrackYourTrip: UIButton!
+    
     @IBOutlet weak var lblDropoffAddress: UILabel!
     @IBOutlet weak var lblDateAndTime: UILabel!
     

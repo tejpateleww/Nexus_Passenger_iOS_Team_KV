@@ -50,6 +50,8 @@ let UpdateBankAccountDetails = WebserviceURLs.kUpdateBankAccountDetails
 
 let OTPVerify = WebserviceURLs.kOtpForRegister
 
+let TrackRunningTrip = WebserviceURLs.kTrackRunningTrip
+
 //-------------------------------------------------------------
 // MARK: - Webservice For Registration
 //-------------------------------------------------------------
@@ -439,6 +441,16 @@ func webserviceForMissBookingRequest(_ dictParams: AnyObject, completion: @escap
 {
     let url = MissBookingRequest
     postData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Track Running Trip
+//-------------------------------------------------------------
+
+func webserviceForTrackRunningTrip(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = TrackRunningTrip + "\(dictParams)"
+    getData("" as AnyObject, nsURL: url, completion: completion)
 }
 
 

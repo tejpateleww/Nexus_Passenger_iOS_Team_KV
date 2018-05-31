@@ -383,7 +383,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
-        print("Location: \(location)")
+//        print("Location: \(location)")
     }
     
     // Handle authorization for the location manager.

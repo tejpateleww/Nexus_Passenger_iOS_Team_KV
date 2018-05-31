@@ -187,4 +187,75 @@ onAcceptBookLaterBookingRequestNotification() is [{
 }]
 
 */
+/*
+{
+    AdminAmount = "";
+    BookingCharge = "";
+    BookingType = "Book Now";
+    ByDriverAmount = "";
+    ByDriverId = 0;
+    CarDetails =     {
+        Color = "";
+        Company = jdjdhdh;
+        CompanyId = 1;
+        Description = "";
+        DriverId = 70;
+        Id = 197;
+        RegistrationCertificate = "images/driver/70/image.jpeg";
+        RegistrationCertificateExpire = "0000-00-00";
+        VehicleImage = "images/driver/70/image2.jpeg";
+        VehicleInsuranceCertificate = "images/driver/70/image1.jpeg";
+        VehicleInsuranceCertificateExpire = "0000-00-00";
+        VehicleModel = 5;
+        VehicleRegistrationNo = jshshs;
+    };
+    CardId = 0;
+    CompanyAmount = "";
+    CompanyId = 1;
+    CreatedDate = "2018/05/28 12/09";
+    Discount = "";
+    DistanceFare = "";
+    DriverId = 70;
+    DriverName = "rahul patel";
+    DropOffLat = "23.02627485022037";
+    DropOffLon = "72.58191671222448";
+    DropTime = "";
+    DropoffLocation = "1354 Relief Rd, Ahmedabad, Ahmedabad";
+    FlightNumber = "";
+    GrandTotal = "";
+    HistoryType = onGoing;
+    Id = 7979;
+    Model = "Tuk Tuk";
+    ModelId = 5;
+    NightFare = "";
+    NightFareApplicable = 0;
+    Notes = "";
+    PaidToDriver = 0;
+    PassengerContact = "";
+    PassengerEmail = "";
+    PassengerId = 8;
+    PassengerName = "";
+    PaymentStatus = "";
+    PaymentType = cash;
+    PickupLat = "23.07082215763308";
+    PickupLng = "72.51659922301769";
+    PickupLocation = "35 Sola Gam Rd, Ahmedabad, Ahmedabad";
+    PickupTime = 1527489630;
+    PromoCode = "";
+    Reason = "";
+    Special = 0;
+    SpecialExtraCharge = 0;
+    Status = traveling;
+    SubTotal = "";
+    Tax = "";
+    TollFee = "";
+    TransactionId = "";
+    Trash = 0;
+    TripDistance = "";
+    TripDuration = "";
+    TripFare = "";
+    WaitingTime = "";
+    WaitingTimeCost = "";
+}
 
+*/

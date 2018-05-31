@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 class ButtonUtility: UIButton {
+    
    @IBInspectable let corner_radius : CGFloat =  10.0
 
     

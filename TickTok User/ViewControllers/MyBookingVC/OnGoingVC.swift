@@ -145,6 +145,8 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
             cell.lblTotalCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "GrandTotal") as? String
             
+            cell.btnTrackYourTrip.tag = indexPath.row
+            cell.btnTrackYourTrip.addTarget(self, action: #selector(self.trackYourTrip(sender:)), for: .touchUpInside)
             
              cell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
         
@@ -171,6 +173,54 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @objc func CancelRequest() {
         
+    }
+   
+    @objc func trackYourTrip(sender: UIButton) {
+        
+        let currentData = aryData.object(at: sender.tag)
+        
+        let id:String = (currentData as! NSDictionary).object(forKey: "Id")! as! String
+        
+        RunningTripTrack(param: id)
+        
+    }
+    
+    
+    func RunningTripTrack(param: String) {
+        
+        
+        webserviceForTrackRunningTrip(param as AnyObject) { (result, status) in
+            
+            if (status) {
+                 print(result)
+                SingletonClass.sharedInstance.bookingId = param
+                
+//                 Post notification
+                NotificationCenter.default.post(name: NotificationTrackRunningTrip, object: nil)
+                
+                self.navigationController?.popViewController(animated: true)
+                
+            }
+            else {
+                SingletonClass.sharedInstance.bookingId = ""
+                NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
+                var msg = String()
+                if let res = result as? String {
+                    msg = res
+                }
+                else if let resDict = result as? NSDictionary {
+                    msg = resDict.object(forKey: "message") as! String
+                }
+                else if let resAry = result as? NSArray {
+                    msg = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
+                }
+                
+                let alert = UIAlertController(title: "Pick N Go", message: msg, preferredStyle: .alert)
+                let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(OK)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
     }
     
     //-------------------------------------------------------------

@@ -127,6 +127,9 @@ class GiveRatingViewController: UIViewController, FloatRatingViewDelegate {
                     }
                 }
             }
+            
+            SingletonClass.sharedInstance.bookingId = ""
+            NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
         }
     }
     

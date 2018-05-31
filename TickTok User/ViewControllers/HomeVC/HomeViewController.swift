@@ -33,7 +33,6 @@ protocol addCardFromHomeVCDelegate {
 class HomeViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, GMSAutocompleteViewControllerDelegate, FavouriteLocationDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, FloatRatingViewDelegate, CompleterTripInfoDelegate, ARCarMovementDelegate, GMSMapViewDelegate, addCardFromHomeVCDelegate {
     
     let baseURLDirections = "https://maps.googleapis.com/maps/api/directions/json?"
-    
     let baseUrlForGetAddress = "https://maps.googleapis.com/maps/api/geocode/json?"
     let apikey = googlPlacesApiKey //"AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"
     
@@ -56,7 +55,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var zoomLevel: Float = 17.0
     var likelyPlaces: [GMSPlace] = []
     var selectedPlace: GMSPlace?
-    var defaultLocation = CLLocation(latitude: -37.814, longitude: 144.96332)
+    var defaultLocation = CLLocation(latitude: 6.9422744, longitude: 79.9196117)
     var arrNumberOfAvailableCars = NSMutableArray()
     var arrTotalNumberOfCars = NSMutableArray()
     var arrNumberOfOnlineCars = NSMutableArray()
@@ -137,7 +136,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
         }
-        
     }
     
     func didRatingCompleted() {
@@ -208,11 +206,19 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var collectionViewCars: UICollectionView!
     
     
+    
     var dropoffLat = Double()
     var dropoffLng = Double()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setLocationFromBarAndClub(_:)), name: NotificationBookNow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setBookLaterDestinationAddress(_:)), name: NotificationBookLater, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.webserviceOfRunningTripTrack), name: NotificationTrackRunningTrip, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.newBooking(_:)), name: NotificationForBookingNewTrip, object: nil)
+        
+        
         
         self.btnDoneForLocationSelected.isHidden = true
         self.ConstantViewCarListsHeight.constant = 0
@@ -221,9 +227,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         currentLocationMarkerText = "Current Location"
         destinationLocationMarkerText = "Destination Location"
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setLocationFromBarAndClub(_:)), name: NotificationBookNow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setBookLaterDestinationAddress(_:)), name: NotificationBookLater, object: nil)
-
         currentLocationMarker.isDraggable = true
         destinationLocationMarker.isDraggable = true
         
@@ -280,6 +283,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.view.bringSubview(toFront: btnFavourite)
         
         callToWebserviceOfCardListViewDidLoad()
+        
         //
         //        // Do any additional setup after loading the view.
         //         
@@ -303,6 +307,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             case 2436:
                 
                 viewHeaderHeightConstant.constant = 80
+                
                 //                frame = CGRect(x: CGFloat(0), y: CGFloat(-20), width: screenWidth, height: CGFloat(heightWithoutLabelForX))
                 //                hView.contraintLabelCentr.constant = 10
                 //
@@ -324,10 +329,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         //        setupGoogleMap()
         
         //        viewTripActions.isHidden = true
-        
-        
-        
-        
         
         // This is For Book Later Address
         if (SingletonClass.sharedInstance.isFromNotificationBookLater) {
@@ -385,7 +386,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
 
     }
-    
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -502,6 +502,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             setupBothCurrentAndDestinationMarkerAndPolylineOnMap()
             
+            self.collectionViewCars.reloadData()
             btnDoneForLocationSelected.isHidden = true
             self.viewCarLists.isHidden = false
             self.ConstantViewCarListsHeight.constant = 150
@@ -523,7 +524,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBAction func btnCurrentLocation(_ sender: UIButton) {
         
         currentLocationAction()
-        
     }
     
     func currentLocationAction() {
@@ -664,7 +664,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         
-        print("didChange position: \(position)")
+//        print("didChange position: \(position)")
         
         
         //        print("\(position.target.latitude) \(position.target.longitude)")
@@ -1753,6 +1753,16 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     //MARK:- IBActions
     var cardData = [[String:AnyObject]]()
     
+    @objc func newBooking(_ sender: UIButton) {
+        
+        let alert = UIAlertController(title: "New Booking", message: "This will clear old trip details on map for temporary now.", preferredStyle: .alert)
+        let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
+            self.clearSetupMapForNewBooking()
+        })
+        alert.addAction(OK)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
     @IBAction func btnBookNow(_ sender: Any) {
         if Connectivity.isConnectedToInternet()
         {
@@ -1956,7 +1966,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             else {
                 
                 if strCarModelID == "" {
-                    
+
                     UtilityClass.setCustomAlert(title: "Missing", message: "Select Car") { (index, title) in
                     }
                 }
@@ -2172,14 +2182,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
-    
     //MARK:- Collectionview Delegate and Datasource methods
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int
     {
-       
-            return self.arrNumberOfOnlineCars.count + 1
-        
+        return self.arrNumberOfOnlineCars.count + 1
     }
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell
     {
         
@@ -2187,20 +2195,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         cell.viewOfImage.layer.cornerRadius = cell.viewOfImage.frame.width / 2
         cell.viewOfImage.layer.borderWidth = 3.0
-        if selectedIndexPath == indexPath
-        {
-            
+        if selectedIndexPath == indexPath {
             cell.viewOfImage.layer.borderColor = themeYellowColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
         }
-        else
-        {
+        else {
             cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
-            
         }
-        
-        
         
         if (self.arrNumberOfOnlineCars.count != 0 && indexPath.row < self.arrNumberOfOnlineCars.count)
         {
@@ -2230,25 +2232,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         cell.lblMinutes.text = "\(minute) min"
                     }
                     
-                    
-                    
                     if ((self.aryEstimateFareData.object(at: indexPath.row) as! NSDictionary).object(forKey: "total") as? NSNull) != nil {
                         
                         cell.lblPrices.text = "\(currencySign) \(0)"
-                        
                     }
                     else if let price = (self.aryEstimateFareData.object(at: indexPath.row) as! NSDictionary).object(forKey: "total") as? Double {
                         
                         cell.lblPrices.text = "\(currencySign) \(price)"
                         
-                        
                     }
-                    
                 }
-                
-                
             }
-            
         }
         else
         {
@@ -2399,7 +2393,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             PackageVC.doublePickupLat = doublePickupLat
             PackageVC.doublePickupLng = doublePickupLng
             
-            
             self.present(navController, animated:true, completion: nil)
 
         }
@@ -2491,56 +2484,57 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func SortIdOfCarsType() {
         
-        let sortedArray = (aryTempOnlineCars as NSArray).sortedArray(using: [NSSortDescriptor(key: "Sort", ascending: true)]) as! [[String:AnyObject]]
+     
+//        DispatchQueue.main.async {
         
-        arrNumberOfOnlineCars = NSMutableArray(array: sortedArray)
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+        
+            let sortedArray = (self.aryTempOnlineCars as NSArray).sortedArray(using: [NSSortDescriptor(key: "Sort", ascending: true)]) as! [[String:AnyObject]]
+        
+            self.arrNumberOfOnlineCars = NSMutableArray(array: sortedArray)
         
         //        print(arrNumberOfOnlineCars)
         
-        if checkTempData.count == 0
-        {
-            
-            SingletonClass.sharedInstance.isFirstTimeReloadCarList = true
-            
-            checkTempData = aryTempOnlineCars as NSArray
-            
-        }
-        else
-        {
-            
-            for i in 0..<aryTempOnlineCars.count
-            {
+        
+            if self.checkTempData.count == 0 {
                 
-                let arySwif = aryTempOnlineCars.object(at: i) as! NSDictionary
+                SingletonClass.sharedInstance.isFirstTimeReloadCarList = true
+                self.checkTempData = self.aryTempOnlineCars as NSArray
                 
-                if (checkTempData.object(at: i) as! NSDictionary) == arySwif {
+                self.collectionViewCars.reloadData()
+            }
+            else {
+                
+                for i in 0..<self.aryTempOnlineCars.count {
                     
-                    //                    self.aryOfOnlineCarsIds.append(String((checkTempData.object(at: i) as! NSDictionary).object(forKey: "carCount") as! Int))
-                    if SingletonClass.sharedInstance.isFirstTimeReloadCarList == true {
-                        SingletonClass.sharedInstance.isFirstTimeReloadCarList = false
+                    let arySwif = self.aryTempOnlineCars.object(at: i) as! NSDictionary
+                    
+                    if (self.checkTempData.object(at: i) as! NSDictionary) == arySwif {
                         
-                        if txtCurrentLocation.text!.count != 0 && txtDestinationLocation.text!.count != 0 && aryOfOnlineCarsIds.count != 0 {
-                            postPickupAndDropLocationForEstimateFare()
+                        //                    self.aryOfOnlineCarsIds.append(String((checkTempData.object(at: i) as! NSDictionary).object(forKey: "carCount") as! Int))
+                        if SingletonClass.sharedInstance.isFirstTimeReloadCarList == true {
+                            SingletonClass.sharedInstance.isFirstTimeReloadCarList = false
+                            
+                            if self.txtCurrentLocation.text!.count != 0 && self.txtDestinationLocation.text!.count != 0 && self.aryOfOnlineCarsIds.count != 0 {
+                                self.postPickupAndDropLocationForEstimateFare()
+                            }
+                            self.collectionViewCars.reloadData()
+                           
                         }
+                    }
+                    else {
+                        self.checkTempData = self.aryTempOnlineCars as NSArray
                         
+                        if self.txtCurrentLocation.text!.count != 0 && self.txtDestinationLocation.text!.count != 0 && self.aryOfOnlineCarsIds.count != 0 {
+                            self.postPickupAndDropLocationForEstimateFare()
+                        }
                         self.collectionViewCars.reloadData()
+                        
                     }
-                    
-                }
-                else {
-                    checkTempData = aryTempOnlineCars as NSArray
-                    
-                    if txtCurrentLocation.text!.count != 0 && txtDestinationLocation.text!.count != 0 && aryOfOnlineCarsIds.count != 0 {
-                        postPickupAndDropLocationForEstimateFare()
-                    }
-                    
-                    
-                    self.collectionViewCars.reloadData()
                 }
             }
-            
-        }
-        
+        })
+       
     }
     
 //    func markertIcon(index: Int) -> String {
@@ -2706,9 +2700,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func socketMethods()
     {
         
-       
         var isSocketConnected = Bool()
-        
         
         socket.on(clientEvent: .disconnect) { (data, ack) in
             print ("socket is disconnected please reconnect")
@@ -2717,7 +2709,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         socket.on(clientEvent: .reconnect) { (data, ack) in
             print ("socket is reconnected please reconnect")
         }
-        
         
         socket.on(clientEvent: .connect) {data, ack in
             print("socket connected")
@@ -2732,24 +2723,23 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             if (isSocketConnected == false) {
                 isSocketConnected = true
                 
-                self.socketMethodForGettingBookingAcceptNotification()
-                self.socketMethodForGettingBookingRejectNotification()
-                self.socketMethodForGettingPickUpNotification()
-                self.socketMethodForGettingTripCompletedNotification()
-                self.onTripHoldingNotificationForPassengerLater()
-                self.onReceiveDriverLocationToPassenger()
-                self.socketMethodForGettingBookingRejectNotificatioByDriver()
-                self.onAcceptBookLaterBookingRequestNotification()
-                self.onRejectBookLaterBookingRequestNotification()
+                self.socketMethodForGettingBookingAcceptNotification()  // Accept Now Req
+                self.socketMethodForGettingBookingRejectNotification()  // Reject Now Req
+                self.socketMethodForGettingPickUpNotification()         // Start Now Req
+                self.socketMethodForGettingTripCompletedNotification()  // CompleteTrip Now Req
+                self.onTripHoldingNotificationForPassengerLater()       // Hold Trip Later
+                self.onReceiveDriverLocationToPassenger()               // Driver Location Receive
+                self.socketMethodForGettingBookingRejectNotificatioByDriver()   // Reject By Driver
+                self.onAcceptBookLaterBookingRequestNotification()              // Accept Later Req
+                self.onRejectBookLaterBookingRequestNotification()              // Reject Later Req
                 self.onPickupPassengerByDriverInBookLaterRequestNotification()
-                self.onTripHoldingNotificationForPassenger()
-                self.onBookingDetailsAfterCompletedTrip()
-                self.onGetEstimateFare()
-                self.onAdvanceTripInfoBeforeStartTrip()
+                self.onTripHoldingNotificationForPassenger()                    // Hold Trip Now
+                self.onBookingDetailsAfterCompletedTrip()                       // Booking Details After Complete Trip
+                self.onGetEstimateFare()                                        // Get Estimate
+                self.onAdvanceTripInfoBeforeStartTrip()                         // Start Later Req
                 self.onReceiveNotificationWhenDriverAcceptRequest()
                 
             }
-            
             
             self.socket.on(SocketData.kNearByDriverList, callback: { (data, ack) in
                 //                print("data is \(data)")
@@ -2789,8 +2779,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             })
             
-
-            
         }
         
         socket.connect()
@@ -2829,7 +2817,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAcceptBookingRequestNotification, callback: { (data, ack) in
             print("AcceptBooking data is \(data)")
             
-            self.socket.off(SocketData.kAcceptBookingRequestNotification)
+//            self.socket.off(SocketData.kAcceptBookingRequestNotification)
             
             
             //            self.clearMap()
@@ -2844,8 +2832,35 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
  
                 //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
 //            }
+            if let getInfoFromData = data as? [[String:AnyObject]] {
+                
+                if let infoData = getInfoFromData[0] as? [String:AnyObject] {
+                    if let bookingInfo = infoData["BookingInfo"] as? [[String:AnyObject]] {
+                        var bookingIdIs = String()
+                        if let nowBookingID: Int = (bookingInfo[0])["Id"] as? Int {
+                            bookingIdIs = "\(nowBookingID)"
+                        }
+                        else if let nowBookingID: String = (bookingInfo[0])["Id"] as? String {
+                            bookingIdIs = nowBookingID
+                        }
+                        print("bookingIdIs: \(bookingIdIs)")
+                        
+                        if SingletonClass.sharedInstance.bookingId != "" {
+                            if SingletonClass.sharedInstance.bookingId == bookingIdIs {
+                                self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+                            }
+                        }
+                        else {
+                            self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+                            
+                        }
+                    }
+                }
+            }
             
-            self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+            
+            
+//            self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
             
             
             
@@ -2979,10 +2994,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.getDirectionsAcceptRequest(origin: originalLoc, destination: destiantionLoc, waypoints: ["\(waypointLatitude),\(waypointSetLongitude)"], travelMode: nil) { (index, title) in
         }
         
-        
-        
-        
-        
+        NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
         
     }
     
@@ -3087,6 +3099,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.getDirectionsSeconMethod(origin: originalLoc, destination: destiantionLoc, waypoints: ["\(waypointLatitude),\(waypointSetLongitude)"], travelMode: nil, completionHandler: nil)
         
+        NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
+        
     }
     
     //MARK:- Show Driver Information
@@ -3127,13 +3141,49 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kRejectBookingRequestNotification, callback: { (data, ack) in
             print("socketMethodForGettingBookingRejectNotification() is \(data)")
             
-            self.viewActivity.stopAnimating()
-            self.viewMainActivityIndicator.isHidden = true
-
-     
-            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+            
+            var bookingId = String()
+            
+            if let bookingInfoData = (data as! [[String:AnyObject]])[0] as? [String:AnyObject] {
+                if let bookingInfo = bookingInfoData["BookingId"] as? Int {
+                    bookingId = "\(bookingInfo)"
+                }
+                else if let bookingInfo = bookingInfoData["BookingId"] as? String {
+                    bookingId = bookingInfo
+                }
                 
-            })
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    if SingletonClass.sharedInstance.bookingId == bookingId {
+                        self.viewActivity.stopAnimating()
+                        self.viewMainActivityIndicator.isHidden = true
+                        UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                            
+                        })
+                    }
+                }
+                else {
+                    self.viewActivity.stopAnimating()
+                    self.viewMainActivityIndicator.isHidden = true
+                    UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                        
+                    })
+                }
+            }
+
+//            self.viewActivity.stopAnimating()
+//            self.viewMainActivityIndicator.isHidden = true
+//            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+//
+//            })
+            
+        /*
+            [{
+                BookingId = 7623;
+                message = "Your Booking request has been canceled";
+                type = BookingRequest;
+                }]
+        */
+            
         
         })
     }
@@ -3146,21 +3196,50 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kCancelTripByDriverNotficication, callback: { (data, ack) in
             print("socketMethodForGettingBookingRejectNotificatioByDriver() is \(data)")
             
-            self.viewActivity.stopAnimating()
-            self.viewMainActivityIndicator.isHidden = true
-            self.currentLocationAction()
-            self.getPlaceFromLatLong()
-            self.clearDataAfteCompleteTrip()
-            self.currentLocationAction()
-            self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+            var bookingId = String()
             
-            self.viewTripActions.isHidden = true
-            SingletonClass.sharedInstance.passengerTypeOther = false
-            self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
-            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+            if let bookingInfoData = (data as! [[String:AnyObject]])[0]["BookingInfo"] as? [[String:AnyObject]] {
+                if let bookingInfo = bookingInfoData[0]["Id"] as? Int {
+                    bookingId = "\(bookingInfo)"
+                }
+                else if let bookingInfo = bookingInfoData[0]["Id"] as? String {
+                    bookingId = bookingInfo
+                }
                 
-            })
-            
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    if SingletonClass.sharedInstance.bookingId == bookingId {
+                        self.viewActivity.stopAnimating()
+                        self.viewMainActivityIndicator.isHidden = true
+                        self.currentLocationAction()
+                        self.getPlaceFromLatLong()
+                        self.clearDataAfteCompleteTrip()
+                        self.currentLocationAction()
+                        self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                        
+                        self.viewTripActions.isHidden = true
+                        SingletonClass.sharedInstance.passengerTypeOther = false
+                        self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                        UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                            
+                        })
+                    }
+                } else {
+                    self.viewActivity.stopAnimating()
+                    self.viewMainActivityIndicator.isHidden = true
+                    self.currentLocationAction()
+                    self.getPlaceFromLatLong()
+                    self.clearDataAfteCompleteTrip()
+                    self.currentLocationAction()
+                    self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                    
+                    self.viewTripActions.isHidden = true
+                    SingletonClass.sharedInstance.passengerTypeOther = false
+                    self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                    UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                        
+                    })
+                }
+            }
         })
     }
     
@@ -3169,16 +3248,61 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kPickupPassengerNotification, callback: { (data, ack) in
             print("socketMethodForGettingPickUpNotification() is \(data)")
 //            self.stopTimer()
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+   /*
+            [{
+                BookingId = 7625;
+                DriverId = 70;
+                message = "Your trip has now started.";
+                }]
+    */
+            var bookingIdIs = String()
+            
+            if let bookingData = data as? [[String:AnyObject]] {
+                if let id = bookingData[0]["BookingId"] as? String {
+                    bookingIdIs = id
+                }
+                else if let id = bookingData[0]["BookingId"] as? Int {
+                    bookingIdIs = "\(id)"
+                }
                 
-            })
-            
-            self.btnRequest.isHidden = true
-            self.btnCancelStartedTrip.isHidden = true
-            
-            self.methodAfterStartTrip(tripData: NSArray(array: data))
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    if SingletonClass.sharedInstance.bookingId == bookingIdIs {
+                        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                        UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                            
+                        })
                         
+                        self.btnRequest.isHidden = true
+                        self.btnCancelStartedTrip.isHidden = true
+                        
+                        self.methodAfterStartTrip(tripData: NSArray(array: data))
+                    }
+                }
+                else {
+                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                    UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+                        
+                    })
+                    
+                    self.btnRequest.isHidden = true
+                    self.btnCancelStartedTrip.isHidden = true
+                    
+                    self.methodAfterStartTrip(tripData: NSArray(array: data))
+                }
+                
+            }
+            
+            
+//            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+//            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+//
+//            })
+//
+//            self.btnRequest.isHidden = true
+//            self.btnCancelStartedTrip.isHidden = true
+//
+//            self.methodAfterStartTrip(tripData: NSArray(array: data))
+            
         })
     }
     
@@ -3189,6 +3313,40 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             SingletonClass.sharedInstance.isTripContinue = false
             self.aryCompleterTripData = data
+            
+            if let getInfoFromData = data as? [[String:AnyObject]] {
+                
+                if let infoData = getInfoFromData[0] as? [String:AnyObject] {
+                    if let bookingInfo = infoData["Info"] as? [[String:AnyObject]] {
+                        var bookingIdIs = String()
+                        if let nowBookingID: Int = (bookingInfo[0])["Id"] as? Int {
+                            bookingIdIs = "\(nowBookingID)"
+                        }
+                        else if let nowBookingID: String = (bookingInfo[0])["Id"] as? String {
+                            bookingIdIs = nowBookingID
+                        }
+                        print("bookingIdIs: \(bookingIdIs)")
+                        
+                        if SingletonClass.sharedInstance.bookingId != "" {
+                            if SingletonClass.sharedInstance.bookingId == bookingIdIs {
+                                if (SingletonClass.sharedInstance.passengerTypeOther) {
+                                    
+                                    SingletonClass.sharedInstance.passengerTypeOther = false
+                                    self.completeTripInfo()
+                                }
+                                else {
+                                    self.completeTripInfo()
+                                    //                self.performSegue(withIdentifier: "showRating", sender: nil)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            
+/*
+            
+            let bookingId = ((((data as! [[String:AnyObject]])[0] as! [String:AnyObject])["Info"] as! [[String:AnyObject]])[0] as! [String:AnyObject])["Id"]
             
             //            self.viewMainFinalRating.isHidden = false
             
@@ -3202,14 +3360,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.completeTripInfo()
                 //                self.performSegue(withIdentifier: "showRating", sender: nil)
             }
-            
-            
+
             //            let next = self.storyboard?.instantiateViewController(withIdentifier: "GiveRatingViewController") as! GiveRatingViewController
             //            next.strBookingType = self.strBookingType
             //            next.delegate = self
             //            next.modalPresentationStyle = .overCurrentContext
             //            self.present(next, animated: true, completion: nil)
-            
+*/
             
         })
     }
@@ -3222,6 +3379,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
         self.scheduledTimerWithTimeInterval()
         UtilityClass.showAlertWithCompletion("Your trip has been completed", message: "", vc: self, completionHandler: { (status) in
+            
             if (status == true)
             {
                 
@@ -3261,6 +3419,17 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    func clearSetupMapForNewBooking() {
+        
+        self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+        clearMap()
+        self.currentLocationAction()
+        self.viewTripActions.isHidden = true
+//        self.viewCarLists.isHidden = false
+//        self.ConstantViewCarListsHeight.constant = 150
+        clearDataAfteCompleteTrip()
+    }
+    
     func clearDataAfteCompleteTrip() {
         
         self.MarkerCurrntLocation.isHidden = false
@@ -3286,6 +3455,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.txtHavePromocode.text = ""
         self.txtSelectPaymentOption.text = ""
         SingletonClass.sharedInstance.isTripContinue = false
+        
+        
         
     }
     
@@ -3326,15 +3497,34 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
             //            })
             
-            UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request has been Accepted.") { (index, title) in
+            var bookingId = String()
+            
+            if let bookingInfoData = (data as! [[String:AnyObject]])[0]["BookingInfo"] as? [[String:AnyObject]] {
+                if let bookingInfo = bookingInfoData[0]["Id"] as? Int {
+                    bookingId = "\(bookingInfo)"
+                }
+                else if let bookingInfo = bookingInfoData[0]["Id"] as? String {
+                    bookingId = bookingInfo
+                }
                 
-                //               self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    if SingletonClass.sharedInstance.bookingId == bookingId {
+                        
+                        UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request has been Accepted.") { (index, title) in
+                            //               self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
+                        }
+                        self.strBookingType = "BookLater"
+                        self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+                    }
+                }
+                else {
+                    UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request has been Accepted.") { (index, title) in
+                        //               self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
+                    }
+                    self.strBookingType = "BookLater"
+                    self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
+                }
             }
-            
-            self.strBookingType = "BookLater"
-            
-            self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
-            
         })
     }
     
@@ -3360,19 +3550,46 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAdvancedBookingPickupPassengerNotification, callback: { (data, ack) in
             print("onPickupPassengerByDriverInBookLaterRequestNotification() is \(data)")
             
-            self.strBookingType = "BookLater"
-            let alert = UIAlertController(title: nil, message: "Your trip has now started.", preferredStyle: .alert)
-            let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alert.addAction(OK)
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+            var bookingId = String()
             
-            self.btnRequest.isHidden = true
-            self.btnCancelStartedTrip.isHidden = true
-            
-            //            SingletonClass.sharedInstance.isTripContinue = true
-            
-            self.methodAfterStartTrip(tripData: NSArray(array: data))
-            
+            if let bookingInfoData = (data as! [[String:AnyObject]])[0]["BookingInfo"] as? [[String:AnyObject]] {
+                if let bookingInfo = bookingInfoData[0]["Id"] as? Int {
+                    bookingId = "\(bookingInfo)"
+                }
+                else if let bookingInfo = bookingInfoData[0]["Id"] as? String {
+                    bookingId = bookingInfo
+                }
+                
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    
+                    if SingletonClass.sharedInstance.bookingId == bookingId {
+                        self.strBookingType = "BookLater"
+                        let alert = UIAlertController(title: nil, message: "Your trip has now started.", preferredStyle: .alert)
+                        let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(OK)
+                        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                        
+                        self.btnRequest.isHidden = true
+                        self.btnCancelStartedTrip.isHidden = true
+                        //            SingletonClass.sharedInstance.isTripContinue = true
+                        self.methodAfterStartTrip(tripData: NSArray(array: data))
+                        
+                    }
+                }
+                else {
+                    self.strBookingType = "BookLater"
+                    let alert = UIAlertController(title: nil, message: "Your trip has now started.", preferredStyle: .alert)
+                    let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(OK)
+                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                    
+                    self.btnRequest.isHidden = true
+                    self.btnCancelStartedTrip.isHidden = true
+                    //            SingletonClass.sharedInstance.isTripContinue = true
+                    self.methodAfterStartTrip(tripData: NSArray(array: data))
+                }
+            }
+ 
         })
     }
     
@@ -3446,9 +3663,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 self.driverMarker = GMSMarker(position: DriverCordinate) // self.originCoordinate
                 
-                
-                
-                
                 self.driverMarker.map = self.mapView
                 var vehicleID = Int()
                 if let vID = SingletonClass.sharedInstance.dictCarInfo["VehicleModel"] as? Int {
@@ -3476,8 +3690,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
 //            self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
             self.destinationCordinate = DriverCordinate
             self.MarkerCurrntLocation.isHidden = true
-            
-            
             
         })
         
@@ -3537,23 +3749,40 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             //            self.viewMainFinalRating.isHidden = false
             
-            
-            if (SingletonClass.sharedInstance.passengerTypeOther) {
+            var bookingId = String()
+            if let bookingData = data as? [[String:AnyObject]] {
                 
-                SingletonClass.sharedInstance.passengerTypeOther = false
-                self.completeTripInfo()
+                if let info = bookingData[0]["Info"] as? [[String:AnyObject]] {
+                    
+                    if let infoId = info[0]["Id"] as? String {
+                        bookingId = infoId
+                    }
+                    else if let infoId = info[0]["Id"] as? Int {
+                        bookingId = "\(infoId)"
+                    }
+                    
+                    if SingletonClass.sharedInstance.bookingId != "" {
+                        if SingletonClass.sharedInstance.bookingId == bookingId {
+                            
+                            if (SingletonClass.sharedInstance.passengerTypeOther) {
+                                
+                                SingletonClass.sharedInstance.passengerTypeOther = false
+                                self.completeTripInfo()
+                            }
+                            else {
+                                self.completeTripInfo()
+                                //                let next = self.storyboard?.instantiateViewController(withIdentifier: "GiveRatingViewController") as! GiveRatingViewController
+                                //                next.strBookingType = self.strBookingType
+                                //                next.delegate = self
+                                //                //            self.presentingViewController?.modalPresentationStyle
+                                //                self.present(next, animated: true, completion: nil)
+                            }
+                        }
+                    }
+                    
+                }
+                
             }
-            else {
-                self.completeTripInfo()
-                
-                
-                //                let next = self.storyboard?.instantiateViewController(withIdentifier: "GiveRatingViewController") as! GiveRatingViewController
-                //                next.strBookingType = self.strBookingType
-                //                next.delegate = self
-                //                //            self.presentingViewController?.modalPresentationStyle
-                //                self.present(next, animated: true, completion: nil)
-            }
-            
         })
     }
     
@@ -3597,20 +3826,46 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAcceptAdvancedBookingRequestNotify, callback: { (data, ack) in
             print("onReceiveNotificationWhenDriverAcceptRequest is \(data)")
             
-            var message = String()
-            message = "Trip on Hold"
+            var bookingId = String()
             
-            if let resAry = NSArray(array: data) as? NSArray {
-                message = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
+            if let bookingInfoData = (data as! [[String:AnyObject]])[0]["BookingInfo"] as? [[String:AnyObject]] {
+                if let bookingInfo = bookingInfoData[0]["Id"] as? Int {
+                    bookingId = "\(bookingInfo)"
+                }
+                else if let bookingInfo = bookingInfoData[0]["Id"] as? String {
+                    bookingId = bookingInfo
+                }
                 
+                if SingletonClass.sharedInstance.bookingId != "" {
+                    
+                    if SingletonClass.sharedInstance.bookingId == bookingId {
+                        var message = String()
+                        message = "Trip on Hold"
+                        
+                        if let resAry = NSArray(array: data) as? NSArray {
+                            message = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
+                        }
+                        
+                        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                        let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        alert.addAction(OK)
+                        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                    }
+                }
+                else {
+                    var message = String()
+                    message = "Trip on Hold"
+                    
+                    if let resAry = NSArray(array: data) as? NSArray {
+                        message = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
+                    }
+                    
+                    let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+                    let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                    alert.addAction(OK)
+                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
+                }
             }
-            
-            let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-            let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
-            
-            alert.addAction(OK)
-            
-            (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: true, completion: nil)
             
         })
         
@@ -4484,10 +4739,107 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.aryCurrentBookingData.add(resultData)
                 self.aryRequestAcceptedData = self.aryCurrentBookingData
                 
-                
                 let bookingType = (self.aryCurrentBookingData.object(at: 0) as! NSDictionary).object(forKey: "BookingType") as! String
                 
+                if bookingType != "" {
+                    
+                    
+                    self.MarkerCurrntLocation.isHidden = true
+                    
+                    if bookingType == "BookNow" {
+                        
+                        self.dictCurrentBookingInfoData = ((resultData).object(forKey: "BookingInfo") as! NSArray).object(at: 0) as! NSDictionary
+                        let statusOfRequest = self.dictCurrentBookingInfoData.object(forKey: "Status") as! String
+                        
+                        self.strBookingType = bookingType
+                        
+                        if statusOfRequest == "accepted" {
+                            
+                            self.bookingIDNow = self.dictCurrentBookingInfoData.object(forKey: "Id") as! String
+                            self.passengerId = SingletonClass.sharedInstance.strPassengerID
+                            SingletonClass.sharedInstance.bookingId = self.bookingIDNow
+                            
+                            self.bookingTypeIsBookNowAndAccepted()
+                            
+                        }
+                        else if statusOfRequest == "traveling" {
+                            self.bookingIDNow = self.dictCurrentBookingInfoData.object(forKey: "Id") as! String
+                            self.passengerId = SingletonClass.sharedInstance.strPassengerID
+                            SingletonClass.sharedInstance.bookingId = self.bookingIDNow
+                            
+                            SingletonClass.sharedInstance.isTripContinue = true
+                            
+                            self.bookingTypeIsBookNowAndTraveling()
+                        }
+                        
+                    }
+                    else if bookingType == "BookLater" {
+                        
+                        self.dictCurrentBookingInfoData = ((resultData).object(forKey: "BookingInfo") as! NSArray).object(at: 0) as! NSDictionary
+                        let statusOfRequest = self.dictCurrentBookingInfoData.object(forKey: "Status") as! String
+                        
+                        self.strBookingType = bookingType
+                        
+                        if statusOfRequest == "accepted" {
+                            
+                            self.bookingIDNow = self.dictCurrentBookingInfoData.object(forKey: "Id") as! String
+                            self.passengerId = SingletonClass.sharedInstance.strPassengerID
+                            SingletonClass.sharedInstance.bookingId = self.bookingIDNow
+                            
+                            self.bookingTypeIsBookNowAndAccepted()
+                            
+                        }
+                        else if statusOfRequest == "traveling" {
+                            self.bookingIDNow = self.dictCurrentBookingInfoData.object(forKey: "Id") as! String
+                            self.passengerId = SingletonClass.sharedInstance.strPassengerID
+                            SingletonClass.sharedInstance.bookingId = self.bookingIDNow
+                            
+                            SingletonClass.sharedInstance.isTripContinue = true
+                            
+                            self.bookingTypeIsBookNowAndTraveling()
+                        }
+                    }
+                    
+                    NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
+                    
+                    
+                }
+            }
+            else {
                 
+                let resultData = (result as! NSDictionary)
+                
+                SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
+
+            }
+        }
+        
+    }
+    
+    //-------------------------------------------------------------
+    // MARK: - Webservice Methods
+    //-------------------------------------------------------------
+    
+    @objc func webserviceOfRunningTripTrack() {
+        
+        
+        webserviceForTrackRunningTrip(SingletonClass.sharedInstance.bookingId as AnyObject) { (result, status) in
+            
+            if (status) {
+                // print(result)
+                
+                self.clearMap()
+                
+                let resultData = (result as! NSDictionary)
+                
+//                SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
+//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
+                self.aryCurrentBookingData.removeAllObjects()
+                self.aryCurrentBookingData.add(resultData)
+                self.aryRequestAcceptedData = self.aryCurrentBookingData
+                
+                let bookingType = (self.aryCurrentBookingData.object(at: 0) as! NSDictionary).object(forKey: "BookingType") as! String
                 
                 if bookingType != "" {
                     
@@ -4549,15 +4901,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
             else {
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+                let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
+                alert.addAction(OK)
+                self.present(alert, animated: true, completion: nil)
                 
-                let resultData = (result as! NSDictionary)
-                
-                SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
-                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
-
             }
         }
-        
     }
     
     // ----------------------------------------------------------------------
@@ -4566,6 +4916,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     // Book Now Accept Request
     // ----------------------------------------------------------------------
     func bookingTypeIsBookNowAndAccepted() {
+        
         
         if let vehicleModelId = (((aryCurrentBookingData.object(at: 0) as? NSDictionary)?.object(forKey: "CarInfo") as? NSArray)?.object(at: 0) as? NSDictionary)?.object(forKey: "VehicleModel") as? String {
             
@@ -4584,7 +4935,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func bookingTypeIsBookNowAndTraveling() {
-        
+       
         //        clearMap()
         
         if let vehicleModelId = (((aryCurrentBookingData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary).object(forKey: "VehicleModel") as? String {

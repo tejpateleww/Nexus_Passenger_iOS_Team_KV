@@ -275,3 +275,234 @@ func Accept Request by Driver()
 }
 )
  */
+
+/*
+
+AcceptBooking data is [{
+    BookingInfo =     (
+        {
+            AdminAmount = "";
+            BookingCharge = "";
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CardId = 0;
+            CompanyAmount = "";
+            CompanyId = 1;
+            CreatedDate = "2018-05-25T12:59:18.000Z";
+            Discount = "";
+            DistanceFare = "";
+            DriverId = 70;
+            DropOffLat = "23.03051289906712";
+            DropOffLon = "72.50754006206989";
+            DropTime = "";
+            DropoffLocation = "SG Road Bodakdev, GJ, Ahmedabad";
+            FlightNumber = "";
+            GrandTotal = "";
+            Id = 7627;
+            ModelId = 5;
+            NightFare = "";
+            NightFareApplicable = 0;
+            Notes = "";
+            PaidToDriver = 0;
+            PassengerContact = "";
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "";
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupLat = "23.07001398702818";
+            PickupLng = "72.51621801406145";
+            PickupLocation = "119 Anurag Bunglow Road, Ahmedabad, Ahmedabad";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            Special = 0;
+            SpecialExtraCharge = 0;
+            Status = accepted;
+            SubTotal = "";
+            Tax = "";
+            TollFee = "";
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = "";
+            TripDuration = "";
+            TripFare = "";
+            WaitingTime = "";
+            WaitingTimeCost = "";
+        }
+    );
+    CarInfo =     (
+        {
+            Color = "";
+            Company = jdjdhdh;
+            CompanyId = 1;
+            Description = "";
+            DriverId = 70;
+            Id = 197;
+            RegistrationCertificate = "images/driver/70/image.jpeg";
+            RegistrationCertificateExpire = "0000-00-00";
+            VehicleImage = "images/driver/70/image2.jpeg";
+            VehicleInsuranceCertificate = "images/driver/70/image1.jpeg";
+            VehicleInsuranceCertificateExpire = "0000-00-00";
+            VehicleModel = 5;
+            VehicleRegistrationNo = jshshs;
+        }
+    );
+    Details =     (
+        {
+            BookingId = 7627;
+            BookingType = BookNow;
+            Distance = 980;
+            DriverId = 70;
+            Lat = "23.070013987028";
+            Long = "72.516218014061";
+            PassengerId = 8;
+            Status = 2;
+            UpdateTime = 1527233358;
+            UpdatedDate = "2018-05-25 07:29:18";
+            "_id" = 5b07bb4ec1f9f1194482ba79;
+        }
+    );
+    DriverInfo =     (
+        {
+            ABN = "";
+            AccreditationCertificate = "images/driver/70/image5.jpeg";
+            AccreditationCertificateExpire = "0000-00-00";
+            Address = hahshs;
+            Availability = 1;
+            BSB = shsh;
+            BankAcNo = 7477474;
+            BankHolderName = rahil;
+            BankName = hshah;
+            City = "";
+            CompanyId = 1;
+            Country = "";
+            DCNumber = "";
+            DOB = "1990-03-15T00:00:00.000Z";
+            Description = "";
+            DeviceType = 1;
+            DispatcherId = 0;
+            DriverDuty = 1;
+            DriverLicense = "images/driver/70/image4.jpeg";
+            DriverLicenseExpire = "0000-00-00";
+            Email = "rahul.b.bit@gmail.com";
+            Fullname = "rahul patel";
+            Gender = Male;
+            Id = 70;
+            Image = "images/driver/70/0b8ace3f9004dd57fbb80f7e596763fa.png";
+            Lat = "23.072699134255576";
+            Lng = "72.51637077057804";
+            MobileNo = 9904439228;
+            Password = 25d55ad283aa400af464c76d713c07ad;
+            ProfileComplete = 1;
+            QRCode = "images/qrcode/jsbS2dDmzpxqYmdeh6KVnaw=.png";
+            ReferralCode = pkng70rah;
+            SmartPhone = 1;
+            State = "";
+            Status = 1;
+            SubUrb = "";
+            Token = "dDEEbNx7xuo:APA91bFNGAE3dWPeBxwn63lHf8xpQx7o-PxUjCVBRmx_2Xo0hcn4N9kiVNBxcZGQorPk1QNRuhGCcZermxEdueZA9XfkwRVhwvBFhba6hMJXjLlASutGtuRZNqmDmtccAqmirbY5JpyW";
+            Trash = 0;
+            ZipCode = 48484545;
+        }
+    );
+    ModelInfo =     (
+        {
+            AbovePerKmCharge = 30;
+            BaseFare = 60;
+            BelowAndAboveKmLimit = 1000;
+            BelowPerKmCharge = 33;
+            BookingFee = 0;
+            CancellationFee = 25;
+            Capacity = 3;
+            CategoryId = 1;
+            Commission = 5;
+            Description = "Smoking is Prohibited in PicknGo";
+            Id = 5;
+            Image = "images/model/Tuk_Tuk1.jpg";
+            MinKm = 1;
+            MinuteFare = 0;
+            Name = "Tuk Tuk";
+            NightCharge = 15;
+            NightChargeApplicable = 1;
+            NightTimeFrom = "22:00:00";
+            NightTimeTo = "06:59:00";
+            Sort = 1;
+            SpecialEventSurcharge = 0;
+            SpecialEventTimeFrom = "17:00:00";
+            SpecialEventTimeTo = "18:59:59";
+            SpecialExtraCharge = 60;
+            Status = 1;
+            WaitingTimePerMinuteCharge = "3.50";
+        }
+    );
+    message = "Your booking request has been confirmed";
+    type = Notification;
+}]
+
+*/
+/*
+onBookingDetailsAfterCompletedTrip() is [{
+    BookingType = BookLater;
+    Info =     (
+        {
+            AdminAmount = "3.14";
+            BookingCharge = 0;
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CardId = 0;
+            CompanyAmount = "59.66";
+            CompanyId = 1;
+            CompanyTax = "";
+            CreatedDate = "2018-05-28T18:36:15.000Z";
+            Discount = 0;
+            DistanceFare = "0.00";
+            DriverId = 9;
+            DropOffLat = "23.0271224";
+            DropOffLon = "72.5084742";
+            DropTime = "";
+            DropoffLocation = "BRTS Bus Stop Pandurang Shastri Athavale Marg, Ahmedabad, Ahmedabad";
+            FlightNumber = "";
+            GrandTotal = "62.80";
+            Id = 533;
+            ModelId = 5;
+            NightFare = 0;
+            NightFareApplicable = 0;
+            Notes = "";
+            OnTheWay = 1;
+            PaidToDriver = 0;
+            PassengerContact = 1122334455;
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "Vishal Dabhi";
+            PassengerType = myself;
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupDate = "2018-05-28T00:00:00.000Z";
+            PickupDateTime = "2018-05-28T19:06:06.000Z";
+            PickupLat = "23.0691958";
+            PickupLng = "72.5112124";
+            PickupLocation = "Sola, Ahmedabad, Gujarat 380060, India";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            Status = completed;
+            SubDispatcherId = 0;
+            SubTotal = "62.80";
+            Tax = "0.00";
+            TollFee = 0;
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = 9;
+            TripDuration = 1080;
+            TripFare = 60;
+            WaitingTime = 48;
+            WaitingTimeCost = "2.80";
+        }
+    );
+    PassengerType = myself;
+    UpdatedBal = "-715";
+}]
+*/
