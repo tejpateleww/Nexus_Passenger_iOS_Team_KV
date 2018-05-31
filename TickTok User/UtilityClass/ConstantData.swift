@@ -57,7 +57,9 @@ struct WebserviceURLs {
     static let kOtpForRegister                          = "OtpForRegister"
     static let kGetPackages                             = "Packages"
     static let kMissBokkingRequest                      = "BookingMissRequest"
+    static let kTrackRunningTrip                        = "TrackRunningTrip/"
     
+
 //    https://pickngolk.info/web/Passenger_Api/OtpForRegister
     
 }
@@ -145,6 +147,8 @@ struct setiPhoneX {
     static let iPhoneXStatusBarHeight = 44
     static let iPhoneXNavigationBarHeight = 40
     static let iPhoneXNavigationBarTop = 44
+    
+    
 }
 
 
@@ -153,6 +157,14 @@ let NotificationKeyFroAllDriver =  NSNotification.Name("NotificationKeyFroAllDri
 
 let NotificationBookNow = NSNotification.Name("NotificationBookNow")
 let NotificationBookLater = NSNotification.Name("NotificationBookLater")
+
+let NotificationTrackRunningTrip = NSNotification.Name("NotificationTrackRunningTrip")
+let NotificationForBookingNewTrip = NSNotification.Name("NotificationForBookingNewTrip")
+let NotificationForAddNewBooingOnSideMenu = NSNotification.Name("NotificationForAddNewBooingOnSideMenu")
+
+
+
+
 
 //let NotificationHotelReservation = NSNotification.Name("NotificationHotelReservation")
 //let NotificationBookaTable = NSNotification.Name("NotificationBookaTable")

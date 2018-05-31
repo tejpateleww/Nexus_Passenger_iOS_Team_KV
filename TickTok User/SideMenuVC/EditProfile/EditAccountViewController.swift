@@ -168,8 +168,7 @@ class EditAccountViewController: UIViewController {
                  UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                     
 //                    (result as! NSDictionary).object(forKey: "profile") as! NSMutableDictionary
-                
-                
+          
 /*
                     {
                         profile =     {

@@ -184,7 +184,7 @@ class AllDriversOnMapViewController: UIViewController, CLLocationManagerDelegate
                                               zoom: zoomLevel)
         mapView.camera = camera
         
-        print("Location: \(location)")
+//        print("Location: \(location)")
     }
     
     // Handle authorization for the location manager.
