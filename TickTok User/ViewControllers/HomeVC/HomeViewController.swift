@@ -175,7 +175,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var selectedIndexPath: IndexPath?
     var strSpecialRequest = String()
     var strSpecialRequestFareCharge = String()
-
+    
     @IBOutlet weak var ConstantViewCarListsHeight: NSLayoutConstraint! // 170
     @IBOutlet weak var constraintTopSpaceViewDriverInfo: NSLayoutConstraint!
     
@@ -379,12 +379,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         viewSelectPaymentOptionParent.layer.cornerRadius = 5
         viewSelectPaymentOptionParent.layer.masksToBounds = true
         
-
+        
         if(locationManager != nil)
         {
             locationManager.startUpdatingLocation()
         }
-
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -486,11 +486,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         clearMap()
         self.routePolyline.map = nil
+        self.updateCounting()
         if strLocationType == currentLocationMarkerText {
             
             btnDoneForLocationSelected.isHidden = true
             if txtDestinationLocation.text?.count != 0 {
-                txtDestinationLocation.isFirstResponder
+                txtDestinationLocation.becomeFirstResponder()
             }
         }
         else if strLocationType == destinationLocationMarkerText {
@@ -520,7 +521,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     var destinationLocationMarker = GMSMarker()
     
     var routePolyline = GMSPolyline()
-   var demoPolylineOLD = GMSPolyline()
+    var demoPolylineOLD = GMSPolyline()
     @IBAction func btnCurrentLocation(_ sender: UIButton) {
         
         currentLocationAction()
@@ -571,7 +572,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
         
-        print("willMove gesture : \(gesture)")
         
         self.btnDoneForLocationSelected.isHidden = true
         
@@ -582,7 +582,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func mapView(_ mapView: GMSMapView, idleAt cameraPosition: GMSCameraPosition) {
         
-        print("idleAt cameraPosition : \(cameraPosition)")
         
         
         
@@ -664,7 +663,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func mapView(_ mapView: GMSMapView, didChange position: GMSCameraPosition) {
         
-//        print("didChange position: \(position)")
+        //        print("didChange position: \(position)")
         
         
         //        print("\(position.target.latitude) \(position.target.longitude)")
@@ -1066,7 +1065,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
         }
     }
-
+    
     
     //MARK:- Webservice Call for Booking Requests
     func webserviceCallForBookingCar()
@@ -1081,7 +1080,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         if(strModelId == "")
         {
             dictParams.setObject(strCarModelIDIfZero, forKey: SubmitBookingRequest.kModelId as NSCopying)
-
+            
         }
         dictParams.setObject(strPickupLocation, forKey: SubmitBookingRequest.kPickupLocation as NSCopying)
         dictParams.setObject(strDropoffLocation, forKey: SubmitBookingRequest.kDropoffLocation as NSCopying)
@@ -1132,15 +1131,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.strBookingType = "BookNow"
                 self.viewBookNow.isHidden = true
                 self.viewActivity.startAnimating()
-               
-
+                
+                
             }
             else {
                 //    print(result)
                 
                 self.viewBookNow.isHidden = true
                 self.viewMainActivityIndicator.isHidden = true
-
+                
                 if let res = result as? String {
                     UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
                     }
@@ -1153,8 +1152,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                     else
                     {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
-                    }
+                        UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                        }
                     }
                 }
                 else if let resAry = result as? NSArray {
@@ -1505,43 +1504,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-    // webservice for Get Estimate Fare
-    func webserviceOfGetEstimateFare() {
-        //        PickupLocation,DropoffLocation,Ids,PickupLat,PickupLong
-        
-        let driverID = aryOfOnlineCarsIds.flatMap{ $0 }.joined(separator: ",")
-        
-        var param = [String:AnyObject]()
-        param["PickupLocation"] = txtCurrentLocation.text as AnyObject
-        param["DropoffLocation"] = txtDestinationLocation.text as AnyObject
-        param["Ids"] = driverID as AnyObject
-        param["PickupLat"] = doublePickupLat as AnyObject
-        param["PickupLong"] = doublePickupLng as AnyObject
-        
-        
-        webserviceForGetEstimateFare(param as AnyObject) { (result, status) in
-            
-            if (status) {
-                //   print(result)
-                
-                let estimateData = (result as! [String:AnyObject])["estimate_fare"] as! [[String:AnyObject]]
-                
-                let sortedArray = estimateData.sorted {($0["sort"] as! Int) < ($1["sort"] as! Int)}
-                
-                //   print(sortedArray)
-                
-                self.aryEstimateFareData = sortedArray as NSArray
-                self.collectionViewCars.reloadData()
-                
-            }
-            else {
-                
-                //     print(result)
-            }
-        }
-        
-    }
-    
     
     func onGetEstimateFare() {
         
@@ -1611,10 +1573,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             
             
-            //            UIView.performWithoutAnimation {
-            //                self.collectionViewCars.reloadData()
-            //            }
-            
+                        UIView.performWithoutAnimation {
+                            self.collectionViewCars.reloadData()
+                        }
+        
             
         })
     }
@@ -1763,6 +1725,24 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func btnCollectionViewScrollRight(_ sender: Any) {
+        if ( arrTotalNumberOfCars.count == 0)
+        {
+            self.collectionViewCars.scrollToItem(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .right, animated: true)
+
+        }
+        else
+        {
+        self.collectionViewCars.scrollToItem(at: NSIndexPath(row: arrTotalNumberOfCars.count, section: 0) as IndexPath, at: .right, animated: true)
+        }
+    }
+    
+    @IBAction func btnCollectionViewScrollLeft(_ sender: Any) {
+        self.collectionViewCars.scrollToItem(at: NSIndexPath(row: 0, section: 0) as IndexPath, at: .left, animated: true)
+
+    }
+    
+    
     @IBAction func btnBookNow(_ sender: Any) {
         if Connectivity.isConnectedToInternet()
         {
@@ -1781,20 +1761,20 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
                 else if strModelId == "" {
                     
-//                    UtilityClass.setCustomAlert(title: appName, message: "There are no cars available. Do you want to pay extra chareges?") { (index, title) in
-//                    }
+                    //                    UtilityClass.setCustomAlert(title: appName, message: "There are no cars available. Do you want to pay extra chareges?") { (index, title) in
+                    //                    }
                     
                     let alert = UIAlertController(title: appName, message: "There are no vehicles available within 2 kms and do u want to pay additional \(currencySign) \(strSpecialRequestFareCharge) and make a booking?", preferredStyle: .alert)
                     let OK = UIAlertAction(title: "Yes", style: .default, handler: { ACTION in
-                    self.strSpecialRequest = "1"
-                      self.bookingRequest()
+                        self.strSpecialRequest = "1"
+                        self.bookingRequest()
                         self.webserviceCallForMissBookingRequest()
-
+                        
                     })
                     let Cancel = UIAlertAction(title: "No", style: .destructive, handler: { ACTION in
-
+                        
                         self.webserviceCallForMissBookingRequest()
-
+                        
                     })
                     
                     
@@ -1814,30 +1794,30 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 strSpecialRequest = "0"
                 bookingRequest()
                 
-//                if (SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0) && self.aryCardsListForBookNow.count == 2 {
-//                    //                UtilityClass.showAlert("", message: "There is no card, If you want to add card than choose payment options to add card.", vc: self)
-//
-//                    let alert = UIAlertController(title: nil, message: "Do you want to add card.", preferredStyle: .alert)
-//                    let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
-//
-//                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
-//
-//                        next.delegateAddCardFromHomeVC = self
-//
-//                        self.navigationController?.present(next, animated: true, completion: nil)
-//
-//                    })
-//                    let Cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { ACTION in
-//                        self.paymentOptions()
-//                    })
-//                    alert.addAction(OK)
-//                    alert.addAction(Cancel)
-//                    self.present(alert, animated: true, completion: nil)
-//
-//                }
-//                else {
-//                    self.paymentOptions()
-//                }
+                //                if (SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0) && self.aryCardsListForBookNow.count == 2 {
+                //                    //                UtilityClass.showAlert("", message: "There is no card, If you want to add card than choose payment options to add card.", vc: self)
+                //
+                //                    let alert = UIAlertController(title: nil, message: "Do you want to add card.", preferredStyle: .alert)
+                //                    let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
+                //
+                //                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
+                //
+                //                        next.delegateAddCardFromHomeVC = self
+                //
+                //                        self.navigationController?.present(next, animated: true, completion: nil)
+                //
+                //                    })
+                //                    let Cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { ACTION in
+                //                        self.paymentOptions()
+                //                    })
+                //                    alert.addAction(OK)
+                //                    alert.addAction(Cancel)
+                //                    self.present(alert, animated: true, completion: nil)
+                //
+                //                }
+                //                else {
+                //                    self.paymentOptions()
+                //                }
             }
             
         }
@@ -1849,32 +1829,32 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func bookingRequest()
     {
-      
-            if (SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0) && self.aryCardsListForBookNow.count == 2 {
-                //                UtilityClass.showAlert("", message: "There is no card, If you want to add card than choose payment options to add card.", vc: self)
+        
+        if (SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0) && self.aryCardsListForBookNow.count == 2 {
+            //                UtilityClass.showAlert("", message: "There is no card, If you want to add card than choose payment options to add card.", vc: self)
+            
+            let alert = UIAlertController(title: nil, message: "Do you want to add card.", preferredStyle: .alert)
+            let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
                 
-                let alert = UIAlertController(title: nil, message: "Do you want to add card.", preferredStyle: .alert)
-                let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
-                    
-                    let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
-                    
-                    next.delegateAddCardFromHomeVC = self
-                    
-                    self.navigationController?.present(next, animated: true, completion: nil)
-                    
-                })
-                let Cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { ACTION in
-                    self.paymentOptions()
-                })
-                alert.addAction(OK)
-                alert.addAction(Cancel)
-                self.present(alert, animated: true, completion: nil)
+                let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
                 
-            }
-            else {
+                next.delegateAddCardFromHomeVC = self
+                
+                self.navigationController?.present(next, animated: true, completion: nil)
+                
+            })
+            let Cancel = UIAlertAction(title: "Cancel", style: .destructive, handler: { ACTION in
                 self.paymentOptions()
-            }
-     
+            })
+            alert.addAction(OK)
+            alert.addAction(Cancel)
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        else {
+            self.paymentOptions()
+        }
+        
         
     }
     
@@ -1965,8 +1945,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             else {
                 
-                if strCarModelID == "" {
-
+                if strCarModelID == "" && strCarModelIDIfZero == ""{
                     UtilityClass.setCustomAlert(title: "Missing", message: "Select Car") { (index, title) in
                     }
                 }
@@ -2272,9 +2251,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             let dictOnlineCarData = (arrNumberOfOnlineCars.object(at: indexPath.row) as! NSDictionary)
             strSpecialRequestFareCharge = dictOnlineCarData.object(forKey: "SpecialExtraCharge") as? String ?? ""
             if dictOnlineCarData.object(forKey: "carCount") as! Int != 0 {
-                //                self.clearMap()
-                //       print("dictOnlineCarData: \(dictOnlineCarData)")
-                
+  
                 self.markerOnlineCars.map = nil
                 
                 for i in 0..<self.aryMarkerOnlineCars.count {
@@ -2308,7 +2285,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         let position = CLLocationCoordinate2D(latitude: lati, longitude: longi)
                         self.markerOnlineCars = GMSMarker(position: position)
                         //                        self.markerOnlineCars.tracksViewChanges = false
-//                        self.strSelectedCarMarkerIcon = self.markertIcon(index: indexPath.row)
+                        //                        self.strSelectedCarMarkerIcon = self.markertIcon(index: indexPath.row)
                         self.strSelectedCarMarkerIcon = self.setCarImage(modelId: dictOnlineCarData.object(forKey: "Id") as! String)
                         //                        self.markerOnlineCars.icon = UIImage(named: self.markertIcon(index: indexPath.row)) // iconCurrentLocation
                         
@@ -2351,7 +2328,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
             else {
- 
+                
                 for i in 0..<self.aryMarkerOnlineCars.count {
                     
                     self.aryMarkerOnlineCars[i].map = nil
@@ -2394,7 +2371,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             PackageVC.doublePickupLng = doublePickupLng
             
             self.present(navController, animated:true, completion: nil)
-
+            
         }
     }
     
@@ -2423,9 +2400,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         for j in 0..<self.arrTotalNumberOfCars.count
         {
-            //            if (j <= 5)
-            //            {
-            
+
             if ((self.arrTotalNumberOfCars[j] as! [String:AnyObject])["Status"] as! String) == "1" {
                 
                 k = 0
@@ -2447,18 +2422,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     carLocationsLng = ((self.arrNumberOfAvailableCars.object(at: i) as! NSDictionary).object(forKey: "Location") as! NSArray).object(at: 1) as! Double
                     dictLocation.setDictionary(((self.arrNumberOfAvailableCars.object(at: i) as! NSDictionary) as! [AnyHashable : Any]))
                     tempAryLocationOfDriver.add(dictLocation)
-                    //                    carLocations = (self.arrNumberOfAvailableCars.object(at: j) as! NSDictionary)
                     
                 }
-                //                print("The number of cars available is \(String(describing: (self.arrTotalNumberOfCars.object(at: j) as! NSDictionary).object(forKey: "Name")!)) and the count is \(k)")
-                
-                
-                //            dictCars.setObject((self.arrTotalNumberOfCars.object(at: j) as! NSDictionary).object(forKey: "Sort")!, forKey: "SordId" as NSCopying)
-                //            dictCars.setObject((self.arrTotalNumberOfCars.object(at: j) as! NSDictionary).object(forKey: "Name")!, forKey: "carName" as NSCopying)
-                //            dictCars.setObject(k, forKey: "carCount" as NSCopying)
-                //            dictCars.setObject((self.arrTotalNumberOfCars.object(at: j) as! NSDictionary).object(forKey: "Id")!, forKey: "Id" as NSCopying)
-                //            dictCars.setObject(tempAryLocationOfDriver, forKey: "locations" as NSCopying)
-                
+
                 let tempDict =  NSMutableDictionary(dictionary: (self.arrTotalNumberOfCars.object(at: j) as! NSDictionary))
                 tempDict.setObject(k, forKey: "carCount" as NSCopying)
                 tempDict.setObject(carLocationsLat, forKey: "Lat" as NSCopying)
@@ -2469,7 +2435,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 aryTempOnlineCars.add(tempDict)
             }
             
-            //            }
         }
         
         SortIdOfCarsType()
@@ -2484,18 +2449,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func SortIdOfCarsType() {
         
-     
-//        DispatchQueue.main.async {
         
-        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now(), execute: {
         
             let sortedArray = (self.aryTempOnlineCars as NSArray).sortedArray(using: [NSSortDescriptor(key: "Sort", ascending: true)]) as! [[String:AnyObject]]
-        
+            
             self.arrNumberOfOnlineCars = NSMutableArray(array: sortedArray)
-        
-        //        print(arrNumberOfOnlineCars)
-        
-        
+
             if self.checkTempData.count == 0 {
                 
                 SingletonClass.sharedInstance.isFirstTimeReloadCarList = true
@@ -2511,7 +2472,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     
                     if (self.checkTempData.object(at: i) as! NSDictionary) == arySwif {
                         
-                        //                    self.aryOfOnlineCarsIds.append(String((checkTempData.object(at: i) as! NSDictionary).object(forKey: "carCount") as! Int))
                         if SingletonClass.sharedInstance.isFirstTimeReloadCarList == true {
                             SingletonClass.sharedInstance.isFirstTimeReloadCarList = false
                             
@@ -2519,7 +2479,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 self.postPickupAndDropLocationForEstimateFare()
                             }
                             self.collectionViewCars.reloadData()
-                           
+                            
                         }
                     }
                     else {
@@ -2533,38 +2493,38 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     }
                 }
             }
-        })
-       
+//        })
+        
     }
     
-//    func markertIcon(index: Int) -> String {
-//
-//        switch index {
-//        case 0: // "1":
-//            return "imgTaxi"
-//        case 1: // "2":
-//            return "imgTaxi"
-//        case 2: // "3":
-//            return "imgTaxi"
-//        case 3: // "4":
-//            return "imgTaxi"
-//        case 4: // "5":
-//            return "imgTaxi"
-//        case 5: // "6":
-//            return "imgTaxi"
-//        case 6: // "7":
-//            return "imgTaxi"
-//            //        case "8":
-//            //            return "imgTaxi"
-//            //        case "9":
-//            //            return "imgTaxi"
-//            //        case "10":
-//            //            return "imgTaxi"
-//            //        case "11":
-//        //            return "imgTaxi"
-//        default:
-//            return "imgTaxi"
-//        }
+    //    func markertIcon(index: Int) -> String {
+    //
+    //        switch index {
+    //        case 0: // "1":
+    //            return "imgTaxi"
+    //        case 1: // "2":
+    //            return "imgTaxi"
+    //        case 2: // "3":
+    //            return "imgTaxi"
+    //        case 3: // "4":
+    //            return "imgTaxi"
+    //        case 4: // "5":
+    //            return "imgTaxi"
+    //        case 5: // "6":
+    //            return "imgTaxi"
+    //        case 6: // "7":
+    //            return "imgTaxi"
+    //            //        case "8":
+    //            //            return "imgTaxi"
+    //            //        case "9":
+    //            //            return "imgTaxi"
+    //            //        case "10":
+    //            //            return "imgTaxi"
+    //            //        case "11":
+    //        //            return "imgTaxi"
+    //        default:
+    //            return "imgTaxi"
+    //        }
     
     func setCarImage(modelId : String) -> String {
         
@@ -2595,53 +2555,53 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     
-        /*/
-         switch index {
-         case 0: // "1":
-         return "iconNano"
-         case 1: // "2":
-         return "iconPremium"
-         case 2: // "3":
-         return "iconBreakdownServices"
-         case 3: // "4":
-         return "iconVan"
-         case 4: // "5":
-         return "iconTukTuk"
-         case 5: // "6":
-         return "iconMiniCar"
-         case 6: // "7":
-         return "iconBusRed"
-         //        case "8":
-         //            return "Motorbike"
-         //        case "9":
-         //            return "Car Delivery"
-         //        case "10":
-         //            return "Van / Trays"
-         //        case "11":
-         //            return "3T truck"
-         default:
-         return "imgTaxi"
-         }
-         */
-        
-        //        switch index {
-        //        case 0:
-        //            return "imgFirstClass"
-        //        case 1:
-        //            return "imgBusinessClass"
-        //        case 2:
-        //            return "imgEconomy"
-        //        case 3:
-        //            return "imgTaxi"
-        //        case 4:
-        //            return "imgLUXVAN"
-        //        case 5:
-        //            return "imgDisability"
-        //        default:
-        //            return ""
-        //        }
-        
-
+    /*/
+     switch index {
+     case 0: // "1":
+     return "iconNano"
+     case 1: // "2":
+     return "iconPremium"
+     case 2: // "3":
+     return "iconBreakdownServices"
+     case 3: // "4":
+     return "iconVan"
+     case 4: // "5":
+     return "iconTukTuk"
+     case 5: // "6":
+     return "iconMiniCar"
+     case 6: // "7":
+     return "iconBusRed"
+     //        case "8":
+     //            return "Motorbike"
+     //        case "9":
+     //            return "Car Delivery"
+     //        case "10":
+     //            return "Van / Trays"
+     //        case "11":
+     //            return "3T truck"
+     default:
+     return "imgTaxi"
+     }
+     */
+    
+    //        switch index {
+    //        case 0:
+    //            return "imgFirstClass"
+    //        case 1:
+    //            return "imgBusinessClass"
+    //        case 2:
+    //            return "imgEconomy"
+    //        case 3:
+    //            return "imgTaxi"
+    //        case 4:
+    //            return "imgLUXVAN"
+    //        case 5:
+    //            return "imgDisability"
+    //        default:
+    //            return ""
+    //        }
+    
+    
     func uniq<S : Sequence, T : Hashable>(source: S) -> [T] where S.Iterator.Element == T {
         var buffer = [T]()
         var added = Set<T>()
@@ -2707,7 +2667,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
         
         socket.on(clientEvent: .reconnect) { (data, ack) in
-            print ("socket is reconnected please reconnect")
+            print ("socket is reconnected")
         }
         
         socket.on(clientEvent: .connect) {data, ack in
@@ -2750,7 +2710,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 self.arrNumberOfAvailableCars = NSMutableArray(array: ((data as NSArray).object(at: 0) as! NSDictionary).object(forKey: "driver") as! NSArray)
                 self.setData()
                 
-                //                self.collectionViewCars.reloadData()
                 if (((data as NSArray).object(at: 0) as! NSDictionary).count != 0)
                 {
                     for i in 0..<(((data as NSArray).object(at: 0) as! NSDictionary).object(forKey: "driver") as! NSArray).count
@@ -2765,18 +2724,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         self.aryOfTempOnlineCarsIds.append(DriverId)
                         self.aryOfOnlineCarsIds = self.uniq(source: self.aryOfTempOnlineCarsIds)
                         
-                        /*
-                         DispatchQueue.main.async
-                         {
-                         let position = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                         let marker = GMSMarker(position: position)
-                         marker.tracksViewChanges = false
-                         marker.icon = UIImage(named: "iconCar") // iconCurrentLocation
-                         marker.map = self.mapView
-                         }
-                         */
+  
                     }
                 }
+                self.postPickupAndDropLocationForEstimateFare()
+
             })
             
         }
@@ -2817,21 +2769,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAcceptBookingRequestNotification, callback: { (data, ack) in
             print("AcceptBooking data is \(data)")
             
-//            self.socket.off(SocketData.kAcceptBookingRequestNotification)
-            
-            
-            //            self.clearMap()
-            //            RequestConfirm.mp3
-            //            self.playSound(fileName: "RequestConfirm", extensionType: "mp3")
-            
-            //            UtilityClass.showAlertWithCompletion("", message: "Your request has been Accepted.", vc: self, completionHandler: { ACTION in
-            //
-            //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
-            //            })
-            
- 
-                //                self.stopSound(fileName: "RequestConfirm", extensionType: "mp3")
-//            }
             if let getInfoFromData = data as? [[String:AnyObject]] {
                 
                 if let infoData = getInfoFromData[0] as? [String:AnyObject] {
@@ -2858,12 +2795,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
             
-            
-            
-//            self.DriverInfoAndSetToMap(driverData: NSArray(array: data))
-            
-            
-            
         })
     }
     
@@ -2885,12 +2816,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.btnCancelStartedTrip.isHidden = true
         
         self.aryRequestAcceptedData = NSArray(array: driverData)
-        
-        //        let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
-        ////        let Details = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "Details") as! NSArray).object(at: 0) as! NSDictionary
-        //        let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
-        //        let bookingInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "BookingInfo") as! NSArray).object(at: 0) as! NSDictionary
-        
+
         let bookingInfo : NSDictionary!
         let DriverInfo: NSDictionary!
         let carInfo: NSDictionary!
@@ -3095,8 +3021,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.mapView.moveCamera(update)
         
-        //        self.getDirectionsAcceptRequest(origin: originalLoc, destination: destiantionLoc, waypoints: ["\(waypointLatitude),\(waypointSetLongitude)"], travelMode: nil, completionHandler: nil)
-        
         self.getDirectionsSeconMethod(origin: originalLoc, destination: destiantionLoc, waypoints: ["\(waypointLatitude),\(waypointSetLongitude)"], travelMode: nil, completionHandler: nil)
         
         NotificationCenter.default.post(name: NotificationForAddNewBooingOnSideMenu, object: nil)
@@ -3169,22 +3093,22 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     })
                 }
             }
-
-//            self.viewActivity.stopAnimating()
-//            self.viewMainActivityIndicator.isHidden = true
-//            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
-//
-//            })
             
-        /*
-            [{
-                BookingId = 7623;
-                message = "Your Booking request has been canceled";
-                type = BookingRequest;
-                }]
-        */
+            //            self.viewActivity.stopAnimating()
+            //            self.viewMainActivityIndicator.isHidden = true
+            //            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+            //
+            //            })
             
-        
+            /*
+             [{
+             BookingId = 7623;
+             message = "Your Booking request has been canceled";
+             type = BookingRequest;
+             }]
+             */
+            
+            
         })
     }
     
@@ -3247,14 +3171,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     {
         self.socket.on(SocketData.kPickupPassengerNotification, callback: { (data, ack) in
             print("socketMethodForGettingPickUpNotification() is \(data)")
-//            self.stopTimer()
-   /*
-            [{
-                BookingId = 7625;
-                DriverId = 70;
-                message = "Your trip has now started.";
-                }]
-    */
+            //            self.stopTimer()
+            /*
+             [{
+             BookingId = 7625;
+             DriverId = 70;
+             message = "Your trip has now started.";
+             }]
+             */
             var bookingIdIs = String()
             
             if let bookingData = data as? [[String:AnyObject]] {
@@ -3293,15 +3217,15 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             }
             
             
-//            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
-//            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
-//
-//            })
-//
-//            self.btnRequest.isHidden = true
-//            self.btnCancelStartedTrip.isHidden = true
-//
-//            self.methodAfterStartTrip(tripData: NSArray(array: data))
+            //            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            //            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
+            //
+            //            })
+            //
+            //            self.btnRequest.isHidden = true
+            //            self.btnCancelStartedTrip.isHidden = true
+            //
+            //            self.methodAfterStartTrip(tripData: NSArray(array: data))
             
         })
     }
@@ -3344,29 +3268,29 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
             
-/*
-            
-            let bookingId = ((((data as! [[String:AnyObject]])[0] as! [String:AnyObject])["Info"] as! [[String:AnyObject]])[0] as! [String:AnyObject])["Id"]
-            
-            //            self.viewMainFinalRating.isHidden = false
-            
-            if (SingletonClass.sharedInstance.passengerTypeOther) {
-                
-                SingletonClass.sharedInstance.passengerTypeOther = false
-                self.completeTripInfo()
-            }
-            else {
-                
-                self.completeTripInfo()
-                //                self.performSegue(withIdentifier: "showRating", sender: nil)
-            }
-
-            //            let next = self.storyboard?.instantiateViewController(withIdentifier: "GiveRatingViewController") as! GiveRatingViewController
-            //            next.strBookingType = self.strBookingType
-            //            next.delegate = self
-            //            next.modalPresentationStyle = .overCurrentContext
-            //            self.present(next, animated: true, completion: nil)
-*/
+            /*
+             
+             let bookingId = ((((data as! [[String:AnyObject]])[0] as! [String:AnyObject])["Info"] as! [[String:AnyObject]])[0] as! [String:AnyObject])["Id"]
+             
+             //            self.viewMainFinalRating.isHidden = false
+             
+             if (SingletonClass.sharedInstance.passengerTypeOther) {
+             
+             SingletonClass.sharedInstance.passengerTypeOther = false
+             self.completeTripInfo()
+             }
+             else {
+             
+             self.completeTripInfo()
+             //                self.performSegue(withIdentifier: "showRating", sender: nil)
+             }
+             
+             //            let next = self.storyboard?.instantiateViewController(withIdentifier: "GiveRatingViewController") as! GiveRatingViewController
+             //            next.strBookingType = self.strBookingType
+             //            next.delegate = self
+             //            next.modalPresentationStyle = .overCurrentContext
+             //            self.present(next, animated: true, completion: nil)
+             */
             
         })
     }
@@ -3375,7 +3299,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func completeTripInfo() {
         
         clearMap()
-           self.stopTimer()
+        self.stopTimer()
         NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
         self.scheduledTimerWithTimeInterval()
         UtilityClass.showAlertWithCompletion("Your trip has been completed", message: "", vc: self, completionHandler: { (status) in
@@ -3425,8 +3349,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         clearMap()
         self.currentLocationAction()
         self.viewTripActions.isHidden = true
-//        self.viewCarLists.isHidden = false
-//        self.ConstantViewCarListsHeight.constant = 150
+        //        self.viewCarLists.isHidden = false
+        //        self.ConstantViewCarListsHeight.constant = 150
         clearDataAfteCompleteTrip()
     }
     
@@ -3589,7 +3513,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self.methodAfterStartTrip(tripData: NSArray(array: data))
                 }
             }
- 
+            
         })
     }
     
@@ -3653,7 +3577,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             //            var DriverCordinate = CLLocationCoordinate2D(latitude: Double("23.076701577176262")! , longitude: Double("72.51612203357585")!)
             
             DriverCordinate = CLLocationCoordinate2DMake(DriverCordinate.latitude, DriverCordinate.longitude)
-  
+            
             if(self.destinationCordinate == nil)
             {
                 self.destinationCordinate = CLLocationCoordinate2DMake(DriverCordinate.latitude, DriverCordinate.longitude)
@@ -3687,7 +3611,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 self.driverMarker.icon = UIImage(named: self.markerCarIconName(modelId: vehicleID))
             }
-//            self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
+            //            self.moveMent.ARCarMovement(marker: self.driverMarker, oldCoordinate: self.destinationCordinate, newCoordinate: DriverCordinate, mapView: self.mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
             self.destinationCordinate = DriverCordinate
             self.MarkerCurrntLocation.isHidden = true
             
@@ -3955,7 +3879,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             _ = CLLocationCoordinate2D(latitude: place.coordinate.latitude, longitude: place.coordinate.longitude)
             
-     
+            
             let camera = GMSCameraPosition.camera(withLatitude: place.coordinate.latitude,longitude: place.coordinate.longitude, zoom: 17.5)
             self.mapView.camera = camera
             mapView.animate(to: camera)
@@ -3980,8 +3904,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             
             if(SingletonClass.sharedInstance.isTripContinue)
             {
-                 PickupLat = doubleUpdateNewLat
-                 PickupLng = doubleUpdateNewLng
+                PickupLat = doubleUpdateNewLat
+                PickupLng = doubleUpdateNewLng
             }
             
             
@@ -4076,7 +4000,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func setLineData() {
         
         let singletonData = SingletonClass.sharedInstance.dictIsFromPrevious
-
+        
         txtCurrentLocation.text = singletonData.object(forKey: "PickupLocation") as? String
         txtDestinationLocation.text = singletonData.object(forKey: "DropoffLocation") as? String
         
@@ -4260,7 +4184,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 
                                 //                                UtilityClass.showAlert("", message: "Line Drawn", vc: self)
                                 
-                                print("Line Drawn")
+                              //  print("Line Drawn")
                                 
                             }
                             else {
@@ -4307,89 +4231,89 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func changePolyLine(origin: String!, destination: String!, waypoints: Array<String>!, travelMode: AnyObject!, completionHandler: ((_ status:   String, _ success: Bool) -> Void)?)
     {
-    
-            if let originLocation = origin {
-                if let destinationLocation = destination {
-                    var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation + "&key=" + googlApiKey
-                    if let routeWaypoints = waypoints {
-                        directionsURLString += "&waypoints=optimize:true"
+        
+        if let originLocation = origin {
+            if let destinationLocation = destination {
+                var directionsURLString = self.baseURLDirections + "origin=" + originLocation + "&destination=" + destinationLocation + "&key=" + googlApiKey
+                if let routeWaypoints = waypoints {
+                    directionsURLString += "&waypoints=optimize:true"
+                    
+                    for waypoint in routeWaypoints {
+                        directionsURLString += "|" + waypoint
+                    }
+                }
+                
+                directionsURLString = directionsURLString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
+                
+                let directionsURL = NSURL(string: directionsURLString)
+                DispatchQueue.main.async( execute: { () -> Void in
+                    let directionsData = NSData(contentsOf: directionsURL! as URL)
+                    do{
+                        let dictionary: Dictionary<String, AnyObject> = try JSONSerialization.jsonObject(with: directionsData! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! Dictionary<String, AnyObject>
                         
-                        for waypoint in routeWaypoints {
-                            directionsURLString += "|" + waypoint
+                        let status = dictionary["status"] as! String
+                        
+                        if status == "OK" {
+                            self.selectedRoute = (dictionary["routes"] as! Array<Dictionary<String, AnyObject>>)[0]
+                            self.overviewPolyline = self.selectedRoute["overview_polyline"] as! Dictionary<String, AnyObject>
+                            
+                            self.locationManager.startUpdatingLocation()
+                            
+                            
+                            self.demoPolylineOLD = self.routePolyline
+                            self.demoPolylineOLD.strokeColor = UIColor.blue
+                            self.demoPolylineOLD.strokeWidth = 3.0
+                            self.demoPolylineOLD.map = self.mapView
+                            self.routePolyline.map = nil
+                            
+                            let route = self.overviewPolyline["points"] as! String
+                            let path: GMSPath = GMSPath(fromEncodedPath: route)!
+                            self.routePolyline = GMSPolyline(path: path)
+                            self.routePolyline.map = self.mapView
+                            self.routePolyline.strokeColor = themeYellowColor
+                            self.routePolyline.strokeWidth = 3.0
+                            self.demoPolylineOLD.map = nil
+                            print("Line Drawn")
+                            
+                        }
+                        else {
+                            print("status")
+                            
+                            self.changePolyLine(origin: origin, destination: destination, waypoints: waypoints, travelMode: nil, completionHandler: nil)
+                            print("changePolyLine OVER_QUERY_LIMIT")
                         }
                     }
-
-                    directionsURLString = directionsURLString.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!
-                    
-                    let directionsURL = NSURL(string: directionsURLString)
-                    DispatchQueue.main.async( execute: { () -> Void in
-                        let directionsData = NSData(contentsOf: directionsURL! as URL)
-                        do{
-                            let dictionary: Dictionary<String, AnyObject> = try JSONSerialization.jsonObject(with: directionsData! as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! Dictionary<String, AnyObject>
-                            
-                            let status = dictionary["status"] as! String
-                            
-                            if status == "OK" {
-                                self.selectedRoute = (dictionary["routes"] as! Array<Dictionary<String, AnyObject>>)[0]
-                                self.overviewPolyline = self.selectedRoute["overview_polyline"] as! Dictionary<String, AnyObject>
-                                
-                                self.locationManager.startUpdatingLocation()
-                                
-                                
-                                self.demoPolylineOLD = self.routePolyline
-                                self.demoPolylineOLD.strokeColor = UIColor.blue
-                                self.demoPolylineOLD.strokeWidth = 3.0
-                                self.demoPolylineOLD.map = self.mapView
-                                self.routePolyline.map = nil
-                                
-                                let route = self.overviewPolyline["points"] as! String
-                                let path: GMSPath = GMSPath(fromEncodedPath: route)!
-                                self.routePolyline = GMSPolyline(path: path)
-                                self.routePolyline.map = self.mapView
-                                self.routePolyline.strokeColor = themeYellowColor
-                                self.routePolyline.strokeWidth = 3.0
-                             self.demoPolylineOLD.map = nil
-                                print("Line Drawn")
-                                
-                            }
-                            else {
-                                print("status")
-                                
-                                self.changePolyLine(origin: origin, destination: destination, waypoints: waypoints, travelMode: nil, completionHandler: nil)
-                                print("changePolyLine OVER_QUERY_LIMIT")
-                            }
+                    catch {
+                        print("catch")
+                        
+                        
+                        UtilityClass.hideACProgressHUD()
+                        
+                        UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location data, please restart app") { (index, title) in
                         }
-                        catch {
-                            print("catch")
-                            
-                            
-                            UtilityClass.hideACProgressHUD()
-                            
-                            UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location data, please restart app") { (index, title) in
-                            }
-                            // completionHandler(status: "", success: false)
-                        }
-                    })
-                }
-                else {
-                    print("Destination is nil.")
-                    
-                    UtilityClass.hideACProgressHUD()
-                    
-                    UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location Destination, please restart app") { (index, title) in
+                        // completionHandler(status: "", success: false)
                     }
-                    //completionHandler(status: "Destination is nil.", success: false)
-                }
+                })
             }
             else {
-                print("Origin is nil")
+                print("Destination is nil.")
                 
                 UtilityClass.hideACProgressHUD()
                 
-                UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location Origin, please restart app") { (index, title) in
+                UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location Destination, please restart app") { (index, title) in
                 }
-                //completionHandler(status: "Origin is nil", success: false)
+                //completionHandler(status: "Destination is nil.", success: false)
             }
+        }
+        else {
+            print("Origin is nil")
+            
+            UtilityClass.hideACProgressHUD()
+            
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Not able to get location Origin, please restart app") { (index, title) in
+            }
+            //completionHandler(status: "Origin is nil", success: false)
+        }
     }
     
     func getDirectionsAcceptRequest(origin: String!, destination: String!, waypoints: Array<String>!, travelMode: AnyObject!, completionHandler: ((_ status:   String, _ success: Bool) -> Void)?)
@@ -4533,7 +4457,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 routePolyline.map = self.mapView
                                 routePolyline.strokeColor = themeYellowColor
                                 routePolyline.strokeWidth = 3.0
-                        
+                                
                                 UtilityClass.hideACProgressHUD()
                                 
                                 //                                UtilityClass.showAlert("", message: "Line Drawn", vc: self)
@@ -4584,10 +4508,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func setDirectionLineOnMapForSourceAndDestinationShow(origin: String!, destination: String!, waypoints: Array<String>!, travelMode: AnyObject!, completionHandler: ((_ status:   String, _ success: Bool) -> Void)?)
     {
-//        clearMap()
-//        UtilityClass.showACProgressHUD()
-//
-//        self.routePolyline.map = nil
+        //        clearMap()
+        //        UtilityClass.showACProgressHUD()
+        //
+        //        self.routePolyline.map = nil
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             
@@ -4626,8 +4550,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 
                                 self.locationManager.startUpdatingLocation()
                                 
-//                                if SingletonClass.sharedInstance.isTripContinue {
-
+                                //                                if SingletonClass.sharedInstance.isTripContinue {
+                                
                                 
                                 // Set currentLocationMarker
                                 self.currentLocationMarker = GMSMarker(position: self.originCoordinate) // destinationCoordinate
@@ -4641,9 +4565,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 self.destinationLocationMarker.map = self.mapView
                                 self.destinationLocationMarker.snippet = self.destinationLocationMarkerText
                                 self.destinationLocationMarker.icon = UIImage(named: "iconCurrentLocation")
-                                    
-//                                     }
-                  
+                                
+                                //                                     }
+                                
                                 let route = self.overviewPolyline["points"] as! String
                                 let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                 self.routePolyline = GMSPolyline(path: path)
@@ -4811,7 +4735,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
-
+                
             }
         }
         
@@ -4833,8 +4757,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 let resultData = (result as! NSDictionary)
                 
-//                SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
-//                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
+                //                SingletonClass.sharedInstance.passengerRating = resultData.object(forKey: "rating") as! String
+                //                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "rating"), object: nil)
                 self.aryCurrentBookingData.removeAllObjects()
                 self.aryCurrentBookingData.add(resultData)
                 self.aryRequestAcceptedData = self.aryCurrentBookingData
@@ -4935,7 +4859,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func bookingTypeIsBookNowAndTraveling() {
-       
+        
         //        clearMap()
         
         if let vehicleModelId = (((aryCurrentBookingData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary).object(forKey: "VehicleModel") as? String {
@@ -4948,7 +4872,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 }
             }
         }
-
+        
         self.methodAfterStartTrip(tripData: NSArray(array: aryCurrentBookingData))
     }
     
@@ -4973,35 +4897,35 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
-//    func markerCarIconName(modelId: Int) -> String {
-//
-//        var CarModel = String()
-//
-//        switch modelId {
-//        case 1:
-//            CarModel = "imgBusinessClass"
-//            return CarModel
-//        case 2:
-//            CarModel = "imgMIni"
-//            return CarModel
-//        case 3:
-//            CarModel = "imgVan"
-//            return CarModel
-//        case 4:
-//            CarModel = "imgNano"
-//            return CarModel
-//        case 5:
-//            CarModel = "imgTukTuk"
-//            return CarModel
-//        case 6:
-//            CarModel = "imgBreakdown"
-//            return CarModel
-//        default:
-//            CarModel = "dummyCar"
-//            return CarModel
-//        }
-//
-//    }
+    //    func markerCarIconName(modelId: Int) -> String {
+    //
+    //        var CarModel = String()
+    //
+    //        switch modelId {
+    //        case 1:
+    //            CarModel = "imgBusinessClass"
+    //            return CarModel
+    //        case 2:
+    //            CarModel = "imgMIni"
+    //            return CarModel
+    //        case 3:
+    //            CarModel = "imgVan"
+    //            return CarModel
+    //        case 4:
+    //            CarModel = "imgNano"
+    //            return CarModel
+    //        case 5:
+    //            CarModel = "imgTukTuk"
+    //            return CarModel
+    //        case 6:
+    //            CarModel = "imgBreakdown"
+    //            return CarModel
+    //        default:
+    //            CarModel = "dummyCar"
+    //            return CarModel
+    //        }
+    //
+    //    }
     
     func markerCarIconName(modelId: Int) -> String {
         
@@ -5082,7 +5006,7 @@ extension HomeViewController: CLLocationManagerDelegate {
                 destinationCordinate = CLLocationCoordinate2DMake(location.coordinate.latitude, location.coordinate.longitude)
             }
             
-  
+            
             if driverMarker == nil {
                 driverMarker = GMSMarker(position: destinationCordinate)
                 
@@ -5119,11 +5043,11 @@ extension HomeViewController: CLLocationManagerDelegate {
                 driverMarker.map = mapView
             }
             
-//            self.moveMent.ARCarMovement(marker: driverMarker, oldCoordinate: destinationCordinate, newCoordinate: currentCordinate, mapView: mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
+            //            self.moveMent.ARCarMovement(marker: driverMarker, oldCoordinate: destinationCordinate, newCoordinate: currentCordinate, mapView: mapView, bearing: Float(SingletonClass.sharedInstance.floatBearing))
             destinationCordinate = currentCordinate
             self.MarkerCurrntLocation.isHidden = true
         }
-     
+        
         
         if mapView.isHidden {
             mapView.isHidden = false
