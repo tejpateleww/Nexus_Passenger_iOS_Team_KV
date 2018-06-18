@@ -4,19 +4,13 @@
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.63004"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "2818"
-            endingLineNumber = "2818"
-            landmarkName = "socketMethodForGettingBookingAcceptNotification()"
-            landmarkType = "7">
+            scope = "0"
+            stopOnStyle = "0">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -26,188 +20,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.6304229"
+            timestampString = "550824839.204336"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3258"
-            endingLineNumber = "3258"
-            landmarkName = "socketMethodForGettingPickUpNotification()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630492"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3317"
-            endingLineNumber = "3317"
-            landmarkName = "socketMethodForGettingTripCompletedNotification()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630553"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3627"
-            endingLineNumber = "3627"
-            landmarkName = "onTripHoldingNotificationForPassengerLater()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630614"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3648"
-            endingLineNumber = "3648"
-            landmarkName = "onReceiveDriverLocationToPassenger()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630674"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3201"
-            endingLineNumber = "3201"
-            landmarkName = "socketMethodForGettingBookingRejectNotificatioByDriver()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630735"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3502"
-            endingLineNumber = "3502"
-            landmarkName = "onAcceptBookLaterBookingRequestNotification()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630795"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3537"
-            endingLineNumber = "3537"
-            landmarkName = "onRejectBookLaterBookingRequestNotification()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630855"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3555"
-            endingLineNumber = "3555"
-            landmarkName = "onPickupPassengerByDriverInBookLaterRequestNotification()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630915"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3604"
-            endingLineNumber = "3604"
-            landmarkName = "onTripHoldingNotificationForPassenger()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.630973"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3748"
-            endingLineNumber = "3748"
-            landmarkName = "onBookingDetailsAfterCompletedTrip()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.6310329"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3808"
-            endingLineNumber = "3808"
-            landmarkName = "onAdvanceTripInfoBeforeStartTrip()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "TickTok User/ViewControllers/HomeVC/HomeViewController.swift"
-            timestampString = "549437143.631091"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "3831"
-            endingLineNumber = "3831"
-            landmarkName = "onReceiveNotificationWhenDriverAcceptRequest()"
+            startingLineNumber = "2978"
+            endingLineNumber = "2978"
+            landmarkName = "DriverInfoAndSetToMap(driverData:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

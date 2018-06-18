@@ -34,15 +34,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-
-        
         // Firebase
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
 
-        
         IQKeyboardManager.sharedManager().enable = true
-        
         
         GMSServices.provideAPIKey(googlApiKey)
         GMSPlacesClient.provideAPIKey(googlApiKey)
@@ -59,9 +55,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         SideMenuController.preferences.drawing.sidePanelWidth = (((window?.frame.width)! / 2) + ((window?.frame.width)! / 4))
         SideMenuController.preferences.drawing.centerPanelShadow = true
         SideMenuController.preferences.animating.statusBarBehaviour = .showUnderlay
-        
-        
-        
         
         // ------------------------------------------------------------
 
