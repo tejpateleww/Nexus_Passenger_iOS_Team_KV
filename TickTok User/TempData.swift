@@ -506,3 +506,104 @@ onBookingDetailsAfterCompletedTrip() is [{
     UpdatedBal = "-715";
 }]
 */
+
+
+// Get Estimate Fare
+/*
+[{
+    "estimate_fare" =     (
+        {
+            "base_fare" = 210;
+            "booking_fee" = 0;
+            duration = 0;
+            id = 1;
+            km = "8.800000000000001";
+            name = Executive;
+            "per_km_charge" = 64;
+            "share_ride" = 0;
+            sort = 4;
+            total = "581.2";
+            "trip_fare" = "581.2";
+    },
+        {
+            "base_fare" = 140;
+            "booking_fee" = 0;
+            duration = 0;
+            id = 2;
+            km = "8.800000000000001";
+            name = "Mini Car";
+            "per_km_charge" = 45;
+            "share_ride" = 1;
+            sort = 3;
+            total = "312.2";
+            "trip_fare" = 446;
+    },
+        {
+            "base_fare" = 1000;
+            "booking_fee" = 0;
+            duration = 0;
+            id = 3;
+            km = "8.800000000000001";
+            name = VAN;
+            "per_km_charge" = 0;
+            "share_ride" = 0;
+            sort = 5;
+            total = 1000;
+            "trip_fare" = 1000;
+    },
+        {
+            "base_fare" = 140;
+            "booking_fee" = 0;
+            duration = 1;
+            id = 4;
+            km = "8.800000000000001";
+            name = Nano;
+            "per_km_charge" = 40;
+            "share_ride" = 1;
+            sort = 2;
+            total = "288.4";
+            "trip_fare" = 412;
+    },
+        {
+            "base_fare" = 60;
+            "booking_fee" = 0;
+            duration = 1;
+            id = 5;
+            km = "8.800000000000001";
+            name = "Tuk Tuk";
+            "per_km_charge" = 33;
+            "share_ride" = 1;
+            sort = 1;
+            total = "222.18";
+            "trip_fare" = "317.4";
+    },
+        {
+            "base_fare" = 6000;
+            "booking_fee" = 200;
+            duration = 0;
+            id = 6;
+            km = "8.800000000000001";
+            name = "Breakdown Services";
+            "per_km_charge" = 0;
+            "share_ride" = 0;
+            sort = 7;
+            total = 6200;
+            "trip_fare" = 6000;
+    },
+        {
+            "base_fare" = 5000;
+            "booking_fee" = 2;
+            duration = 0;
+            id = 7;
+            km = "8.800000000000001";
+            name = Bus;
+            "per_km_charge" = "0.80";
+            "share_ride" = 0;
+            sort = 6;
+            total = "5006.64";
+            "trip_fare" = "5004.64";
+    }
+    );
+    status = 1;
+}]
+*/

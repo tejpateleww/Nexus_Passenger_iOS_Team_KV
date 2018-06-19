@@ -507,8 +507,8 @@ class WalletTransferRecieve: UIViewController {
 
         let profileData = SingletonClass.sharedInstance.dictProfile
         if let QRCodeImage = (profileData).object(forKey: "QRCode") as? String {
-            let baseURL = WebserviceURLs.kImageBaseURL
-            imgQRCode.sd_setImage(with: URL(string: baseURL + QRCodeImage), completed: nil)
+            let baseURL = QRCodeImage //WebserviceURLs.kImageBaseURL
+            imgQRCode.sd_setImage(with: URL(string: QRCodeImage), completed: nil)
         }
  
     }

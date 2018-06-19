@@ -145,10 +145,11 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
             cell.lblMonthExpiry.text = String(describing: month!)
             cell.lblYearExpiry.text = String(describing: year!)
             
+            cell.viewCards.layoutIfNeeded()
+            cell.viewCards.dropShadowToCardView(color: .gray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
             cell.viewCards.layer.cornerRadius = 5
             cell.viewCards.layer.masksToBounds = true
-            
-            cell.viewCards.dropShadowToCardView(color: .gray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
+
             
             let type = dictData["Type"] as! String
             

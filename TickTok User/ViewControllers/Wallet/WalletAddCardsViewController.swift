@@ -251,8 +251,16 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         txtCVVNumber.placeholder = "CVV"
         
         //        var validation = Validation()
-        validation.maximumLength = 3
-        validation.minimumLength = 3
+        
+        if self.cardTypeLabel == "Amex" {
+            self.validation.maximumLength = 4
+            self.validation.minimumLength = 4
+        }
+        else {
+            self.validation.maximumLength = 3
+            self.validation.minimumLength = 3
+        }
+
         validation.characterSet = NSCharacterSet.decimalDigits
         let inputValidator = InputValidator(validation: validation)
         txtCVVNumber.inputValidator = inputValidator
@@ -335,6 +343,9 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
             print(type.name)
             
             imgCard.image = UIImage(named: type.name)
+            
+            self.cardCVV()
+            
             
 //            self.cardTypeLabel.textColor = UIColor.green
         } else {

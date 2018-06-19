@@ -21,6 +21,8 @@ class DriverInfoViewController: UIViewController {
     var strDriverImage = String()
     var strDriverName = String()
     
+    var strCarPlateNumber = String()
+    
     var strPassengerMobileNumber = String()
     
 
@@ -69,6 +71,7 @@ class DriverInfoViewController: UIViewController {
     @IBOutlet weak var lblPickupLocation: UILabel!
     @IBOutlet weak var lblDropoffLocation: UILabel!
     
+    @IBOutlet weak var lblCarPlateNumber: UILabel!
     @IBOutlet weak var imgDriver: UIImageView!
     @IBOutlet weak var lblDriverName: UILabel!
     
@@ -121,6 +124,7 @@ class DriverInfoViewController: UIViewController {
         }
         
         lblCareName.text = strCareName
+        lblCarPlateNumber.text = strCarPlateNumber
        
         lblPickupLocation.text = strPickupLocation
         lblDropoffLocation.text = strDropoffLocation

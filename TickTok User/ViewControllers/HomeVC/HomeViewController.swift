@@ -160,6 +160,32 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     //MARK:-
     @IBOutlet weak var viewCarLists: UIView!
+    @IBOutlet weak var viewShareRideView: UIView!
+    @IBOutlet weak var imgIsShareRideON: UIImageView!
+    
+    /// if intShareRide = 1 than ON and if intShareRide = 0 OFF
+    var intShareRide:Int = 0
+    
+    var isShareRideON = Bool()
+    
+    @IBAction func btnShareRide(_ sender: UIButton) {
+        isShareRideON = !isShareRideON
+        
+        if (isShareRideON) {
+            imgIsShareRideON.image = UIImage(named: "iconGreen")
+            intShareRide = 1
+        }
+        else {
+            imgIsShareRideON.image = UIImage(named: "iconRed")
+            intShareRide = 0
+        }
+        
+        postPickupAndDropLocationForEstimateFare()
+        
+    }
+    
+    
+    
     //PassengerId,ModelId,PickupLocation,DropoffLocation,PickupLat,PickupLng,DropOffLat,DropOffLon
     
     var strModelId = String()
@@ -223,9 +249,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.btnDoneForLocationSelected.isHidden = true
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
         
         currentLocationMarkerText = "Current Location"
         destinationLocationMarkerText = "Destination Location"
+        
+        imgIsShareRideON.image = UIImage(named: "iconRed")
         
         currentLocationMarker.isDraggable = true
         destinationLocationMarker.isDraggable = true
@@ -506,11 +535,13 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.collectionViewCars.reloadData()
             btnDoneForLocationSelected.isHidden = true
             self.viewCarLists.isHidden = false
+//            self.viewShareRideView.isHidden = false
             self.ConstantViewCarListsHeight.constant = 150
         }
         else {
             self.ConstantViewCarListsHeight.constant = 0
             self.viewCarLists.isHidden = true
+//            self.viewShareRideView.isHidden = true
         }
         
     }
@@ -541,6 +572,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.btnDoneForLocationSelected.isHidden = false
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
         
         mapView.delegate = self
         
@@ -1534,7 +1566,6 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     
                 }
                 
-                
             }
             
             self.aryEstimateFareData = NSMutableArray(array: sortedArray as NSArray)
@@ -1667,6 +1698,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         mapView.camera = camera
         
+        self.mapView.settings.rotateGestures = false
+        self.mapView.settings.tiltGestures = false
+        
+        
         //        let position = CLLocationCoordinate2D(latitude: defaultLocation.coordinate.latitude, longitude: defaultLocation.coordinate.longitude)
         //        let marker = GMSMarker(position: position)
         //        marker.map = self.mapView
@@ -1721,7 +1756,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let OK = UIAlertAction(title: "OK", style: .default, handler: { ACTION in
             self.clearSetupMapForNewBooking()
         })
+        let cancel = UIAlertAction(title: "Cancel", style: .default, handler: { ACTION in
+           
+        })
         alert.addAction(OK)
+        alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
     }
     
@@ -2016,13 +2055,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.getPlaceFromLatLong()
         
         
-        UtilityClass.setCustomAlert(title: "\(appName)", message: "Request Canceled") { (index, title) in
-        }
+//        UtilityClass.setCustomAlert(title: "\(appName)", message: "Request Cancelled") { (index, title) in
+//        }
         
         self.viewTripActions.isHidden = true
         self.viewCarLists.isHidden = true
         self.ConstantViewCarListsHeight.constant = 150
         //        self.constraintTopSpaceViewDriverInfo.constant = 170
+//        self.viewShareRideView.isHidden = true
         
     }
     
@@ -2220,6 +2260,26 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         cell.lblPrices.text = "\(currencySign) \(price)"
                         
                     }
+                    
+                    
+//                    if appCurrentVersion == "2.4.7" {
+//
+//                        if (intShareRide == 1) {
+//
+//                            if let ride = (self.aryEstimateFareData.object(at: indexPath.row) as! NSDictionary).object(forKey: "share_ride") as? String {
+//
+//                                if ride == "1" {
+//                                    cell.contentView.isUserInteractionEnabled = true
+//                                }
+//                                else if ride == "0" {
+//                                    cell.contentView.isUserInteractionEnabled = false
+//                                }
+//                            }
+//                        }
+//
+//                    }
+                    
+                    
                 }
             }
         }
@@ -2769,6 +2829,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.socket.on(SocketData.kAcceptBookingRequestNotification, callback: { (data, ack) in
             print("AcceptBooking data is \(data)")
             
+            self.locationManager.startUpdatingLocation()
+            
+            
             if let getInfoFromData = data as? [[String:AnyObject]] {
                 
                 if let infoData = getInfoFromData[0] as? [String:AnyObject] {
@@ -2809,6 +2872,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.viewTripActions.isHidden = false
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
         
         self.viewActivity.stopAnimating()
         self.viewMainActivityIndicator.isHidden = true
@@ -2937,6 +3001,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.viewTripActions.isHidden = false
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
         
         self.viewActivity.stopAnimating()
         self.viewMainActivityIndicator.isHidden = true
@@ -3042,6 +3107,9 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             next.strCarClass = String(describing: carInfo.object(forKey: "VehicleModel")!)
         }
         
+        if let carPlateNumber = carInfo.object(forKey: "VehicleRegistrationNo") as? String {
+            next.strCarPlateNumber = carPlateNumber
+        }
         
         next.strCareName = carInfo.object(forKey: "Company") as! String
         next.strDriverImage = WebserviceURLs.kImageBaseURL + (DriverInfo.object(forKey: "Image") as! String)
@@ -3315,6 +3383,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 self.viewTripActions.isHidden = true
                 self.viewCarLists.isHidden = false
+//                self.viewShareRideView.isHidden = false
                 self.ConstantViewCarListsHeight.constant = 150
                 //                    self.constraintTopSpaceViewDriverInfo.constant = 170
                 self.viewMainFinalRating.isHidden = true
@@ -3405,6 +3474,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         stopTimer()
         self.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
         
     }
     // ------------------------------------------------------------
@@ -3653,11 +3723,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     {
         let driverID = aryOfOnlineCarsIds.compactMap{ $0 }.joined(separator: ",")
         
-        var myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strDropoffLocation,"DropoffLat" : self.doubleDropOffLat, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID ] as [String : Any]
+        var myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strDropoffLocation,"DropoffLat" : self.doubleDropOffLat, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID, "ShareRiding": intShareRide ] as [String : Any]
         
         if(strDropoffLocation.count == 0)
         {
-            myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strPickupLocation,"DropoffLat" : self.doubleDropOffLng, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID ] as [String : Any]
+            myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID,  "PickupLocation" : strPickupLocation ,"PickupLat" :  self.doublePickupLat , "PickupLong" :  self.doublePickupLng, "DropoffLocation" : strPickupLocation,"DropoffLat" : self.doubleDropOffLng, "DropoffLon" : self.doubleDropOffLng,"Ids" : driverID, "ShareRiding": intShareRide] as [String : Any]
         }
         socket.emit(SocketData.kSendRequestForGetEstimateFare , with: [myJSON])
     }
@@ -3844,6 +3914,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.btnDoneForLocationSelected.isHidden = false
             self.ConstantViewCarListsHeight.constant = 0
             self.viewCarLists.isHidden = true
+//            self.viewShareRideView.isHidden = true
             
             txtCurrentLocation.text = place.formattedAddress
             strPickupLocation = place.formattedAddress!
@@ -3869,6 +3940,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
             self.btnDoneForLocationSelected.isHidden = false
             self.ConstantViewCarListsHeight.constant = 0
             self.viewCarLists.isHidden = true
+//            self.viewShareRideView.isHidden = true
             
             txtDestinationLocation.text = place.formattedAddress
             strDropoffLocation = place.formattedAddress!
@@ -3974,6 +4046,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.btnDoneForLocationSelected.isHidden = false
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
     }
     
     func clearDestinationLocation() {
@@ -3991,6 +4064,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.btnDoneForLocationSelected.isHidden = false
         self.ConstantViewCarListsHeight.constant = 0
         self.viewCarLists.isHidden = true
+//        self.viewShareRideView.isHidden = true
     }
     
     //-------------------------------------------------------------
