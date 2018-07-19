@@ -67,11 +67,13 @@ class TripDetailsViewController: ParentViewController {
     @IBOutlet weak var lblSubTotal: UILabel!
     
     @IBOutlet weak var lblBookingCharge: UILabel!
+    @IBOutlet weak var lblSpecialExtraCharge: UILabel!
     @IBOutlet weak var lblTax: UILabel!
     @IBOutlet weak var lblDiscount: UILabel!
     
     @IBOutlet weak var lblGrandTotal: UILabel!
     
+    @IBOutlet weak var stackViewSpecialExtraCharge: UIStackView!
     //-------------------------------------------------------------
     // MARK: - Custom Methods
     //-------------------------------------------------------------
@@ -97,7 +99,22 @@ class TripDetailsViewController: ParentViewController {
             lblDiscount.text = data.object(forKey: "Discount") as? String
             
             lblGrandTotal.text = data.object(forKey: "GrandTotal") as? String
-        
+            
+            var strSpecial = String()
+            
+            if let special = data.object(forKey: "Special") as? String {
+                strSpecial = special
+            } else if let special = data.object(forKey: "Special") as? Int {
+                strSpecial = String(special)
+            }
+            
+            stackViewSpecialExtraCharge.isHidden = true
+            if strSpecial == "1" {
+                stackViewSpecialExtraCharge.isHidden = false
+                lblSpecialExtraCharge.text = data.object(forKey: "SpecialExtraCharge") as? String
+            }
+            
+            
         }
     }
     @IBAction func btnBackAction(sender: UIButton) {

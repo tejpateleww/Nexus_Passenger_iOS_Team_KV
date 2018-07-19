@@ -125,132 +125,178 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
     //-------------------------------------------------------------
     
     @IBAction func btnFacebook(_ sender: UIButton) {
-
-        var fbController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         
-        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
-            var completionHandler: SLComposeViewControllerCompletionHandler = {(_ result: SLComposeViewControllerResult) -> Void in
-                fbController?.dismiss(animated: true) { [weak self] in }
-                switch result {
-                case .done:
-                    print("Posted.")
-                case .cancelled:
-                    fallthrough
-                default:
-                    print("Cancelled.")
-                }
-            }
-//            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
-            fbController?.setInitialText(codeToSend())
-//            fbController.add(URL(string: "URLString")!)
-            fbController?.completionHandler = completionHandler
-            self.present(fbController!, animated: true) { [weak self] in }
-        }
-        else {
-            if let fbSignInDialog = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
-                fbSignInDialog.setInitialText("")
-                self.present(fbSignInDialog, animated: false) { [weak self] in }
-        }
-            else {
-                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Facebook app") { (index, title) in
-                }
-            }
-        }
+        let text = codeToSend()
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+
+//        var fbController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+//
+//        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeFacebook) {
+//            var completionHandler: SLComposeViewControllerCompletionHandler = {(_ result: SLComposeViewControllerResult) -> Void in
+//                fbController?.dismiss(animated: true) { [weak self] in }
+//                switch result {
+//                case .done:
+//                    print("Posted.")
+//                case .cancelled:
+//                    fallthrough
+//                default:
+//                    print("Cancelled.")
+//                }
+//            }
+////            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
+//            fbController?.setInitialText(codeToSend())
+////            fbController.add(URL(string: "URLString")!)
+//            fbController?.completionHandler = completionHandler
+//            self.present(fbController!, animated: true) { [weak self] in }
+//        }
+//        else {
+//
+//            UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Facebook app") { (index, title) in
+//            }
+//        }
+        
+        
+        
+//            if let fbSignInDialog = SLComposeViewController(forServiceType: SLServiceTypeFacebook) {
+//                fbSignInDialog.setInitialText("")
+//                self.present(fbSignInDialog, animated: false) { [weak self] in }
+//        }
+//            else {
+//                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Facebook app") { (index, title) in
+//                }
+//            }
+//        }
 
 //        commingSoon()
         
     }
     
     @IBAction func btnTwitter(_ sender: UIButton) {
-
-        var TWController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         
-        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
-            var completionHandler: SLComposeViewControllerCompletionHandler = {(_ result: SLComposeViewControllerResult) -> Void in
-                TWController?.dismiss(animated: true) { [weak self] in }
-                switch result {
-                case .done:
-                    print("Posted.")
-                case .cancelled:
-                    fallthrough
-                default:
-                    print("Cancelled.")
-                }
-            }
-            //            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
-            TWController?.setInitialText(codeToSend())
-            //            fbController.add(URL(string: "URLString")!)
-            TWController?.completionHandler = completionHandler
-            self.present(TWController!, animated: true) { [weak self] in }
-        }
-        else {
-            if let twitterSignInDialog = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
-            
-                twitterSignInDialog.setInitialText(codeToSend())
-                
-                if twitterSignInDialog.serviceType == SLServiceTypeTwitter {
-                     self.present(twitterSignInDialog, animated: false)
-                }
-                else {
-                   
-                    UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
-                    }
-                }
-                
-            }
-            else {
-                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
-                }
-            }
-        }
+        let text = codeToSend()
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+        
+
+//        var TWController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+//
+//        if SLComposeViewController.isAvailable(forServiceType: SLServiceTypeTwitter) {
+//            var completionHandler: SLComposeViewControllerCompletionHandler = {(_ result: SLComposeViewControllerResult) -> Void in
+//                TWController?.dismiss(animated: true) { [weak self] in }
+//                switch result {
+//                case .done:
+//                    print("Posted.")
+//                case .cancelled:
+//                    fallthrough
+//                default:
+//                    print("Cancelled.")
+//                }
+//            }
+//            //            fbController?.add(UIImage(named: "1.jpg") ?? UIImage())
+//            TWController?.setInitialText(codeToSend())
+//            //            fbController.add(URL(string: "URLString")!)
+//            TWController?.completionHandler = completionHandler
+//            self.present(TWController!, animated: true) { [weak self] in }
+//        }
+//        else {
+//            if let twitterSignInDialog = SLComposeViewController(forServiceType: SLServiceTypeTwitter) {
+//
+//                twitterSignInDialog.setInitialText(codeToSend())
+//
+//                if twitterSignInDialog.serviceType == SLServiceTypeTwitter {
+//                     self.present(twitterSignInDialog, animated: false)
+//                }
+//                else {
+//
+//                    UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
+//                    }
+//                }
+//
+//            }
+//            else {
+//                UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install Twitter app") { (index, title) in
+//                }
+//            }
+//        }
  
 //        commingSoon()
     }
     
     @IBAction func btnEmail(_ sender: UIButton) {
         
-        var emailTitle = ""
-        var messageBody = ""
-        var toRecipents = [""]
-        var mc: MFMailComposeViewController = MFMailComposeViewController()
-        mc.mailComposeDelegate = self
-        mc.setSubject(emailTitle)
-        mc.setMessageBody(codeToSend(), isHTML: false)
-        mc.setToRecipients(toRecipents)
-
-        self.present(mc, animated: true, completion: nil)
-
+//        let emailTitle = ""
+//        var messageBody = ""
+//        let toRecipents = [""]
+//
+//        if (MFMailComposeViewController.canSendMail()) {
+//            let mc: MFMailComposeViewController = MFMailComposeViewController()
+//            mc.mailComposeDelegate = self
+//            mc.setSubject(emailTitle)
+//            mc.setMessageBody(codeToSend(), isHTML: false)
+//            mc.setToRecipients(toRecipents)
+//
+//            self.present(mc, animated: true, completion: nil)
+//        } else {
+//            UtilityClass.setCustomAlert(title: "Email id Missing", message: "Please sign in from email settings") { (index, title) in
+//            }
+//        }
         
+        
+        let text = codeToSend()
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+
 //        commingSoon()
     }
     
     @IBAction func btnWhatsApp(_ sender: UIButton) {
 
-        let urlString = codeToSend()
-        let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
-        let url = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
+//        let urlString = codeToSend()
+//        let urlStringEncoded = urlString.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)
+//        let url = NSURL(string: "whatsapp://send?text=\(urlStringEncoded!)")
+//        
+//        if UIApplication.shared.canOpenURL(url! as URL) {
+//            UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
+//        } else {
+//
+//            UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install WhatsApp app") { (index, title) in
+//            }
+//
+//        }
         
-        if UIApplication.shared.canOpenURL(url! as URL) {
-            UIApplication.shared.open(url! as URL, options: [:], completionHandler: nil)
-        } else {
-            
-            UtilityClass.setCustomAlert(title: "Not Available App", message: "Please install WhatsApp app") { (index, title) in
-            }
-
-        }
+        let text = codeToSend()
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
+        
+        
 
 //      commingSoon()
     }
     
     @IBAction func btnSMS(_ sender: UIButton) {
         
-        if (MFMessageComposeViewController.canSendText()) {
-            let controller = MFMessageComposeViewController()
-            controller.body = codeToSend()
-            controller.recipients = [""]
-            controller.messageComposeDelegate = self
-            self.present(controller, animated: true, completion: nil)
-        }
+//        if (MFMessageComposeViewController.canSendText()) {
+//            let controller = MFMessageComposeViewController()
+//            controller.messageComposeDelegate = self
+//            controller.body = codeToSend()
+//            controller.recipients = [""]
+//            self.present(controller, animated: true, completion: nil)
+//        }
+        
+        let text = codeToSend()
+        let textShare = [ text ]
+        let activityViewController = UIActivityViewController(activityItems: textShare , applicationActivities: nil)
+        activityViewController.popoverPresentationController?.sourceView = self.view
+        self.present(activityViewController, animated: true, completion: nil)
         
 //        commingSoon()
     }
@@ -292,8 +338,10 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
              }
             break
         }
-        self.dismiss(animated: true, completion: nil)
+        controller.dismiss(animated: true, completion: nil)
     }
+    
+    
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
         //... handle sms screen actions
@@ -319,7 +367,8 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
              }
             break
         }
-        self.dismiss(animated: true, completion: nil)
+        
+        controller.dismiss(animated: true, completion: nil)
     }
 
     //-------------------------------------------------------------

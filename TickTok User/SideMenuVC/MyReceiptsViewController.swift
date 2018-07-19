@@ -211,25 +211,37 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         case MessageComposeResult.cancelled:
             print("Mail cancelled")
             
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
-            }
+//            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+//            }
+            messages = "Mail cancelled"
         case MessageComposeResult.sent:
             print("Mail sent")
             
-            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
-            }
+//            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+//            }
+            messages = "Mail sent"
         case MessageComposeResult.failed:
             print("Mail sent failure")
+            messages = "Mail sent failure"
         //            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
         default:
 //            UtilityClass.showAlert("", message: "Something went wrong", vc: self)
             UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
             }
+//            
             break
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            self.mailAlert(strMsg: self.messages)
+        }
     }
     
+    var messages = String()
+    func mailAlert(strMsg: String) {
+        
+        UtilityClass.setCustomAlert(title: "Error", message: strMsg) { (index, title) in
+        }
+    }
     //-------------------------------------------------------------
     // MARK: - Webservice Methods
     //-------------------------------------------------------------

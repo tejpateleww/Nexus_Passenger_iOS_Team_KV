@@ -77,9 +77,9 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 //        txtEmail.lineColor = UIColor.white
 //        txtPassword.lineColor = UIColor.white
 
-        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" || UIDevice.current.name == "iPhone"{
+        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" {
             
-            txtEmail.text = "9879252952"
+            txtEmail.text = "9904439228"
             txtPassword.text = "12345678"
         }
         
@@ -219,12 +219,12 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
             if ((result as! NSDictionary).object(forKey: "status") as! Int == 1) {
   
                  UtilityClass.setCustomAlert(title: "Success", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
-            }
+                }
             }
             else {
 
                  UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
-            }
+                }
             }
         }
     }

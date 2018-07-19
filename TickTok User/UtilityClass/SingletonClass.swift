@@ -92,4 +92,7 @@ class SingletonClass: NSObject {
     
     var otpCode = String()
     
+    /// If 1 Than share Ride is ON else 0 than OFF
+    var isShareRide: Int = 0
+    
 }

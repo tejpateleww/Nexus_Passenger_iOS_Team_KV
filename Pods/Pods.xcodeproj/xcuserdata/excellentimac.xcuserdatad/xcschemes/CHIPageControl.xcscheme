@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0930"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -13,11 +13,11 @@
             buildForProfiling = "YES"
             buildForArchiving = "YES">
             <BuildableReference
-               BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'B3B93A64221AF129207A86BA0F0C1A6A'
-               BlueprintName = 'CHIPageControl'
-               ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'CHIPageControl.framework'>
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "B3B93A64221AF129207A86BA0F0C1A6A"
+               BlueprintName = "CHIPageControl"
+               ReferencedContainer = "container:Pods.xcodeproj"
+               BuildableName = "CHIPageControl.framework">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

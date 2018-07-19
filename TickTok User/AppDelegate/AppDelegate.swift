@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         
         
         Fabric.with([Crashlytics.self])
+        
+        googleAnalyticsTracking()
+        
         // TODO: Move this to where you establish a user session
      //   self.logUser()
         
@@ -124,6 +127,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         
         
         return true
+    }
+    
+    func googleAnalyticsTracking() {
+        guard let gai = GAI.sharedInstance() else {
+            assert(false, "Google Analytics not configured correctly")
+        }
+        gai.tracker(withTrackingId: googleAnalyticsTrackId)
+        // Optional: automatically report uncaught exceptions.
+        gai.trackUncaughtExceptions = true
+        
+        // Optional: set Logger to VERBOSE for debug information.
+        // Remove before app release.
+        gai.logger.logLevel = .verbose
     }
     
 //    func logUser() {
@@ -264,8 +280,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
          // 4
          completionHandler()
          */
+        
     }
-    
+
     //-------------------------------------------------------------
     // MARK: - Push Notification Methods
     //-------------------------------------------------------------

@@ -17,11 +17,13 @@ let currencySign = "LKR"
 let appName = "Pick'N'Go"
 let helpLineNumber = "0772506506"
 
+let googleAnalyticsTrackId = "UA-122360832-1"
+
 //let appCurrentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String
 
 
 struct WebserviceURLs {
-    static let kBaseURL                                 = "https://pickngolk.info/web/Passenger_Api/" //"http://54.169.67.226/web/Passenger_Api/" // "https://pickngolk.info/web/Passenger_Api/" // "http://54.255.222.125/web/Passenger_Api/" // "https://pickngolk.info/web/Passenger_Api/"
+    static let kBaseURL                                 = "https://pickngolk.info/web/Passenger_Api/" // "http://54.169.67.226/web/Passenger_Api/" // "https://pickngolk.info/web/Passenger_Api/" "http://54.169.67.226/web/Passenger_Api/" //
     static let kDriverRegister                          = "Register"
     static let kDriverLogin                             = "Login"
     static let kChangePassword                          = "ChangePassword"
@@ -33,7 +35,7 @@ struct WebserviceURLs {
     static let kDriver                                  = "Driver"
     static let kBookingHistory                          = "BookingHistory/"
     static let kGetEstimateFare                         = "GetEstimateFare"
-    static let kImageBaseURL                            = "https://pickngolk.info/web/" //"http://54.169.67.226/web/" // "https://pickngolk.info/web/" // "http://54.255.222.125/web/" // "https://pickngolk.info/web/"
+    static let kImageBaseURL                            = "https://pickngolk.info/web/" // "https://pickngolk.info/web/" "http://54.169.67.226/web/" //
     
     static let kCardsList                               = "Cards/"
     static let kPackageBookingHistory                   = "PackageBookingHistory"
@@ -70,7 +72,7 @@ struct WebserviceURLs {
 
 struct SocketData {
     
-    static let kBaseURL                                     = "https://pickngolk.info:8081" // "http://54.169.67.226:8080" // "https://pickngolk.info:8081" // "http://54.255.222.125:8080/" // "https://pickngolk.info:8081"
+    static let kBaseURL                                     = "https://pickngolk.info:8081" // "http://54.255.222.125:8080/" // "https://pickngolk.info:8081" "http://54.169.67.226:8080" // 
     static let kNearByDriverList                            = "NearByDriverListIOS"
     static let kUpdatePassengerLatLong                      = "UpdatePassengerLatLong"
     static let kAcceptBookingRequestNotification            = "AcceptBookingRequestNotification"
@@ -122,6 +124,11 @@ struct SubmitBookingRequest {
     static let kPaymentType             = "PaymentType"
     static let kCardId                  = "CardId"
     static let kSpecial                 = "Special"
+    
+    static let kShareRide               = "ShareRide"
+    static let kNoOfPassenger           = "NoOfPassenger"
+    
+    
 }
 
 struct NotificationCenterName {

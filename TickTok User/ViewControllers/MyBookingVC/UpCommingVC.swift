@@ -162,9 +162,14 @@ cell.selectionStyle = .none
 //                    self.navigationController?.popViewController(animated: true)
 //                })
                 
-                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.navigationController?.popViewController(animated: true)
-                })
+//                }
+                
+                
+//                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+//                    self.navigationController?.popViewController(animated: true)
+//                })
             }
             else {
                 let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
@@ -173,10 +178,12 @@ cell.selectionStyle = .none
 //                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
 //                    self.navigationController?.popViewController(animated: true)
 //                })
-                
-                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.navigationController?.popViewController(animated: true)
-                })
+//                }
+//                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+//                    self.navigationController?.popViewController(animated: true)
+//                })
             }
         }
         

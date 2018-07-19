@@ -22,6 +22,7 @@ class ChangePasswordVC: UIViewController {
 
         btnSubmit.layer.cornerRadius = 5
         btnSubmit.layer.masksToBounds = true
+        
        
     }
 
@@ -121,12 +122,16 @@ class ChangePasswordVC: UIViewController {
                 
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
                 
-                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                self.txtNewPassword.text = ""
+                self.txtConfirmPassword.text = ""
+                
+                UtilityClass.setCustomAlert(title: appName, message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    
+                    self.navigationController?.popViewController(animated: true)
             }
                 
 //                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
                 
-                self.navigationController?.popViewController(animated: true)
                 
             }
             else {

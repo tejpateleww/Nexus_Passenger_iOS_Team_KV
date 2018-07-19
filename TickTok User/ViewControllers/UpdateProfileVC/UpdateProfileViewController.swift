@@ -150,7 +150,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func btnSubmit(_ sender: UIButton) {
 
-        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" || imgProfile.image == nil {
+        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" {
             
             
             UtilityClass.setCustomAlert(title: "Misssing", message: "Please fill all details") { (index, title) in

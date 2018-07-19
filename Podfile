@@ -26,6 +26,8 @@ target 'PickNGo User' do
   pod 'FormTextField'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
+  
+  pod 'GoogleAnalytics'
 
   # pod 'WWCalendarTimeSelector'
   pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'
