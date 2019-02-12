@@ -46,9 +46,9 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         // Do any additional setup after loading the view.
         
         self.radioButtonsController = AKRadioButtonsController(radioButtons: self.radioButtons)
-        self.radioButtonsController.strokeColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
-        self.radioButtonsController.startGradColorForSelected = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
-        self.radioButtonsController.endGradColorForSelected = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)
+        self.radioButtonsController.strokeColor = UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
+        self.radioButtonsController.startGradColorForSelected =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
+        self.radioButtonsController.endGradColorForSelected =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
         self.radioButtonsController.selectedIndex = 2
         self.radioButtonsController.delegate = self //class should implement AKRadioButtonsControllerDelegate
     
@@ -108,6 +108,8 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         
         // picker.stopVideoCapture()
         picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
+        
+        setNavigationFontBlack()
         present(picker, animated: true, completion: nil)
     }
     
@@ -120,7 +122,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         picker.allowsEditing = false
         picker.sourceType = .camera
         picker.cameraCaptureMode = .photo
-        
+        setNavigationFontBlack()
         present(picker, animated: true, completion: nil)
     }
     
@@ -133,11 +135,14 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             imgProfile.contentMode = .scaleToFill
             imgProfile.image = pickedImage
         }
+        setNavigationClear()
         
         dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        setNavigationClear()
+
         dismiss(animated: true, completion: nil)
     }
     
@@ -145,6 +150,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         
         let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.date
+        datePickerView.maximumDate = Date()
         sender.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(self.pickupdateMethod(_:)), for: UIControlEvents.valueChanged)
     }
@@ -168,33 +174,33 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         if (txtFirstName.text?.count == 0)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter First Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter first name") { (index, title) in
             }
             return false
         }
         else if (txtLastName.text?.count == 0)
         {
             
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Last Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter last name") { (index, title) in
             }
             return false
         }
 //        else if imgProfile.image == UIImage(named: "iconProfilePicBlank")
 //        {
 //
-//            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose profile picture") { (index, title) in
+//            UtilityClass.setCustomAlert(title: "", message: "Please choose profile picture") { (index, title) in
 //            }
 //            return false
 //        }
         else if strDateOfBirth == "" {
            
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose Date of Birth") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please choose date of birth") { (index, title) in
             }
             return false
         }
         else if gender == "" {
             
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please choose Gender") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please choose gender") { (index, title) in
             }
             return false
         }
@@ -275,7 +281,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             {
                 self.btnSignUp.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
                   
-                    UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                     
                 })

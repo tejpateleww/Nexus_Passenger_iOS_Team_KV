@@ -8,8 +8,8 @@
 
 import UIKit
 
-class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
+class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate { 
+    
     
     var aryData = NSArray()
     
@@ -18,8 +18,10 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     var strDropoffLat = String()
     var strDropoffLng = String()
+    let notAvailable: String = "N/A"
     
     var bookinType = String()
+    var isTransport = Bool()
     
     var expandedCellPaths = Set<IndexPath>()
     
@@ -33,10 +35,26 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return refreshControl
     }()
     
-    
+    @IBOutlet weak var lblNoDataFound: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        tableView.isHidden = true
+        
+        self.aryData = SingletonClass.sharedInstance.aryUpComming
+        if (aryData.count == 0)
+        {
+            lblNoDataFound.text = "No Data Found"
+            tableView.isHidden = true
+            lblNoDataFound.isHidden = false
+        }
+        else
+        {
+            tableView.isHidden = false
+            lblNoDataFound.isHidden = true
+        }
+        
+ 
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
@@ -49,6 +67,20 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         
         tableView.reloadData()
+       
+        self.aryData = SingletonClass.sharedInstance.aryUpComming
+        if (aryData.count == 0)
+        {
+            lblNoDataFound.text = "No Data Found"
+            tableView.isHidden = true
+            lblNoDataFound.isHidden = false
+        }
+        else
+        {
+            tableView.isHidden = false
+            lblNoDataFound.isHidden = true
+        }
+         self.tableView.reloadData()
         refreshControl.endRefreshing()
     }
 
@@ -60,7 +92,18 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @objc func reloadDataTableView()
     {
         self.aryData = SingletonClass.sharedInstance.aryUpComming
-        self.tableView.reloadData()
+        if (aryData.count == 0)
+        {
+            lblNoDataFound.text = "No Data Found"
+            tableView.isHidden = true
+            lblNoDataFound.isHidden = false
+        }
+        else
+        {
+            tableView.isHidden = false
+            lblNoDataFound.isHidden = true
+        }
+         self.tableView.reloadData()
 //        self.tableView.frame.size = tableView.contentSize
     }
     
@@ -70,6 +113,23 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func btnTaxiHistory(_ sender: UIButton) {
+        
+        if let taxiData = (SingletonClass.sharedInstance.aryUpComming as? [[String:Any]])?.filter({($0["RequestFor"] as? String) == "taxi"}) {
+            isTransport = false
+            aryData = taxiData as NSArray
+            tableView.reloadData()
+        }
+    }
+    
+    @IBAction func btnTransportHistory(_ sender: UIButton) {
+        
+        if let deliveryData = (SingletonClass.sharedInstance.aryUpComming as? [[String:Any]])?.filter({($0["RequestFor"] as? String) == "delivery"}) {
+            isTransport = true
+            aryData = deliveryData as NSArray
+            tableView.reloadData()
+        }
+    }
     
     //-------------------------------------------------------------
     // MARK: - Table View Methods
@@ -77,17 +137,53 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
   
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
+        if(aryData.count == 0)
+        {
+            return 1
+        }
         return aryData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UpCommingTableViewCell") as! UpCommingTableViewCell
+//        let Emptycell = tableView.dequeueReusableCell(withIdentifier: "EmptyTableViewCell") as! EmptyTableViewCell
+//        cell.constaintOFLblNoDataFond.constant = 0
+//        if(aryData.count == 0)
+//        {
+//
+//           cell.constaintOFLblNoDataFond.constant = 40
+//             cell.lblNoDataFound.text = " No Data Found"
+//
+//        }
         
         if aryData.count > 0 {
-
-cell.selectionStyle = .none
+            
+            
+            let currentData = (aryData.object(at: indexPath.row) as! [String:AnyObject])
+            
+            cell.selectionStyle = .none
+            
+            if isTransport {
+                
+                if let parcel = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Parcel") as? [String:Any] {
+                    
+                    if let parcelName = parcel["Name"] as? String {
+                        let myString = parcelName
+                        let myAttribute = [ NSAttributedStringKey.foregroundColor: UIColor.black, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue] as [NSAttributedStringKey : Any]
+                        let myAttrString = NSAttributedString(string: myString, attributes: myAttribute)
+                        cell.lblDriverName.attributedText = myAttrString
+                    }
+                }
+            }
+            else {
+                let myString = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String
+                let myAttribute = [ NSAttributedStringKey.foregroundColor: UIColor.black, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue] as [NSAttributedStringKey : Any]
+                let myAttrString = NSAttributedString(string: myString!, attributes: myAttribute)
+                cell.lblDriverName.attributedText = myAttrString
+            }
+            
+            
             cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String // PickupLocation
             cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String //  DropoffLocation
             var time = ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String)
@@ -103,6 +199,26 @@ cell.selectionStyle = .none
                 cell.btnCancelRequest.tag = bookingID
             }
             
+            cell.lblPickupTime.text = checkDictionaryHaveValue(dictData: currentData, didHaveValue: "PickupTime", isNotHave: notAvailable)
+            cell.lblDistanceTravelled.text = checkDictionaryHaveValue(dictData: currentData, didHaveValue: "TripDistance", isNotHave: notAvailable)
+            
+            cell.lblBookingId.text = "Booking Id: \(checkDictionaryHaveValue(dictData: currentData, didHaveValue: "Id", isNotHave: notAvailable))"
+            
+            cell.lblVehicleModel.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
+            
+            cell.stackViewTransportService.isHidden = true
+            
+            if let parcel = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Parcel") as? NSDictionary {
+                if parcel.count != 0 {
+                    if let parcelName = parcel.object(forKey: "Name") as? String {
+                        cell.stackViewTransportService.isHidden = false
+                        cell.lblTransportService.text = parcelName
+                    }
+                }
+                
+            }
+//                lblTransportService
+            
             bookinType = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingType") as! String
             cell.btnCancelRequest.addTarget(self, action: #selector(self.CancelRequest), for: .touchUpInside)
             
@@ -114,8 +230,6 @@ cell.selectionStyle = .none
         
         return cell
     }
-    
-  
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
      
@@ -133,10 +247,10 @@ cell.selectionStyle = .none
     }
     
     
+    
     @objc func CancelRequest(sender: UIButton) {
         
         let bookingID = sender.tag
-        
         
         let socketData = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController).socket
         let showTopView = ((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController)
@@ -152,43 +266,61 @@ cell.selectionStyle = .none
             
         }
         else {
-            if bookinType == "Book Now" {
-                let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
-                socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
+            
+            let alert = UIAlertController(title: appName, message: "Are you sure to cancel this trip?", preferredStyle: .alert)
+            
+            let ok = UIAlertAction(title: "Yes", style: .default) { (action) in
                 
-                showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
-                
-//                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
-                
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.navigationController?.popViewController(animated: true)
-//                }
-                
-                
-//                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
+                if self.bookinType == "Book Now" {
+                    let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+                    socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
+                    
+                    showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
+                    
+                    if let myBooking = self.parent as? MyBookingViewController {
+                        myBooking.webserviceOfBookingHistory()
+                    }
+                    
+                    //                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+                    //                    self.navigationController?.popViewController(animated: true)
+                    //                })
+                    
+                    //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    //                    self.navigationController?.popViewController(animated: true) // 8-Oct-2018
+                    //                }
+                    
+                    
+                    //                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+                    //                    self.navigationController?.popViewController(animated: true)
+                    //                })
+                }
+                else {
+                    let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
+                    socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
+                    
+                    if let myBooking = self.parent as? MyBookingViewController {
+                        myBooking.webserviceOfBookingHistory()
+                    }
+                    
+                    //                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
+                    //                    self.navigationController?.popViewController(animated: true)
+                    //                })
+                    //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    //                    self.navigationController?.popViewController(animated: true)  // 8-Oct-2018
+                    //                }
+                    //                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
+                    //                    self.navigationController?.popViewController(animated: true)
+                    //                })
+                }
             }
-            else {
-                let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
-                socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
-                
-//                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    self.navigationController?.popViewController(animated: true)
-//                }
-//                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
-//                    self.navigationController?.popViewController(animated: true)
-//                })
-            }
+            
+            let cancel = UIAlertAction(title: "No", style: .default, handler: nil)
+            alert.addAction(ok)
+            alert.addAction(cancel)
+            self.present(alert, animated: true, completion: nil)
+           
         }
         
-       
-       
     }
     
     //-------------------------------------------------------------
@@ -211,8 +343,6 @@ cell.selectionStyle = .none
     }
     
     func changeDateAndTimeFormate(dateAndTime: String) -> String {
-        
-       
         
         let time = dateAndTime // "22:02:00"
         

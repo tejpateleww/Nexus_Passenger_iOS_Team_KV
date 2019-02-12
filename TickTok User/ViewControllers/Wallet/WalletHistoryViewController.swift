@@ -97,7 +97,7 @@ class WalletHistoryViewController: ParentViewController, UITableViewDataSource, 
         
         if dictData["Status"] as! String == "failed" {
             
-            cell.lblAmount.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+            cell.lblAmount.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
             cell.lblAmount.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
             
             cell.lblTransferStatusHeight.constant = 17
@@ -106,7 +106,7 @@ class WalletHistoryViewController: ParentViewController, UITableViewDataSource, 
             cell.lblTransferStatus.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
         }
         else if dictData["Status"] as! String == "pending" {
-            cell.lblAmount.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+            cell.lblAmount.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
             cell.lblAmount.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
             
             cell.lblTransferStatusHeight.constant = 17
@@ -120,14 +120,14 @@ class WalletHistoryViewController: ParentViewController, UITableViewDataSource, 
                 cell.lblTransferStatusHeight.constant = 0
                 cell.lblTransferStatus.isHidden = true
                 
-                cell.lblAmount.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+                cell.lblAmount.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
                 cell.lblAmount.textColor = UIColor.black
             }
             else {
                 cell.lblTransferStatusHeight.constant = 0
                 cell.lblTransferStatus.isHidden = true
                 
-                cell.lblAmount.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+                cell.lblAmount.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
                 cell.lblAmount.textColor = UIColor.init(red: 0, green: 144/255, blue: 81/255, alpha: 1.0)
             }
             
@@ -180,15 +180,15 @@ class WalletHistoryViewController: ParentViewController, UITableViewDataSource, 
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }

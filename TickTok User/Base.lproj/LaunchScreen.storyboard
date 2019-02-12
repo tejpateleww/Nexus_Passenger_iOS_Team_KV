@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina4_7" orientation="portrait">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,27 +15,19 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pyE-hB-rV5">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imgBackground" translatesAutoresizingMaskIntoConstraints="NO" id="mz5-nM-SMl">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="iconNewLogo" translatesAutoresizingMaskIntoConstraints="NO" id="pEP-sf-6UP">
-                                        <rect key="frame" x="112" y="258.5" width="150" height="150"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="pEP-sf-6UP" secondAttribute="height" multiplier="1:1" id="qvU-bC-mUC"/>
-                                        </constraints>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash_bg_img" translatesAutoresizingMaskIntoConstraints="NO" id="mz5-nM-SMl">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="mz5-nM-SMl" secondAttribute="bottom" id="6U0-zs-azC"/>
-                                    <constraint firstItem="pEP-sf-6UP" firstAttribute="centerX" secondItem="pyE-hB-rV5" secondAttribute="centerX" id="F3f-le-7bq"/>
-                                    <constraint firstItem="pEP-sf-6UP" firstAttribute="centerY" secondItem="pyE-hB-rV5" secondAttribute="centerY" id="IVj-Bn-t8Q"/>
                                     <constraint firstItem="mz5-nM-SMl" firstAttribute="top" secondItem="pyE-hB-rV5" secondAttribute="top" id="R24-wi-Jby"/>
                                     <constraint firstItem="mz5-nM-SMl" firstAttribute="leading" secondItem="pyE-hB-rV5" secondAttribute="leading" id="UgL-oR-FJb"/>
                                     <constraint firstAttribute="trailing" secondItem="mz5-nM-SMl" secondAttribute="trailing" id="ZaK-E2-BW2"/>
@@ -59,7 +50,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="iconNewLogo" width="150" height="150"/>
-        <image name="imgBackground" width="384" height="682"/>
+        <image name="splash_bg_img" width="375" height="812"/>
     </resources>
 </document>

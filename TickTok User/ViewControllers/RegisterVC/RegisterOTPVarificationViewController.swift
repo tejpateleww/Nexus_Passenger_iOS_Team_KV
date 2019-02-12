@@ -50,7 +50,7 @@ class RegisterOTPVarificationViewController: UIViewController {
         }
         else
         {
-            UtilityClass.setCustomAlert(title: "\(appName)", message: "Please Enter Valid OTP Code", completionHandler: { (index, title) in
+            UtilityClass.setCustomAlert(title: "\(appName)", message: "Please enter valid OTP code", completionHandler: { (index, title) in
                 
             })
         }

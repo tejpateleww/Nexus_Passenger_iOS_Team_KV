@@ -15,6 +15,7 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
     var aryData = NSArray()
     var urlForMail = String()
     var counts = Int()
+    var messages = String()
     
     var expandedCellPaths = Set<IndexPath>()
     
@@ -26,17 +27,21 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
         refreshControl.tintColor = themeYellowColor
-        
+      
         return refreshControl
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.counts = 0
-  
+        self.navigationController?.navigationBar.tintColor = UIColor.white
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
+        
+        self.lblNodataFound.isHidden = true
+        self.tableView.isHidden = false
+        self.lblNodataFound.contentMode = .center
         
 //        labelNoData = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
 //        self.labelNoData.text = "Loading..."
@@ -46,15 +51,21 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         
        webserviewOfMyReceipt()
         
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor : UIColor.black]
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .highlighted)//temp => binal
+        //
         self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         self.tableView.addSubview(self.refreshControl)
     }
  
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
-    
     
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
@@ -71,6 +82,8 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
     //-------------------------------------------------------------
     
     @IBOutlet var tableView: UITableView!
+    @IBOutlet weak var lblNodataFound: UILabel!
+    
     
     
     //-------------------------------------------------------------
@@ -79,8 +92,6 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        
         
         return self.counts
     }
@@ -116,7 +127,9 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
                 
                 self.urlForMail = dictData.object(forKey: "ShareUrl") as! String
                 cell.btnGetReceipt.addTarget(self, action: #selector(self.getReceipt(sender:)), for: .touchUpInside)
+               
                 cell.viewDetails.isHidden = !self.expandedCellPaths.contains(indexPath)
+                
                 
                 return cell
             }
@@ -165,44 +178,59 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         let emailTitle = ""
         let messageBody = urlForMail
         let toRecipents = [""]
-        let mc: MFMailComposeViewController = MFMailComposeViewController()
-        mc.mailComposeDelegate = self
-        mc.setSubject(emailTitle)
-        mc.setMessageBody(messageBody, isHTML: false)
-        mc.setToRecipients(toRecipents)
+    
         
-        self.present(mc, animated: true, completion: nil)
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients(toRecipents)
+            mail.setMessageBody(messageBody, isHTML: true)
+            mail.navigationController?.navigationBar.barTintColor = UIColor.red
+           
+//            mail.navigationBar.isTranslucent = true
+          
+        
+            present(mail, animated: true)
+        } else {
+            UtilityClass.setCustomAlert(title: "", message: "Please login into setting with emaild id") { (index, title) in
+            }
+        }
+        
+       
     }
     
     func mailComposeController(_ controller:MFMailComposeViewController, didFinishWith result:MFMailComposeResult, error:Error?) {
         switch result {
         case MFMailComposeResult.cancelled:
             print("Mail cancelled")
-
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
-            }
+            messages = "Mail cancelled"
+//            UtilityClass.setCustomAlert(title: "", message: "Mail cancelled") { (index, title) in
+//            }
         case MFMailComposeResult.saved:
             print("Mail saved")
-
-            UtilityClass.setCustomAlert(title: "Done", message: "Mail saved") { (index, title) in
-            }
+            messages = "Mail saved"
+//            UtilityClass.setCustomAlert(title: "Done", message: "Mail saved") { (index, title) in
+//            }
         case MFMailComposeResult.sent:
             print("Mail sent")
-
-            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
-            }
+            messages = "Mail sent"
+//            UtilityClass.setCustomAlert(title: "Done", message: "Mail sent") { (index, title) in
+//            }
         case MFMailComposeResult.failed:
             print("Mail sent failure: \(String(describing: error?.localizedDescription))")
-
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
-            }
+            messages = "Mail sent failure: \(String(describing: error?.localizedDescription))"
+//            UtilityClass.setCustomAlert(title: "", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
+//      }
         default:
-        
-            UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
-            }
+            messages = "Something went wrong"
+//            UtilityClass.setCustomAlert(title: "", message: "Something went wrong") { (index, title) in
+//            }
             break
         }
-        self.dismiss(animated: true, completion: nil)
+        
+        controller.dismiss(animated: true) {
+            self.mailAlert(strMsg: self.messages)
+        }
     }
 
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
@@ -211,7 +239,7 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         case MessageComposeResult.cancelled:
             print("Mail cancelled")
             
-//            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+//            UtilityClass.setCustomAlert(title: "", message: "Mail cancelled") { (index, title) in
 //            }
             messages = "Mail cancelled"
         case MessageComposeResult.sent:
@@ -226,20 +254,21 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         //            UtilityClass.showAlert("", message: "Mail sent failure: \(String(describing: error?.localizedDescription))", vc: self)
         default:
 //            UtilityClass.showAlert("", message: "Something went wrong", vc: self)
-            UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
-            }
+//            UtilityClass.setCustomAlert(title: "", message: "Something went wrong") { (index, title) in
+//            }
+            messages = "Something went wrong"
 //            
             break
         }
-        self.dismiss(animated: true) {
+        controller.dismiss(animated: true) {
             self.mailAlert(strMsg: self.messages)
         }
     }
     
-    var messages = String()
+    
     func mailAlert(strMsg: String) {
         
-        UtilityClass.setCustomAlert(title: "Error", message: strMsg) { (index, title) in
+        UtilityClass.setCustomAlert(title: appName, message: strMsg) { (index, title) in
         }
     }
     //-------------------------------------------------------------
@@ -274,24 +303,35 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
                     }
                 }
                 
-            
+                if self.newAryData.count == 0 {
+                    self.lblNodataFound.isHidden = false
+                    self.tableView.isHidden = true
+                }
+                else {
+                    self.lblNodataFound.isHidden = true
+                    self.tableView.isHidden = false
+                }
+                
+                
                self.tableView.reloadData()
                 
             }
             else {
                 print(result)
                 
+                self.lblNodataFound.isHidden = false
+                self.tableView.isHidden = true
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }

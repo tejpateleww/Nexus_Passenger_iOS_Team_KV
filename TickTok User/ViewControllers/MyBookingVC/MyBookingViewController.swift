@@ -24,10 +24,10 @@ class MyBookingViewController: UIViewController, UIScrollViewDelegate {
     var isFromPushNotification = Bool()
     var bookingType = String()
     
-    var selectedBackgroundColor = UIColor.init(red: 204/255, green: 204/255, blue: 204/255, alpha: 1.0)
+    var selectedBackgroundColor = UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1.0)
     var unselectedBackgroundColor = UIColor.white
     var selectedTextColor = UIColor.init(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)
-    var unselectedTextColor = UIColor.init(red: 167/255, green: 167/255, blue: 167/255, alpha: 1.0)
+    var unselectedTextColor = UIColor.init(red: 164/255, green: 164/255, blue: 164/255, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()

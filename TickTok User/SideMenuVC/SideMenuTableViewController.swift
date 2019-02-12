@@ -30,13 +30,15 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         super.viewDidLoad()
         
 //        giveGradientColor()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(self.SetRating), name: NSNotification.Name(rawValue: "rating"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.setNewBookingOnArray), name: NotificationForAddNewBooingOnSideMenu, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateProfileData), name: NotificationUpdateProfileOnSidemenu, object: nil)
         
-        if SingletonClass.sharedInstance.bookingId != "" {
-            setNewBookingOnArray()
-        }
+        /// Multiple Booking
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.setNewBookingOnArray), name: NotificationForAddNewBooingOnSideMenu, object: nil)
+        
+//        if SingletonClass.sharedInstance.bookingId != "" {
+//            setNewBookingOnArray()
+//        }
 
         webserviceOfTickPayStatus()
         
@@ -47,9 +49,11 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         
 
         
-        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconStarOfSideMenu","iconMyreceipts","iconInviteFriends","iconSettings","iconMyBooking","iconPackageHistory","iconLogOut"]
+        arrMenuIcons = ["iconMyBooking","iconPaymentOption","iconWallet","iconStarOfSideMenu","iconMyreceipts","iconInviteFriends","iconSettings","iconLogOut"]
         
-        arrMenuTitle = ["My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","Become a \(appName) Driver","Package History","LogOut"]
+        arrMenuTitle = ["My Booking","Payment Options","Wallet","Favourites","My Receipts","Invite Friends","Settings","LogOut"]
+        
+        
         
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
@@ -64,7 +68,7 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        giveGradientColor()
+//        giveGradientColor() binal
         
 //        UIApplication.shared.isStatusBarHidden = true
 //        UIApplication.shared.statusBarStyle = .lightContent
@@ -76,11 +80,16 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
 //
     }
     
+    @objc func updateProfileData() {
+        ProfileData = SingletonClass.sharedInstance.dictProfile
+        tableView.reloadData()
+    }
     
     @objc func SetRating() {
         self.tableView.reloadData()
     }
     
+    // TODO: - Multiple Booking
     @objc func setNewBookingOnArray() {
         
         if SingletonClass.sharedInstance.bookingId == "" {
@@ -97,20 +106,19 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
         
         self.tableView.reloadData()
     }
-    
-    func giveGradientColor() {
-        
-        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
-        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor
-        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
-        gradientLayer.locations = [ 0.0, 0.5, 1.0]
-        gradientLayer.frame = self.view.bounds
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
+//    func giveGradientColor() {
+//
+//        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
+//        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor// check
+//        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor// check
+//
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
+//        gradientLayer.locations = [ 0.0, 0.5, 1.0]
+//        gradientLayer.frame = self.view.bounds
+//        self.view.layer.insertSublayer(gradientLayer, at: 0)
+//
+//    }
 
     // MARK: - Table view data source
 
@@ -146,7 +154,7 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             cellHeader.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
             cellHeader.lblName.text = ProfileData.object(forKey: "Fullname") as? String
             
-            cellHeader.lblMobileNumber.text = ProfileData.object(forKey: "MobileNo") as? String
+          //  cellHeader.lblMobileNumber.text = ProfileData.object(forKey: "MobileNo") as? String
             cellHeader.lblRating.text = SingletonClass.sharedInstance.passengerRating
 
             return cellHeader
@@ -286,7 +294,11 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                 self.navigationController?.pushViewController(next, animated: true)
             }
             else if arrMenuTitle[indexPath.row] == "Become a \(appName) Driver" {
-                UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
+//                UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)//binal
+                let next = self.storyboard?.instantiateViewController(withIdentifier: "BecomeACabrideDriverVC") as! BecomeACabrideDriverVC
+                self.navigationController?.pushViewController(next, animated: true)//binal
+                
+                
             }
             else if arrMenuTitle[indexPath.row] == "Package History"
             {
@@ -297,7 +309,7 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
             
             if (arrMenuTitle[indexPath.row] == "LogOut")
             {
-                self.performSegue(withIdentifier: "unwindToContainerVC", sender: self)
+               
                 UserDefaults.standard.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
                 
                 UserDefaults.standard.removeObject(forKey: "Passcode")
@@ -305,6 +317,54 @@ class SideMenuTableViewController: UIViewController,UITableViewDataSource,UITabl
                 
                 UserDefaults.standard.removeObject(forKey: "isPasscodeON")
                 SingletonClass.sharedInstance.isPasscodeON = false
+                
+//                let _ = (self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers.first?.childViewControllers.first as! HomeViewController
+//                _.socket.disconnect()
+//
+                if (self.navigationController?.childViewControllers.count)! > 1 {
+                    if let customSideMenuVC = self.navigationController?.childViewControllers[1] as? CustomSideMenuViewController {
+                        if customSideMenuVC.childViewControllers.count != 0 {
+                            if customSideMenuVC.childViewControllers.first?.childViewControllers.count != 0 {
+                                if let homeVC = customSideMenuVC.childViewControllers.first?.childViewControllers.first as? HomeViewController {
+                                    
+                                    homeVC.socket.off(SocketData.kNearByDriverList)
+                                    homeVC.socket.off(SocketData.kAcceptBookingRequestNotification)
+                                    homeVC.socket.off(SocketData.kRejectBookingRequestNotification)
+                                    homeVC.socket.off(SocketData.kPickupPassengerNotification)
+                                    homeVC.socket.off(SocketData.kBookingCompletedNotification)
+                                    homeVC.socket.off(SocketData.kAdvancedBookingTripHoldNotification)
+                                    homeVC.socket.off(SocketData.kReceiveDriverLocationToPassenger)
+                                    homeVC.socket.off(SocketData.kCancelTripByDriverNotficication)
+                                    homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotification)
+                                    homeVC.socket.off(SocketData.kRejectAdvancedBookingRequestNotification)
+                                    homeVC.socket.off(SocketData.kAdvancedBookingPickupPassengerNotification)
+                                    homeVC.socket.off(SocketData.kReceiveHoldingNotificationToPassenger)
+                                    homeVC.socket.off(SocketData.kAdvancedBookingDetails)
+                                    homeVC.socket.off(SocketData.kReceiveGetEstimateFare)
+                                    homeVC.socket.off(SocketData.kInformPassengerForAdvancedTrip)
+                                    homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                                    
+                                    if homeVC.txtCurrentLocation != nil {
+                                        homeVC.txtCurrentLocation.text = ""
+                                    }
+                                    
+                                    if homeVC.txtDestinationLocation != nil {
+                                        homeVC.txtDestinationLocation.text = ""
+                                    }
+                                    
+                                    homeVC.timer.invalidate()
+                                    
+                                    homeVC.socket.off(clientEvent: .disconnect)
+                    
+                                    homeVC.socket.disconnect()
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                
+                self.performSegue(withIdentifier: "unwindLogOut", sender: self)
                 
             }
 //            else if (indexPath.row == arrMenuTitle.count - 2)

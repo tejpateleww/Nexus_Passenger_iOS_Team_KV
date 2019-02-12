@@ -8,6 +8,7 @@
 
 import UIKit
 import SDWebImage
+
 import M13Checkbox
 import NVActivityIndicatorView
 import ACFloatingTextfield_Swift
@@ -50,8 +51,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         
-         
+        
     }
     
     //-------------------------------------------------------------
@@ -150,16 +150,30 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     
     @IBAction func btnSubmit(_ sender: UIButton) {
 
-        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" {
-            
-            
-            UtilityClass.setCustomAlert(title: "Misssing", message: "Please fill all details") { (index, title) in
-            }
-        }
-        else {
+        if validation() {
             webserviceOfUpdateProfile()
         }
+    }
+    
+    func validation() -> Bool {
         
+        if txtFirstName.text == "" {
+            UtilityClass.setCustomAlert(title: appName, message: "Please enter first name") { (index, title) in
+            }
+            return false
+        }
+        else if txtAddress.text == "" {
+            UtilityClass.setCustomAlert(title: appName, message: "Please enter address") { (index, title) in
+            }
+            return false
+        }
+        else if gender == "" {
+            UtilityClass.setCustomAlert(title: appName, message: "Please choose gender") { (index, title) in
+            }
+            return false
+        }
+    
+        return true
     }
     
     @IBAction func btnUploadImage(_ sender: UIButton) {
@@ -194,7 +208,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         picker.allowsEditing = false
         picker.sourceType = .photoLibrary
-        
+        setNavigationFontBlack()
         // picker.stopVideoCapture()
         picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: .photoLibrary)!
         present(picker, animated: true, completion: nil)
@@ -208,7 +222,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         picker.allowsEditing = false
         picker.sourceType = .camera
         picker.cameraCaptureMode = .photo
-        
+        setNavigationFontBlack()
         present(picker, animated: true, completion: nil)
     }
     
@@ -218,11 +232,13 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
             imgProfile.contentMode = .scaleToFill
             imgProfile.image = pickedImage
         }
-        
+        setNavigationClear()
         dismiss(animated: true, completion: nil)
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        
+        setNavigationClear()
         dismiss(animated: true, completion: nil)
     }
 
@@ -311,21 +327,23 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         
         webserviceForUpdateProfile(dictData as AnyObject, image1: imgProfile.image!) { (result, status) in
+             NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
             
             if (status) {
                 
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+               
                 
                 print(result)
                 SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
                 
                 UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                 
+                
+                NotificationCenter.default.post(name: NotificationUpdateProfileOnSidemenu, object: nil)
                
                 UtilityClass.setCustomAlert(title: "Done", message: "Update Profile Successfully") { (index, title) in
                 }
-                
-                
+            
             }
             else {
                 print(result)

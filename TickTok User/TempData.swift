@@ -607,3 +607,589 @@ onBookingDetailsAfterCompletedTrip() is [{
     status = 1;
 }]
 */
+
+
+/*
+onAcceptBookLaterBookingRequestNotification() is [{
+    BookingInfo =     (
+        {
+            AdminAmount = "";
+            BookingCharge = "";
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CancelBy = "";
+            CancellationFee = "";
+            CancelledReason = "";
+            CancelledTime = "0000-00-00 00:00:00";
+            CardId = 0;
+            CompanyAmount = "";
+            CompanyId = 1;
+            CompanyTax = "";
+            CreatedDate = "2018-10-05T14:54:41.000Z";
+            Discount = "";
+            DistanceFare = "";
+            DriverId = 7;
+            DropOffLat = "23.0632526";
+            DropOffLon = "72.5372408";
+            DropTime = "";
+            DropoffLocation = "112, Mahavir Smruti Society, C P Nagar Cross Road, Ghatlodiya, Ahmedabad, Gujarat 380061, India";
+            FlightNumber = "";
+            GrandTotal = "";
+            Id = 183;
+            Labour = 0;
+            ModelId = 1;
+            NightFare = "";
+            NightFareApplicable = 0;
+            Notes = "";
+            OnTheWay = 0;
+            PaidToDriver = 0;
+            ParcelId = 0;
+            PassengerContact = 6655443322;
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "Bhavesh Odedra      ";
+            PassengerType = myself;
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupDate = "2018-10-05T00:00:00.000Z";
+            PickupDateTime = "2018-10-05T16:24:31.000Z";
+            PickupLat = "23.072623";
+            PickupLng = "72.516301";
+            PickupLocation = "508, City Center, CIMS Circle, Science City Road, Sola, Sola, Ahmedabad, Gujarat 380060, India";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            RequestFor = taxi;
+            Status = accepted;
+            SubTotal = "";
+            Tax = "";
+            TollFee = "";
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = "2.7";
+            TripDuration = 420;
+            TripFare = "";
+            WaitingTime = "";
+            WaitingTimeCost = "";
+        }
+    );
+    CarInfo =     (
+        {
+            Color = "";
+            Company = "Honda City";
+            CompanyId = 0;
+            Description = "";
+            DriverId = 7;
+            Id = 206;
+            RegistrationCertificate = "images/driver/7/9db3a1ccb98081a08249795a36280dd0";
+            RegistrationCertificateExpire = "0000-00-00";
+            VehicleImage = "images/driver/7/abf823b2179ff509afbffeb9420c2ee5";
+            VehicleInsuranceCertificate = "images/driver/7/bbb21eb13995764acf3bf962479a6d2f";
+            VehicleInsuranceCertificateExpire = "2018-09-25T00:00:00.000Z";
+            VehicleModel = 1;
+            VehicleRegistrationNo = Gj11;
+        }
+    );
+    Details =     (
+        {
+            AdminAmount = "";
+            BookingCharge = "";
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CancelBy = "";
+            CancellationFee = "";
+            CancelledReason = "";
+            CancelledTime = "0000-00-00 00:00:00";
+            CardId = 0;
+            CompanyAmount = "";
+            CompanyId = 1;
+            CompanyTax = "";
+            CreatedDate = "2018-10-05T14:54:41.000Z";
+            Discount = "";
+            DistanceFare = "";
+            DriverId = 7;
+            DropOffLat = "23.0632526";
+            DropOffLon = "72.5372408";
+            DropTime = "";
+            DropoffLocation = "112, Mahavir Smruti Society, C P Nagar Cross Road, Ghatlodiya, Ahmedabad, Gujarat 380061, India";
+            FlightNumber = "";
+            GrandTotal = "";
+            Id = 183;
+            Labour = 0;
+            ModelId = 1;
+            NightFare = "";
+            NightFareApplicable = 0;
+            Notes = "";
+            OnTheWay = 0;
+            PaidToDriver = 0;
+            ParcelId = 0;
+            PassengerContact = 6655443322;
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "Bhavesh Odedra      ";
+            PassengerType = myself;
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupDate = "2018-10-05T00:00:00.000Z";
+            PickupDateTime = "2018-10-05T16:24:31.000Z";
+            PickupLat = "23.072623";
+            PickupLng = "72.516301";
+            PickupLocation = "508, City Center, CIMS Circle, Science City Road, Sola, Sola, Ahmedabad, Gujarat 380060, India";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            RequestFor = taxi;
+            Status = accepted;
+            SubTotal = "";
+            Tax = "";
+            TollFee = "";
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = "2.7";
+            TripDuration = 420;
+            TripFare = "";
+            WaitingTime = "";
+            WaitingTimeCost = "";
+        }
+    );
+    DriverInfo =     (
+        {
+            ABN = "";
+            AccreditationCertificate = "images/driver/7/32ebc539e476e4c9e387c92d716ccf54";
+            AccreditationCertificateExpire = "2018-09-25T00:00:00.000Z";
+            Address = Ahmedabad;
+            Availability = 1;
+            BSB = bodakdev;
+            BankAcNo = 1234567890;
+            BankHolderName = "Jone Cena";
+            BankName = kotak;
+            City = "";
+            CompanyId = 1;
+            Country = "";
+            CreatedDate = "2018-09-25T19:20:15.000Z";
+            DCNumber = "";
+            DOB = "2018-09-25T00:00:00.000Z";
+            Description = "";
+            DeviceType = 2;
+            DispatcherId = 0;
+            DriverDuty = 1;
+            DriverLicense = "images/driver/7/a0ebb1f7e4b27ef3da1df6333419b43a";
+            DriverLicenseExpire = "2018-09-27T00:00:00.000Z";
+            Email = "vishal@gmail.com";
+            Fullname = "Jhon Cena";
+            Gender = Male;
+            Id = 7;
+            Image = "images/driver/7/bc7657ea0397c28072d7624a8e0d4cc1";
+            Lat = "23.072758";
+            Lng = "72.51634";
+            MobileNo = 9977553311;
+            Password = 25d55ad283aa400af464c76d713c07ad;
+            PendingBooking = 0;
+            ProfileComplete = 1;
+            Pwd = "";
+            QRCode = "images/qrcode/ZHJpdmVyXzk5Nzc1NTMzMTE=.png";
+            ReferralCode = cbrddr7Jho;
+            ShareRiding = 0;
+            SmartPhone = 1;
+            State = "";
+            Status = 1;
+            SubUrb = "";
+            Token = "fhsNbUST9O8:APA91bEXaz5GebDBuOif0bLTUvxbeRTOKoCrHDC5g9pcZ7aUvA1idMHZZxd8mxOs9xOtBOtF4rETzMcOJ17rykyvG6BTiGG_elmebxrkAuZoy6PgWzN_VAcGwaBePwKVQiUxssnKgjL3";
+            Trash = 0;
+            ZipCode = 123456;
+        }
+    );
+    ModelInfo =     (
+        {
+            AbovePerKmCharge = "2.25";
+            BaseFare = 25;
+            BelowAndAboveKmLimit = 15;
+            BelowPerKmCharge = "2.85";
+            BookingFee = 5;
+            CancellationFee = 10;
+            Capacity = 4;
+            CategoryId = 1;
+            Commission = 0;
+            Description = Premium;
+            Height = 0;
+            Id = 1;
+            Image = "images/model/Premium.png";
+            MinKm = 3;
+            MinuteFare = "0.80";
+            ModelSizeImage = "";
+            Name = Premium;
+            NightCharge = 20;
+            NightChargeApplicable = 1;
+            NightTimeFrom = "23:00:00";
+            NightTimeTo = "05:00:00";
+            Sort = 1;
+            SpecialEventSurcharge = 5;
+            SpecialEventTimeFrom = "18:00:00";
+            SpecialEventTimeTo = "23:59:59";
+            SpecialExtraCharge = 0;
+            Status = 1;
+            WaitingTimePerMinuteCharge = 1;
+            Width = 0;
+        }
+    );
+    message = "Your driver is on the way.";
+    type = Notification;
+}]
+*/
+/*
+AcceptBooking data is [{
+    BookingInfo =     (
+        {
+            AdminAmount = "";
+            BookingCharge = "";
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CancelBy = "";
+            CancellationFee = "";
+            CancelledReason = "";
+            CancelledTime = "0000-00-00 00:00:00";
+            CardId = 0;
+            CompanyAmount = "";
+            CompanyId = 1;
+            CreatedDate = "2018-10-05T17:03:31.000Z";
+            Discount = "";
+            DistanceFare = "";
+            DriverId = 0;
+            DropOffLat = "23.03097140877728";
+            DropOffLon = "72.4762849509716";
+            DropTime = "";
+            DropoffLocation = "Sardar Patel Ring Road, Near Bopal Circle, Bopal, Ahmedabad, Gujarat 380058, India";
+            FlightNumber = "";
+            GrandTotal = "";
+            Id = 282;
+            ModelId = 2;
+            NightFare = "";
+            NightFareApplicable = 0;
+            NoOfPassenger = 1;
+            Notes = "";
+            PaidToDriver = 0;
+            PassengerContact = "";
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "";
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupLat = "23.072623";
+            PickupLng = "72.516301";
+            PickupLocation = "508, City Center, CIMS Circle, Science City Road, Sola, Sola, Ahmedabad, Gujarat 380060, India";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            ShareRide = 0;
+            Special = 0;
+            SpecialExtraCharge = 0;
+            Status = pending;
+            SubTotal = "";
+            Tax = "";
+            TollFee = "";
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = "";
+            TripDuration = "";
+            TripFare = "";
+            WaitingTime = "";
+            WaitingTimeCost = "";
+        }
+    );
+    CarInfo =     (
+        {
+            Color = "";
+            Company = "Honda City";
+            CompanyId = 0;
+            Description = "";
+            DriverId = 4;
+            Id = 167;
+            RegistrationCertificate = "images/driver/4/28ccc7b881f3b6f36a221aec2c794a02";
+            RegistrationCertificateExpire = "0000-00-00";
+            VehicleImage = "images/driver/4/ebdd2686603f3c98a9c3fa816ef17c91";
+            VehicleInsuranceCertificate = "images/driver/4/80768f73e67fb3e8cc935082e90b8d5f";
+            VehicleInsuranceCertificateExpire = "2018-09-29T00:00:00.000Z";
+            VehicleModel = 2;
+            VehicleRegistrationNo = "GJ 11 314";
+        }
+    );
+    Details =     (
+        {
+            BookingId = 282;
+            BookingType = BookNow;
+            Distance = 50;
+            DriverId = 4;
+            Lat = "23.072623";
+            Long = "72.516301";
+            PassengerId = 8;
+            Status = 2;
+            UpdateTime = 1538739211;
+            UpdatedDate = "2018-10-05 11:33:31";
+            "_id" = 5bb74c0bd898550305886d8e;
+        }
+    );
+    DriverInfo =     (
+        {
+            ABN = "";
+            AccreditationCertificate = "images/driver/4/ca418b1166fd0891019ef284d6104e3c";
+            AccreditationCertificateExpire = "2018-09-13T00:00:00.000Z";
+            Address = Ahmedabad;
+            Availability = 1;
+            BSB = "Ahmedabad Branch";
+            BankAcNo = 1234567890;
+            BankHolderName = "Jhon Cena";
+            BankName = kotak;
+            City = "";
+            CompanyId = 1;
+            Country = "";
+            CreatedDate = "0000-00-00 00:00:00";
+            DCNumber = "";
+            DOB = "2018-09-11T00:00:00.000Z";
+            Description = "";
+            DeviceType = 2;
+            DispatcherId = 0;
+            DriverDuty = 1;
+            DriverLicense = "images/driver/4/2a801982e0710874c283e5f5cf6d6956";
+            DriverLicenseExpire = "2018-09-11T00:00:00.000Z";
+            
+            Email = "vishal@excellentwebworld.info";
+            Fullname = "Jhon Cena";
+            Gender = Male;
+            Id = 4;
+            Image = "images/driver/4/285608cbd0d0d9f6427d639dabb2143a";
+            Lat = "23.072764";
+            Lng = "72.516352";
+            MobileNo = 1133557799;
+            Password = 25d55ad283aa400af464c76d713c07ad;
+            PendingBooking = 0;
+            ProfileComplete = 1;
+            Pwd = "";
+            QRCode = "images/qrcode/ZHJpdmVyXzExMzM1NTc3OTk=.png";
+            ReferralCode = cbrddr4Jho;
+            ShareRiding = 0;
+            SmartPhone = 1;
+            State = "";
+            Status = 1;
+            SubUrb = "";
+            Token = "e8qH1fCwaSg:APA91bEp6jIhs4FkO9-HI22YqGniOG1ZqfPLlelpZZ-_V47GNVOXsA1qhuF7hz2iN0hCZh0cFeeHmFqzynHrDVRMUSEIIdDeiCL70WM3i0gnzsdkYnNvp1M5qxPzYuFrIbsKEOJiY43q";
+            Trash = 0;
+            ZipCode = 123456;
+        }
+    );
+    ModelInfo =     (
+        {
+            AbovePerKmCharge = "1.90";
+            BaseFare = 20;
+            BelowAndAboveKmLimit = 21;
+            BelowPerKmCharge = "2.00";
+            BookingFee = 4;
+            CancellationFee = 10;
+            Capacity = 4;
+            CategoryId = 1;
+            Commission = 0;
+            Description = "Caprice, Genesis, Lexus, Mercedes E, BMW 5 Series, VW Touareg, Audi A6, Chrysler 300C. etc";
+            Height = 0;
+            Id = 2;
+            Image = "images/model/Standard-min.png";
+            MinKm = 3;
+            MinuteFare = "0.80";
+            ModelSizeImage = "";
+            Name = Standard;
+            NightCharge = 10;
+            NightChargeApplicable = 1;
+            NightTimeFrom = "23:00:00";
+            NightTimeTo = "05:00:00";
+            Sort = 2;
+            SpecialEventSurcharge = 5;
+            SpecialEventTimeFrom = "18:00:00";
+            SpecialEventTimeTo = "23:59:59";
+            SpecialExtraCharge = 0;
+            Status = 1;
+            WaitingTimePerMinuteCharge = "1.00";
+            Width = 0;
+        }
+    );
+    message = "Your booking request has been confirmed.";
+    type = Notification;
+}]
+*/
+
+
+/*
+CurrentBooking
+{
+    BookingInfo =     (
+        {
+            AdminAmount = "";
+            BookingCharge = "";
+            BookingType = "";
+            ByDriverAmount = "";
+            ByDriverId = 0;
+            CancelBy = "";
+            CancellationFee = "";
+            CancelledReason = "";
+            CancelledTime = "0000-00-00 00:00:00";
+            CardId = 0;
+            CompanyAmount = "";
+            CompanyId = 1;
+            CreatedDate = "2018-10-05 17:45:32";
+            Discount = "";
+            DistanceFare = "";
+            DriverId = 4;
+            DropOffLat = "23.03051289906712";
+            DropOffLon = "72.50754006206989";
+            DropTime = "";
+            DropoffLocation = "Iscon Mega Mall, First Floor, Sarkhej - Gandhinagar Hwy, Ahmedabad, Gujarat 380054, India";
+            FlightNumber = "";
+            GrandTotal = "";
+            Id = 297;
+            ModelId = 2;
+            NightFare = "";
+            NightFareApplicable = 0;
+            NoOfPassenger = 1;
+            Notes = "";
+            PaidToDriver = 0;
+            PassengerContact = "";
+            PassengerEmail = "";
+            PassengerId = 8;
+            PassengerName = "";
+            PaymentStatus = "";
+            PaymentType = cash;
+            PickupLat = "23.072623";
+            PickupLng = "72.516301";
+            PickupLocation = "508, City Center, CIMS Circle, Science City Road, Sola, Sola, Ahmedabad, Gujarat 380060, India";
+            PickupTime = "";
+            PromoCode = "";
+            Reason = "";
+            ShareRide = 0;
+            Special = 0;
+            SpecialExtraCharge = 0;
+            Status = accepted;
+            SubTotal = "";
+            Tax = "";
+            TollFee = "";
+            TransactionId = "";
+            Trash = 0;
+            TripDistance = "";
+            TripDuration = "";
+            TripFare = "";
+            WaitingTime = "";
+            WaitingTimeCost = "";
+        }
+    );
+    BookingType = BookNow;
+    CarInfo =     (
+        {
+            Color = "";
+            Company = "Honda City";
+            CompanyId = 0;
+            Description = "";
+            DriverId = 4;
+            Id = 167;
+            Model =             {
+                AbovePerKmCharge = "1.90";
+                BaseFare = 20;
+                BelowAndAboveKmLimit = 21;
+                BelowPerKmCharge = "2.00";
+                BookingFee = 4;
+                CancellationFee = 10;
+                Capacity = 4;
+                CategoryId = 1;
+                Commission = 0;
+                Description = "Caprice, Genesis, Lexus, Mercedes E, BMW 5 Series, VW Touareg, Audi A6, Chrysler 300C. etc";
+                Height = 0;
+                Id = 2;
+                Image = "images/model/Standard-min.png";
+                MinKm = 3;
+                MinuteFare = "0.80";
+                ModelSizeImage = "";
+                Name = Standard;
+                NightCharge = 10;
+                NightChargeApplicable = 1;
+                NightTimeFrom = "23:00:00";
+                NightTimeTo = "05:00:00";
+                Sort = 2;
+                SpecialEventSurcharge = 5;
+                SpecialEventTimeFrom = "18:00:00";
+                SpecialEventTimeTo = "23:59:59";
+                SpecialExtraCharge = 0;
+                Status = 1;
+                WaitingTimePerMinuteCharge = "1.00";
+                Width = 0;
+            };
+            RegistrationCertificate = "images/driver/4/28ccc7b881f3b6f36a221aec2c794a02";
+            RegistrationCertificateExpire = "0000-00-00";
+            VehicleImage = "images/driver/4/ebdd2686603f3c98a9c3fa816ef17c91";
+            VehicleInsuranceCertificate = "images/driver/4/80768f73e67fb3e8cc935082e90b8d5f";
+            VehicleInsuranceCertificateExpire = "2018-09-29";
+            VehicleModel = 2;
+            VehicleRegistrationNo = "GJ 11 314";
+        }
+    );
+    DriverInfo =     (
+        {
+            ABN = "";
+            AccreditationCertificate = "images/driver/4/ca418b1166fd0891019ef284d6104e3c";
+            AccreditationCertificateExpire = "2018-09-13";
+            Address = Ahmedabad;
+            Availability = 1;
+            BSB = "Ahmedabad Branch";
+            BankAcNo = 1234567890;
+            BankHolderName = "Jhon Cena";
+            BankName = kotak;
+            City = "";
+            CompanyId = 1;
+            Country = "";
+            CreatedDate = "0000-00-00 00:00:00";
+            DCNumber = "";
+            DOB = "2018-09-11";
+            Description = "";
+            DeviceType = 2;
+            DispatcherId = 0;
+            DriverDuty = 1;
+            DriverLicense = "images/driver/4/2a801982e0710874c283e5f5cf6d6956";
+            DriverLicenseExpire = "2018-09-11";
+            Email = "vishal@excellentwebworld.info";
+            Fullname = "Jhon Cena";
+            Gender = Male;
+            Id = 4;
+            Image = "images/driver/4/285608cbd0d0d9f6427d639dabb2143a";
+            Lat = "23.072769";
+            Lng = "72.516357";
+            MobileNo = 1133557799;
+            Password = 25d55ad283aa400af464c76d713c07ad;
+            PendingBooking = 1;
+            ProfileComplete = 1;
+            Pwd = "";
+            QRCode = "images/qrcode/ZHJpdmVyXzExMzM1NTc3OTk=.png";
+            ReferralCode = cbrddr4Jho;
+            ShareRiding = 0;
+            SmartPhone = 1;
+            State = "";
+            Status = 1;
+            SubUrb = "";
+            Token = "e8qH1fCwaSg:APA91bEp6jIhs4FkO9-HI22YqGniOG1ZqfPLlelpZZ-_V47GNVOXsA1qhuF7hz2iN0hCZh0cFeeHmFqzynHrDVRMUSEIIdDeiCL70WM3i0gnzsdkYnNvp1M5qxPzYuFrIbsKEOJiY43q";
+            Trash = 0;
+            ZipCode = 123456;
+        }
+    );
+    Status = accepted;
+    balance = "15809.6";
+    cards =     (
+        {
+            Alias = "";
+            CardNum = 4444333322221111;
+            CardNum2 = "xxxx xxxx xxxx 1111";
+            Expiry = "/30";
+            Id = 34;
+            Type = visa;
+        }
+    );
+    rating = "4.7";
+    status = 1;
+    type = Notification;
+}
+ */

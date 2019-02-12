@@ -211,14 +211,14 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         {
             if txtEmailId.text!.count == 0
             {
-                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Email Id") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "Please Enter Email Id") { (index, title) in
                 }
                 return false
             }
             else if (!isEmailAddressValid)
             {
 
-                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Valid Email ID") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "Please Enter Valid Email ID") { (index, title) in
                 }
                 
                 return false
@@ -229,7 +229,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
             if txtPhoneNumber.text!.count == 0
             {
   
-                UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Phone number") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "Please Enter Phone number") { (index, title) in
                 }
                 
                 return false
@@ -240,13 +240,13 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         
         if txtCustomerName.text!.count == 0 {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter customer name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter customer name") { (index, title) in
             }
             return false
         }
         else if txtDescription.text!.count == 0 {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter description") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter description") { (index, title) in
             }
             return false
         }
@@ -288,7 +288,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
         strTiCKPayId = SingletonClass.sharedInstance.strTickPayId
         
         if strInvoiceType == "" {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Select Invoice Type") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Select Invoice Type") { (index, title) in
             }
         }
         else {
@@ -324,15 +324,15 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
             else{
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }

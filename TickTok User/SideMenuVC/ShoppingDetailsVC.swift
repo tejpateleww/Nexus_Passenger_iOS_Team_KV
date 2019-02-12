@@ -94,7 +94,7 @@ class ShoppingDetailsVC: ParentViewController, UITableViewDataSource, UITableVie
         if let rating = datas["rating"] as? Float {
             cell.lblRatting.text = String(rating)
             cell.viewRatting.rating = rating
-            cell.lblRatting.textColor = UIColor.init(red: 229/255, green: 166/255, blue: 28/255, alpha: 1.0)
+            cell.lblRatting.textColor = UIColor.init(red:242/255, green: 21/255, blue: 65/255, alpha: 1.0)//BINAL
         }
         
         if let address = datas["formatted_address"] as? String {
@@ -263,7 +263,7 @@ class ShoppingDetailsVC: ParentViewController, UITableViewDataSource, UITableVie
                     
                     if let resDict = result as? NSDictionary {
                         
-                        UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "status") as! String) { (index, title) in
+                        UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "status") as! String) { (index, title) in
                         }
                     }
                     

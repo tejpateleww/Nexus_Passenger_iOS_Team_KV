@@ -138,7 +138,7 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
         
         if dictData["Status"] as! String == "failed" {
             
-            cell.lblPrice.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+            cell.lblPrice.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
             cell.lblPrice.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
             
             cell.statusHeight.constant = 20.5
@@ -147,7 +147,7 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
             cell.lblStatus.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
         }
         else if dictData["Status"] as! String == "pending" {
-            cell.lblPrice.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+            cell.lblPrice.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
             cell.lblPrice.textColor = UIColor.init(red: 204/255, green: 3/255, blue: 0, alpha: 1.0)
             
             cell.statusHeight.constant = 17
@@ -161,22 +161,18 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
                 cell.statusHeight.constant = 0
                 cell.lblStatus.isHidden = true
                 
-                cell.lblPrice.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+                cell.lblPrice.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
                 cell.lblPrice.textColor = UIColor.black
             }
             else {
                 cell.statusHeight.constant = 0
                 cell.lblStatus.isHidden = true
                 
-                cell.lblPrice.text = "\(dictData["Type"] as! String) \(dictData["Amount"] as! String)"
+                cell.lblPrice.text = "\(dictData["Type"] as! String) \(currencySign)\(dictData["Amount"] as! String)"
                 cell.lblPrice.textColor = UIColor.init(red: 0, green: 144/255, blue: 81/255, alpha: 1.0)
             }
             
         }
-        
-        
-        
-        
         
         // ----------------------------------------------------------------------
         // ----------------------------------------------------------------------
@@ -254,15 +250,15 @@ class WalletBalanceMainVC: ParentViewController, UITableViewDataSource, UITableV
                 
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 

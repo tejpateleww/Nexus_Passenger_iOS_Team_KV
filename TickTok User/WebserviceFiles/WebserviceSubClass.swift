@@ -51,6 +51,14 @@ let UpdateBankAccountDetails = WebserviceURLs.kUpdateBankAccountDetails
 let OTPVerify = WebserviceURLs.kOtpForRegister
 
 let TrackRunningTrip = WebserviceURLs.kTrackRunningTrip
+let ParcelAndLabour = WebserviceURLs.kParcelAndLabour
+
+let GetEstimateFareForDeliveryService = WebserviceURLs.kGetEstimateFareForDeliveryService
+
+let PastBooking = WebserviceURLs.kPastBooking
+let UpcomingBooking = WebserviceURLs.kUpcomingBooking
+let OngoingBooking = WebserviceURLs.kOngoingBooking
+
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Registration
@@ -454,3 +462,42 @@ func webserviceForTrackRunningTrip(_ dictParams: AnyObject, completion: @escapin
 }
 
 
+//-------------------------------------------------------------
+// MARK: - Webservice For Parcel And Labour
+//-------------------------------------------------------------
+
+func webserviceForParcelAndLabour(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = ParcelAndLabour
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Get Estimate Fare For Delivery Service
+//-------------------------------------------------------------
+
+func webserviceForGetEstimateFareForDeliveryService(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = GetEstimateFareForDeliveryService
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Get Car List
+//-------------------------------------------------------------
+
+func webserviceForGetCarList(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = WebserviceURLs.kGetCarList
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Get Car List
+//-------------------------------------------------------------
+
+func webserviceForPastBookingData(_ dictParams: AnyObject, showLoader: Bool, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = PastBooking + "\(dictParams)"
+    getDataWithOrWithoutLoader("" as AnyObject, nsURL: url, isShowLoader: showLoader, completion: completion)
+}

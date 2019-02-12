@@ -23,7 +23,6 @@ class ChangePasswordVC: UIViewController {
         btnSubmit.layer.cornerRadius = 5
         btnSubmit.layer.masksToBounds = true
         
-       
     }
 
     override func didReceiveMemoryWarning() {
@@ -33,8 +32,7 @@ class ChangePasswordVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-         
-         
+        
     }
     
 
@@ -42,33 +40,58 @@ class ChangePasswordVC: UIViewController {
     // MARK: - Outlets
     //-------------------------------------------------------------
     
-    @IBOutlet weak var txtNewPassword: ACFloatingTextfield!
+    @IBOutlet weak var txtNewPassword  : ACFloatingTextfield!
     @IBOutlet weak var txtConfirmPassword: ACFloatingTextfield!
     @IBOutlet weak var btnSubmit: UIButton!
     
     
     @IBAction func btnSubmit(_ sender: UIButton) {
+     
         
-        let str = txtNewPassword.text
+       
+        //binal
+       
+     if(isValidation())
+     {
+        if self.txtNewPassword.text == self.txtConfirmPassword.text {
+                    let  str = self.txtNewPassword.text
+                    if str!.count >= 8  {
+                        self.webserviceOfChangePassword()
+                        
+                    }
+                    else {
+                        UtilityClass.setCustomAlert(title: "", message: "Password should be minimum 8 characters.") { (index, title) in
+                        }
+                    }
+                }
+                else {
+                    UtilityClass.setCustomAlert(title: "Password did not match", message: "Password and confirm password must be same.") { (index, title) in
+                    }
+                }
         
-        if txtNewPassword.text == txtConfirmPassword.text {
-        
-            if str!.count >= 8  {
-                webserviceOfChangePassword()
             }
-            else {
-                UtilityClass.setCustomAlert(title: "Missing", message: "Password should be minimum 8 characters.") { (index, title) in
-            }
-            }
+    
+    }
+    func isValidation() -> Bool
+    {
+            let  Str = self.txtNewPassword.text
+        if txtNewPassword.text == " " || txtConfirmPassword.text == " "
+        {
+            UtilityClass.showAlert("", message: "we do not allow blank space.", vc:self)
+            return false
         }
-        else {
-            UtilityClass.setCustomAlert(title: "Password did not match", message: "Please re-enter password") { (index, title) in
-            }
+            
+        else if(Str!.count < 8)
+        {
+            UtilityClass.showAlert("", message: "Please enter password maximum 8 character.", vc:self)
+            return false
         }
         
+        return true
     }
     
     
+   
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -127,8 +150,15 @@ class ChangePasswordVC: UIViewController {
                 
                 UtilityClass.setCustomAlert(title: appName, message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     
-                    self.navigationController?.popViewController(animated: true)
-            }
+                    for controller in self.navigationController!.viewControllers as Array {
+                        if controller.isKind(of: UpdateProfileViewController.self) {
+                            self.navigationController!.popToViewController(controller, animated: true)
+                            break
+                        }
+                    }
+                    
+//                    self.navigationController?.popViewController(animated: true)
+                }
                 
 //                UtilityClass.showAlert("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self)
                 
@@ -137,8 +167,11 @@ class ChangePasswordVC: UIViewController {
             else {
                  print(result)
                 
+                UtilityClass.setCustomAlert(title: appName, message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    
+                }
 //                UtilityClass.setCustomAlert(title: <#T##String#>, message: <#T##String#>, completionHandler: { (<#Int#>, <#String#>) in
-//                    <#code#>
+//
 //                })
                 
             }

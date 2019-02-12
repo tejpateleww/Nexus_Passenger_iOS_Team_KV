@@ -147,7 +147,7 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         txtCardNumber.formatter = CardNumberFormatter()
         txtCardNumber.placeholder = "Card Number"
         txtCardNumber.leftMargin = 0
-        txtCardNumber.cornerRadius = 5
+//        txtCardNumber.cornerRadius = 5
         txtCardNumber.backgroundColor = UIColor.white
         txtCardNumber.activeBackgroundColor = UIColor.white
         txtCardNumber.enabledBackgroundColor = UIColor.white
@@ -186,7 +186,7 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         txtExpiryDate.placeholder = "Expiration Date (MM/YY)"
         
         txtExpiryDate.leftMargin = 0
-        txtExpiryDate.cornerRadius = 5
+//        txtExpiryDate.cornerRadius = 5
         txtExpiryDate.backgroundColor = UIColor.white
         txtExpiryDate.activeBackgroundColor = UIColor.white
         txtExpiryDate.enabledBackgroundColor = UIColor.white
@@ -208,7 +208,7 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         txtCVV.placeholder = "CVC"
         
         txtCVV.leftMargin = 0
-        txtCVV.cornerRadius = 5
+//        txtCVV.cornerRadius = 5
         txtCVV.backgroundColor = UIColor.white
         txtCVV.activeBackgroundColor = UIColor.white
         txtCVV.enabledBackgroundColor = UIColor.white
@@ -319,45 +319,45 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
 
 
         if txtCardNumber.text == "" {
-//            UtilityClass.showAlert("Missing", message: "Please Enter Card Number", vc: self)
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Card Number") { (index, title) in
+//            UtilityClass.showAlert("", message: "Please Enter Card Number", vc: self)
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Card Number") { (index, title) in
             }
         }
 //        else if isCreditCardValid == false {
-//            UtilityClass.showAlert("Sorry", message: "Card Number is invalid", vc: self)
+//            UtilityClass.showAlert("", message: "Card Number is invalid", vc: self)
 //        }
 //        else if txtCardNumber.text!.count < 14 || txtCardNumber.text!.count >= 19 {
-//            UtilityClass.showAlert("Sorry", message: "Card Number is invalid", vc: self)
+//            UtilityClass.showAlert("", message: "Card Number is invalid", vc: self)
 //        }
 //        else if strSelectedMonth == "" || strSelectedYear == "" {
-//            UtilityClass.showAlert("Missing", message: "Please select Expiry Date", vc: self)
+//            UtilityClass.showAlert("", message: "Please select Expiry Date", vc: self)
 //        }
         else if txtCompanyName.text == ""
         {
-//            UtilityClass.showAlert("Missing", message: "Please Enter Company Name / Name", vc: self)
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Company Name / Name") { (index, title) in
+//            UtilityClass.showAlert("", message: "Please Enter Company Name / Name", vc: self)
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Company Name / Name") { (index, title) in
             }
         }
         else if txtAmount.text == "" {
-//            UtilityClass.showAlert("Missing", message: "Please Enter Amount", vc: self)
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Amount") { (index, title) in
+//            UtilityClass.showAlert("", message: "Please Enter Amount", vc: self)
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Amount") { (index, title) in
             }
         }
         else if txtExpiryDate.text == "" {
-//            UtilityClass.showAlert("Missing", message: "Please Enter Expiry Date", vc: self)
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Expiry Date") { (index, title) in
+//            UtilityClass.showAlert("", message: "Please Enter Expiry Date", vc: self)
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Expiry Date") { (index, title) in
             }
         }
         else if txtCVV.isHidden == false {
             
             if txtCVV.text == "" {
-//                UtilityClass.showAlert("Missing", message: "Please enter CVV Number", vc: self)
-                UtilityClass.setCustomAlert(title: "Missing", message: "Please enter CVV Number") { (index, title) in
+//                UtilityClass.showAlert("", message: "Please enter CVV Number", vc: self)
+                UtilityClass.setCustomAlert(title: "", message: "Please enter CVV Number") { (index, title) in
                 }
             }
             else if txtCVV.text!.count != 3 {
 //                UtilityClass.showAlert("", message: "Please enter valid CVV Number", vc: self)
-                UtilityClass.setCustomAlert(title: "Missing", message: "Please enter valid CVV Number") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "Please enter valid CVV Number") { (index, title) in
                 }
             }
         }
@@ -543,6 +543,12 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
         
         let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)
         cardIOVC?.modalPresentationStyle = .formSheet
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .normal)//binal
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .highlighted)//binal
         present(cardIOVC!, animated: true, completion: nil)
         
     }
@@ -742,13 +748,13 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                     
                     if let res = result as? String {
                       
-                        UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                        UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                         }
                         
                     }
                     else {
                         
-                        UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                        UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                         }
                     }
                     
@@ -778,15 +784,15 @@ class PayViewController: UIViewController, UIPickerViewDataSource, UIPickerViewD
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 

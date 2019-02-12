@@ -10,7 +10,20 @@ import UIKit
 
 
 class FavoriteViewController: ParentViewController, UITableViewDataSource, UITableViewDelegate {
-
+    
+    
+    //-------------------------------------------------------------
+    // MARK: - Outlets
+    //-------------------------------------------------------------
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var lblSwipeLeftToRemove: UILabel!
+    
+    
+    // ----------------------------------------------------
+    // MARK: - Globle Declaration Methods
+    // ----------------------------------------------------
+    
     var labelNoData = UILabel()
     var aryAddress = [[String:AnyObject]]()
     
@@ -28,8 +41,6 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
-         
-         
         
     }
 
@@ -37,14 +48,7 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
         super.didReceiveMemoryWarning()
         
     }
-    
-    //-------------------------------------------------------------
-    // MARK: - Outlets
-    //-------------------------------------------------------------
-    
-    @IBOutlet weak var tableView: UITableView!
-    
-
+   
     //-------------------------------------------------------------
     // MARK: - Custom Methods
     //-------------------------------------------------------------
@@ -55,7 +59,8 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
         self.labelNoData.text = "No Favourite Location Found!"
         self.labelNoData.textAlignment = .center
         self.view.addSubview(self.labelNoData)
-        
+        self.tableView.isHidden = true
+        lblSwipeLeftToRemove.isHidden = true
     }
     
     //-------------------------------------------------------------
@@ -124,10 +129,10 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
                 tableView.endUpdates()
                 
                 if aryAddress.count == 0 {
-                    let dict = [String:AnyObject]()
-                    delegateForFavourite?.didEnterFavouriteDestination(Source: dict)
-                    self.navigationController?.popViewController(animated: true)
+                    self.lblSwipeLeftToRemove.isHidden = true
+                    self.setData()
                 }
+               
             }
         }
         
@@ -179,23 +184,24 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
                         self.tableView.reloadData()
                     }
                 }
-                
+                self.lblSwipeLeftToRemove.isHidden = false
                 if self.aryAddress.count == 0 {
                     self.setData()
                 }
+                
             }
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }
@@ -232,15 +238,15 @@ class FavoriteViewController: ParentViewController, UITableViewDataSource, UITab
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 

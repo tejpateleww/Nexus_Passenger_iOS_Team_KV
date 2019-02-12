@@ -1,6 +1,0 @@
-framework module Pods_PickNGo_User {
-  umbrella header "Pods-PickNGo User-umbrella.h"
-
-  export *
-  module * { export * }
-}

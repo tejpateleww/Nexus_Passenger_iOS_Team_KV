@@ -16,10 +16,12 @@ import SideMenuController
 import SocketIO
 import UserNotifications
 import Firebase
+import Intents
 
 
-let googlApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" //"AIzaSyBpHWct2Dal71hBjPis6R1CU0OHZNfMgCw"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
-let googlPlacesApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" // "AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
+
+let googlApiKey = "AIzaSyDDhx61DtSR4k174_60MQ6EyiQIF-qrd4o" //"AIzaSyBpHWct2Dal71hBjPis6R1CU0OHZNfMgCw"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
+let googlPlacesApiKey = "AIzaSyDDhx61DtSR4k174_60MQ6EyiQIF-qrd4o" // "AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 
 //AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 @UIApplicationMain
@@ -31,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
 
      let SocketManager = SocketIOClient(socketURL: URL(string: SocketData.kBaseURL)!, config: [.log(false), .compress])
 
+ 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -39,10 +42,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
         Messaging.messaging().delegate = self
 
         IQKeyboardManager.sharedManager().enable = true
-        
+
         GMSServices.provideAPIKey(googlApiKey)
         GMSPlacesClient.provideAPIKey(googlApiKey)
+        UINavigationBar.appearance().tintColor = UIColor.white
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.clear], for: .normal)
+        UIBarButtonItem.appearance().setTitleTextAttributes([NSAttributedStringKey.foregroundColor: UIColor.clear], for: UIControlState.highlighted)
         
+        UIApplication.shared.isStatusBarHidden = false
+        UIApplication.shared.statusBarStyle = .lightContent
+        
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey .foregroundColor : UIColor.white]
+
+        
+        var preferredStatusBarStyle: UIStatusBarStyle {
+            return .lightContent
+        }
         
         Fabric.with([Crashlytics.self])
         
@@ -122,6 +137,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
          //            (window?.rootViewController as? UITabBarController)?.selectedIndex = 0
          }
          */
+     
         
         
         
@@ -170,10 +186,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate {
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
         
-        let isSwitchOn = UserDefaults.standard.object(forKey: "isPasscodeON") as? Bool
+        
         let passCode = SingletonClass.sharedInstance.setPasscode
         
-        SingletonClass.sharedInstance.isPasscodeON = isSwitchOn!
+        if let isSwitchOn = UserDefaults.standard.object(forKey: "isPasscodeON") as? Bool {
+            SingletonClass.sharedInstance.isPasscodeON = isSwitchOn
+        }
+        
         
         if (passCode != "" && SingletonClass.sharedInstance.isPasscodeON) {
             

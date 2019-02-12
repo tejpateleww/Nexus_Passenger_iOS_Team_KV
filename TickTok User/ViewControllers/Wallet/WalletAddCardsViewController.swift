@@ -64,6 +64,8 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         
         aryTempMonth = ["01","02","03","04","05","06","07","08","09","10","11","12"]
         aryTempYear = ["2018","2019","2020","2021","2022","2023","2024","2025","2026","2027","2028","2029","2030"]
+        
+
 
         // Do any additional setup after loading the view.
     }
@@ -75,9 +77,6 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-         
-         
         
         cardNum()
         cardExpiry()
@@ -211,7 +210,9 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         txtCardNumber.formatter = CardNumberFormatter()
         txtCardNumber.placeholder = "Card Number"
         txtCardNumber.leftMargin = 0
-        txtCardNumber.cornerRadius = 5
+//        txtCardNumber.cornerRadius = 5
+        
+        
 //        txtCardNumber.backgroundColor = UIColor.white
 //        txtCardNumber.activeBackgroundColor = UIColor.white
 //        txtCardNumber.enabledBackgroundColor = UIColor.white
@@ -269,6 +270,7 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     }
     
     
+    
     //-------------------------------------------------------------
     // MARK: - Actions
     //-------------------------------------------------------------
@@ -308,7 +310,18 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     @IBAction func btnScanCard(_ sender: UIButton) {
         
         let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)
+     
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .normal)//binal
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .highlighted)//binal
+      
         cardIOVC?.modalPresentationStyle = .formSheet
+        
+        setNavigationFontBlack()
+        
         present(cardIOVC!, animated: true, completion: nil)
 
         
@@ -363,25 +376,25 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         
         if (txtCardNumber.text!.count == 0) {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Card Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter card number") { (index, title) in
             }
             return false
         }
         else if (txtValidThrough.text!.count == 0) {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Expiry Date") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter expiry date") { (index, title) in
             }
             return false
         }
         else if (txtCVVNumber.text!.count == 0) {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter CVV Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter cvv number") { (index, title) in
             }
             return false
         }
 //        else if (txtAlies.text!.count == 0) {
 //
-//            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Name") { (index, title) in
+//            UtilityClass.setCustomAlert(title: "", message: "Enter Bank Name") { (index, title) in
 //            }
 //            return false
 //        }
@@ -389,6 +402,14 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
         return true
     }
  
+    @IBAction func txtExpiryDateDefault(_ sender: UITextField) {
+        let cardExpiryDate = (month: Date(), year: Date())
+        let month = cardExpiryDate.month.getCurrentMonth()
+        let year = cardExpiryDate.year.getCurrentYear()
+        
+        txtValidThrough.text = "\(month)/\(year)"
+    }
+    
     
     //-------------------------------------------------------------
     // MARK: - Webservice Methods
@@ -453,20 +474,22 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
                 alert.addAction(OK)
                 self.present(alert, animated: true, completion: nil)
                 
+                NotificationCenter.default.post(name: NSNotification.Name("CardListReload"), object: nil)
+                
             }
             else {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 
@@ -494,6 +517,7 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
     
     
     func userDidCancel(_ paymentViewController: CardIOPaymentViewController!) {
+        setNavigationClear()
         dismiss(animated: true, completion: nil)
     }
     
@@ -532,12 +556,15 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
             strCVV = String(info.cvv)
           
         }
+        
+        setNavigationClear()
         paymentViewController?.dismiss(animated: true, completion: nil)
         
     }
     
     func userDidCancelPaymentViewController(paymentViewController: CardIOPaymentViewController!) {
         //        resultLabel.text = "user canceled"
+        setNavigationClear()
         paymentViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -548,6 +575,7 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
             txtCardNumber.text = info.redactedCardNumber
             txtValidThrough.text = "\(info.expiryMonth)/\(info.expiryYear)"
         }
+        setNavigationClear()
         paymentViewController?.dismiss(animated: true, completion: nil)
     }
     
@@ -556,7 +584,7 @@ class WalletAddCardsViewController: ParentViewController, UIPickerViewDataSource
             .map{ String($0) }.joined(separator: " ")
         
     }
-
+   
 }
 
 extension Collection {
@@ -597,6 +625,28 @@ extension String {
         return result
     }
 }
+
+
+extension Date {
+    
+    func getCurrentMonth() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM"
+        let strMonth = dateFormatter.string(from: self)
+        return strMonth
+    }
+    
+    func getCurrentYear() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yy"
+        let strMonth = dateFormatter.string(from: self)
+        return strMonth
+    }
+    
+}
+
+
+
 /*
 
 // SuccessFully

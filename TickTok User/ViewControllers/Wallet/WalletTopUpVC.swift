@@ -77,12 +77,12 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
         
         if strCardId == "" {
  
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please reselect card") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please reselect card") { (index, title) in
             }
         }
         else if txtAmount.text == "" {
      
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Amount") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter amount") { (index, title) in
             }
         }
         else {
@@ -205,6 +205,15 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
                 
                 SingletonClass.sharedInstance.strCurrentBalance = ((result as! NSDictionary).object(forKey: "walletBalance") as AnyObject).doubleValue
                 
+                if self.navigationController != nil {
+                    if self.navigationController?.childViewControllers.count != 0 {
+                        
+                        if let wallet = self.navigationController?.childViewControllers[4] as? WalletBalanceMainVC {
+                            wallet.webserviceOfTransactionHistory()
+                        }
+                    }
+                }
+                
             }
             else {
                 print(result)
@@ -212,15 +221,15 @@ class WalletTopUpVC: ParentViewController, SelectCardDelegate {
                 self.txtAmount.text = ""
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                

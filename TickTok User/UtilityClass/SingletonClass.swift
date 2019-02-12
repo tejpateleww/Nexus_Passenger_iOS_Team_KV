@@ -89,7 +89,7 @@ class SingletonClass: NSObject {
     var allDiverShowOnBirdView = NSArray()
     
     var isFromNotificationBookLater = Bool()
-    
+    var onlineCars = [[String:AnyObject]]()
     var otpCode = String()
     
     /// If 1 Than share Ride is ON else 0 than OFF

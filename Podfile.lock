@@ -104,7 +104,7 @@ DEPENDENCIES:
   - TransitionButton
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - ACFloatingTextfield-Swift
     - Alamofire
     - CardIO
@@ -175,6 +175,6 @@ SPEC CHECKSUMS:
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
   TransitionButton: 0bf7e5ffe80030f9d10d57983a04acf2f511998a
 
-PODFILE CHECKSUM: 7efc745da6866da8d4885d64ecdaf0f99cdfa998
+PODFILE CHECKSUM: 0bcaebda3fa8c1b61e1fe8db091a1e6819a84563
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.3

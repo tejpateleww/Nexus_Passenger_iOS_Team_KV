@@ -1,0 +1,6 @@
+framework module Pods_Nexus_User {
+  umbrella header "Pods-Nexus User-umbrella.h"
+
+  export *
+  module * { export * }
+}

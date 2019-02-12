@@ -47,7 +47,8 @@ class EditAccountViewController: UIViewController {
     // MARK: - Actions
     //-------------------------------------------------------------
     
-    @IBAction func btnBack(_ sender: UIButton) {
+    @IBAction func btnBack(_ sender: UIButton)
+    {
         self.navigationController?.popViewController(animated: true)
     }
     
@@ -93,27 +94,27 @@ class EditAccountViewController: UIViewController {
     func validationForUpdateBankAccountDetails() -> Bool {
         
         if (txtAccountHolderName.text!.count == 0) {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Account Holeder Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter account holeder name") { (index, title) in
             }
             return false
         }
 //        else if (txtABN.text!.count == 0) {
-//            UtilityClass.setCustomAlert(title: "Missing", message: "Enter ABN Number") { (index, title) in
+//            UtilityClass.setCustomAlert(title: "", message: "Enter ABN Number") { (index, title) in
 //            }
 //            return false
 //        }
         else if (txtBankName.text!.count == 0) {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter bank name") { (index, title) in
             }
             return false
         }
         else if (txtBSB.text!.count == 0) {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter BSB Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter BSB number") { (index, title) in
             }
             return false
         }
         else if (txtBankAccount.text!.count == 0) {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Bank Account Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter bank account number") { (index, title) in
             }
             return false
         }
@@ -206,17 +207,17 @@ class EditAccountViewController: UIViewController {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
             }
                 }
                 else if let resDict = result as? NSDictionary {
                     
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
             }
                 }
                 else if let resAry = result as? NSArray {
                     
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
             }
                 }
             }

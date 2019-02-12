@@ -13,6 +13,7 @@ import ACFloatingTextfield_Swift
 //import SideMenu
 import NVActivityIndicatorView
 import CoreLocation
+import SocketIO
 
 class LoginViewController: UIViewController, CLLocationManagerDelegate, alertViewMethodsDelegates {
     
@@ -36,6 +37,13 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     
     override func loadView() {
         super.loadView()
+      
+//        if(SingletonClass.sharedInstance.isUserLoggedIN)
+//        {
+//            //
+//            self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
+//        }
+        
         
         if Connectivity.isConnectedToInternet() {
             print("Yes! internet is available.")
@@ -72,22 +80,37 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewMain.isHidden = true
+        viewMain.isHidden = false
         
 //        txtEmail.lineColor = UIColor.white
-//        txtPassword.lineColor = UIColor.white
+//        txtPassword.lineColor = UIColor.white`
 
-        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" {
+        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" ||  UIDevice.current.name == "iOS2’s iPad" ||  UIDevice.current.name == "Excellent iPhone 7" || UIDevice.current.name ==  "Mayur's iPhone X" || UIDevice.current.name ==  "EWW iPhone" {
             
-            txtEmail.text = "9904439228"
             txtPassword.text = "12345678"
+            txtEmail.text = "bhavesh@excellentwebworld.info" // "bhavesh@excellentwebworld.info"
         }
+       
+        #if targetEnvironment(simulator)
+        txtPassword.text = "12345678"
+        txtEmail.text = "bhavesh@yahoo.com" // "bhavesh@excellentwebworld.info"
+        #endif
+       
         
+//        #if DEBUG
+//        UtilityClass.showAlert("Debug", message: "This is Debuging Mode", vc: self)
+//        #elseif release
+//        UtilityClass.showAlert("Live", message: "This is Live Mode", vc: self)
+//        #endif
+
+        txtPassword.text = "12345678"
+        txtEmail.text = "bhavesh@excellentwebworld.info"
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        btnLogin.setTitle("Log In", for: .normal)
+        btnLogin.titleLabel?.tintColor = UIColor.white
         
     }
     
@@ -103,7 +126,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
         if (txtEmail.text?.count == 0)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Mobile Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter email") { (index, title) in
             }
             
              // txtEmail.showErrorWithText(errorText: "Enter Email")
@@ -112,7 +135,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
         else if (txtPassword.text?.count == 0)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Password") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter password") { (index, title) in
             }
 
             return false
@@ -139,39 +162,40 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
             if ((result as! NSDictionary).object(forKey: "status") as! Int == 1)
             {
                 DispatchQueue.main.async(execute: { () -> Void in
+                    
+                    SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
+                    SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
+                    SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)//as! String
+                    SingletonClass.sharedInstance.isUserLoggedIN = true
+                    
+                    
+                    UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
+                    UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+                    
+                    
+                    self.webserviceForAllDrivers()
+                    
 
-                    self.btnLogin.stopAnimation(animationStyle: .normal, completion: {
-                        SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
-                        SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
-                        SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)//as! String
-                        SingletonClass.sharedInstance.isUserLoggedIN = true
-                        
-                        
-                        UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
-                        UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
-
-                        
-                        self.webserviceForAllDrivers()
-                        
-//                        self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
-                    })
+//                    self.btnLogin.stopAnimation(animationStyle: .normal, completion: {
+//
+////                        self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
+//                    })
                 })
             }
             else
             {
-                self.btnLogin.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
-                    
-//                    let next = self.storyboard?.instantiateViewController(withIdentifier: "CustomAlertsViewController") as! CustomAlertsViewController
-//                    next.delegateOfAlertView = self
-//                    next.strTitle = "Error"
-//                    next.strMessage = (result as! NSDictionary).object(forKey: "message") as! String
-//                    self.navigationController?.present(next, animated: false, completion: nil)
+                
+                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                }
+                
+//                self.btnLogin.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
 //
-
-                     UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
-            }
-
-                })
+////                    let next = self.storyboard?.instantiateViewController(withIdentifier: "CustomAlertsViewController") as! CustomAlertsViewController
+////                    next.delegateOfAlertView = self
+////                    next.strTitle = ""
+////                    next.strMessage = (result as! NSDictionary).object(forKey: "message") as! String
+////                    self.navigationController?.present(next, animated: false, completion: nil)
+//                })
             }
         }
     }
@@ -210,7 +234,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     func webserviceCallForForgotPassword(strEmail : String)
     {
         let dictparam = NSMutableDictionary()
-        dictparam.setObject(strEmail, forKey: "MobileNo" as NSCopying)
+        dictparam.setObject(strEmail, forKey: "Email" as NSCopying)
         let activityData = ActivityData()
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
         webserviceForForgotPassword(dictparam) { (result, status) in
@@ -223,7 +247,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
             }
             else {
 
-                 UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                 UtilityClass.setCustomAlert(title: appName, message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                 }
             }
         }
@@ -251,7 +275,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
                     let alert = UIAlertController(title: nil, message: (result as! NSDictionary).object(forKey: "message") as? String, preferredStyle: .alert)
                     let UPDATE = UIAlertAction(title: "UPDATE", style: .default, handler: { ACTION in
                         
-                        UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
+                        UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/cab-ride-passenger/id1438603822?ls=1&mt=8")! as URL)
                     })
                     let Cancel = UIAlertAction(title: "Cancel", style: .default, handler: { ACTION in
                         
@@ -282,17 +306,17 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 
                         UtilityClass.showAlertWithCompletion("", message: (result as! NSDictionary).object(forKey: "message") as! String, vc: self, completionHandler: { ACTION in
                             
-                            UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL), options: [:], completionHandler: { (status) in
+                            UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/cab-ride-passenger/id1438603822?ls=1&mt=8")! as URL), options: [:], completionHandler: { (status) in
                                 
                             })//openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL)
                         })
                     }
                     else {
 
-                         UtilityClass.setCustomAlert(title: "Error", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                         UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                             if (index == 0)
                             {
-                                UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/pick-n-go/id1320783092?mt=8")! as URL), options: [:], completionHandler: { (status) in
+                                UIApplication.shared.open((NSURL(string: "https://itunes.apple.com/us/app/cab-ride-passenger/id1438603822?ls=1&mt=8")! as URL), options: [:], completionHandler: { (status) in
                                     
                                 })
                             }
@@ -301,19 +325,21 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
                     }
                     
                 }
+                
+              
 /*
                 if let res = result as? String {
-                     UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                     UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
             }
                 }
                 else if let resDict = result as? NSDictionary {
 
-                     UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                     UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
             }
                 }
                 else if let resAry = result as? NSArray {
 
-                     UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                     UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
             }
                 }
  */
@@ -324,6 +350,96 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     //MARK: - IBActions
     
     @IBAction func unwindToVC(segue: UIStoryboardSegue) {
+        SingletonClass.sharedInstance.isUserLoggedIN = false
+//        webserviceOfAppSetting()
+        print("Logout")
+        if (self.navigationController?.childViewControllers.count)! > 1 {
+            if let customSideMenuVC = self.navigationController?.childViewControllers[1] as? CustomSideMenuViewController {
+                if customSideMenuVC.childViewControllers.count != 0 {
+                    if customSideMenuVC.childViewControllers.first?.childViewControllers.count != 0 {
+                        if let homeVC = customSideMenuVC.childViewControllers.first?.childViewControllers.first as? HomeViewController {
+                            
+                            homeVC.socket.off(SocketData.kNearByDriverList)
+                            homeVC.socket.off(SocketData.kAcceptBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kRejectBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kPickupPassengerNotification)
+                            homeVC.socket.off(SocketData.kBookingCompletedNotification)
+                            homeVC.socket.off(SocketData.kAdvancedBookingTripHoldNotification)
+                            homeVC.socket.off(SocketData.kReceiveDriverLocationToPassenger)
+                            homeVC.socket.off(SocketData.kCancelTripByDriverNotficication)
+                            homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kRejectAdvancedBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kAdvancedBookingPickupPassengerNotification)
+                            homeVC.socket.off(SocketData.kReceiveHoldingNotificationToPassenger)
+                            homeVC.socket.off(SocketData.kAdvancedBookingDetails)
+                            homeVC.socket.off(SocketData.kReceiveGetEstimateFare)
+                            homeVC.socket.off(SocketData.kInformPassengerForAdvancedTrip)
+                            homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                            
+                            homeVC.txtDestinationLocation.text = ""
+                            homeVC.txtCurrentLocation.text = ""
+                            
+                            homeVC.socket.off(clientEvent: .disconnect)
+                            
+                            homeVC.socket.disconnect()
+                            
+                            
+//                            SocketIOClient(socketURL: URL(string: SocketData.kBaseURL)!, config: [.log(false), .compress])
+                            
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    @IBAction func unwindLogOut(segue: UIStoryboardSegue) {
+        SingletonClass.sharedInstance.isUserLoggedIN = false
+//        webserviceOfAppSetting()
+        print("Logout")
+        if (self.navigationController?.childViewControllers.count)! > 1 {
+            if let customSideMenuVC = self.navigationController?.childViewControllers[1] as? CustomSideMenuViewController {
+                if customSideMenuVC.childViewControllers.count != 0 {
+                    if customSideMenuVC.childViewControllers.first?.childViewControllers.count != 0 {
+                        if let homeVC = customSideMenuVC.childViewControllers.first?.childViewControllers.first as? HomeViewController {
+                            
+                            homeVC.socket.off(SocketData.kNearByDriverList)
+                            homeVC.socket.off(SocketData.kAcceptBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kRejectBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kPickupPassengerNotification)
+                            homeVC.socket.off(SocketData.kBookingCompletedNotification)
+                            homeVC.socket.off(SocketData.kAdvancedBookingTripHoldNotification)
+                            homeVC.socket.off(SocketData.kReceiveDriverLocationToPassenger)
+                            homeVC.socket.off(SocketData.kCancelTripByDriverNotficication)
+                            homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kRejectAdvancedBookingRequestNotification)
+                            homeVC.socket.off(SocketData.kAdvancedBookingPickupPassengerNotification)
+                            homeVC.socket.off(SocketData.kReceiveHoldingNotificationToPassenger)
+                            homeVC.socket.off(SocketData.kAdvancedBookingDetails)
+                            homeVC.socket.off(SocketData.kReceiveGetEstimateFare)
+                            homeVC.socket.off(SocketData.kInformPassengerForAdvancedTrip)
+                            homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                            
+                            if homeVC.txtCurrentLocation != nil {
+                                homeVC.txtCurrentLocation.text = ""
+                            }
+                            
+                            if homeVC.txtDestinationLocation != nil {
+                                homeVC.txtDestinationLocation.text = ""
+                            }
+                            
+                            homeVC.socket.off(clientEvent: .disconnect)
+                            
+                            homeVC.socket.disconnect()
+                            
+                            //                            SocketIOClient(socketURL: URL(string: SocketData.kBaseURL)!, config: [.log(false), .compress])
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
     }
     
     
@@ -331,7 +447,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     @IBAction func btnLogin(_ sender: Any) {
         
         if (checkValidation()) {
-            self.btnLogin.startAnimation()
+//            self.btnLogin.startAnimation()
             self.webserviceCallForLogin()
         }
     
@@ -339,19 +455,18 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     
     @IBAction func btnSignup(_ sender: Any) {
         
-        
     }
     
     
     @IBAction func btnForgotPassword(_ sender: UIButton) {
         
         //1. Create the alert controller.
-        let alert = UIAlertController(title: "Forgot Password?", message: "Enter Mobile Number", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Forgot Password?", message: "Enter email id", preferredStyle: .alert)
         
         //2. Add the text field. You can configure it however you need.
         alert.addTextField { (textField) in
             
-            textField.placeholder = "Mobile Number"
+            textField.placeholder = "Email"
         }
         
         // 3. Grab the value from the text field, and print it when the user clicks OK.

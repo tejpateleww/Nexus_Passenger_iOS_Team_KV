@@ -33,6 +33,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         return refreshControl
     }()
+    @IBOutlet weak var lblNoDataFounds: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +41,8 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         self.tableView.addSubview(self.refreshControl)
+        self.aryData = SingletonClass.sharedInstance.aryOnGoing
+        self.tableView.reloadData()
         
         // Register to receive notification
         NotificationCenter.default.addObserver(self, selector: #selector(self.reloadDataOfTableView), name: NSNotification.Name(rawValue: NotificationCenterName.keyForOnGoing), object: nil)
@@ -56,11 +59,34 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         self.aryData = SingletonClass.sharedInstance.aryOnGoing
         self.tableView.reloadData()
         
+        if (aryData.count == 0)
+        {
+            lblNoDataFounds.text = "No Data Found "
+            
+        }
+        else
+        {
+         
+            lblNoDataFounds.isHidden = true
+        }
     }
     
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         
-        tableView.reloadData()
+        self.aryData = SingletonClass.sharedInstance.aryOnGoing
+        self.tableView.reloadData()
+        
+        if (aryData.count == 0)
+        {
+            lblNoDataFounds.text = "No Data Found "
+            
+        }
+        else
+        {
+            
+            lblNoDataFounds.isHidden = true
+        }
+       
         refreshControl.endRefreshing()
     }
     
@@ -70,6 +96,30 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
+    @IBAction func btnTaxiHistory(_ sender: UIButton) {
+        
+        if SingletonClass.sharedInstance.aryOnGoing.count != 0 {
+            
+            if let taxiData = (SingletonClass.sharedInstance.aryOnGoing as? [[String:Any]])?.filter({($0["RequestFor"] as? String) == "taxi"}) {
+                
+                aryData = taxiData as NSArray
+                tableView.reloadData()
+            }
+        }
+       
+    }
+    
+    @IBAction func btnTransportHistory(_ sender: UIButton) {
+        
+        if SingletonClass.sharedInstance.aryOnGoing.count != 0 {
+            if let deliveryData = (SingletonClass.sharedInstance.aryOnGoing as? [[String:Any]])?.filter({($0["RequestFor"] as? String) == "delivery"}) {
+                
+                aryData = deliveryData as NSArray
+                tableView.reloadData()
+            }
+        }
+        
+    }
     
     //-------------------------------------------------------------
     // MARK: - Table View Methods
@@ -215,7 +265,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     msg = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
                 }
                 
-                let alert = UIAlertController(title: "Pick N Go", message: msg, preferredStyle: .alert)
+                let alert = UIAlertController(title: "Cab Ride", message: msg, preferredStyle: .alert)
                 let OK = UIAlertAction(title: "OK", style: .default, handler: nil)
                 alert.addAction(OK)
                 self.present(alert, animated: true, completion: nil)

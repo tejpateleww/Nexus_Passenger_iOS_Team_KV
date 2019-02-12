@@ -49,6 +49,22 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
         
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        if UIDevice().userInterfaceIdiom == .phone {
+            switch UIScreen.main.nativeBounds.height {
+            case 2436:
+
+                headerView?.contraintLabelCentr.constant = 15
+               
+            default:
+                print("unknown")
+            }
+        }
+        
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Custom Methods
     //-------------------------------------------------------------
@@ -190,7 +206,20 @@ class ParentViewController: UIViewController, HeaderViewDelegate {
             switch UIScreen.main.nativeBounds.height {
             case 2436:
                 frame = CGRect(x: CGFloat(0), y: CGFloat(-20), width: screenWidth, height: CGFloat(heightWithoutLabelForX))
-                hView.contraintLabelCentr.constant = 10
+                hView.contraintLabelCentr.constant = 15
+                hView.layoutIfNeeded()
+   
+
+                if (showTitleLabelView)
+                {
+                    frame = CGRect(x: CGFloat(0), y: CGFloat(0), width: screenWidth, height: CGFloat(heightWithLabelForX))
+                    hView.lblHeaderTitle.text = strHeaderTitle
+                }
+            case 2688:
+                frame = CGRect(x: CGFloat(0), y: CGFloat(-20), width: screenWidth, height: CGFloat(heightWithoutLabelForX))
+                hView.contraintLabelCentr.constant = 15
+                hView.layoutIfNeeded()
+
 
                 if (showTitleLabelView)
                 {

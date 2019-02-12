@@ -94,7 +94,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         if (txtPhoneNumber.text?.count == 0)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Phone Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter phone number") { (index, title) in
             }
 
             return false
@@ -102,28 +102,28 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         else if ((txtPhoneNumber.text?.count)! < 10)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Phone Number should 10 digits") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please phone number should 10 digits") { (index, title) in
             }
 
             return false
         }
         else if (txtEmail.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Email Address") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter email address") { (index, title) in
             }
 
             return false
         }
         else if (!isEmailAddressValid)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Valid Email ID") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter valid email id") { (index, title) in
             }
 
             return false
         }
         else if (txtPassword.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Enter Password") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter password") { (index, title) in
             }
 
             return false
@@ -131,14 +131,14 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
             
         else if ((txtPassword.text?.count)! < 6)
         {
-            UtilityClass.setCustomAlert(title: "Required", message: "Password should be of more than 6 characters") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Password should be of more than 6 characters") { (index, title) in
             }
 
             return false
         }
         else if (txtPassword.text != txtConfirmPassword.text)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Password and Confirm Password does not match") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Password and Confirm Password does not match") { (index, title) in
             }
 
             return false
@@ -238,15 +238,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
                  print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 

@@ -170,6 +170,12 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         
         let cardIOVC = CardIOPaymentViewController(paymentDelegate: self)
         cardIOVC?.modalPresentationStyle = .formSheet
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .normal)//binal
+        UIBarButtonItem.appearance().setTitleTextAttributes([
+            .foregroundColor : UIColor.black
+            ], for: .highlighted)//binal
         present(cardIOVC!, animated: true, completion: nil)
     }
     
@@ -216,20 +222,20 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         if(txtCompanysName.text?.count == 0)
         {
 
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Insert Company Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Insert Company Name") { (index, title) in
             }
             return false
         }
         //iconCamera
         else if(btnImgCameras.imageView?.image == nil && btnImgCameras.imageView?.image == UIImage(named: "iconCamera"))
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Upload Driving Licence Image") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Upload Driving Licence Image") { (index, title) in
             }
             return false
         }
         else if(btnimgCameraForPassport.imageView?.image == nil && btnimgCameraForPassport.imageView?.image == UIImage(named: "iconCamera"))
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Upload Passport Image") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Upload Passport Image") { (index, title) in
             }
             return false
         }
@@ -241,25 +247,25 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
         
         if(txtCardNumbers.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Card Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Card Number") { (index, title) in
             }
             return false
         }
         else if(txtExpireyDate.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Expiry Date") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Expiry Date") { (index, title) in
             }
             return false
         }
         else if(txtCvv.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter CVV Number") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter CVV Number") { (index, title) in
             }
             return false
         }
         else if(txtAliasbank.text?.count == 0)
         {
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Enter Bank Name") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please Enter Bank Name") { (index, title) in
             }
             return false
         }
@@ -513,17 +519,17 @@ class TickPayRegistrationViewController: UIViewController,UIImagePickerControlle
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
 
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
 
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }

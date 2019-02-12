@@ -24,6 +24,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
     override func viewDidLoad() {
         super.viewDidLoad()
        
+       
 
         let profileData = SingletonClass.sharedInstance.dictProfile
 
@@ -42,8 +43,12 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
             imgProfilePick.sd_setShowActivityIndicatorView(true)
             imgProfilePick.sd_setIndicatorStyle(.gray)
             imgProfilePick.sd_setImage(with: URL(string: imgProfile), completed: nil)
-        }
 
+          
+        }
+        self.imgProfilePick.layoutIfNeeded()
+        self.imgProfilePick.layer.cornerRadius = self.imgProfilePick.frame.height / 2
+        self.imgProfilePick.layer.masksToBounds = true
        
         
         /*
@@ -79,9 +84,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
          */
 
 //        headerView?.btnBack.addTarget(self, action: #selector(self.nevigateToBack), for: .touchUpInside)
-        
-        imgProfilePick.layer.cornerRadius = imgProfilePick.frame.width / 2
-        imgProfilePick.layer.masksToBounds = true
+      
         
         
         
@@ -93,10 +96,6 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         // Dispose of any resources that can be recreated.
     }
     
-    
-    
-   
-
   
     //-------------------------------------------------------------
     // MARK: - Outlets
@@ -314,7 +313,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         switch result {
         case MFMailComposeResult.cancelled:
             print("Mail cancelled")
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Mail cancelled") { (index, title) in
             }
 
         case MFMailComposeResult.saved:
@@ -330,11 +329,11 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         case MFMailComposeResult.failed:
             print("Mail sent failure: \(String(describing: error?.localizedDescription))")
       
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Mail sent failure: \(String(describing: error?.localizedDescription))") { (index, title) in
             }
         default:
             
-             UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+             UtilityClass.setCustomAlert(title: "", message: "Something went wrong") { (index, title) in
              }
             break
         }
@@ -349,7 +348,7 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         case MessageComposeResult.cancelled:
             print("Mail cancelled")
 
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail cancelled") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Mail cancelled") { (index, title) in
             }
         case MessageComposeResult.sent:
             print("Mail sent")
@@ -359,11 +358,11 @@ class InviteDriverViewController: ParentViewController, MFMailComposeViewControl
         case MessageComposeResult.failed:
             print("Mail sent failure")
 
-            UtilityClass.setCustomAlert(title: "Error", message: "Mail sent failure") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Mail sent failure") { (index, title) in
             }
         default:
 
-             UtilityClass.setCustomAlert(title: "Error", message: "Something went wrong") { (index, title) in
+             UtilityClass.setCustomAlert(title: "", message: "Something went wrong") { (index, title) in
              }
             break
         }

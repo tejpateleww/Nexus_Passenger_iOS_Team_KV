@@ -49,7 +49,7 @@ class PackageDetailViewController: UIViewController,UIPickerViewDelegate, UIPick
         lblPackageType.text = dictCarModelData["Type"] as? String
         lblDistance.text = "\(dictCarModelData["KM"] as! String) KMs"
         
-        lblAmount.text = "LKR \(dictCarModelData["Amount"] as! String)"
+        lblAmount.text = "$ \(dictCarModelData["Amount"] as! String)"
         lblVehicleType.text = strVehicleType
         
         if dictCarModelData["Type"] as? String == "hours"
@@ -243,15 +243,15 @@ class PackageDetailViewController: UIViewController,UIPickerViewDelegate, UIPick
             else {
                 print(result)
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }
@@ -288,7 +288,7 @@ class PackageDetailViewController: UIViewController,UIPickerViewDelegate, UIPick
         
         if paymentType == "" {
             
-            UtilityClass.setCustomAlert(title: "Missing", message: "Select Payment Type") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Select Payment Type") { (index, title) in
             }
         }
         else
@@ -405,15 +405,15 @@ class PackageDetailViewController: UIViewController,UIPickerViewDelegate, UIPick
                 alert.addAction(OK)
                 self.present(alert, animated: true, completion: nil)
                 //                if let res = result as? String {
-                //                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                //                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                 //                    }
                 //                }
                 //                else if let resDict = result as? NSDictionary {
-                //                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                //                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                 //                    }
                 //                }
                 //                else if let resAry = result as? NSArray {
-                //                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                //                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                 //                    }
                 //                }
                             }

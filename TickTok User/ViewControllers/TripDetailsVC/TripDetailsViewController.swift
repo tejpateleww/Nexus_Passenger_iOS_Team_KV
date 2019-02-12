@@ -84,21 +84,21 @@ class TripDetailsViewController: ParentViewController {
             
             let distanceFare = "\(data.object(forKey: "DistanceFare")!) (\(data.object(forKey: "TripDistance")!) km)"
         
-            lblPickupLocation.text = data.object(forKey: "PickupLocation") as? String
-            lblDropoffLocation.text = data.object(forKey: "DropoffLocation") as? String
+            lblPickupLocation.text = "\(data.object(forKey: "PickupLocation") as? String ?? "N/A")"
+            lblDropoffLocation.text = "\(data.object(forKey: "DropoffLocation") as? String ?? "N/A")"
             
-            lblBaseFare.text = data.object(forKey: "TripFare") as? String
-            lblDistanceFare.text = distanceFare
-            lblNightFare.text = data.object(forKey: "NightFare") as? String
-            lblWaitingCost.text = data.object(forKey: "WaitingTimeCost") as? String
-            lblTollFee.text = data.object(forKey: "TollFee") as? String
-            lblSubTotal.text = data.object(forKey: "SubTotal") as? String
+            lblBaseFare.text = ": \(currencySign) " + "\(data.object(forKey: "TripFare") as? String ?? "0")"
+            lblDistanceFare.text = ": \(distanceFare)"
+            lblNightFare.text = ": \(currencySign) " + "\(data.object(forKey: "NightFare") as? String ?? "0")"
+            lblWaitingCost.text = ": \(currencySign) " + "\(data.object(forKey: "WaitingTimeCost") as? String ?? "0")"
+            lblTollFee.text = ": \(currencySign) " + "\(data.object(forKey: "TollFee") as? String ?? "0")"
+            lblSubTotal.text = ": \(currencySign) " + "\(data.object(forKey: "SubTotal") as? String ?? "0")"
             
-            lblBookingCharge.text = data.object(forKey: "BookingCharge") as? String
-            lblTax.text = data.object(forKey: "Tax") as? String
-            lblDiscount.text = data.object(forKey: "Discount") as? String
+            lblBookingCharge.text = ": \(currencySign) " + "\(data.object(forKey: "BookingCharge") as? String ?? "0")"
+            lblTax.text = ": \(currencySign) " + "\(data.object(forKey: "Tax") as? String ?? "0")"
+            lblDiscount.text = ": \(currencySign) " + "\(data.object(forKey: "Discount") as? String ?? "0")"
             
-            lblGrandTotal.text = data.object(forKey: "GrandTotal") as? String
+            lblGrandTotal.text = ": \(currencySign) " + "\(data.object(forKey: "GrandTotal") as? String ?? "0")"
             
             var strSpecial = String()
             
@@ -111,7 +111,7 @@ class TripDetailsViewController: ParentViewController {
             stackViewSpecialExtraCharge.isHidden = true
             if strSpecial == "1" {
                 stackViewSpecialExtraCharge.isHidden = false
-                lblSpecialExtraCharge.text = data.object(forKey: "SpecialExtraCharge") as? String
+                lblSpecialExtraCharge.text = ": \(currencySign) " + "\(data.object(forKey: "SpecialExtraCharge") as? String ?? "0")"
             }
             
             

@@ -15,7 +15,7 @@ var request : Request!
 
 
 
-let header: [String:String] = ["key":"PickNGo123*#*"]
+let header: [String:String] = ["key":"TicktocApp123*"]
 
 //-------------------------------------------------------------
 // MARK: - Webservice For PostData Method
@@ -160,6 +160,41 @@ func sendImage(_ dictParams: [String:AnyObject], image1: UIImage, nsURL: String,
         }
     }
 }
+
+
+//-------------------------------------------------------------
+// MARK: - Webservice For GetData with or without loader Method
+//-------------------------------------------------------------
+
+func getDataWithOrWithoutLoader(_ dictParams: AnyObject, nsURL: String, isShowLoader: Bool , completion: @escaping (_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = WebserviceURLs.kBaseURL + nsURL
+    
+    if isShowLoader {
+        UtilityClass.showACProgressHUD()
+    }
+   
+    Alamofire.request(url, method: .get, parameters: dictParams as? [String : AnyObject], encoding: URLEncoding.default, headers: header)
+        .validate()
+        .responseJSON
+        { (response) in
+            
+            if let JSON = response.result.value {
+                UtilityClass.hideACProgressHUD()
+                if (JSON as AnyObject).object(forKey:("status")) as! Bool == false {
+                    completion(JSON as AnyObject, false)
+                }
+                else {
+                    completion(JSON as AnyObject, true)
+                }
+            }
+            else {
+                print("Data not Found")
+                UtilityClass.hideACProgressHUD()
+            }
+        }
+}
+
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Send Image Method

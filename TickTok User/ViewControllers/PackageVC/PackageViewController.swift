@@ -170,6 +170,8 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
                         
                         self.arrCarData.add(dictCarData)
                     }
+                    if(self.PacakgeData != nil)
+                    {
                     let dictOnlineCarData = (self.PacakgeData.object(at: 0) as! NSDictionary)
                     let arrCar = (dictOnlineCarData.object(forKey: "Package") as! NSArray)
                     
@@ -187,6 +189,7 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
                             self.arrCarDaysData.add(dictData)
                         }
                     }
+                    }
                     let indexPath = IndexPath(row: 0, section: 0)
                     self.selectedIndexPath = indexPath
                     let dict = self.arrCarData.object(at: 0) as! NSDictionary
@@ -196,22 +199,21 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
                     //                    self.steGetTickPayRate = res.object(forKey: "rate") as! String
 //                    self.strTransactionFee = res.object(forKey: "TransactionFee") as! String
 //                    self.lblCredirAndDebitRate.text = "\(self.steGetTickPayRate)% Service fee \n$\(self.strTransactionFee) Transaction fee"
-                    
                 }
             }
              else {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 
@@ -405,7 +407,7 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
                cell.lblHours.text = "\(dictData.object(forKey: "Time") as! String) Days"
             }
             
-            cell.lblAmount.text = "LKR \(dictData.object(forKey: "Amount") as! String)"
+            cell.lblAmount.text = "$ \(dictData.object(forKey: "Amount") as! String)"
             cell.lblAdditional.text = dictData.object(forKey: "Notes") as? String
         }
         else
@@ -421,7 +423,7 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
             {
                 cell.lblHours.text = "\(dictData.object(forKey: "Time") as! String) Days"
             }
-            cell.lblAmount.text = "LKR \(dictData.object(forKey: "Amount") as! String)"
+            cell.lblAmount.text = "$ \(dictData.object(forKey: "Amount") as! String)"
             cell.lblAdditional.text = dictData.object(forKey: "Notes") as? String
         }
         

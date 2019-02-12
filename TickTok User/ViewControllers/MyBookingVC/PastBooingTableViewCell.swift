@@ -79,5 +79,14 @@ class PastBooingTableViewCell: UITableViewCell {
     
     @IBOutlet weak var stackViewTotalCost: UIStackView!
     @IBOutlet weak var lblTotalCost: UILabel!
-   
+    
+    @IBOutlet weak var lblWaitingTime: UILabel!
+    
+    
+    @IBOutlet weak var lblTranportName: UILabel!
+    @IBOutlet weak var constantHeightOfTransportName: NSLayoutConstraint! // 21
+    
+    
+    
+    
 }

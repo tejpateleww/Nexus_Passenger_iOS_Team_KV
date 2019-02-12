@@ -70,7 +70,7 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
             
             if enterdAmount > currrentBalance {
                
-                UtilityClass.setCustomAlert(title: "Missing", message: "Your current balance is lower then entered amount") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "Your current balance is lower then entered amount") { (index, title) in
                 }
             }
             else {
@@ -79,17 +79,17 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
         }
         else if SingletonClass.sharedInstance.strQRCodeForSendMoney == "" {
            
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please Scan QR Code") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please scan QR code") { (index, title) in
             }
         }
         else if txtEnterMoney.text!.count == 0 {
            
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter amount") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter amount") { (index, title) in
             }
         }
         else {
             
-            UtilityClass.setCustomAlert(title: "Missing", message: "Please enter amount") { (index, title) in
+            UtilityClass.setCustomAlert(title: "", message: "Please enter amount") { (index, title) in
             }
         }
     
@@ -215,15 +215,15 @@ class WalletTransferViewController: ParentViewController, UITextFieldDelegate {
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 
@@ -280,7 +280,7 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
     
     
     var captureSession: AVCaptureSession?
-    var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+    var videoPreviewLayer: AVCaptureVideoPreviewLayer?
     var isReading: Bool = false
     
     //-------------------------------------------------------------
@@ -355,10 +355,17 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
 //                btnStartStop.setTitle("Stop", for: .normal)
 //                lblQRScanner.text = "Scanning for QR Code..."
             }
+            imgQRCode.isHidden = true
+            
         }
         else {
             stopReading()
 //            btnStartStop.setTitle("Start", for: .normal)
+            imgQRCode.isHidden = false
+            self.imgQRCode.isHidden = false
+            self.lblQRScanner.isHidden = false
+            self.lblFullName.isHidden = true
+            self.lblMobileNumber.isHidden = true
         }
         isReading = !isReading
     }
@@ -369,38 +376,45 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
         
 //        let captureDevice = AVCaptureDevice.default(for: .video)
         
-        do {
-            let input = try AVCaptureDeviceInput(device: captureDevice!)
-            captureSession = AVCaptureSession()
-            captureSession?.addInput(input)
-            // Do the rest of your work...
-        } catch let error as NSError {
-            // Handle any errors
-            print(error)
-            return false
+        if captureDevice != nil {
+            
+            do {
+                let input = try AVCaptureDeviceInput(device: captureDevice!)
+                captureSession = AVCaptureSession()
+                captureSession?.addInput(input)
+                // Do the rest of your work...
+            } catch let error as NSError {
+                // Handle any errors
+                print(error)
+                return false
+            }
+            
+            videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
+            videoPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            videoPreviewLayer?.frame = viewQRCodeScanner.layer.bounds
+            viewQRCodeScanner.layer.addSublayer(videoPreviewLayer!)
+            
+            /* Check for metadata */
+            let captureMetadataOutput = AVCaptureMetadataOutput()
+            captureSession?.addOutput(captureMetadataOutput)
+            captureMetadataOutput.metadataObjectTypes = captureMetadataOutput.availableMetadataObjectTypes
+            print(captureMetadataOutput.availableMetadataObjectTypes)
+            captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
+            captureSession?.startRunning()
+            
+            return true
         }
         
-        videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-        videoPreviewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        videoPreviewLayer.frame = viewQRCodeScanner.layer.bounds
-        viewQRCodeScanner.layer.addSublayer(videoPreviewLayer)
-        
-        /* Check for metadata */
-        let captureMetadataOutput = AVCaptureMetadataOutput()
-        captureSession?.addOutput(captureMetadataOutput)
-        captureMetadataOutput.metadataObjectTypes = captureMetadataOutput.availableMetadataObjectTypes
-        print(captureMetadataOutput.availableMetadataObjectTypes)
-        captureMetadataOutput.setMetadataObjectsDelegate(self, queue: DispatchQueue.main)
-        captureSession?.startRunning()
-        
-        return true
+        imgQRCode.isHidden = false
+        return false
     }
     
     @objc func stopReading() {
         
+        imgQRCode.isHidden = false
         captureSession?.stopRunning()
         captureSession = nil
-        videoPreviewLayer.removeFromSuperlayer()
+        videoPreviewLayer?.removeFromSuperlayer()
     }
     
     func metadataOutput(_ output: AVCaptureMetadataOutput, didOutput metadataObjects: [AVMetadataObject], from connection: AVCaptureConnection) {
@@ -447,6 +461,7 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
                 
                 self.lblFullName.text = Fullname
                 self.lblMobileNumber.text = MobileNo
+                self.imgQRCode.isHidden = true
                 
 /*                {
                     data =     {
@@ -461,7 +476,7 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
             }
             else {
                 print(result)
-                
+                self.imgQRCode.isHidden = false
                 self.lblQRScanner.isHidden = false
                 self.lblFullName.isHidden = true
                 self.lblMobileNumber.isHidden = true

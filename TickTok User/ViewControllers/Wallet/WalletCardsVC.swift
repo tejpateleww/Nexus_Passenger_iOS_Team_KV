@@ -170,7 +170,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 //
             }
             
-            let colorTop =  UIColor(red: 78/255, green: 202/255, blue:237, alpha: 1.0).cgColor
+            let colorTop =  UIColor(red: 78/255, green: 202/255, blue:237/255, alpha: 1.0).cgColor
             let colorMiddle =  UIColor(red: 187/255, green: 241/255, blue: 239/255, alpha: 0.5).cgColor
 //            let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
             
@@ -263,7 +263,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         }
         
     }
-   
+
     
     //-------------------------------------------------------------
     // MARK: - Actions
@@ -338,20 +338,20 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         tableView.reloadData()
     }
     
-    func giveGradientColor() {
-        
-        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
-        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor
-        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
-        
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
-        gradientLayer.locations = [ 0.0, 0.5, 1.0]
-        gradientLayer.frame = self.view.bounds
-        self.view.layer.insertSublayer(gradientLayer, at: 0)
-        
-    }
-    
+//    func giveGradientColor() {
+//
+//        let colorTop =  UIColor(red: 0, green: 0, blue: 0, alpha: 1.0).cgColor
+//        let colorMiddle =  UIColor(red: 36/255, green: 24/255, blue: 3/255, alpha: 0.5).cgColor
+//        let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
+//
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.colors = [ colorTop, colorMiddle, colorBottom]
+//        gradientLayer.locations = [ 0.0, 0.5, 1.0]
+//        gradientLayer.frame = self.view.bounds
+//        self.view.layer.insertSublayer(gradientLayer, at: 0)
+//
+//    }
+//
    
     //-------------------------------------------------------------
     // MARK: - Webservice Methods For All Cards
@@ -379,6 +379,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     self.navigationController?.pushViewController(next, animated: true)
                 }
                 
+                NotificationCenter.default.post(name: NSNotification.Name("CardListReload"), object: nil)
                 self.refreshControl.endRefreshing()
             }
             else {
@@ -387,15 +388,15 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
              
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }
@@ -447,15 +448,15 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                 print(result)
                 
                 if let res = result as? String {
-                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
                     }
                 }
                 else if let resDict = result as? NSDictionary {
-                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
                     }
                 }
                 else if let resAry = result as? NSArray {
-                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                 }
             }
