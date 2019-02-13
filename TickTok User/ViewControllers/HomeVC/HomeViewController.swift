@@ -341,10 +341,10 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         viewMainActivityIndicator.isHidden = true
         
         viewActivity.type = .ballPulse
-        viewActivity.color = themeYellowColor
+        viewActivity.color = ThemeBlueColor
         
         
-        viewHavePromocode.tintColor = themeYellowColor
+        viewHavePromocode.tintColor = ThemeBlueColor
         viewHavePromocode.stateChangeAnimation = .fill
         viewHavePromocode.boxType = .square
         
@@ -396,7 +396,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 viewHeaderHeightConstant.constant = 80
 
             case  2688 :
-                viewHeaderHeightConstant.constant = 80
+                viewHeaderHeightConstant.constant = 100
 
             default:
                 print("")
@@ -2668,11 +2668,11 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell.viewOfImage.layer.cornerRadius = cell.viewOfImage.frame.width / 2
         cell.viewOfImage.layer.borderWidth = 3.0
         if selectedIndexPath == indexPath {
-            cell.viewOfImage.layer.borderColor = themeYellowColor.cgColor
+            cell.viewOfImage.layer.borderColor = ThemeBlueColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
         }
         else {
-            cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
+            cell.viewOfImage.layer.borderColor = ThemeWhiteColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
         }
         
@@ -2918,7 +2918,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 selectedIndexPath = indexPath
                 
                 let cell = collectionView.cellForItem(at: indexPath) as! CarsCollectionViewCell
-                cell.viewOfImage.layer.borderColor = themeYellowColor.cgColor
+                cell.viewOfImage.layer.borderColor = ThemeBlueColor.cgColor
                 
                 let imageURL = dictOnlineCarData.object(forKey: "Image") as! String
                 strNavigateCarModel = imageURL
@@ -2949,7 +2949,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 strCarModelID = carModelIDConverString
 
                 let cell = collectionView.cellForItem(at: indexPath) as! CarsCollectionViewCell
-                cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
+                cell.viewOfImage.layer.borderColor = ThemeWhiteColor.cgColor
                 
                 selectedIndexPath = indexPath
                 
@@ -3047,7 +3047,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath as IndexPath) as! CarsCollectionViewCell
-        cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
+        cell.viewOfImage.layer.borderColor = ThemeWhiteColor.cgColor
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
@@ -4716,7 +4716,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         BoolCurrentLocation = true
         
         
-        acController.navigationController?.navigationBar.backgroundColor = themeYellowColor
+        acController.navigationController?.navigationBar.backgroundColor = ThemeBlueColor
         //        acController.navigationController?.navigationItem.
         present(acController, animated: true, completion: nil)
     }
@@ -5177,7 +5177,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                     let routePolyline = GMSPolyline(path: path)
                                     routePolyline.map = self.mapView
-                                    routePolyline.strokeColor = themeYellowColor
+                                    routePolyline.strokeColor = ThemeBlueColor
                                     routePolyline.strokeWidth = 3.0
                                     
                                     
@@ -5319,7 +5319,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     //
                                     
                                     //                                    self.demoPolylineOLD = self.demoPolyline
-                                    //                                    self.demoPolylineOLD.strokeColor = themeYellowColor
+                                    //                                    self.demoPolylineOLD.strokeColor = ThemeBlueColor
                                     //                                    self.demoPolylineOLD.strokeWidth = 3.0
                                     //                                    self.demoPolylineOLD.map = self.mapView
                                     //                                    self.demoPolyline.map = nil
@@ -5327,7 +5327,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     //
                                     //                                self.demoPolyline = GMSPolyline(path: path)
                                     //                                self.demoPolyline.map = self.mapView
-                                    //                                self.demoPolyline.strokeColor = themeYellowColor
+                                    //                                self.demoPolyline.strokeColor = ThemeBlueColor
                                     //                                self.demoPolyline.strokeWidth = 3.0
                                     //                                self.demoPolylineOLD.map = nil
                                     
@@ -5342,14 +5342,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     DispatchQueue.main.async {
                                         
                                         self.demoPolylineOLD = self.demoPolyline
-                                        self.demoPolylineOLD.strokeColor = themeYellowColor
+                                        self.demoPolylineOLD.strokeColor = ThemeBlueColor
                                         self.demoPolylineOLD.strokeWidth = 3.0
                                         self.demoPolylineOLD.map = self.mapView
                                         self.demoPolyline.map = nil
                                         
                                         self.demoPolyline = GMSPolyline(path: path)
                                         self.demoPolyline.map = self.mapView
-                                        self.demoPolyline.strokeColor = themeYellowColor
+                                        self.demoPolyline.strokeColor = ThemeBlueColor
                                         self.demoPolyline.strokeWidth = 3.0
                                         self.demoPolylineOLD.map = nil
                                         
@@ -5367,7 +5367,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     //                                UIView.animate(withDuration: 3.0, delay: 0, options: .curveLinear, animations: {
                                     //                                    self.demoPolyline = GMSPolyline(path: path)
                                     //                                    self.demoPolyline.map = self.mapView
-                                    //                                    self.demoPolyline.strokeColor = themeYellowColor
+                                    //                                    self.demoPolyline.strokeColor = ThemeBlueColor
                                     //                                    self.demoPolyline.strokeWidth = 3.0
                                     //                                    self.demoPolylineOLD.map = nil
                                     //                                }, completion: { (status) in
@@ -5458,7 +5458,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     //                                let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                     //                                self.routePolyline = GMSPolyline(path: path)
                                     //                                self.routePolyline.map = self.mapView
-                                    //                                self.routePolyline.strokeColor = UIColor.blue // themeYellowColor
+                                    //                                self.routePolyline.strokeColor = UIColor.blue // ThemeBlueColor
                                     //                                self.routePolyline.strokeWidth = 3.0
                                     //                                self.demoPolylineOLD.map = nil
                                 }
@@ -5472,7 +5472,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 //                            if self.routePolyline.map == nil {
                                 //                                self.demoPolylineOLD = self.routePolyline
                                 //                                self.demoPolylineOLD.map = self.mapView
-                                //                                self.demoPolylineOLD.strokeColor = themeYellowColor
+                                //                                self.demoPolylineOLD.strokeColor = ThemeBlueColor
                                 //                                self.demoPolylineOLD.strokeWidth = 5.0
                                 //                               self.routePolyline.map = nil
                                 
@@ -5482,7 +5482,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                 //                                let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                 //                                self.routePolyline = GMSPolyline(path: path)
                                 //                                self.routePolyline.map = self.mapView
-                                //                                self.routePolyline.strokeColor = UIColor.blue // themeYellowColor
+                                //                                self.routePolyline.strokeColor = UIColor.blue // ThemeBlueColor
                                 //                                self.routePolyline.strokeWidth = 3.0
                                 //                                self.demoPolylineOLD.map = nil
                                 
@@ -5692,7 +5692,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                     //                                let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                     //                                let routePolyline = GMSPolyline(path: path)
                                     //                                routePolyline.map = self.mapView
-                                    //                                routePolyline.strokeColor = themeYellowColor
+                                    //                                routePolyline.strokeColor = ThemeBlueColor
                                     //                                routePolyline.strokeWidth = 3.0
                                     
                                     UtilityClass.hideACProgressHUD()
@@ -5817,7 +5817,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                                         let path: GMSPath = GMSPath(fromEncodedPath: route)!
                                         self.routePolyline = GMSPolyline(path: path)
                                         self.routePolyline.map = self.mapView
-                                        self.routePolyline.strokeColor = themeYellowColor
+                                        self.routePolyline.strokeColor = ThemeBlueColor
                                         self.routePolyline.strokeWidth = 3.0
                                         
                                         

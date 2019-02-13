@@ -117,19 +117,19 @@ class ShoppingDetailsVC: ParentViewController, UITableViewDataSource, UITableVie
                 }
                 else {
                     cell.btnShopStatus.setTitle("Close now", for: .normal)
-                    cell.btnShopStatus.setTitleColor(themeYellowColor, for: .normal)
+                    cell.btnShopStatus.setTitleColor(ThemeBlueColor, for: .normal)
                     
                 }
             }
             else {
                 cell.btnShopStatus.setTitle("Close now", for: .normal)
-                cell.btnShopStatus.setTitleColor(themeYellowColor, for: .normal)
+                cell.btnShopStatus.setTitleColor(ThemeBlueColor, for: .normal)
                 
             }
         }
         else {
             cell.btnShopStatus.setTitle("Close now", for: .normal)
-            cell.btnShopStatus.setTitleColor(themeYellowColor, for: .normal)
+            cell.btnShopStatus.setTitleColor(ThemeBlueColor, for: .normal)
             
         }
         

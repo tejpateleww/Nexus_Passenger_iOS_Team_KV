@@ -68,7 +68,33 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
         }
 
     }
+    class func setCornerRadiusTextField(textField : UITextField, borderColor : UIColor , bgColor : UIColor, textColor : UIColor)
+    {
+        textField.layer.cornerRadius = textField.frame.size.height / 2
+        textField.backgroundColor = bgColor
+        textField.layer.borderColor = borderColor.cgColor
+        textField.layer.borderWidth = 1.0
+        textField.textColor = textColor
+        textField.clipsToBounds = true
+    }
     
+    class func setCornerRadiusButton(button : UIButton , borderColor : UIColor , bgColor : UIColor, textColor : UIColor)
+    {
+        button.layer.cornerRadius = button.frame.size.height / 2
+        button.clipsToBounds = true
+        button.backgroundColor = bgColor
+        button.setTitleColor(textColor, for: .normal)
+        button.layer.borderColor = borderColor.cgColor
+        button.layer.borderWidth = 1.0
+    }
+    
+    class func setCornerRadiusView(view: UIView, borderColor: UIColor, bgColor: UIColor) {
+        view.layer.cornerRadius = view.frame.size.height / 2
+        view.clipsToBounds = true
+        view.backgroundColor = bgColor
+        view.layer.borderColor = borderColor.cgColor
+        view.layer.borderWidth = 1.0
+    }
     
     class func CustomAlertViewMethod(_ title: String, message: String, vc: UIViewController, completionHandler: @escaping CompletionHandler) -> Void {
         
@@ -137,7 +163,7 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
 //
 //        progressView.hudBackgroundColor = .black
 //
-//        progressView.indicatorColor = themeYellowColor
+//        progressView.indicatorColor = ThemeBlueColor
 //        //        progressView.shadowRadius = 0.5
 //
 //
@@ -147,7 +173,7 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
         NVActivityIndicatorView.DEFAULT_BLOCKER_MINIMUM_DISPLAY_TIME = 55
         NVActivityIndicatorView.DEFAULT_BLOCKER_DISPLAY_TIME_THRESHOLD = 55
         NVActivityIndicatorView.DEFAULT_TYPE = .ballClipRotate//binal
-        NVActivityIndicatorView.DEFAULT_COLOR = themeYellowColor
+        NVActivityIndicatorView.DEFAULT_COLOR = ThemeBlueColor
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
         
         

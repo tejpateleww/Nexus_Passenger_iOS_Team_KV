@@ -40,7 +40,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         super.viewDidLayoutSubviews()
         imgProfile.layer.cornerRadius = imgProfile.frame.width / 2
         imgProfile.layer.borderWidth = 1.0
-        imgProfile.layer.borderColor = themeYellowColor.cgColor
+        imgProfile.layer.borderColor = ThemeBlueColor.cgColor
         imgProfile.layer.masksToBounds = true
     }
 
@@ -84,7 +84,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func btnMale(_ sender: UIButton) {
         
         viewMale.checkState = .checked
-        viewMale.tintColor = themeYellowColor
+        viewMale.tintColor = ThemeBlueColor
         viewFemale.checkState = .unchecked
         
         gender = "Male"
@@ -92,7 +92,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func btnFemale(_ sender: UIButton) {
         
         viewFemale.checkState = .checked
-        viewFemale.tintColor = themeYellowColor
+        viewFemale.tintColor = ThemeBlueColor
         viewMale.checkState = .unchecked
         
         gender = "Female"
@@ -270,12 +270,12 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
         
         if gender == "male" || gender == "Male" {
             viewMale.checkState = .checked
-            viewMale.tintColor = themeYellowColor
+            viewMale.tintColor = ThemeBlueColor
             viewFemale.checkState = .unchecked
         }
         else {
             viewMale.checkState = .unchecked
-            viewFemale.tintColor = themeYellowColor
+            viewFemale.tintColor = ThemeBlueColor
             viewFemale.checkState = .checked
         }
     }
@@ -293,7 +293,7 @@ class UpdateProfileViewController: UIViewController, UIImagePickerControllerDele
     @IBAction func viewFemale(_ sender: M13Checkbox) {
         
         viewFemale.checkState = .checked
-        viewFemale.tintColor = themeYellowColor
+        viewFemale.tintColor = ThemeBlueColor
         viewMale.checkState = .unchecked
         
         gender = "Female"

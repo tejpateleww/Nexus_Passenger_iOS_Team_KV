@@ -51,7 +51,7 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
         pickerView.datePickerMode = .dateAndTime
         pickerView.minimumDate = Date.today()
         imgClosePicker.image = UIImage.init(named: "iconCloseAlert")?.withRenderingMode(.alwaysTemplate)
-        imgClosePicker.tintColor = themeYellowColor
+        imgClosePicker.tintColor = ThemeBlueColor
      
         let hourtoAdd = 2
         let currentDate = Date()
@@ -96,9 +96,9 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
         self.navigationController?.navigationBar.isTranslucent = false
         
         self.navigationController?.navigationBar.barTintColor = UIColor.white;
-        self.navigationController?.navigationBar.tintColor = themeYellowColor;
+        self.navigationController?.navigationBar.tintColor = ThemeBlueColor;
         self.title = "Packages"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : themeYellowColor]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : ThemeBlueColor]
         
         
         let btnback :UIBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "iconArrowSmall"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(btnBackClicked(_:)))
@@ -247,12 +247,12 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
         if selectedIndexPath == indexPath
         {
             
-            cell.viewOfImage.layer.borderColor = themeYellowColor.cgColor
+            cell.viewOfImage.layer.borderColor = ThemeBlueColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
         }
         else
         {
-            cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
+            cell.viewOfImage.layer.borderColor = ThemeWhiteColor.cgColor
             cell.viewOfImage.layer.masksToBounds = true
             
         }
@@ -360,7 +360,7 @@ class PackageViewController: UIViewController,UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath as IndexPath) as! PackageCarListCollectionViewCell
-        cell.viewOfImage.layer.borderColor = themeGrayColor.cgColor
+        cell.viewOfImage.layer.borderColor = ThemeWhiteColor.cgColor
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     

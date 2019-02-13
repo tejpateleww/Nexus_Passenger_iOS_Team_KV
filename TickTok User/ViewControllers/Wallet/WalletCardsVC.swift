@@ -26,7 +26,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = themeYellowColor
+        refreshControl.tintColor = ThemeBlueColor
         
         return refreshControl
     }()
@@ -202,7 +202,7 @@ class WalletCardsVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         else {
             
 //            let img = UIImage(named: "iconArrowGrey")
-//            cell2.btnArrow.image = img?.maskWithColor(color: themeYellowColor)
+//            cell2.btnArrow.image = img?.maskWithColor(color: ThemeBlueColor)
             return cell2
         }
     }

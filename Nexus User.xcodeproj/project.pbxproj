@@ -145,6 +145,7 @@
 		21DA90D31FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21DA90D21FEBB60300E9B179 /* TiCKPayNeedToVarifyViewController.swift */; };
 		21F74B12203421F4000F8769 /* AJAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21F74B10203421F3000F8769 /* AJAlertController.swift */; };
 		21F74B13203421F4000F8769 /* AJAlertController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 21F74B11203421F3000F8769 /* AJAlertController.xib */; };
+		3AF4FF5C2212C696000A23D1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF4FF5B2212C696000A23D1 /* Constants.swift */; };
 		545B30B7204C22DA0019012F /* PackageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545B30B6204C22DA0019012F /* PackageViewController.swift */; };
 		545B30BA204C230B0019012F /* PackageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545B30B9204C230B0019012F /* PackageDetailViewController.swift */; };
 		D0E3E28977DE03C856DAF981 /* Pods_Nexus_User.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 06452868A03B3647DFDB0B0E /* Pods_Nexus_User.framework */; };
@@ -312,6 +313,7 @@
 		21F74B10203421F3000F8769 /* AJAlertController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AJAlertController.swift; sourceTree = "<group>"; };
 		21F74B11203421F3000F8769 /* AJAlertController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AJAlertController.xib; sourceTree = "<group>"; };
 		2FB9143EE504073516757CCC /* Pods-Nexus User.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus User.release.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus User/Pods-Nexus User.release.xcconfig"; sourceTree = "<group>"; };
+		3AF4FF5B2212C696000A23D1 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		545B30B6204C22DA0019012F /* PackageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageViewController.swift; sourceTree = "<group>"; };
 		545B30B9204C230B0019012F /* PackageDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageDetailViewController.swift; sourceTree = "<group>"; };
 		5E1A20D5E0AE3B282E071A9F /* Pods-Nexus User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus User/Pods-Nexus User.debug.xcconfig"; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				0079BF9F1FA35E7900EFB38D /* UtilityClass.swift */,
 				00A61D461FA87E0600E1BA84 /* ButtonUtility.swift */,
 				00FFCDDF1FA4A8AF00073621 /* ConstantData.swift */,
+				3AF4FF5B2212C696000A23D1 /* Constants.swift */,
 				00FFCDE11FA4AA4D00073621 /* SingletonClass.swift */,
 				006057171FF52197004CA5DE /* CustomViewForShadow.swift */,
 				219675F5210F33D4001289FB /* Extention+UIViewController.swift */,
@@ -975,6 +978,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Nexus User/Pods-Nexus User-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ACFloatingTextfield-Swift/ACFloatingTextfield_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BFKit-Swift/BFKit.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/CreditCardForm/CreditCardForm.framework",
 				"${BUILT_PRODUCTS_DIR}/DOAlertController/DOAlertController.framework",
@@ -996,6 +1000,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ACFloatingTextfield_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/BFKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardForm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DOAlertController.framework",
@@ -1100,6 +1105,7 @@
 				21AA8AE91FE175F200210E2D /* BookTableSelectedDataViewController.swift in Sources */,
 				008D22311FA08DCF001223DF /* AppDelegate.swift in Sources */,
 				21690C921FEE511B00F89B40 /* GiveRatingViewController.swift in Sources */,
+				3AF4FF5C2212C696000A23D1 /* Constants.swift in Sources */,
 				21506B92215B693600FACF0D /* BecomeACabrideDriverVC.swift in Sources */,
 				2167B462215A5A2B0037D656 /* EmptyTableViewCell.swift in Sources */,
 				2174B6231FDFFE5C00462E91 /* WalletTransferViewController.swift in Sources */,

@@ -26,7 +26,7 @@ class MyReceiptsViewController: ParentViewController, UITableViewDataSource, UIT
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = themeYellowColor
+        refreshControl.tintColor = ThemeBlueColor
       
         return refreshControl
     }()

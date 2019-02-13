@@ -26,7 +26,7 @@ target 'Nexus User' do
   pod 'FormTextField'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  
+  pod 'BFKit-Swift'
   pod 'GoogleAnalytics'
 
   # pod 'WWCalendarTimeSelector'

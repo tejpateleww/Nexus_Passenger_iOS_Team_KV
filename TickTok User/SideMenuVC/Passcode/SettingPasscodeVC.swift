@@ -51,7 +51,7 @@ class SettingPasscodeVC: ParentViewController, checkSwitchIsOnOrOff {
         switchPasscode.isOn = SingletonClass.sharedInstance.isPasscodeON
         
         if switchPasscode.isOn {
-            switchPasscode.thumbTintColor = themeYellowColor
+            switchPasscode.thumbTintColor = ThemeBlueColor
         }
         else {
             switchPasscode.thumbTintColor = UIColor.gray
@@ -104,7 +104,7 @@ class SettingPasscodeVC: ParentViewController, checkSwitchIsOnOrOff {
         {
             viewChangePasscode.isHidden = false
 
-            switchPasscode.thumbTintColor = themeYellowColor
+            switchPasscode.thumbTintColor = ThemeBlueColor
             SingletonClass.sharedInstance.isPasscodeON = true
             UserDefaults.standard.set(SingletonClass.sharedInstance.isPasscodeON, forKey: "isPasscodeON")
             

@@ -9,12 +9,12 @@
 import UIKit
 import Foundation
 
-let themeYellowColor: UIColor =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1.0) // UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)//binal
-let themeGrayColor: UIColor = UIColor.init(red: 231/255, green: 231/255, blue: 231/255, alpha: 1.0) //UIColor.init(red: 114/255, green: 114/255, blue: 114/255, alpha: 1.0)//binal
-//let ThemeYellowColor : UIColor = UIColor.init(hex: "ffa300")
+//let ThemeBlueColor: UIColor =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1.0) // UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)//binal
+//let themeGrayColor: UIColor = UIColor.init(red: 231/255, green: 231/255, blue: 231/255, alpha: 1.0) //UIColor.init(red: 114/255, green: 114/255, blue: 114/255, alpha: 1.0)//binal
+//let ThemeBlueColor : UIColor = UIColor.init(hex: "ffa300")
 
 let currencySign = "$"
-let appName = "Cab Ride"
+let appName = "Nexus"
 let helpLineNumber = "1234567890"
 
 let googleAnalyticsTrackId = "UA-122360832-1"
@@ -23,7 +23,7 @@ let googleAnalyticsTrackId = "UA-122360832-1"
 
 
 struct WebserviceURLs {
-    static let kBaseURL                                 = "http://52.66.86.25/web/Passenger_Api/"//13.127.148.119
+    static let kBaseURL                                 = "http://3.17.200.7/web/Passenger_Api/"//"http://52.66.86.25/web/Passenger_Api/"//13.127.148.119
     static let kDriverRegister                          = "Register"
     static let kDriverLogin                             = "Login"
     static let kChangePassword                          = "ChangePassword"
@@ -35,7 +35,7 @@ struct WebserviceURLs {
     static let kDriver                                  = "Driver"
     static let kBookingHistory                          = "BookingHistory/"
     static let kGetEstimateFare                         = "GetEstimateFare"
-    static let kImageBaseURL                            = "http://52.66.86.25/web/"
+    static let kImageBaseURL                            = "http://3.17.200.7/web/"//http://52.66.86.25/web/"
     
     static let kCardsList                               = "Cards/"
     static let kPackageBookingHistory                   = "PackageBookingHistory"
@@ -78,7 +78,7 @@ struct WebserviceURLs {
 
 struct SocketData {
     
-    static let kBaseURL                                     = "http://52.66.86.25:8080"
+    static let kBaseURL                                     = "http://3.17.200.7:8080/"//"http://52.66.86.25:8080"
     static let kNearByDriverList                            = "NearByDriverListIOS"
     static let kUpdatePassengerLatLong                      = "UpdatePassengerLatLong"
     static let kAcceptBookingRequestNotification            = "AcceptBookingRequestNotification"
@@ -202,10 +202,10 @@ extension UIColor {
     }
 }
 
-//let ThemeYellowColor : UIColor = UIColor(hex: "ffa300")
-let ThemeGrayColor : UIColor = UIColor(hex: "8e8c80")  //UIColor.init(hex:  "8e8c80")
+//let ThemeBlueColor : UIColor = UIColor(hex: "ffa300")
+//let ThemeGrayColor : UIColor = UIColor(hex: "8e8c80")  //UIColor.init(hex:  "8e8c80")
 let ThemePinkColor : UIColor = UIColor(hex: "F31541") //UIColor.init(hex:  "F21541")
-let ThemeBlueColor : UIColor = UIColor(hex: "0e0c22") //UIColor.init(hex:  "0e0c22")
+let ThemeBlueColor : UIColor = UIColor(hex: "292a6a") //UIColor.init(hex:  "0e0c22")
 //let ThemeStatusBarColor : UIColor = UIColor.init(hex:  "cccccc")
 
 

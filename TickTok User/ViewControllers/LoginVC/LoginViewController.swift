@@ -23,10 +23,10 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
     //-------------------------------------------------------------
     @IBOutlet weak var viewMain: UIView!
     
-    @IBOutlet weak var txtPassword: ACFloatingTextfield!
-    @IBOutlet weak var txtEmail: ACFloatingTextfield!
-    @IBOutlet weak var btnLogin: TransitionButton!
-    @IBOutlet weak var btnSignup: TransitionButton!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var btnLogin: UIButton!
+    @IBOutlet weak var btnSignup: UIButton!
     
     
     var locationManager = CLLocationManager()
@@ -76,8 +76,24 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
                 //                manager.startUpdatingLocation()
             }
         }
+        
+        
     }
-    
+    func setCornerToTextField(txtField : UITextField)
+    {
+        txtField.layer.cornerRadius = txtField.frame.height / 2
+        txtField.layer.borderColor = UIColor.white.cgColor
+        txtField.layer.borderWidth = 1.0
+    }
+    func setCornerToButton(BTN : UIButton , bgColor : UIColor, BorderColor : UIColor, textcolor : UIColor)
+    {
+        BTN.layer.cornerRadius = BTN.frame.height / 2
+        BTN.layer.borderColor = BorderColor.cgColor
+        BTN.layer.borderWidth = 1.0
+        BTN.backgroundColor = bgColor
+        BTN.setTitleColor(textcolor, for: .normal)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         viewMain.isHidden = false
@@ -96,6 +112,11 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
         txtEmail.text = "bhavesh@yahoo.com" // "bhavesh@excellentwebworld.info"
         #endif
        
+        self.setCornerToTextField(txtField: txtEmail)
+        self.setCornerToTextField(txtField: txtPassword)
+        
+        self.setCornerToButton(BTN: btnLogin, bgColor: UIColor.white, BorderColor: UIColor.white, textcolor: ThemeBlueColor)
+        self.setCornerToButton(BTN: btnSignup, bgColor: UIColor.clear, BorderColor: UIColor.white, textcolor: UIColor.white)
         
 //        #if DEBUG
 //        UtilityClass.showAlert("Debug", message: "This is Debuging Mode", vc: self)
@@ -104,7 +125,7 @@ class LoginViewController: UIViewController, CLLocationManagerDelegate, alertVie
 //        #endif
 
         txtPassword.text = "12345678"
-        txtEmail.text = "bhavesh@excellentwebworld.info"
+        txtEmail.text = "1234560987"
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -22,12 +22,12 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     
     var radioButtonsController: AKRadioButtonsController!
     @IBOutlet var radioButtons: [AKRadioButton]!
-    @IBOutlet weak var txtFirstName: ACFloatingTextfield!
-    @IBOutlet weak var txtLastName: ACFloatingTextfield!
-    @IBOutlet weak var btnSignUp: TransitionButton!
+    @IBOutlet weak var txtFirstName: UITextField!
+    @IBOutlet weak var txtLastName: UITextField!
+    @IBOutlet weak var btnSignUp: UIButton!
     
-    @IBOutlet weak var txtDateOfBirth: ACFloatingTextfield!
-    @IBOutlet weak var txtRafarralCode: ACFloatingTextfield!
+    @IBOutlet weak var txtDateOfBirth: UITextField!
+    @IBOutlet weak var txtRafarralCode: UITextField!
     
     @IBOutlet weak var imgProfile: UIImageView!
 
@@ -46,14 +46,25 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         // Do any additional setup after loading the view.
         
         self.radioButtonsController = AKRadioButtonsController(radioButtons: self.radioButtons)
-        self.radioButtonsController.strokeColor = UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
-        self.radioButtonsController.startGradColorForSelected =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
-        self.radioButtonsController.endGradColorForSelected =  UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
+        self.radioButtonsController.strokeColor = ThemeNaviBlueColor//UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
+        self.radioButtonsController.startGradColorForSelected =  ThemeWhiteColor//UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
+        self.radioButtonsController.endGradColorForSelected = ThemeWhiteColor// UIColor.init(red: 242/255, green: 21/255, blue: 65/255, alpha: 1)//UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1)binal
         self.radioButtonsController.selectedIndex = 2
         self.radioButtonsController.delegate = self //class should implement AKRadioButtonsControllerDelegate
     
 //        txtFirstName.text = "rahul"
 //        txtLastName.text = "patel"
+        self.setCornerToTextField(txtField: txtFirstName)
+        self.setCornerToTextField(txtField: txtLastName)
+        self.setCornerToTextField(txtField: txtRafarralCode)
+        self.setCornerToTextField(txtField: txtDateOfBirth)
+
+    }
+    func setCornerToTextField(txtField : UITextField)
+    {
+        txtField.layer.cornerRadius = txtField.frame.height / 2
+        txtField.layer.borderColor = UIColor.white.cgColor
+        txtField.layer.borderWidth = 1.0
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -225,7 +236,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
             strEmail = (registerVC.txtEmail.text)!
             strPassword = (registerVC.txtPassword.text)!
             
-            self.btnSignUp.startAnimation()
+//            self.btnSignUp.startAnimation()
             
             webServiceCallForRegister()
         }
@@ -263,8 +274,8 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
                 
                 DispatchQueue.main.async(execute: { () -> Void in
                     
-                    self.btnSignUp.stopAnimation(animationStyle: .normal, completion: {
-                        
+//                    self.btnSignUp.stopAnimation(animationStyle: .normal, completion: {
+                    
                         SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)   
                         SingletonClass.sharedInstance.isUserLoggedIN = true
                         SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)
@@ -273,18 +284,18 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
 
                         UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                         self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
-                    })
+//                    })
                 })
                 
             }
             else
             {
-                self.btnSignUp.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
-                  
+//                self.btnSignUp.stopAnimation(animationStyle: .shake, revertAfterDelay: 0, completion: {
+                
                     UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     }
                     
-                })
+//                })
             }
         }
     }

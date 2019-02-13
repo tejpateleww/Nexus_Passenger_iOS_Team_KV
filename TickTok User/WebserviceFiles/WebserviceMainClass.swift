@@ -15,7 +15,7 @@ var request : Request!
 
 
 
-let header: [String:String] = ["key":"TicktocApp123*"]
+let header: [String:String] = ["key":"Nexus123*#*"]
 
 //-------------------------------------------------------------
 // MARK: - Webservice For PostData Method

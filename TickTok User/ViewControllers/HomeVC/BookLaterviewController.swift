@@ -294,10 +294,10 @@ class BookLaterviewController: UIViewController, GMSAutocompleteViewControllerDe
         
 //        let themeColor: UIColor = UIColor.init(red: 255/255, green: 163/255, blue: 0, alpha: 1.0)
         
-        viewMySelf.tintColor = themeYellowColor
-        viewOthers.tintColor = themeYellowColor
-        viewFlightNumber.tintColor = themeYellowColor
-        btnNotes.tintColor = themeYellowColor
+        viewMySelf.tintColor = ThemeBlueColor
+        viewOthers.tintColor = ThemeBlueColor
+        viewFlightNumber.tintColor = ThemeBlueColor
+        btnNotes.tintColor = ThemeBlueColor
         
         
         viewMySelf.stateChangeAnimation = .fill
@@ -604,16 +604,16 @@ class BookLaterviewController: UIViewController, GMSAutocompleteViewControllerDe
     @IBAction func btnCalendar(_ sender: UIButton) {
         
         selector.optionCalendarFontColorPastDates = UIColor.gray
-        selector.optionButtonFontColorDone = themeYellowColor
-        selector.optionSelectorPanelBackgroundColor = themeYellowColor
-        selector.optionCalendarBackgroundColorTodayHighlight = themeYellowColor
-        selector.optionTopPanelBackgroundColor = themeYellowColor
-        selector.optionClockBackgroundColorMinuteHighlightNeedle = themeYellowColor
-        selector.optionClockBackgroundColorHourHighlight = themeYellowColor
-        selector.optionClockBackgroundColorAMPMHighlight = themeYellowColor
-        selector.optionCalendarBackgroundColorPastDatesHighlight = themeYellowColor
-        selector.optionCalendarBackgroundColorFutureDatesHighlight = themeYellowColor
-        selector.optionClockBackgroundColorMinuteHighlight = themeYellowColor
+        selector.optionButtonFontColorDone = ThemeBlueColor
+        selector.optionSelectorPanelBackgroundColor = ThemeBlueColor
+        selector.optionCalendarBackgroundColorTodayHighlight = ThemeBlueColor
+        selector.optionTopPanelBackgroundColor = ThemeBlueColor
+        selector.optionClockBackgroundColorMinuteHighlightNeedle = ThemeBlueColor
+        selector.optionClockBackgroundColorHourHighlight = ThemeBlueColor
+        selector.optionClockBackgroundColorAMPMHighlight = ThemeBlueColor
+        selector.optionCalendarBackgroundColorPastDatesHighlight = ThemeBlueColor
+        selector.optionCalendarBackgroundColorFutureDatesHighlight = ThemeBlueColor
+        selector.optionClockBackgroundColorMinuteHighlight = ThemeBlueColor
         
         
         

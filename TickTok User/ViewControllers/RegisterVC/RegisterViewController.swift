@@ -9,17 +9,21 @@
 import UIKit
 import ACFloatingTextfield_Swift
 
-class RegisterViewController: UIViewController, UITextFieldDelegate {
+class RegisterViewController: UIViewController, UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate {
     
-    @IBOutlet weak var txtPhoneNumber: ACFloatingTextfield!
-    @IBOutlet weak var txtEmail: ACFloatingTextfield!
-    @IBOutlet weak var txtPassword: ACFloatingTextfield!
-    @IBOutlet weak var txtConfirmPassword: ACFloatingTextfield!
-    
-
+    @IBOutlet weak var txtPhoneNumber: UITextField!
+    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtConfirmPassword: UITextField!
+     var aryContoryNum = [[String:Any]]()
+    let countoryz : Int = 0
+    var imgflag = UIImageView()
+    var countoryPicker = UIPickerView()
+    @IBOutlet var txtContoryNum: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        aryContoryNum = [["countoryCode" : "+1","countoryName" : "USA","countoryID" : "US", "countoryimage" : "US_Flag"]] as [[String : AnyObject]]
         
         txtPhoneNumber.delegate = self
         
@@ -28,11 +32,52 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         //        txtPassword.text = "12345678"
         //        txtConfirmPassword.text = "12345678"
         
+        let data = aryContoryNum[0]
+        if let CountryCode:String = data["countoryCode"] as? String, let CountryId:String = data["countoryID"] as? String {
+            self.txtContoryNum.text = "\(CountryId) \(CountryCode)"
+        }
+        //            self.txtContoryNum.text = data as? String
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: 30, height: 40))
+        leftView.backgroundColor = UIColor.clear
         
+        imgflag = UIImageView(frame: CGRect(x: 10, y: 10, width: 25, height: 25))
+        imgflag.image = UIImage(named:  data["countoryimage"] as? String ?? "")
+        leftView.addSubview(imgflag)
+        self.txtContoryNum.leftView = leftView
+        self.txtContoryNum.leftViewMode = .always
+        
+        
+        UtilityClass.setCornerRadiusTextField(textField: txtPhoneNumber, borderColor: UIColor.white, bgColor: UIColor.clear, textColor: UIColor.white)
+        UtilityClass.setCornerRadiusTextField(textField: txtEmail, borderColor: UIColor.white, bgColor: UIColor.clear, textColor: UIColor.white)
+        UtilityClass.setCornerRadiusTextField(textField: txtPassword, borderColor: UIColor.white, bgColor: UIColor.clear, textColor: UIColor.white)
+        UtilityClass.setCornerRadiusTextField(textField: txtConfirmPassword, borderColor: UIColor.white, bgColor: UIColor.clear, textColor: UIColor.white)
+        UtilityClass.setCornerRadiusTextField(textField: txtContoryNum, borderColor: UIColor.white, bgColor: UIColor.clear, textColor: UIColor.white)
+        
+        countoryPicker.delegate = self
+        countoryPicker.dataSource = self
+        
+        txtContoryNum.inputView = countoryPicker
+        self.setCornerToTextField(txtField: txtContoryNum)
+        self.setCornerToTextField(txtField: txtPhoneNumber)
+        self.setCornerToTextField(txtField: txtEmail)
+        self.setCornerToTextField(txtField: txtPassword)
+        self.setCornerToTextField(txtField: txtConfirmPassword)
 //        txtPhoneNumber.placeHolderColor = UIColor.red
         // Do any additional setup after loading the view.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+         self.countoryPicker.reloadAllComponents()
+        
+        
+    }
     
+    func setCornerToTextField(txtField : UITextField)
+    {
+        txtField.layer.cornerRadius = txtField.frame.height / 2
+        txtField.layer.borderColor = UIColor.white.cgColor
+        txtField.layer.borderWidth = 1.0
+    }
     //-------------------------------------------------------------
     // MARK: - TextField Delegate Method
     //-------------------------------------------------------------
@@ -41,7 +86,13 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         if textField == txtPhoneNumber {
             let resultText: String? = (textField.text as NSString?)?.replacingCharacters(in: range, with: string)
-            
+            if textField == txtPhoneNumber && range.location == 0 {
+                
+                if string == "0" {
+                    return false
+                }
+        
+            }
             if resultText!.count >= 11 {
                 return false
             }
@@ -52,8 +103,87 @@ class RegisterViewController: UIViewController, UITextFieldDelegate {
         
         return true
     }
+    func removeZeros(from anyString: String?) -> String? {
+        if anyString?.hasPrefix("0") ?? false && (anyString?.count ?? 0) > 1 {
+            return removeZeros(from: (anyString as NSString?)?.substring(from: 1))
+        } else {
+            return anyString
+        }
+    }
     
+    @IBAction func textDidChange(_ sender: UITextField) {
+        if !sender.text!.isEmpty {
+            txtPhoneNumber.text = removeZeros(from: sender.text!)
+        }
+    }
     
+    //-------------------------------------------------------------
+    // MARK: - PickerView Methods
+    //-------------------------------------------------------------
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return aryContoryNum.count
+    }
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 60
+    }
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        
+        //        if pickerView == countoryPicker
+        //        {
+        //mainview
+        let viewOfContryCode = UIView(frame: CGRect(x: 10, y: 5, width: countoryPicker.frame.size.width , height: 50))
+        
+        //image
+        let imgOfCountry = UIImageView(frame: CGRect(x: 20 , y: 10 , width: 50, height: 30))
+        
+        //country Name
+        let lblCountryName = UILabel(frame: CGRect(x: 80, y: 10, width: UIScreen.main.bounds.size.width - 160, height: 30))
+        
+        //labelNum
+        let lblOfCountryNum = UILabel(frame: CGRect(x: UIScreen.main.bounds.size.width - 80, y: 10, width: 50, height: 30))
+        //addsubview
+        viewOfContryCode.addSubview(imgOfCountry)
+        viewOfContryCode.addSubview(lblOfCountryNum)
+        viewOfContryCode.addSubview(lblCountryName)
+        let dictCountry = aryContoryNum[row]
+        
+        if let CountryCode:String = dictCountry["countoryCode"] as? String {
+            lblOfCountryNum.text = CountryCode
+        }
+        if let CountryImg:String = dictCountry["countoryimage"] as? String {
+            imgOfCountry.image = UIImage(named: CountryImg)
+        }
+        
+        if let CountryName:String = dictCountry["countoryName"] as? String, let CountryId:String = dictCountry["countoryID"] as? String {
+            lblCountryName.text = "\(CountryName) \(CountryId)"
+        }
+        
+        
+        // return mainview
+        //        return viewOfContryCode
+        
+        //        }
+        
+        return viewOfContryCode
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        
+        let data = aryContoryNum[row]
+        if let CountryCode:String = data["countoryCode"] as? String, let CountryId:String = data["countoryID"] as? String {
+            self.txtContoryNum.text = "\(CountryId) \(CountryCode)"
+        }
+        //            self.txtContoryNum.text = data as? String
+        imgflag.image = UIImage(named:  data["countoryimage"] as? String ?? "")
+        //            lblFlageCode.text = data["countoryCode"] as? String ?? ""
+    }
     
     // MARK: - Navigation
     

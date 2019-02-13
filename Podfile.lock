@@ -1,6 +1,7 @@
 PODS:
   - ACFloatingTextfield-Swift (1.5)
   - Alamofire (4.5.1)
+  - BFKit-Swift (4.0.1)
   - CardIO (5.4.1)
   - CHIPageControl (0.1.4):
     - CHIPageControl/Aji (= 0.1.4)
@@ -82,6 +83,7 @@ PODS:
 DEPENDENCIES:
   - ACFloatingTextfield-Swift
   - Alamofire
+  - BFKit-Swift
   - CardIO
   - CHIPageControl
   - Crashlytics
@@ -107,6 +109,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - ACFloatingTextfield-Swift
     - Alamofire
+    - BFKit-Swift
     - CardIO
     - CHIPageControl
     - Crashlytics
@@ -147,6 +150,7 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   ACFloatingTextfield-Swift: ebcfb892acbce8545576dd224df7b1b7473a4bbd
   Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  BFKit-Swift: 6cd796a01dcdbb3a269afbc9f07b015f7205d0f7
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
   CHIPageControl: 032b5ab68506c00711d5a61bd83e9fdf2a7ecb22
   Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
@@ -175,6 +179,6 @@ SPEC CHECKSUMS:
   Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
   TransitionButton: 0bf7e5ffe80030f9d10d57983a04acf2f511998a
 
-PODFILE CHECKSUM: 0bcaebda3fa8c1b61e1fe8db091a1e6819a84563
+PODFILE CHECKSUM: ac7a02ec50b4b96a58ea5738adf131d1a38b8c99
 
 COCOAPODS: 1.5.3

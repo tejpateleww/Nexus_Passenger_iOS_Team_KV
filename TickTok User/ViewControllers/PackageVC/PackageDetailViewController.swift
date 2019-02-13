@@ -79,9 +79,9 @@ class PackageDetailViewController: UIViewController,UIPickerViewDelegate, UIPick
         self.navigationController?.navigationBar.isTranslucent = false
         
         self.navigationController?.navigationBar.barTintColor = UIColor.white;
-        self.navigationController?.navigationBar.tintColor = themeYellowColor;
+        self.navigationController?.navigationBar.tintColor = ThemeBlueColor;
         self.title = "Packages Details"
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : themeYellowColor]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor : ThemeBlueColor]
         
         
         let btnback :UIBarButtonItem = UIBarButtonItem.init(image: UIImage.init(named: "iconCloseAlert"), style: UIBarButtonItemStyle.plain, target: self, action: #selector(btnBackClicked(_:)))

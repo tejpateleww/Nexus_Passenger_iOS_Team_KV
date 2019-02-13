@@ -157,7 +157,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
     
     func setEmail() {
         viewEmail.checkState = .checked
-        viewEmail.tintColor = themeYellowColor
+        viewEmail.tintColor = ThemeBlueColor
         viewSMS.checkState = .unchecked
         
         txtPhoneNumber.isHidden = true
@@ -168,7 +168,7 @@ class InVoiceReceiptViewController: ParentViewController, UIPickerViewDelegate, 
     
     func setSMS() {
         viewSMS.checkState = .checked
-        viewSMS.tintColor = themeYellowColor
+        viewSMS.tintColor = ThemeBlueColor
         viewEmail.checkState = .unchecked
         
         txtPhoneNumber.isHidden = false

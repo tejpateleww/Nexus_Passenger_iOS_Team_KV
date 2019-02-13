@@ -18,10 +18,15 @@ class RegisterOTPVarificationViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.setCornerToTextField(txtField: txtOTP)
        
     }
-
+    func setCornerToTextField(txtField : UITextField)
+    {
+        txtField.layer.cornerRadius = txtField.frame.height / 2
+        txtField.layer.borderColor = UIColor.white.cgColor
+        txtField.layer.borderWidth = 1.0
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
@@ -32,7 +37,9 @@ class RegisterOTPVarificationViewController: UIViewController {
     // MARK: - Outlets
     //-------------------------------------------------------------
     
-    @IBOutlet weak var txtOTP: ACFloatingTextfield!
+
+    @IBOutlet var btnNext: UIButton!
+    @IBOutlet weak var txtOTP: UITextField!
     
     
     
