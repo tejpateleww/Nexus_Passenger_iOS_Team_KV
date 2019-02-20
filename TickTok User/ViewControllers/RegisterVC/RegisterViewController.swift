@@ -192,9 +192,7 @@ class RegisterViewController: UIViewController, UITextFieldDelegate,UIPickerView
         
         if (validateAllFields())
         {
-
-            webserviceForGetOTPCode(email: txtEmail.text!, mobile: txtPhoneNumber.text!)
-
+            webserviceForGetOTPCode(email: txtEmail.text!, mobile: "1\(txtPhoneNumber.text!)")
         }
         
     }

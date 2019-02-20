@@ -345,8 +345,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         
         viewHavePromocode.tintColor = ThemeBlueColor
-        viewHavePromocode.stateChangeAnimation = .fill
-        viewHavePromocode.boxType = .square
+//        viewHavePromocode.stateChangeAnimation = .fill
+//        viewHavePromocode.boxType = .square
         
         viewTripActions.isHidden = true
         
@@ -389,18 +389,28 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func setHeaderForIphoneX() {
         
-        if UIDevice().userInterfaceIdiom == .phone {
-            switch UIScreen.main.nativeBounds.height {
-            case 2436:
-                
+        if UIDevice().userInterfaceIdiom == .phone
+        {
+            
+            if IS_IPHONE_X
+            {
                 viewHeaderHeightConstant.constant = 80
-
-            case  2688 :
-                viewHeaderHeightConstant.constant = 100
-
-            default:
-                print("")
             }
+            else if IS_IPHONE_XR
+            {
+                viewHeaderHeightConstant.constant = 100
+            }
+//            switch UIScreen.main.nativeBounds.height {
+//            case 2436:
+//                
+//                viewHeaderHeightConstant.constant = 80
+//
+//            case  2688 :
+//                viewHeaderHeightConstant.constant = 100
+//
+//            default:
+//                print("")
+//            }
         }
         
     }
@@ -684,12 +694,12 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         self.MarkerCurrntLocation.isHidden = false
         //        self.btnDoneForLocationSelected.isHidden = false
-        self.btnDoneForLocationSelected.isHidden = true // Just for checking
+        self.btnDoneForLocationSelected.isHidden = false // Just for checking
         
         self.doublePickupLat = (defaultLocation.coordinate.latitude)
         self.doublePickupLng = (defaultLocation.coordinate.longitude)
         
-        stackViewOfTruckBooking.isHidden = false
+        stackViewOfTruckBooking.isHidden = true
         
         //        let strLati: String = "\(self.doublePickupLat)"
         //        let strlongi: String = "\(self.doublePickupLng)"
@@ -1456,7 +1466,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
     @IBOutlet weak var viewSelectPaymentOption: UIView!
     @IBOutlet weak var txtSelectPaymentOption: UITextField!
     
-    @IBOutlet weak var viewHavePromocode: M13Checkbox!
+    @IBOutlet weak var viewHavePromocode: UIView!
     @IBOutlet weak var stackViewOfPromocode: UIStackView!
     @IBOutlet weak var stackViewNumberOfPassenger: UIStackView!
     
@@ -1482,14 +1492,14 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
         if (boolIsSelected) {
             stackViewOfPromocode.isHidden = false
-            viewHavePromocode.checkState = .checked
-            viewHavePromocode.stateChangeAnimation = .fill
+//            viewHavePromocode.checkState = .checked
+//            viewHavePromocode.stateChangeAnimation = .fill
         }
         else {
             txtHavePromocode.text = ""
             stackViewOfPromocode.isHidden = true
-            viewHavePromocode.checkState = .unchecked
-            viewHavePromocode.stateChangeAnimation = .fill
+//            viewHavePromocode.checkState = .unchecked
+//            viewHavePromocode.stateChangeAnimation = .fill
         }
         
     }
@@ -4870,8 +4880,8 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
         self.viewCarLists.isHidden = true
         //        self.viewShareRideView.isHidden = true
         
-        self.btnDoneForLocationSelected.isHidden = true // Just for checking
-        stackViewOfTruckBooking.isHidden = false
+        self.btnDoneForLocationSelected.isHidden = false // Just for checking
+        stackViewOfTruckBooking.isHidden = true
     }
     
     func clearDestinationLocation() {
@@ -5944,7 +5954,7 @@ class HomeViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     
                     
                     self.MarkerCurrntLocation.isHidden = true
-                    self.btnDoneForLocationSelected.isHidden = true
+                    self.btnDoneForLocationSelected.isHidden = false
                     self.stackViewOfTruckBooking.isHidden = true
                     
                     if bookingType == "BookNow" {
