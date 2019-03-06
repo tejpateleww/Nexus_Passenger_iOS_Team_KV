@@ -380,12 +380,15 @@ class RegisterViewController: UIViewController, UITextFieldDelegate,UIPickerView
 //
 //                })
                 
+                
                 UtilityClass.setCustomAlert(title: "OTP Code", message: datas["message"] as! String) { (index, title) in
                     if let otp = datas["otp"] as? String {
                         SingletonClass.sharedInstance.otpCode = otp
+                        print("OTP is \(otp)")
                     }
                     else if let otp = datas["otp"] as? Int {
                         SingletonClass.sharedInstance.otpCode = "\(otp)"
+                        print("OTP is \(otp)")
                     }
                     
                     

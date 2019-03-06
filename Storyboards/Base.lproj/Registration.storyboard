@@ -382,7 +382,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fk7-PX-fdQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-916" y="84"/>
+            <point key="canvasLocation" x="-1015" y="84"/>
         </scene>
         <!--CustomSideMenuViewController-->
         <scene sceneID="fUF-Ff-ydp">
@@ -419,7 +419,7 @@
                                                 </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="tkh-8e-OFy">
-                                                <rect key="frame" x="10" y="116" width="355" height="235"/>
+                                                <rect key="frame" x="10" y="116" width="355" height="170"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Bfg-7x-LRl">
                                                         <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
@@ -460,11 +460,11 @@
                                                             </textField>
                                                         </subviews>
                                                     </stackView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pD0-we-Q3e">
-                                                        <rect key="frame" x="0.0" y="130" width="355" height="40"/>
+                                                    <stackView hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="pD0-we-Q3e">
+                                                        <rect key="frame" x="0.0" y="117.5" width="355" height="0.0"/>
                                                         <subviews>
-                                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Referral Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="psq-iy-3qy">
-                                                                <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
+                                                            <textField opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Referral Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="psq-iy-3qy">
+                                                                <rect key="frame" x="0.0" y="0.0" width="355" height="0.0"/>
                                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -479,7 +479,7 @@
                                                         </subviews>
                                                     </stackView>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="dXU-va-BPw">
-                                                        <rect key="frame" x="0.0" y="195" width="355" height="40"/>
+                                                        <rect key="frame" x="0.0" y="130" width="355" height="40"/>
                                                         <subviews>
                                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Date of Birth" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZtV-H6-8D3">
                                                                 <rect key="frame" x="0.0" y="0.0" width="355" height="40"/>
@@ -501,7 +501,7 @@
                                                 </subviews>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HM9-ko-7XO">
-                                                <rect key="frame" x="10" y="361" width="281.5" height="50"/>
+                                                <rect key="frame" x="10" y="296" width="281.5" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Gender" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="djd-I8-iaV">
                                                         <rect key="frame" x="0.0" y="0.0" width="94" height="50"/>
@@ -631,7 +631,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="499"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iyi-7X-JlP">
-                                        <rect key="frame" x="20" y="229.5" width="335" height="40"/>
+                                        <rect key="frame" x="20" y="61.5" width="335" height="40"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="OTP Code" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="miz-MQ-w6Q">
                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="40"/>
@@ -672,7 +672,7 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="iyi-7X-JlP" firstAttribute="centerY" secondItem="dG9-5d-oWQ" secondAttribute="centerY" id="Ghb-JW-pxL"/>
+                                    <constraint firstItem="iyi-7X-JlP" firstAttribute="centerY" secondItem="dG9-5d-oWQ" secondAttribute="centerY" constant="-168" id="Ghb-JW-pxL"/>
                                     <constraint firstAttribute="bottom" secondItem="dbj-26-u5e" secondAttribute="bottom" constant="10" id="Gxl-me-MPW"/>
                                     <constraint firstItem="dbj-26-u5e" firstAttribute="trailing" secondItem="iyi-7X-JlP" secondAttribute="trailing" id="L2B-p1-cGx"/>
                                     <constraint firstAttribute="trailing" secondItem="iyi-7X-JlP" secondAttribute="trailing" constant="20" id="SIY-cH-j2l"/>

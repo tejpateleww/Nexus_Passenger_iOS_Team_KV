@@ -16,7 +16,10 @@ class EditProfileViewController: BaseViewController {
     
     @IBOutlet weak var lblEditProfile: UILabel!
     @IBOutlet weak var lblAccount: UILabel!
+    
     @IBOutlet var btnSignOut: ThemeButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,12 +31,12 @@ class EditProfileViewController: BaseViewController {
         viewAccount.layer.cornerRadius = 10
         viewAccount.layer.masksToBounds = true
        
-        btnSignOut.setTitleColor(ThemeNaviBlueColor, for: .normal)
-        btnSignOut.backgroundColor = UIColor.clear
-        btnSignOut.layer.cornerRadius = btnSignOut.frame.height / 2
-        btnSignOut.clipsToBounds = true
-        btnSignOut.layer.borderWidth = 1.0
-        btnSignOut.layer.borderColor = ThemeNaviBlueColor.cgColor
+//        btnSignOut.setTitleColor(ThemeNaviBlueColor, for: .normal)
+//        btnSignOut.backgroundColor = UIColor.clear
+//        btnSignOut.layer.cornerRadius = btnSignOut.frame.height / 2
+//        btnSignOut.clipsToBounds = true
+//        btnSignOut.layer.borderWidth = 1.0
+//        btnSignOut.layer.borderColor = ThemeNaviBlueColor.cgColor
 //        self.ConstraintEditProfileX.constant = self.view.frame.origin.x - viewEditProfile.frame.size.width - 20
 //        self.constraintAccountTailing.constant = -(viewEditProfile.frame.size.width + 20)
 //
@@ -103,8 +106,8 @@ class EditProfileViewController: BaseViewController {
     @IBOutlet weak var imgArrowProfile: UIImageView!
     @IBOutlet weak var imgArrowAccount: UIImageView!
     
-    @IBOutlet weak var ConstraintEditProfileX: NSLayoutConstraint!
-    @IBOutlet weak var constraintAccountTailing: NSLayoutConstraint!
+//    @IBOutlet weak var ConstraintEditProfileX: NSLayoutConstraint!
+//    @IBOutlet weak var constraintAccountTailing: NSLayoutConstraint!
     
     @IBOutlet weak var viewMain: UIView!
     
@@ -207,16 +210,16 @@ class EditProfileViewController: BaseViewController {
     }
     func AnimationToView() {
 
-        self.ConstraintEditProfileX.constant = self.view.frame.origin.x - viewEditProfile.frame.size.width - 20
-        self.constraintAccountTailing.constant = -(viewEditProfile.frame.size.width + 20)
+//        self.ConstraintEditProfileX.constant = self.view.frame.origin.x - viewEditProfile.frame.size.width - 20
+//        self.constraintAccountTailing.constant = -(viewEditProfile.frame.size.width + 20)
         
         self.viewMain.layoutIfNeeded()
         
         UIView.animate(withDuration: 2.0, delay: 0.0, options: .curveEaseIn, animations: {
 
             
-            self.ConstraintEditProfileX.constant = 20
-            self.constraintAccountTailing.constant = 20
+//            self.ConstraintEditProfileX.constant = 20
+//            self.constraintAccountTailing.constant = 20
             
             self.viewMain.layoutIfNeeded()
             
