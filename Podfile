@@ -18,6 +18,10 @@ target 'Nexus User' do
   pod 'Crashlytics'
   pod 'SDWebImage', '~> 4.0'
   pod 'M13Checkbox'
+  pod 'FacebookCore'
+  pod 'FacebookLogin'
+  pod 'FacebookShare'
+  pod 'GoogleSignIn'
   pod 'SideMenuController'
   pod "Pulsator"
   pod 'CardIO'
@@ -26,7 +30,7 @@ target 'Nexus User' do
   pod 'FormTextField'
   pod 'Firebase/Core'
   pod 'Firebase/Messaging'
-  pod 'BFKit-Swift'
+  pod 'IQDropDownTextField'
   pod 'GoogleAnalytics'
 
   # pod 'WWCalendarTimeSelector'

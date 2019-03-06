@@ -1,0 +1,48 @@
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "E5H-5c-W71"; */
+"E5H-5c-W71.normalTitle" = "Next";
+
+/* Class = "UITextField"; placeholder = "Confirm Password"; ObjectID = "Hkg-kw-1el"; */
+"Hkg-kw-1el.placeholder" = "Confirm Password";
+
+/* Class = "UITextField"; placeholder = "First Name"; ObjectID = "JPy-Xn-iwm"; */
+"JPy-Xn-iwm.placeholder" = "First Name";
+
+/* Class = "UIButton"; normalTitle = "Female"; ObjectID = "KiD-sY-9wh"; */
+"KiD-sY-9wh.normalTitle" = "Female";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "Nij-qy-Htm"; */
+"Nij-qy-Htm.placeholder" = "Password";
+
+/* Class = "UIButton"; normalTitle = "Sign Up"; ObjectID = "Qr2-ji-22s"; */
+"Qr2-ji-22s.normalTitle" = "Sign Up";
+
+/* Class = "UITextField"; placeholder = "Date of Birth"; ObjectID = "ZtV-H6-8D3"; */
+"ZtV-H6-8D3.placeholder" = "Date of Birth";
+
+/* Class = "UILabel"; text = "REGISTER"; ObjectID = "dTa-R6-Bbc"; */
+"dTa-R6-Bbc.text" = "REGISTER";
+
+/* Class = "UIButton"; normalTitle = "Next"; ObjectID = "dbj-26-u5e"; */
+"dbj-26-u5e.normalTitle" = "Next";
+
+/* Class = "UILabel"; text = "Gender"; ObjectID = "djd-I8-iaV"; */
+"djd-I8-iaV.text" = "Gender";
+
+/* Class = "UITextField"; placeholder = "OTP Code"; ObjectID = "miz-MQ-w6Q"; */
+"miz-MQ-w6Q.placeholder" = "OTP Code";
+
+/* Class = "UIButton"; normalTitle = "Male"; ObjectID = "nhj-U5-CRt"; */
+"nhj-U5-CRt.normalTitle" = "Male";
+
+/* Class = "UITextField"; placeholder = "Referral Code"; ObjectID = "psq-iy-3qy"; */
+"psq-iy-3qy.placeholder" = "Referral Code";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "qvW-9G-Y9R"; */
+"qvW-9G-Y9R.placeholder" = "Email";
+
+/* Class = "UITextField"; placeholder = "Last Name"; ObjectID = "roW-82-oP8"; */
+"roW-82-oP8.placeholder" = "Last Name";
+
+/* Class = "UITextField"; placeholder = "Mobile Number"; ObjectID = "xcG-E8-8sT"; */
+"xcG-E8-8sT.placeholder" = "Mobile Number";
