@@ -7,7 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		342EEFA02233820400E4354C /* Help.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 342EEFA22233820400E4354C /* Help.storyboard */; };
+		342EEFAA2233865800E4354C /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFA82233865700E4354C /* ChatViewController.swift */; };
+		342EEFAB2233865800E4354C /* EmptyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFA92233865800E4354C /* EmptyTableViewCell.swift */; };
+		342EEFB12233866500E4354C /* HelpListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFAC2233866300E4354C /* HelpListViewCell.swift */; };
+		342EEFB22233866500E4354C /* GenerateTicketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFAD2233866400E4354C /* GenerateTicketViewController.swift */; };
+		342EEFB32233866500E4354C /* TicketListViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFAE2233866400E4354C /* TicketListViewCell.swift */; };
+		342EEFB42233866500E4354C /* HelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFAF2233866500E4354C /* HelpViewController.swift */; };
+		342EEFB52233866500E4354C /* TicketListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 342EEFB02233866500E4354C /* TicketListViewController.swift */; };
+		3456423A2237C8B100EE0E3D /* TipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 345642392237C8B100EE0E3D /* TipViewController.swift */; };
 		34745432221FF95500952FDD /* Registration.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34745434221FF95500952FDD /* Registration.storyboard */; };
+		34986F6C2238C51E00948B89 /* CanceledBookingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 34986F6B2238C51E00948B89 /* CanceledBookingTableViewCell.swift */; };
+		34986F74223931AA00948B89 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 34986F73223931AA00948B89 /* GoogleService-Info.plist */; };
 		34E01A1D220EE898000D048E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34E01A1F220EE898000D048E /* Main.storyboard */; };
 		34E01A25220EED13000D048E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 34E01A27220EED13000D048E /* LaunchScreen.storyboard */; };
 		34E01A2A220EEE2C000D048E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 34E01A28220EEE2C000D048E /* Localizable.strings */; };
@@ -161,7 +172,6 @@
 		3A40741321B512280015C494 /* WebserviceSubClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A40737721B512280015C494 /* WebserviceSubClass.swift */; };
 		3A5DDCA721BA5C9200F9B5A3 /* TripInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5DDCA621BA5C9200F9B5A3 /* TripInfoViewController.swift */; };
 		3A5F1BD221CE21AD000007AE /* Credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5F1BD121CE21AD000007AE /* Credentials.plist */; };
-		3A5F1BD421CE2272000007AE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3A5F1BD321CE2272000007AE /* GoogleService-Info.plist */; };
 		3A84BC9321C22B2E00EDA3A2 /* RMPopoverPresentationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A84BC8A21C22B2E00EDA3A2 /* RMPopoverPresentationController.m */; };
 		3A84BC9421C22B2E00EDA3A2 /* RMUniversalAlert.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A84BC8C21C22B2E00EDA3A2 /* RMUniversalAlert.m */; };
 		3A84BC9521C22B2E00EDA3A2 /* UIActionSheet+Blocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A84BC8E21C22B2E00EDA3A2 /* UIActionSheet+Blocks.m */; };
@@ -178,9 +188,22 @@
 		008D222D1FA08DCF001223DF /* Nexus User.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Nexus User.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		00A61D4B1FA8AC5600E1BA84 /* Location.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Location.gpx; sourceTree = "<group>"; };
 		3419629621637561005A580E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		342EEFA12233820400E4354C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Help.storyboard; sourceTree = "<group>"; };
+		342EEFA42233820700E4354C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Help.strings; sourceTree = "<group>"; };
+		342EEFA62233820800E4354C /* sw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sw; path = sw.lproj/Help.strings; sourceTree = "<group>"; };
+		342EEFA82233865700E4354C /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		342EEFA92233865800E4354C /* EmptyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyTableViewCell.swift; sourceTree = "<group>"; };
+		342EEFAC2233866300E4354C /* HelpListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpListViewCell.swift; sourceTree = "<group>"; };
+		342EEFAD2233866400E4354C /* GenerateTicketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GenerateTicketViewController.swift; sourceTree = "<group>"; };
+		342EEFAE2233866400E4354C /* TicketListViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketListViewCell.swift; sourceTree = "<group>"; };
+		342EEFAF2233866500E4354C /* HelpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpViewController.swift; sourceTree = "<group>"; };
+		342EEFB02233866500E4354C /* TicketListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TicketListViewController.swift; sourceTree = "<group>"; };
+		345642392237C8B100EE0E3D /* TipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TipViewController.swift; sourceTree = "<group>"; };
 		34745433221FF95500952FDD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Registration.storyboard; sourceTree = "<group>"; };
 		34745436221FF97300952FDD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Registration.strings; sourceTree = "<group>"; };
 		34745438221FF99A00952FDD /* sw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sw; path = sw.lproj/Registration.strings; sourceTree = "<group>"; };
+		34986F6B2238C51E00948B89 /* CanceledBookingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanceledBookingTableViewCell.swift; sourceTree = "<group>"; };
+		34986F73223931AA00948B89 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		34E01A20220EE8B3000D048E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		34E01A24220EEC65000D048E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		34E01A26220EED13000D048E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -341,7 +364,6 @@
 		3A40737721B512280015C494 /* WebserviceSubClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebserviceSubClass.swift; sourceTree = "<group>"; };
 		3A5DDCA621BA5C9200F9B5A3 /* TripInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripInfoViewController.swift; sourceTree = "<group>"; };
 		3A5F1BD121CE21AD000007AE /* Credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Credentials.plist; sourceTree = "<group>"; };
-		3A5F1BD321CE2272000007AE /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		3A84BC8921C22B2E00EDA3A2 /* RMPopoverPresentationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMPopoverPresentationController.h; sourceTree = "<group>"; };
 		3A84BC8A21C22B2E00EDA3A2 /* RMPopoverPresentationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMPopoverPresentationController.m; sourceTree = "<group>"; };
 		3A84BC8B21C22B2E00EDA3A2 /* RMUniversalAlert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMUniversalAlert.h; sourceTree = "<group>"; };
@@ -419,6 +441,20 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		342EEFA7223383C300E4354C /* Help */ = {
+			isa = PBXGroup;
+			children = (
+				342EEFAD2233866400E4354C /* GenerateTicketViewController.swift */,
+				342EEFAC2233866300E4354C /* HelpListViewCell.swift */,
+				342EEFAF2233866500E4354C /* HelpViewController.swift */,
+				342EEFAE2233866400E4354C /* TicketListViewCell.swift */,
+				342EEFB02233866500E4354C /* TicketListViewController.swift */,
+				342EEFA82233865700E4354C /* ChatViewController.swift */,
+				342EEFA92233865800E4354C /* EmptyTableViewCell.swift */,
+			);
+			path = Help;
+			sourceTree = "<group>";
+		};
 		34E50029221EAB54009EF357 /* RegistrationVC */ = {
 			isa = PBXGroup;
 			children = (
@@ -433,7 +469,7 @@
 		3A4072B321B512270015C494 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3A5F1BD321CE2272000007AE /* GoogleService-Info.plist */,
+				34986F73223931AA00948B89 /* GoogleService-Info.plist */,
 				34E50034221EB312009EF357 /* Assets.xcassets */,
 				3A5F1BD121CE21AD000007AE /* Credentials.plist */,
 				3A4072BA21B512270015C494 /* Fonts */,
@@ -483,6 +519,7 @@
 		3A4072DC21B512270015C494 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				342EEFA7223383C300E4354C /* Help */,
 				34E50029221EAB54009EF357 /* RegistrationVC */,
 				3A84BC9C21C264E800EDA3A2 /* MyRatingViewController */,
 				3A5DDCA521BA5C9200F9B5A3 /* TripInfoViewController */,
@@ -567,6 +604,8 @@
 				3A4072F721B512270015C494 /* PastBookingVC.swift */,
 				3A4072F821B512270015C494 /* UpCommingTableViewCell.swift */,
 				3A4072F921B512270015C494 /* UpCommingVC.swift */,
+				345642392237C8B100EE0E3D /* TipViewController.swift */,
+				34986F6B2238C51E00948B89 /* CanceledBookingTableViewCell.swift */,
 			);
 			path = MyBookingVC;
 			sourceTree = "<group>";
@@ -929,6 +968,7 @@
 				34745434221FF95500952FDD /* Registration.storyboard */,
 				34E01A1F220EE898000D048E /* Main.storyboard */,
 				34E01A27220EED13000D048E /* LaunchScreen.storyboard */,
+				342EEFA22233820400E4354C /* Help.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1015,7 +1055,7 @@
 				3A40738821B512280015C494 /* proxima-nova-regular-italic.otf in Resources */,
 				3A4073F521B512280015C494 /* AJAlertController.xib in Resources */,
 				3A4073A221B512280015C494 /* HeaderView.xib in Resources */,
-				3A5F1BD421CE2272000007AE /* GoogleService-Info.plist in Resources */,
+				34986F74223931AA00948B89 /* GoogleService-Info.plist in Resources */,
 				3A40739021B512280015C494 /* costcoWholesale.png in Resources */,
 				3A40738021B512280015C494 /* proxima-nova-condensed-light.otf in Resources */,
 				3A40738F21B512280015C494 /* coles.jpg in Resources */,
@@ -1028,6 +1068,7 @@
 				3A40737C21B512280015C494 /* proxima-nova-black.otf in Resources */,
 				3A40738221B512280015C494 /* proxima-nova-condensed-semibold-italic.otf in Resources */,
 				3A40737E21B512280015C494 /* proxima-nova-bold.otf in Resources */,
+				342EEFA02233820400E4354C /* Help.storyboard in Resources */,
 				3A40738D21B512280015C494 /* aldi.jpg in Resources */,
 				3A40739121B512280015C494 /* IGABrand.jpg in Resources */,
 				3A40740121B512280015C494 /* round30.png in Resources */,
@@ -1064,7 +1105,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Fabric/run\" 14a43f19af433e25667bd2c0d03a5aa6e886a728 2340430a2873285f1c9628d9b46f95a0a23165a6305e01fc1529cbcacd067e65";
+			shellScript = "\"${PODS_ROOT}/Fabric/run\" 14a43f19af433e25667bd2c0d03a5aa6e886a728 2340430a2873285f1c9628d9b46f95a0a23165a6305e01fc1529cbcacd067e65\n";
 		};
 		0F3CCE603DFCC1C63FAF5F5C /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1118,7 +1159,6 @@
 				"${BUILT_PRODUCTS_DIR}/Bolts/Bolts.framework",
 				"${BUILT_PRODUCTS_DIR}/CHIPageControl/CHIPageControl.framework",
 				"${BUILT_PRODUCTS_DIR}/CreditCardForm/CreditCardForm.framework",
-				"${BUILT_PRODUCTS_DIR}/DOAlertController/DOAlertController.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKCoreKit/FBSDKCoreKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKLoginKit/FBSDKLoginKit.framework",
 				"${BUILT_PRODUCTS_DIR}/FBSDKShareKit/FBSDKShareKit.framework",
@@ -1126,9 +1166,9 @@
 				"${BUILT_PRODUCTS_DIR}/FacebookLogin/FacebookLogin.framework",
 				"${BUILT_PRODUCTS_DIR}/FacebookShare/FacebookShare.framework",
 				"${BUILT_PRODUCTS_DIR}/FormTextField/FormTextField.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IQDropDownTextField/IQDropDownTextField.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/M13Checkbox/M13Checkbox.framework",
@@ -1138,9 +1178,7 @@
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SideMenuController/SideMenuController.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
-				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/TransitionButton/TransitionButton.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
+				"${BUILT_PRODUCTS_DIR}/StarscreamSocketIO/StarscreamSocketIO.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -1149,7 +1187,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Bolts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CHIPageControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CreditCardForm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DOAlertController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKCoreKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKLoginKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FBSDKShareKit.framework",
@@ -1157,9 +1194,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookLogin.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FacebookShare.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FormTextField.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQDropDownTextField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/M13Checkbox.framework",
@@ -1169,9 +1206,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SideMenuController.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TransitionButton.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/StarscreamSocketIO.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1187,6 +1222,7 @@
 			files = (
 				3A4073C121B512280015C494 /* EditAccountViewController.swift in Sources */,
 				3A4073CF21B512280015C494 /* InVoiceReceiptViewController.swift in Sources */,
+				342EEFAA2233865800E4354C /* ChatViewController.swift in Sources */,
 				3A4073B021B512280015C494 /* UpCommingTableViewCell.swift in Sources */,
 				3A4073CA21B512280015C494 /* SettingPasscodeVC.swift in Sources */,
 				3A4073AF21B512280015C494 /* PastBookingVC.swift in Sources */,
@@ -1208,6 +1244,7 @@
 				3A4073E221B512280015C494 /* UpdateProfileViewController.swift in Sources */,
 				3A4073E621B512280015C494 /* WalletCollectionViewCell.swift in Sources */,
 				3A40739D21B512280015C494 /* SideMenuCollectionViewCell.swift in Sources */,
+				342EEFB12233866500E4354C /* HelpListViewCell.swift in Sources */,
 				3A4073C421B512280015C494 /* GroceriesViewController.swift in Sources */,
 				3A4073EE21B512280015C494 /* ThemeButton.swift in Sources */,
 				3A4073CC21B512280015C494 /* ShoppingDetailsVC.swift in Sources */,
@@ -1224,13 +1261,16 @@
 				3A4073EA21B512280015C494 /* WalletTransferViewController.swift in Sources */,
 				3A84BC9721C22B2E00EDA3A2 /* UIAlertView+Blocks.m in Sources */,
 				3A84BCA021C264E900EDA3A2 /* MyRatingViewController.swift in Sources */,
+				34986F6C2238C51E00948B89 /* CanceledBookingTableViewCell.swift in Sources */,
 				3A84BC9F21C264E900EDA3A2 /* MyRatingViewCell.swift in Sources */,
 				3A40741321B512280015C494 /* WebserviceSubClass.swift in Sources */,
 				3A4073A621B512280015C494 /* CarsCollectionViewCell.swift in Sources */,
 				34E10DA9222CF43400E38364 /* AskForTipViewController.swift in Sources */,
 				3A4073E521B512280015C494 /* WalletCardsVC.swift in Sources */,
 				3A4073D421B512280015C494 /* BarsAndClubsTableViewCell.swift in Sources */,
+				342EEFB22233866500E4354C /* GenerateTicketViewController.swift in Sources */,
 				3A4073C321B512280015C494 /* FavoriteViewController.swift in Sources */,
+				342EEFB42233866500E4354C /* HelpViewController.swift in Sources */,
 				3A4073AC21B512280015C494 /* OnGoingTableViewCell.swift in Sources */,
 				3A4073AB21B512280015C494 /* MyBookingViewController.swift in Sources */,
 				3A4073D721B512280015C494 /* MyFavouriteTableViewCell.swift in Sources */,
@@ -1261,6 +1301,7 @@
 				3A4073C821B512280015C494 /* MyReceiptsViewController.swift in Sources */,
 				3A4073EC21B512280015C494 /* webViewVC.swift in Sources */,
 				3A4073C721B512280015C494 /* MainHeaderTableViewCell.swift in Sources */,
+				342EEFAB2233865800E4354C /* EmptyTableViewCell.swift in Sources */,
 				3A4073F021B512280015C494 /* ACHUD+Animation.swift in Sources */,
 				3A4073C921B512280015C494 /* SetPasscodeViewController.swift in Sources */,
 				3A4073B221B512280015C494 /* PacageHoursDaysTableViewCell.swift in Sources */,
@@ -1268,10 +1309,13 @@
 				3A4073F421B512280015C494 /* AJAlertController.swift in Sources */,
 				3A4073E021B512280015C494 /* TripDetailsViewController.swift in Sources */,
 				3A4073DA21B512280015C494 /* WalletBalanceMainTableViewCell.swift in Sources */,
+				342EEFB52233866500E4354C /* TicketListViewController.swift in Sources */,
+				342EEFB32233866500E4354C /* TicketListViewCell.swift in Sources */,
 				3A84BC9421C22B2E00EDA3A2 /* RMUniversalAlert.m in Sources */,
 				3A4073A021B512280015C494 /* BaseViewController.swift in Sources */,
 				3A4073E821B512280015C494 /* WalletTopUpVC.swift in Sources */,
 				3A4073ED21B512280015C494 /* Extensions.swift in Sources */,
+				3456423A2237C8B100EE0E3D /* TipViewController.swift in Sources */,
 				3A40740421B512280015C494 /* Duration.swift in Sources */,
 				3A4073D521B512280015C494 /* BookTableSelectedDataTableViewCell.swift in Sources */,
 				3A4073A321B512280015C494 /* ParentViewController.swift in Sources */,
@@ -1311,6 +1355,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		342EEFA22233820400E4354C /* Help.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				342EEFA12233820400E4354C /* Base */,
+				342EEFA42233820700E4354C /* en */,
+				342EEFA62233820800E4354C /* sw */,
+			);
+			name = Help.storyboard;
+			sourceTree = "<group>";
+		};
 		34745434221FF95500952FDD /* Registration.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1475,6 +1529,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Libraries",
+					"$(PROJECT_DIR)/Libraries/Firebase",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -1504,6 +1560,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
+					"$(PROJECT_DIR)/Libraries",
+					"$(PROJECT_DIR)/Libraries/Firebase",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;

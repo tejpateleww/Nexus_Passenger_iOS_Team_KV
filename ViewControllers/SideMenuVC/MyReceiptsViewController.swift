@@ -83,8 +83,6 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        
-        
         return self.counts
     }
     
@@ -93,9 +91,17 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "MyRecepitTableViewCell") as! MyRecepitTableViewCell
         cell.selectionStyle = .none
+        cell.lblPickUpLocationTitle.text = "PICKUP LOCATION".localized
+        cell.lblDropOffLocationTitle.text = "DROP LOCATION".localized
         
+        cell.lblVehicleTypeTitle.text = "VEHICLE TYPE".localized
+        cell.lblDistanceTravelledTitle.text = "DISTANCE TRAVELLED".localized 
+        cell.lblTollFeeTitle.text = "TIPS".localized
+        cell.lblFareTotalTitle.text = "FARE TOTAL".localized
+        cell.lblDiscountAppliedTitle.text = "DISCOUNT APPLIED".localized
+        cell.lblChargedCardTitle.text = "CHARGED CARD".localized
   
-        
+/*
         cell.lblPickUpTimeTitle.text = "Pickup Time".localized
         cell.lblDropOffTimeTitle.text = "DropoffTime:".localized
         cell.lblVehicleTypeTitle.text = "Vehicle Type:".localized
@@ -109,13 +115,15 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
         cell.lblTotalAmountTitle.text = "Total Amount :".localized
         cell.lblInclTaxTitle.text = "(incl tax)".localized
         cell.lblTripStatusTitlr.text = "Trip Status:".localized
-        cell.btnGetReceipt.setTitle("GET RECEIPT".localized, for: .normal)
+ */
         
+        cell.btnGetReceipt.setTitle("GET RECEIPT".localized, for: .normal)
+        cell.btnGetReceipt.titleLabel?.font = UIFont.bold(ofSize: 11.0)
 
         let dictData = self.newAryData.object(at: indexPath.row) as! NSDictionary
         
-        cell.viewCell.layer.cornerRadius = 10
-        cell.viewCell.clipsToBounds = true
+//        cell.viewCell.layer.cornerRadius = 10
+//        cell.viewCell.clipsToBounds = true
 //        cell.viewCell.layer.shadowRadius = 3.0
 //        cell.viewCell.layer.shadowColor = UIColor.lightGray.withAlphaComponent(0.6).cgColor
 //        cell.viewCell.layer.shadowOffset = CGSize (width: 1.0, height: 1.0)
@@ -141,9 +149,9 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                 //PromoCode
                 //Status
                 
-                if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? String {
-                    cell.lblBookingId.text = "\("Booking Id :".localized) \(bookingID)"
-                }
+//                if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? String {
+//                    cell.lblBookingId.text = "\("Booking Id :".localized) \(bookingID)"
+//                }
                
 //                "\("Booking Id :".localized) \(String(describing: dictData.object(forKey: "Id")))"
               
@@ -161,6 +169,25 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                 let strDate = dateFormatter.string(from: date)
                 let strDateDrop = dateFormatter.string(from: dateDrop)
                 
+                cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
+                
+                cell.lblPickUpLocationDescription.text = dictData.object(forKey: "PickupLocation") as? String
+                cell.lblDropOffLocationDescription.text =
+                dictData.object(forKey: "DropoffLocation") as? String
+                
+                cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
+                
+                cell.lblDistanceTravelled.text = dictData.object(forKey: "TripDistance") as? String
+                cell.lblTollFee.text = "\(currencySign)\(String(format: "%.2f", Double((dictData["TollFee"] as! String != "") ? dictData["TollFee"] as! String : "0.0")!))"
+//                    dictData.object(forKey: "TollFee") as? String
+                cell.lblFareTotal.text = "\(currencySign)\(String(format: "%.2f", Double((dictData["GrandTotal"] as! String != "") ? dictData["GrandTotal"] as! String : "0.0")!))"
+//                    dictData.object(forKey: "TripFare") as? String
+                cell.lblDiscountApplied.text = "\(currencySign)\(String(format: "%.2f", Double((dictData["Discount"] as! String != "") ? dictData["Discount"] as! String : "0.0")!))"
+//                    dictData.object(forKey: "Discount") as? String
+                cell.lblChargedCard.text = dictData.object(forKey: "PaymentType") as? String
+                
+                
+                /*
                 cell.lblPickupTime.text = strDate//dictData.object(forKey: "PickupDateTime") as? String
                 
                 cell.lblDrooffTime.text = strDateDrop //dictData.object(forKey: "PickupDateTime") as? String
@@ -168,10 +195,7 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                 cell.lblDriversNames.text = (dictData.object(forKey: "DriverName") as? String)?.uppercased()
                 
                 cell.lblDropLocationDescription.text = dictData.object(forKey: "DropoffLocation") as? String
-                cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
-                
-                cell.lblPickUpLocationDescription.text = dictData.object(forKey: "PickupLocation") as? String
-                cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
+               
                 
                 cell.lblPaymentType.text = dictData.object(forKey: "PaymentType") as? String
                 cell.lblBookingFee.text = "\(dictData.object(forKey: "BookingCharge") as! String) \(currencySign)"
@@ -188,9 +212,9 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
 //                cell.lblChargedCard.text = dictData.object(forKey: "PaymentType") as? String
 //
 //                self.urlForMail = dictData.object(forKey: "ShareUrl") as! String
-                
-                
-                
+                */
+ 
+                cell.btnGetReceipt.tag = indexPath.row
                 cell.btnGetReceipt.addTarget(self, action: #selector(self.getReceipt(sender:)), for: .touchUpInside)
                 cell.viewDetails.isHidden = !self.expandedCellPaths.contains(indexPath)
                 
@@ -243,22 +267,29 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
     
     @objc func getReceipt(sender: UIButton) {
         
-        let emailTitle = ""
-        let messageBody = urlForMail
-        let toRecipents = [""]
-    
-        
-        if MFMailComposeViewController.canSendMail() {
-            let mail = MFMailComposeViewController()
-            mail.mailComposeDelegate = self
-            mail.setToRecipients(toRecipents)
-            mail.setMessageBody(messageBody, isHTML: true)
-            
-            present(mail, animated: true)
-        } else {
-            UtilityClass.setCustomAlert(title: "", message: "Your Email Id is not configured from settings. Please configure it from Settings -> Mail") { (index, title) in
-            }
+        let dictData = self.newAryData.object(at: sender.tag) as! NSDictionary
+        if let strContent = dictData.object(forKey: "ShareUrl") as? String {
+            let StringContent = "Please download from below link\n\n\(strContent)"
+            let share = [StringContent]
+            let activityViewController = UIActivityViewController(activityItems: share, applicationActivities: nil)
+            activityViewController.popoverPresentationController?.sourceView = self.view
+            self.present(activityViewController, animated: true, completion: nil)
         }
+        
+//        let emailTitle = ""
+//        let messageBody = urlForMail
+//        let toRecipents = [""]
+//        if MFMailComposeViewController.canSendMail() {
+//            let mail = MFMailComposeViewController()
+//            mail.mailComposeDelegate = self
+//            mail.setToRecipients(toRecipents)
+//            mail.setMessageBody(messageBody, isHTML: true)
+//
+//            present(mail, animated: true)
+//        } else {
+//            UtilityClass.setCustomAlert(title: "", message: "Your Email Id is not configured from settings. Please configure it from Settings -> Mail") { (index, title) in
+//            }
+//        }
         
        
     }

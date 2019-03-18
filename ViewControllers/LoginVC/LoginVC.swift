@@ -8,15 +8,17 @@
 
 import Foundation
 import UIKit
-import TransitionButton
+//import TransitionButton
 import ACFloatingTextfield_Swift
 //import SideMenu
 import NVActivityIndicatorView
 import CoreLocation
 import SocketIO
+import FBSDKLoginKit
+import FacebookLogin
+import GoogleSignIn
 
-
-class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDelegates  {
+class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDelegates,GIDSignInDelegate,GIDSignInUIDelegate  {
 
     
     //-------------------------------------------------------------
@@ -31,7 +33,7 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
     
     
     var locationManager = CLLocationManager()
-    
+    var strURLForSocialImage = String()
     //-------------------------------------------------------------
     // MARK: - Base Methods
     //-------------------------------------------------------------
@@ -276,9 +278,9 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         let dictparam = NSMutableDictionary()
         dictparam.setObject(strEmail, forKey: "Email" as NSCopying)
         let activityData = ActivityData()
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
         webserviceForForgotPassword(dictparam) { (result, status) in
-            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
             
             if ((result as! NSDictionary).object(forKey: "status") as! Int == 1) {
                 
@@ -482,6 +484,287 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         
     }
     
+    
+    //MARK: - IBActions
+    
+//    @IBAction func unwindToVC(segue: UIStoryboardSegue) {
+//    }
+    
+    
+    @IBAction func btnGoogleClicked(_ sender: Any) {
+        if Connectivity.isConnectedToInternet() == false {
+            
+            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+            }
+            return
+        }
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self as GIDSignInUIDelegate
+        GIDSignIn.sharedInstance().signIn()
+    }
+    
+    
+    //MARK: - Google SignIn Delegate -
+    
+    func signInWillDispatch(signIn: GIDSignIn!, error: Error!)
+    {
+        // myActivityIndicator.stopAnimating()
+    }
+    
+    // Present a view that prompts the user to sign in with Google
+    func sign(_ signIn: GIDSignIn!,
+              present viewController: UIViewController!) {
+        UIApplication.shared.statusBarStyle = .default
+        self.present(viewController, animated: true, completion: nil)
+    }
+    
+    // Dismiss the "Sign in with Google" view
+    func sign(_ signIn: GIDSignIn!,
+              dismiss viewController: UIViewController!)
+    {
+        UIApplication.shared.statusBarStyle = .lightContent
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!)
+    {
+        
+        if (error == nil)
+        {
+            // Perform any operations on signed in user here.
+            let userId : String = user.userID // For client-side use only!
+            let firstName : String  = user.profile.givenName
+            let lastName : String  = user.profile.familyName
+            let email : String = user.profile.email
+            
+            var dictUserData = [String: AnyObject]()
+            var image = UIImage()
+            if user.profile.hasImage
+            {
+                let pic = user.profile.imageURL(withDimension: 400)
+                let imgUrl: String = (pic?.absoluteString)!
+                print(imgUrl)
+                self.strURLForSocialImage = imgUrl
+                let url = URL(string: imgUrl as! String)
+                let data = try? Data(contentsOf: url!)
+                
+                if let imageData = data {
+                    image = UIImage(data: imageData)!
+                }else {
+                    image = UIImage(named: "iconUser")!
+                }
+                
+                //                dictUserData["image"] = strImage as AnyObject
+            }
+            
+            //            var strFullName = ""
+            //
+            //            if Utili !Utilities.isEmpty(str: firstName)
+            //            {
+            //                strFullName = strFullName + ("\(firstName)")
+            //            }
+            //            if !Utilities.isEmpty(str: strFullName) {
+            //                strFullName = strFullName + (" \(lastName)")
+            //            }
+            
+            
+            //            dictUserData["profileimage"] = "" as AnyObject
+            SingletonClass.sharedInstance.strSocialFirstName = firstName
+            SingletonClass.sharedInstance.strSocialLastName = lastName
+            dictUserData["Firstname"] = firstName as AnyObject
+            dictUserData["Lastname"] = lastName as AnyObject
+            dictUserData["Email"] = email as AnyObject
+            dictUserData["MobileNo"] = "" as AnyObject
+            dictUserData["Lat"] = "6287346872364287" as AnyObject
+            dictUserData["Lng"] = "6287346872364287" as AnyObject
+            dictUserData["SocialId"] = userId as AnyObject
+            dictUserData["SocialType"] = "Google" as AnyObject
+            dictUserData["Token"] = SingletonClass.sharedInstance.deviceToken as AnyObject
+            dictUserData["DeviceType"] = "1" as AnyObject
+            self.webserviceForSocilLogin(dictUserData as AnyObject, ImgPic: image, socialId: userId, SocialType:"Google")
+        }
+        else
+        {
+            print("\(error.localizedDescription)")
+        }
+        
+    }
+    
+    //MARK: - Webservice methods -
+    func webserviceForSocilLogin(_ dictData : AnyObject, ImgPic : UIImage, socialId:String, SocialType:String)
+    {
+        webserviceForSocialLogin(dictData as AnyObject, image1: ImgPic, showHUD: true) { (result, status) in
+     
+            if(status)
+            {
+                DispatchQueue.main.async(execute: { () -> Void in
+                    
+                    SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
+                    SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
+                    SingletonClass.sharedInstance.strPassengerID = String(describing:SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)//as! String
+                    SingletonClass.sharedInstance.isUserLoggedIN = true
+                    
+                    
+                    UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
+                    UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+                    
+                    
+                    self.webserviceForAllDrivers()
+                    
+                    
+                    //                    self.btnLogin.stopAnimation(animationStyle: .normal, completion: {
+                    //
+                    ////                        self.performSegue(withIdentifier: "segueToHomeVC", sender: nil)
+                    //                    })
+                })
+                
+                //                let dictData = result as! [String : AnyObject]
+//                SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
+//                SingletonClass.sharedInstance.arrCarLists = NSMutableArray(array: (result as! NSDictionary).object(forKey: "car_class") as! NSArray)
+//                SingletonClass.sharedInstance.strPassengerID = String(describing: SingletonClass.sharedInstance.dictProfile.object(forKey: "Id")!)//as! String
+//                SingletonClass.sharedInstance.isUserLoggedIN = true
+//
+//                UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
+//                UserDefaults.standard.set(SingletonClass.sharedInstance.arrCarLists, forKey: "carLists")
+//
+//                self.webserviceForAllDrivers()
+                //                let dict = dictData["profile"] as! [String : AnyObject]
+                //                let tempID = dict["Id"] as? String
+                
+            }
+            else
+            {
+                print(result)
+                if let res = result as? String
+                {
+                    UtilityClass.showAlert(appName, message: res, vc: self)
+                }
+                else if let resDict = result as? NSDictionary
+                {
+                    //                    Utilities.showAlert(appName, message: resDict.object(forKey: "message") as! String, vc: self)
+                    let RegisterStoryBoard = UIStoryboard(name: "Registration", bundle: nil)
+                    let viewController = RegisterStoryBoard.instantiateViewController(withIdentifier: "RegistrationContainerViewController") as? RegistrationContainerViewController
+                    
+                    SingletonClass.sharedInstance.strSocialEmail = dictData["Email"] as! String
+                    SingletonClass.sharedInstance.strSocialFirstName = "\(dictData["Firstname"] as! String)"
+                    SingletonClass.sharedInstance.strSocialLastName = "\(dictData["Lastname"] as! String)"
+                    SingletonClass.sharedInstance.strSocialImage = self.strURLForSocialImage
+                     self.navigationController?.pushViewController(viewController!, animated: true)
+                    
+                }
+                else if let resAry = result as? NSArray
+                {
+                    UtilityClass.showAlert(appName, message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String, vc: self)
+                }
+//                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+//                }
+            }
+        }
+    }
+    
+    
+    @IBAction func btnFBClicked(_ sender: Any) {
+        
+        if Connectivity.isConnectedToInternet() == false {
+            
+            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+            }
+            return
+        }
+        let login = FBSDKLoginManager()
+        login.loginBehavior = FBSDKLoginBehavior.browser
+        UIApplication.shared.statusBarStyle = .default
+        login.logOut()
+        login.logIn(withReadPermissions: ["public_profile","email"], from: self) { (result, error) in
+            
+            
+            if error != nil
+            {
+                UIApplication.shared.statusBarStyle = .lightContent
+            }
+            else if (result?.isCancelled)!
+            {
+                UIApplication.shared.statusBarStyle = .lightContent
+            }
+            else
+            {
+                if (result?.grantedPermissions.contains("email"))!
+                {
+                    UIApplication.shared.statusBarStyle = .lightContent
+                    self.getFBUserData()
+                }
+                else
+                {
+                    print("you don't have permission")
+                }
+            }
+        }
+        
+    }
+    
+    
+    //function is fetching the user data from Facebook
+    
+    func getFBUserData()
+    {
+        
+        //        Utilities.showActivityIndicator()
+        
+        var parameters = [AnyHashable: Any]()
+        parameters["fields"] = "first_name, last_name, picture, email,id"
+        
+        FBSDKGraphRequest.init(graphPath: "me", parameters: parameters).start { (connection, result, error) in
+            if error == nil
+            {
+                print("\(#function) \(result)")
+                let dictData = result as! [String : AnyObject]
+                let strFirstName = String(describing: dictData["first_name"]!)
+                let strLastName = String(describing: dictData["last_name"]!)
+                let strEmail = String(describing: dictData["email"]!)
+                let strUserId = String(describing: dictData["id"]!)
+                
+                //                //NSString *strPicurl = [NSString stringWithFormat:@"%@",[[[result objectForKey:@"picture"] objectForKey:@"data"] objectForKey:@"url"]];
+                let imgUrl = ((dictData["picture"] as! [String:AnyObject])["data"]  as! [String:AnyObject])["url"] as? String
+                
+                //                var imgUrl = "http://graph.facebook.com/\(strUserId)/picture?type=large"
+                
+                
+                
+                //                let pictureDict = self.report["picture"]!["data"] as AnyObject
+                //                let imgUrl = pictureDict["url"] as AnyObject
+                
+                var image = UIImage()
+                let url = URL(string: imgUrl as! String)
+                self.strURLForSocialImage = imgUrl!
+                let data = try? Data(contentsOf: url!)
+                
+                if let imageData = data {
+                    image = UIImage(data: imageData)!
+                }else {
+                    image = UIImage(named: "iconUser")!
+                }
+                
+                var dictUserData = [String: AnyObject]()
+                dictUserData["Firstname"] = strFirstName as AnyObject
+                dictUserData["Lastname"] = strLastName as AnyObject
+                dictUserData["Email"] = strEmail as AnyObject
+                dictUserData["MobileNo"] = "" as AnyObject
+                dictUserData["Lat"] = "6287346872364287" as AnyObject
+                dictUserData["Lng"] = "6287346872364287" as AnyObject
+                dictUserData["SocialId"] = strUserId as AnyObject
+                dictUserData["SocialType"] = "Facebook" as AnyObject
+                dictUserData["Token"] = SingletonClass.sharedInstance.deviceToken as AnyObject
+                dictUserData["DeviceType"] = "1" as AnyObject
+                
+                self.webserviceForSocilLogin(dictUserData as AnyObject, ImgPic: image, socialId: strUserId,SocialType: "Facebook")
+                
+                //                self.APIcallforSocialMedia(dictParam: dictUserData)
+                
+                //                let viewController = self.storyboard?.instantiateViewController(withIdentifier: "RegisterViewController") as! RegisterViewController
+                //                self.navigationController?.pushViewController(viewController, animated: true)
+            }
+        }
+    }
     
     
     @IBAction func btnLogin(_ sender: Any) {

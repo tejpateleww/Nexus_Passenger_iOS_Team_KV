@@ -8,7 +8,7 @@
 
 import UIKit
 import ACFloatingTextfield_Swift
-import TransitionButton
+//import TransitionButton
 
 class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
  
@@ -52,8 +52,9 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         self.radioButtonsController.selectedIndex = 2
         self.radioButtonsController.delegate = self //class should implement AKRadioButtonsControllerDelegate
     
-//        txtFirstName.text = "rahul"
-//        txtLastName.text = "patel"
+        txtFirstName.text = SingletonClass.sharedInstance.strSocialFirstName
+        txtLastName.text = SingletonClass.sharedInstance.strSocialLastName
+        
         self.setCornerToTextField(txtField: txtFirstName)
         self.setCornerToTextField(txtField: txtLastName)
         self.setCornerToTextField(txtField: txtRafarralCode)
@@ -71,6 +72,18 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.width/2
         self.imgProfile.layer.masksToBounds = true
         self.imgProfile.contentMode = .scaleAspectFill
+        if SingletonClass.sharedInstance.strSocialImage != "" {
+            
+            let url = URL(string: SingletonClass.sharedInstance.strSocialImage)
+            let data = try? Data(contentsOf: url!)
+            
+            if let imageData = data {
+                self.imgProfile.image = UIImage(data: imageData)!
+            }else {
+                self.imgProfile.image = UIImage(named: "iconUser")!
+            }
+           
+        }
     }
     
     func selectedButton(sender: AKRadioButton) {

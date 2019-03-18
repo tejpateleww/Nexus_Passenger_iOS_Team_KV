@@ -92,14 +92,21 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "OnGoingTableViewCell") as! OnGoingTableViewCell
         
-
-        cell.lblBookingID.text = "Booking Id".localized
-        cell.btnTrackYourTrip.setTitle("TrackYourTrip:".localized, for: .normal)
+        cell.lblPickupUpAddressTitle.text = "PICK UP LOCATION".localized
+        cell.lblDropOffAddressTitle.text = "DROP OFF LOCATION".localized
+        cell.lblPickupTimeTitle.text = "PICKUP TIME".localized
+        cell.lblVehicleTypeTitle.text = "VEHICLE TYPE".localized
+        cell.lblPaymentTypeTitle.text = "PAYMENT TYPE".localized
+        
+        cell.btnTrackYourTrip.setTitle("Track Your Trip".localized, for: .normal)
+        cell.btnTrackYourTrip.titleLabel?.font = UIFont.bold(ofSize: 11.0)
+        
         if aryData.count > 0 {
             
             cell.selectionStyle = .none
-            cell.viewCell.layer.cornerRadius = 10
-            cell.viewCell.clipsToBounds = true
+            
+//            cell.viewCell.layer.cornerRadius = 10
+//            cell.viewCell.clipsToBounds = true
             if let name = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String {
                 
                 if name == "" {
@@ -114,21 +121,23 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                 cell.lblDriverName.text = "NULL"
             }
             
-           
+           let dictData = aryData.object(at: indexPath.row) as! NSDictionary
             
-            let formattedString = NSMutableAttributedString()
-            formattedString
-                .normal("\("Booking Id :".localized)")
-                .bold("\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))", 14)
+//            let formattedString = NSMutableAttributedString()
+//            formattedString
+//                .normal("\("Booking Id :".localized)")
+//                .bold("\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))", 14)
             
-           
-            cell.lblBookingID.attributedText = formattedString
-            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
+            if let BookingID = dictData.object(forKey: "Id") as? String {
+                cell.lblBookingID.text = "\("Booking Id".localized) : \(BookingID)"
+            }
             
-            cell.lblFirstDescription.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String // PickupLocation
-            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String  // DropoffLocation
+//            cell.lblBookingID.attributedText = formattedString
+            cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
+            cell.lblPickupAddress.text = dictData.object(forKey: "PickupLocation") as? String // PickupLocation
+            cell.lblDropoffAddress.text = dictData.object(forKey: "DropoffLocation") as? String  // DropoffLocation
             
-            if let pickupTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String {
+            if let pickupTime = dictData.object(forKey: "PickupTime") as? String {
                 if pickupTime == "" {
                     cell.lblPickupTime.text = "Date and Time not available"
                 }
@@ -136,39 +145,46 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
                     cell.lblPickupTime.text = setTimeStampToDate(timeStamp: pickupTime)
                 }
             }
+            cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
+            cell.lblPaymentType.text = dictData.object(forKey: "PaymentType") as? String
             
-            if let DropoffTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String {
-                if DropoffTime == "" {
-                    cell.lblDropoffTime.text = "Date and Time not available"
-                }
-                else {
-                    cell.lblDropoffTime.text = setTimeStampToDate(timeStamp: DropoffTime)
-                }
-            }
+//            if let DropoffTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String {
+//                if DropoffTime == "" {
+//                    cell.lbldrop.text = "Date and Time not available"
+//                }
+//                else {
+//                    cell.lblDropoffTime.text = setTimeStampToDate(timeStamp: DropoffTime)
+//                }
+//            }
             
 //            cell.lblPickupTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupTime") as? String
 //            cell.lblDropoffTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String
-            cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
-            cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
-            cell.lblTripFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
-            cell.lblNightFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "NightFare") as? String
-            cell.lblTollFee.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TollFee") as? String
-            cell.lblWaitingCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "WaitingTimeCost") as? String
-            cell.lblBookingCharge.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingCharge") as? String
-            cell.lblTax.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Tax") as? String
-            cell.lblDiscount.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Discount") as? String
-            cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
-            cell.lblTotalCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "GrandTotal") as? String
             
+//            cell.lblDistanceTravelled.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripDistance") as? String
+//            cell.lblTripFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TripFare") as? String
+//            cell.lblNightFare.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "NightFare") as? String
+//            cell.lblTollFee.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "TollFee") as? String
+//            cell.lblWaitingCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "WaitingTimeCost") as? String
+//            cell.lblBookingCharge.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingCharge") as? String
+//            cell.lblTax.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Tax") as? String
+//            cell.lblDiscount.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Discount") as? String
+//            cell.lblTotalCost.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "GrandTotal") as? String
+            
+            cell.btnTrackYourTrip.layer.cornerRadius = 5
+            cell.btnTrackYourTrip.layer.masksToBounds = true
             cell.btnTrackYourTrip.tag = indexPath.row
             cell.btnTrackYourTrip.addTarget(self, action: #selector(self.trackYourTrip(sender:)), for: .touchUpInside)
             
-             cell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
+            cell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
         
         }
  
         return cell
     }
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableViewAutomaticDimension
+//    }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -251,7 +267,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current //Set timezone that you want
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd" //Specify your format that you want
+        dateFormatter.dateFormat = "HH/mm yyyy/MM/dd" //Specify your format that you want
         let strDate: String = dateFormatter.string(from: date)
         
         return strDate

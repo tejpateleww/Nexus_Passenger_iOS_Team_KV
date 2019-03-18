@@ -22,12 +22,13 @@ let GetEstimateFare =  WebserviceURLs.kGetEstimateFare
 let ChangePassword = WebserviceURLs.kChangePassword
 let UpdateProfile = WebserviceURLs.kUpdateProfile
 let PastBooking = WebserviceURLs.kPastBooking
-let FeedbackList              = WebserviceURLs.kFeedbackList
+let FeedbackList = WebserviceURLs.kFeedbackList
 let cardsList = WebserviceURLs.kCardsList
 let bookPackage = WebserviceURLs.kBookPackage
 let packageHistory = WebserviceURLs.kPackageBookingHistory
 let CurrentBooking = WebserviceURLs.kCurrentBooking
 let AddNewCard = WebserviceURLs.kAddNewCard
+let sendTip = WebserviceURLs.kSendTip
 let AddMoney = WebserviceURLs.kAddMoney
 let TransactionHistory = WebserviceURLs.kTransactionHistory
 let SendMoney = WebserviceURLs.kSendMoney
@@ -41,6 +42,13 @@ let VarifyUser = WebserviceURLs.kVarifyUser
 let TickpayInvoice = WebserviceURLs.kTickpayInvoice
 let GetTickpayRate = WebserviceURLs.kGetTickpayRate
 let Init = WebserviceURLs.kInit
+
+let Help = WebserviceURLs.kFAQ
+let GenerateTicket = WebserviceURLs.kGenerateTicket
+let TicketList = WebserviceURLs.kTicketList
+let TicketChatHistory = WebserviceURLs.kTicketChatHistory
+let TicketChat = WebserviceURLs.kTicketChat
+
 
 let GetPackages = WebserviceURLs.kGetPackages
 
@@ -159,7 +167,7 @@ func webserviceForBookingHistory(_ dictParams: AnyObject, completion: @escaping(
 
 func webserviceForPastBookingList(_ dictParams: AnyObject,PageNumber : AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
 {
-    let url = "\(PastBooking)/\(dictParams)/\(PageNumber)"
+    let url = "\(PastBooking)/\(dictParams)/\(PageNumber)/taxi"
     getData(dictParams as AnyObject, nsURL: url, completion: completion)
 }
 //-------------------------------------------------------------
@@ -200,6 +208,46 @@ func webserviceForUpdateProfile(_ dictParams: AnyObject, image1: UIImage, comple
     let url = UpdateProfile
     sendImage(dictParams as! [String : AnyObject], image1: image1, nsURL: url, completion: completion)
 }
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Ticket List
+//-------------------------------------------------------------
+
+func webserviceForTicketList(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = TicketList + (dictParams as! String)
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For HElp List
+//-------------------------------------------------------------
+
+func webserviceForHelpQuestionList(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = Help
+    getData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For chat History
+//-------------------------------------------------------------
+
+func webserviceForChatHistory(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = TicketChatHistory + (dictParams as! String)
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+//-------------------------------------------------------------
+// MARK: - Webservice For Send Chat
+//-------------------------------------------------------------
+
+func webserviceForSendingDataChat(dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = TicketChat
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Current Trip List
@@ -248,6 +296,16 @@ func webserviceForBookPackage(_ dictParams: AnyObject, completion: @escaping(_ r
 func webserviceForAddCards(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
 {
     let url = AddNewCard
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For send Tip
+//-------------------------------------------------------------
+
+func webserviceToSendTip(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = sendTip
     postData(dictParams, nsURL: url, completion: completion)
 }
 
@@ -439,6 +497,17 @@ func webserviceForTickpayApprovalStatus(_ dictParams: AnyObject, completion: @es
     let url = GetTickpayApprovalStatus + (dictParams as! String)
     getData("" as AnyObject, nsURL: url, completion: completion)
 }
+
+//-------------------------------------------------------------
+// MARK: - Webservice For GenerteTickets
+//-------------------------------------------------------------
+
+func webserviceForGenerateTickets(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = GenerateTicket
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
 
 //-------------------------------------------------------------
 // MARK: - Webservice For Transfer To Bank

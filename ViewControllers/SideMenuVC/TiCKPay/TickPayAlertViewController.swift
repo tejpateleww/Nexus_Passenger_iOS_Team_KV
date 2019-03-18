@@ -71,11 +71,11 @@ class TickPayAlertViewController: UIViewController {
 
         
         
-//        if Singletons.sharedInstance.isfirstTimeTickPay {
+//        if SingletonClass.sharedInstance.isfirstTimeTickPay {
 ////            let next = self.storyboard?.instantiateViewController(withIdentifier: "InVoiceReceiptViewController") as! InVoiceReceiptViewController
 ////
 ////            self.navigationController?.pushViewController(next, animated: true)
-//             Singletons.sharedInstance.isfirstTimeTickPay = false
+//             SingletonClass.sharedInstance.isfirstTimeTickPay = false
 //            self.performSegue(withIdentifier: "segueForInVoice", sender: nil)
 //        }
         

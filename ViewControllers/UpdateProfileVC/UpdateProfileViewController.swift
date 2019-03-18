@@ -26,20 +26,18 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     var  imgUpdatedProfilePic = UIImage()
     @IBOutlet weak var txtFirstName: UITextField!
     //    @IBOutlet weak var txtLastName: UITextField!
-    @IBOutlet weak var txtPhoneNumber: UITextField!
+//    @IBOutlet weak var txtPhoneNumber: UITextField!
     @IBOutlet weak var txtAddress: UITextField!
     @IBOutlet weak var txtDateOfBirth: UITextField!
     
-//    @IBOutlet weak var viewMale: M13Checkbox!
-//    @IBOutlet weak var viewFemale: M13Checkbox!
+    @IBOutlet weak var viewMale: M13Checkbox!
+    @IBOutlet weak var viewFemale: M13Checkbox!
     
-//    @IBOutlet weak var btnSave: ThemeButton!
-    
+    @IBOutlet weak var btnSave: ThemeButton!
+    @IBOutlet weak var btnChangePasssword: ThemeButton!
 //    @IBOutlet var viewChangePassword: UIView!
-    @IBOutlet var btnChangePassword: UIButton!
-    @IBOutlet var btnProfile: UIButton!
-    
-    
+//    @IBOutlet var btnChangePassword: UIButton!
+//    @IBOutlet var btnProfile: UIButton!
     
     
     var firstName = String()
@@ -47,22 +45,28 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     var fullName = String()
     var gender = String()
     
-    @IBOutlet weak var viewFullName: UIView!
-    @IBOutlet weak var viewEmail: UIView!
-    @IBOutlet weak var viewMobile: UIView!
-    @IBOutlet weak var viewGender: UIView!
-    @IBOutlet weak var viewDateofBirth: UIView!
-    @IBOutlet weak var lblFullName: UILabel!
-    @IBOutlet weak var lblAddress: UILabel!
-    @IBOutlet weak var lblPhoneNum: UILabel!
-    @IBOutlet weak var lblDateOfBirth: UILabel!
+//    @IBOutlet weak var viewFullName: UIView!
+//    @IBOutlet weak var viewEmail: UIView!
+//    @IBOutlet weak var viewMobile: UIView!
+//    @IBOutlet weak var viewGender: UIView!
+//    @IBOutlet weak var viewDateofBirth: UIView!
+//    @IBOutlet weak var lblFullName: UILabel!
+//    @IBOutlet weak var lblAddress: UILabel!
+//    @IBOutlet weak var lblPhoneNum: UILabel!
+//    @IBOutlet weak var lblDateOfBirth: UILabel!
     @IBOutlet weak var lblGender: UILabel!
-    @IBOutlet weak var btnSave: ThemeButton!
-    @IBOutlet var btnMale: RadioButton!
-    @IBOutlet var btnFemale: RadioButton!
+    @IBOutlet weak var lblMale: UILabel!
+    @IBOutlet weak var lblFemale: UILabel!
+//    @IBOutlet weak var btnSave: ThemeButton!
+//    @IBOutlet var btnMale: RadioButton!
+//    @IBOutlet var btnFemale: RadioButton!
+    @IBOutlet weak var btnMale:UIButton!
+    @IBOutlet weak var btnFemale:UIButton!
     @IBOutlet weak var btnCamera: UIButton!
-    @IBOutlet var iconCamera: UIImageView!
-    @IBOutlet var viewRadioGender: UIView!
+//    @IBOutlet var iconCamera: UIImageView!
+//    @IBOutlet var viewRadioGender: UIView!
+    //    @IBOutlet var btnChangePassword: UIButton!
+    //    @IBOutlet var btnProfile: UIButton!
 //    @IBOutlet weak var btnChangePassword: UIButton!
     
     
@@ -77,31 +81,35 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         super.viewDidLoad()
         txtDateOfBirth.delegate = self
      
-        self.btnMale.isSelected = true
-        self.txtPhoneNumber.isUserInteractionEnabled = false
+//        self.btnMale.isSelected = true
+//        self.txtPhoneNumber.isUserInteractionEnabled = false
  
-        self.setShadowToTextFieldView(txtField: txtFirstName)
-        self.setShadowToTextFieldView(txtField: txtAddress)
-        self.setShadowToTextFieldView(txtField: txtPhoneNumber)
-        self.setShadowToTextFieldView(txtField: txtDateOfBirth)
+//        self.setShadowToTextFieldView(txtField: txtFirstName)
+//        self.setShadowToTextFieldView(txtField: txtAddress)
+//        self.setShadowToTextFieldView(txtField: txtPhoneNumber)
+//        self.setShadowToTextFieldView(txtField: txtDateOfBirth)
         
         
         UtilityClass.setLeftPaddingInTextfield(textfield: txtFirstName, padding: 10)
         UtilityClass.setLeftPaddingInTextfield(textfield: txtAddress, padding: 10)
-        UtilityClass.setLeftPaddingInTextfield(textfield: txtPhoneNumber, padding: 10)
+//        UtilityClass.setLeftPaddingInTextfield(textfield: txtPhoneNumber, padding: 10)
         UtilityClass.setLeftPaddingInTextfield(textfield: txtDateOfBirth, padding: 10)
         
         UtilityClass.setRightPaddingInTextfield(textfield: txtFirstName, padding: 10)
         UtilityClass.setRightPaddingInTextfield(textfield: txtAddress, padding: 10)
-        UtilityClass.setRightPaddingInTextfield(textfield: txtPhoneNumber, padding: 10)
+//        UtilityClass.setRightPaddingInTextfield(textfield: txtPhoneNumber, padding: 10)
         UtilityClass.setRightPaddingInTextfield(textfield: txtDateOfBirth, padding: 10)
         
+        viewMale.tintColor = ThemeNaviBlueColor
+        viewFemale.tintColor = ThemeNaviBlueColor
+        viewMale.boxType = .circle
+        viewFemale.boxType = .circle
         
-        viewRadioGender.layer.cornerRadius = 2
-        viewRadioGender.layer.shadowRadius = 3.0
-        viewRadioGender.layer.shadowColor = UIColor.black.withAlphaComponent(0.6).cgColor
-        viewRadioGender.layer.shadowOffset = CGSize (width: 1.0, height: 1.0)
-        viewRadioGender.layer.shadowOpacity = 1.0
+//        viewRadioGender.layer.cornerRadius = 2
+//        viewRadioGender.layer.shadowRadius = 3.0
+//        viewRadioGender.layer.shadowColor = UIColor.black.withAlphaComponent(0.6).cgColor
+//        viewRadioGender.layer.shadowOffset = CGSize (width: 1.0, height: 1.0)
+//        viewRadioGender.layer.shadowOpacity = 1.0
         
 //        btnSave.layer.cornerRadius = 5
 //        btnSave.layer.masksToBounds = true
@@ -140,15 +148,19 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     func setLocalization()
     {
        
-        lblFullName.text = "Full Name".localized
-        lblAddress.text = "Address".localized
-        lblPhoneNum.text = "Phone Number".localized
-        lblDateOfBirth.text =  "Date Of Birth".localized
+//        lblFullName.text = "Full Name".localized
+//        lblAddress.text = "Address".localized
+//        lblPhoneNum.text = "Phone Number".localized
+//        lblDateOfBirth.text =  "Date Of Birth".localized
         lblGender.text = "Gender".localized
+        lblMale.text = "Male".localized
+        lblFemale.text = "Female".localized
+        
+//        btnMale.setTitle("Male".localized, for: .normal)
+//        btnFemale.setTitle("Female".localized, for: .normal)
+        
+        btnChangePasssword.setTitle("Change Password".localized, for: .normal)
         btnSave.setTitle("Save".localized, for: .normal)
-        btnMale.setTitle("Male".localized, for: .normal)
-        btnFemale.setTitle("Female".localized, for: .normal)
-        btnChangePassword.setTitle("Change Password".localized, for: .normal)
     }
 
 
@@ -201,21 +213,65 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
 
     }
     
-    
-    @IBAction func btnSubmit(_ sender: ThemeButton) {
-    
-        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" {
-            
-            
-            UtilityClass.setCustomAlert(title: "Misssing", message: "Please fill all details".localized) { (index, title) in
-            }
+    @IBAction func btnGenderSelection(_ sender: UIButton) {
+        
+        viewFemale.checkState = .unchecked
+        viewMale.checkState = .unchecked
+        
+        if sender.tag == 101 {
+            viewMale.checkState = .checked
+            gender = "Male"
+        } else if sender.tag == 102 {
+            viewFemale.checkState = .checked
+            gender = "Female"
         }
-        else
-        {
+    
+    }
+    
+    
+    
+    @IBAction func btnSave(_ sender: ThemeButton) {
+        
+        let VAlidator = self.isProfileValidate()
+        if VAlidator.0 == false {
+            UtilityClass.setCustomAlert(title: "", message: VAlidator.1, completionHandler: nil)
+        } else {
             webserviceOfUpdateProfile()
         }
         
+//        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" {
+//
+//
+//            UtilityClass.setCustomAlert(title: "Misssing", message: "Please fill all details".localized) { (index, title) in
+//            }
+//        }
+//        else
+//        {
+//            webserviceOfUpdateProfile()
+//        }
+        
     }
+    
+    func isProfileValidate() -> (Bool,String) {
+        var isValid:Bool = true
+        var ValidatorMessage:String = ""
+        
+        if self.txtFirstName.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            isValid  = false
+            ValidatorMessage = "Please enter fullname."
+        } else if self.txtDateOfBirth.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            isValid = false
+            ValidatorMessage = "Please enter date of birth."
+        } else if self.txtAddress.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            isValid = false
+            ValidatorMessage = "Please enter address."
+        } else if gender == "" {
+            isValid = false
+            ValidatorMessage = "Please select gender."
+        }
+        return (isValid, ValidatorMessage)
+    }
+    
     
     @IBAction func btnUploadImage(_ sender: UIButton) {
         
@@ -294,7 +350,7 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         imgProfile.sd_setIndicatorStyle(.gray)
         imgProfile.sd_setImage(with: URL(string: getData.object(forKey: "Image") as! String), completed: nil)
         
-        txtPhoneNumber.text = getData.object(forKey: "MobileNo") as? String
+//        txtPhoneNumber.text = getData.object(forKey: "MobileNo") as? String
         txtDateOfBirth.text = getData.object(forKey: "DOB") as? String
         
 
@@ -306,32 +362,22 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         lastName = fullNameArr[1]
 
         txtFirstName.text = fullName
+        self.lblEmailId.text = getData.object(forKey: "Email") as? String
+        self.lblContactNumber.text = getData.object(forKey: "MobileNo") as? String
         txtAddress.text = getData.object(forKey: "Address") as? String
         
         gender = getData.object(forKey: "Gender") as! String
         
         if gender == "male" || gender == "Male" {
-            self.btnMale.isSelected = true
+            viewMale.checkState = .checked
         }
         else {
-            self.btnFemale.isSelected = true
+            viewFemale.checkState = .checked
         }
     }
 
     
-    @IBAction func btnMaleFemaleClicked(_ sender: UIButton)
-    {
-        
-        if sender.titleLabel?.text == "Female"
-        {
-            gender = "Female"
-        }
-        else
-        {
-            gender = "Male"
-        }
-    }
-    
+
     //-------------------------------------------------------------
     // MARK: - Webservice Methods
     //-------------------------------------------------------------
@@ -348,14 +394,14 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         dictData["DOB"] = txtDateOfBirth.text as AnyObject
         
         let activityData = ActivityData()
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
         
         
         webserviceForUpdateProfile(dictData as AnyObject, image1: self.imgUpdatedProfilePic ) { (result, status) in
             
             if (status) {
                 
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
                 
                 print(result)
                 SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)

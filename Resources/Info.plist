@@ -25,7 +25,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb255467325166998</string>
+				<string>fb2208343646160862</string>
 			</array>
 		</dict>
 		<dict>
@@ -33,7 +33,7 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.1048315388776-2f8m0mndip79ae6jem9doe0uq0k25i7b</string>
+				<string>com.googleusercontent.apps.243435127466-ehcnmq7f6qlftnbk2au3lnbqbmndis51</string>
 			</array>
 		</dict>
 	</array>
@@ -54,9 +54,9 @@
 		</array>
 	</dict>
 	<key>FacebookAppID</key>
-	<string>255467325166998</string>
+	<string>2208343646160862</string>
 	<key>FacebookDisplayName</key>
-	<string>TanTaxi Tanzania app</string>
+	<string>Nexus</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSApplicationQueriesSchemes</key>

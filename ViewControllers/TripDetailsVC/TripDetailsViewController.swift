@@ -94,15 +94,12 @@ class TripDetailsViewController: BaseViewController {
         lblDistanceFareTitle.text = "Distance Fare:".localized
         lblNightFareTitle.text = "Night Fare:".localized
         lblWaitingCostTitle.text = "Waiting Cost".localized
-        lblTollFreeTitle.text = "Toll Fee".localized
+        lblTollFreeTitle.text = "Tips".localized
         lblSubTotalTitle.text = "Sub Total".localized
-        
-        
         lblBookingChargeTitle.text = "Booking Charge".localized
         lblSpecialChargeTitle.text = "Special Extra Charge".localized
-        lblTaxTitle.text = "Toll Fee".localized
+        lblTaxTitle.text = "Tax".localized
         lblDiscountTitle.text = "Discount".localized
-        
         lblGrandTotalTitle.text = "Grand Total".localized
         
     }
@@ -120,18 +117,19 @@ class TripDetailsViewController: BaseViewController {
             lblPickupLocation.text = data.object(forKey: "PickupLocation") as? String
             lblDropoffLocation.text = data.object(forKey: "DropoffLocation") as? String
             
-            lblBaseFare.text = data.object(forKey: "TripFare") as? String
-            lblDistanceFare.text = distanceFare
-            lblNightFare.text = data.object(forKey: "NightFare") as? String
-            lblWaitingCost.text = data.object(forKey: "WaitingTimeCost") as? String
-            lblTollFee.text = data.object(forKey: "TollFee") as? String
-            lblSubTotal.text = data.object(forKey: "SubTotal") as? String
+            lblBaseFare.text = "\(currencySign) \(data.object(forKey: "TripFare") as! String)"
+            lblDistanceFare.text = "\(currencySign) \(distanceFare)"
+            lblNightFare.text =  "\(currencySign) \(data.object(forKey: "NightFare") as! String)"
+            lblWaitingCost.text = "\(currencySign) \(data.object(forKey: "WaitingTimeCost") as! String)"
+            lblTollFee.text = "\(currencySign) \(data.object(forKey: "TollFee") as! String)"
+            lblSubTotal.text = "\(currencySign) \(data.object(forKey: "SubTotal") as! String)"
             
-            lblBookingCharge.text = data.object(forKey: "BookingCharge") as? String
-            lblTax.text = data.object(forKey: "Tax") as? String
-            lblDiscount.text = data.object(forKey: "Discount") as? String
+            lblBookingCharge.text = "\(currencySign) \(data.object(forKey: "BookingCharge") as! String)"
+            lblTax.text = "\(currencySign) \(data.object(forKey: "Tax") as! String)"
+            lblDiscount.text = "\(currencySign) \(data.object(forKey: "Discount") as! String)"
             
-            lblGrandTotal.text = data.object(forKey: "GrandTotal") as? String
+            
+            lblGrandTotal.text = "\(currencySign) \(data.object(forKey: "GrandTotal") as! String)"
             
             var strSpecial = String()
             
@@ -144,7 +142,7 @@ class TripDetailsViewController: BaseViewController {
             stackViewSpecialExtraCharge.isHidden = true
             if strSpecial == "1" {
                 stackViewSpecialExtraCharge.isHidden = false
-                lblSpecialExtraCharge.text = data.object(forKey: "SpecialExtraCharge") as? String
+                lblSpecialExtraCharge.text = "\(currencySign) \(data.object(forKey: "SpecialExtraCharge") as! String)"
             }
         }
     }
@@ -167,7 +165,6 @@ class TripDetailsViewController: BaseViewController {
         let contactNumber = helpLineNumber
         
         if contactNumber == "" {
-            
             UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
             }
         }

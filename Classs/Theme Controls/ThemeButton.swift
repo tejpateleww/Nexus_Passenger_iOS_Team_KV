@@ -15,8 +15,8 @@ class ThemeButton: UIButton {
     
     override func awakeFromNib() {
         self.titleLabel?.font = UIFont.bold(ofSize: 15.0)
-        self.layer.cornerRadius = 0.0
-        self.layer.masksToBounds = true
+//        self.layer.cornerRadius = 0.0
+//        self.layer.masksToBounds = true
 
         if isSubmitButton == true {
             self.backgroundColor = ThemeNaviBlueColor

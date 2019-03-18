@@ -1,6 +1,6 @@
 PODS:
-  - ACFloatingTextfield-Swift (1.5)
-  - Alamofire (4.5.1)
+  - ACFloatingTextfield-Swift (1.7)
+  - Alamofire (4.8.1)
   - Bolts (1.9.0):
     - Bolts/AppLinks (= 1.9.0)
     - Bolts/Tasks (= 1.9.0)
@@ -8,121 +8,110 @@ PODS:
     - Bolts/Tasks
   - Bolts/Tasks (1.9.0)
   - CardIO (5.4.1)
-  - CHIPageControl (0.1.4):
-    - CHIPageControl/Aji (= 0.1.4)
-    - CHIPageControl/Aleppo (= 0.1.4)
-    - CHIPageControl/Chimayo (= 0.1.4)
-    - CHIPageControl/Fresno (= 0.1.4)
-    - CHIPageControl/Jalapeno (= 0.1.4)
-    - CHIPageControl/Jaloro (= 0.1.4)
-    - CHIPageControl/Paprika (= 0.1.4)
-    - CHIPageControl/Puya (= 0.1.4)
-  - CHIPageControl/Aji (0.1.4)
-  - CHIPageControl/Aleppo (0.1.4)
-  - CHIPageControl/Chimayo (0.1.4)
-  - CHIPageControl/Fresno (0.1.4)
-  - CHIPageControl/Jalapeno (0.1.4)
-  - CHIPageControl/Jaloro (0.1.4)
-  - CHIPageControl/Paprika (0.1.4)
-  - CHIPageControl/Puya (0.1.4)
-  - Crashlytics (3.9.3):
-    - Fabric (~> 1.7.2)
-  - CreditCardForm (0.1.5)
-  - DOAlertController (2.0)
-  - Fabric (1.7.2)
-  - FacebookCore (0.3.3):
+  - CHIPageControl (0.1.7):
+    - CHIPageControl/Aji (= 0.1.7)
+    - CHIPageControl/Aleppo (= 0.1.7)
+    - CHIPageControl/Chimayo (= 0.1.7)
+    - CHIPageControl/Fresno (= 0.1.7)
+    - CHIPageControl/Jalapeno (= 0.1.7)
+    - CHIPageControl/Jaloro (= 0.1.7)
+    - CHIPageControl/Paprika (= 0.1.7)
+    - CHIPageControl/Puya (= 0.1.7)
+  - CHIPageControl/Aji (0.1.7)
+  - CHIPageControl/Aleppo (0.1.7)
+  - CHIPageControl/Chimayo (0.1.7)
+  - CHIPageControl/Fresno (0.1.7)
+  - CHIPageControl/Jalapeno (0.1.7)
+  - CHIPageControl/Jaloro (0.1.7)
+  - CHIPageControl/Paprika (0.1.7)
+  - CHIPageControl/Puya (0.1.7)
+  - Crashlytics (3.12.0):
+    - Fabric (~> 1.9.0)
+  - CreditCardForm (0.1.8)
+  - Fabric (1.9.0)
+  - FacebookCore (0.5.0):
     - Bolts (~> 1.9)
-    - FBSDKCoreKit (~> 4.36)
-  - FacebookLogin (0.3.3):
+    - FBSDKCoreKit (~> 4.37)
+  - FacebookLogin (0.5.0):
     - Bolts (~> 1.9)
-    - FacebookCore (~> 0.3.3)
-    - FBSDKCoreKit (~> 4.36)
-    - FBSDKLoginKit (~> 4.36)
-  - FacebookShare (0.3.3):
+    - FacebookCore (~> 0.5)
+    - FBSDKCoreKit (~> 4.37)
+    - FBSDKLoginKit (~> 4.37)
+  - FacebookShare (0.5.0):
     - Bolts (~> 1.9)
-    - FacebookCore (~> 0.3.3)
-    - FBSDKCoreKit (~> 4.36)
-    - FBSDKShareKit (~> 4.36)
-  - FBSDKCoreKit (4.36.0):
-    - Bolts (~> 1.7)
-  - FBSDKLoginKit (4.36.0):
+    - FacebookCore (~> 0.5)
+    - FBSDKCoreKit (~> 4.37)
+    - FBSDKShareKit (~> 4.37)
+  - FBSDKCoreKit (4.40.0):
+    - Bolts (~> 1.9)
+  - FBSDKLoginKit (4.40.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.36.0):
-    - FBSDKCoreKit (~> 4.36.0)
-  - Firebase/Core (4.7.0):
-    - FirebaseAnalytics (= 4.0.5)
-    - FirebaseCore (= 4.0.12)
-  - Firebase/Messaging (4.7.0):
-    - Firebase/Core
-    - FirebaseMessaging (= 2.0.7)
-  - FirebaseAnalytics (4.0.5):
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-    - nanopb (~> 0.3)
-  - FirebaseCore (4.0.12):
-    - "GoogleToolboxForMac/NSData+zlib (~> 2.1)"
-  - FirebaseInstanceID (2.0.7)
-  - FirebaseMessaging (2.0.7):
-    - FirebaseAnalytics (~> 4.0)
-    - FirebaseCore (~> 4.0)
-    - FirebaseInstanceID (~> 2.0)
-    - GoogleToolboxForMac/Logger (~> 2.1)
+  - FBSDKShareKit (4.40.0):
+    - FBSDKCoreKit
+  - Firebase/CoreOnly (5.18.0):
+    - FirebaseCore (= 5.3.1)
+  - Firebase/Messaging (5.18.0):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.3.2)
+  - FirebaseAnalyticsInterop (1.2.0)
+  - FirebaseCore (5.3.1):
+    - GoogleUtilities/Logger (~> 5.2)
+  - FirebaseInstanceID (3.7.0):
+    - FirebaseCore (~> 5.2)
+    - GoogleUtilities/Environment (~> 5.2)
+    - GoogleUtilities/UserDefaults (~> 5.2)
+  - FirebaseMessaging (3.3.2):
+    - FirebaseAnalyticsInterop (~> 1.1)
+    - FirebaseCore (~> 5.2)
+    - FirebaseInstanceID (~> 3.6)
+    - GoogleUtilities/Environment (~> 5.3)
+    - GoogleUtilities/Reachability (~> 5.3)
+    - GoogleUtilities/UserDefaults (~> 5.3)
     - Protobuf (~> 3.1)
-  - FormTextField (2.0.0)
+  - FormTextField (2.0.1)
   - GoogleAnalytics (3.17.0)
-  - GoogleMaps (2.5.0):
-    - GoogleMaps/Maps (= 2.5.0)
-  - GoogleMaps/Base (2.5.0)
-  - GoogleMaps/Maps (2.5.0):
+  - GoogleMaps (3.0.3):
+    - GoogleMaps/Maps (= 3.0.3)
+  - GoogleMaps/Base (3.0.3)
+  - GoogleMaps/Maps (3.0.3):
     - GoogleMaps/Base
-  - GooglePlaces (2.5.0):
-    - GoogleMaps/Base (= 2.5.0)
-  - GoogleSignIn (4.2.0):
+  - GooglePlaces (3.0.3):
+    - GoogleMaps/Base (= 3.0.3)
+  - GoogleSignIn (4.4.0):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
-    - GTMOAuth2 (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleToolboxForMac/DebugUtils (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - GoogleToolboxForMac/Defines (2.1.3)
-  - GoogleToolboxForMac/Logger (2.1.3):
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - "GoogleToolboxForMac/NSData+zlib (2.1.3)":
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.1.3)":
-    - GoogleToolboxForMac/DebugUtils (= 2.1.3)
-    - GoogleToolboxForMac/Defines (= 2.1.3)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.1.3)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.1.3)"
-  - GTMOAuth2 (1.1.6):
-    - GTMSessionFetcher (~> 1.1)
-  - GTMSessionFetcher (1.2.0):
-    - GTMSessionFetcher/Full (= 1.2.0)
-  - GTMSessionFetcher/Core (1.2.0)
-  - GTMSessionFetcher/Full (1.2.0):
-    - GTMSessionFetcher/Core (= 1.2.0)
+  - GoogleToolboxForMac/DebugUtils (2.2.0):
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+  - GoogleToolboxForMac/Defines (2.2.0)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.2.0)":
+    - GoogleToolboxForMac/DebugUtils (= 2.2.0)
+    - GoogleToolboxForMac/Defines (= 2.2.0)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
+  - GoogleUtilities/Environment (5.3.7)
+  - GoogleUtilities/Logger (5.3.7):
+    - GoogleUtilities/Environment
+  - GoogleUtilities/Reachability (5.3.7):
+    - GoogleUtilities/Logger
+  - GoogleUtilities/UserDefaults (5.3.7):
+    - GoogleUtilities/Logger
+  - GTMSessionFetcher/Core (1.2.1)
   - IQDropDownTextField (1.1.1)
-  - IQKeyboardManagerSwift (5.0.6)
-  - M13Checkbox (3.2.1)
-  - nanopb (0.3.8):
-    - nanopb/decode (= 0.3.8)
-    - nanopb/encode (= 0.3.8)
-  - nanopb/decode (0.3.8)
-  - nanopb/encode (0.3.8)
-  - NVActivityIndicatorView (4.0.0):
-    - NVActivityIndicatorView/Presenter (= 4.0.0)
-  - NVActivityIndicatorView/Presenter (4.0.0)
-  - Protobuf (3.5.0)
-  - Pulsator (0.4.0)
-  - SDWebImage (4.2.1):
-    - SDWebImage/Core (= 4.2.1)
-  - SDWebImage/Core (4.2.1)
+  - IQKeyboardManagerSwift (6.2.0)
+  - M13Checkbox (3.3.2)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
+  - Protobuf (3.7.0)
+  - Pulsator (0.5.3)
+  - SDWebImage (4.4.6):
+    - SDWebImage/Core (= 4.4.6)
+  - SDWebImage/Core (4.4.6)
   - SideMenuController (0.2.4)
-  - Socket.IO-Client-Swift (12.1.2):
-    - Starscream (~> 2.1.1)
-  - Starscream (2.1.1)
-  - TransitionButton (0.3.0)
+  - Socket.IO-Client-Swift (11.1.3):
+    - StarscreamSocketIO (~> 8.0.5)
+  - StarscreamSocketIO (8.0.7)
 
 DEPENDENCIES:
   - ACFloatingTextfield-Swift
@@ -131,17 +120,15 @@ DEPENDENCIES:
   - CHIPageControl
   - Crashlytics
   - CreditCardForm
-  - DOAlertController (from `https://github.com/okmr-d/DOAlertController.git`, branch `master`)
   - Fabric
   - FacebookCore
   - FacebookLogin
   - FacebookShare
-  - Firebase/Core
   - Firebase/Messaging
   - FormTextField
   - GoogleAnalytics
-  - GoogleMaps
-  - GooglePlaces
+  - GoogleMaps (= 3.0.3)
+  - GooglePlaces (= 3.0.3)
   - GoogleSignIn
   - IQDropDownTextField
   - IQKeyboardManagerSwift
@@ -150,8 +137,7 @@ DEPENDENCIES:
   - Pulsator
   - SDWebImage (~> 4.0)
   - SideMenuController
-  - Socket.IO-Client-Swift
-  - TransitionButton
+  - Socket.IO-Client-Swift (= 11.1.3)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -170,7 +156,7 @@ SPEC REPOS:
     - FBSDKLoginKit
     - FBSDKShareKit
     - Firebase
-    - FirebaseAnalytics
+    - FirebaseAnalyticsInterop
     - FirebaseCore
     - FirebaseInstanceID
     - FirebaseMessaging
@@ -180,73 +166,58 @@ SPEC REPOS:
     - GooglePlaces
     - GoogleSignIn
     - GoogleToolboxForMac
-    - GTMOAuth2
+    - GoogleUtilities
     - GTMSessionFetcher
     - IQDropDownTextField
     - IQKeyboardManagerSwift
     - M13Checkbox
-    - nanopb
     - NVActivityIndicatorView
     - Protobuf
     - Pulsator
     - SDWebImage
     - SideMenuController
     - Socket.IO-Client-Swift
-    - Starscream
-    - TransitionButton
-
-EXTERNAL SOURCES:
-  DOAlertController:
-    :branch: master
-    :git: https://github.com/okmr-d/DOAlertController.git
-
-CHECKOUT OPTIONS:
-  DOAlertController:
-    :commit: d0c58322b6ebc8d935399598bed0fb029451e0b3
-    :git: https://github.com/okmr-d/DOAlertController.git
+    - StarscreamSocketIO
 
 SPEC CHECKSUMS:
-  ACFloatingTextfield-Swift: ebcfb892acbce8545576dd224df7b1b7473a4bbd
-  Alamofire: 2d95912bf4c34f164fdfc335872e8c312acaea4a
+  ACFloatingTextfield-Swift: df075d5ed5d441d8603f985fc106ec7ebe0c673f
+  Alamofire: 16ce2c353fb72865124ddae8a57c5942388f4f11
   Bolts: ac6567323eac61e203f6a9763667d0f711be34c8
   CardIO: 56983b39b62f495fc6dae9ad7cf875143df06443
-  CHIPageControl: 032b5ab68506c00711d5a61bd83e9fdf2a7ecb22
-  Crashlytics: dbb07d01876c171c5ccbdf7826410380189e452c
-  CreditCardForm: 9ae830341997229abb0e284e66f301f834afe942
-  DOAlertController: 4d4ee33bbf1656271895da4a3cac4fbaa1d3217e
-  Fabric: 9cd6a848efcf1b8b07497e0b6a2e7d336353ba15
-  FacebookCore: 9ecbe48cfd37c91a93add7f8cec2b4a2c50a1eec
-  FacebookLogin: bdaea5789e9b364fa8a1990ba3bbba4fd2197415
-  FacebookShare: 14e88f2dcc3a03376304d2a1e10254296076ce88
-  FBSDKCoreKit: 3b8e6570eedb443f9fc4af196a7bf39f18e3a3d8
-  FBSDKLoginKit: 8bccb6064708ab2f4251a7fc4e3b6d8d00ad91ba
-  FBSDKShareKit: 7090fdd55c39b03941efddb64c83a64ff6b3949f
-  Firebase: dbfb98ccec2dcfcd21ab9cc1b4981a3f3c8c5e26
-  FirebaseAnalytics: 5b02a63ead2c3f0259cfc7f15e053e440587ecf8
-  FirebaseCore: 6cf108b63997bc08c04a1ffa55a3ac0d71a59ffc
-  FirebaseInstanceID: 148c25c986c8699e67304b114e365713dce467f2
-  FirebaseMessaging: 1a11d1c0a9ed9b3f75a0685bb0ae5932e1062f5f
-  FormTextField: 40016d44fc3371410be6c5a0c968498e43f00d33
+  CHIPageControl: bbe1ddd0c688c02ec65b7f7e7d34551a3d16f37c
+  Crashlytics: 07fb167b1694128c1c9a5a5cc319b0e9c3ca0933
+  CreditCardForm: 7e67bc394545eda9e502652af0858552b4931728
+  Fabric: f988e33c97f08930a413e08123064d2e5f68d655
+  FacebookCore: 74288d0add931d361b1596beae787ab72c438249
+  FacebookLogin: ebcf34714a1cb9f0759d9f071cfb01ed500996cf
+  FacebookShare: 963b4bb1124a64a395b1e428163d70b5774116e8
+  FBSDKCoreKit: ae214474b25033399c131dc81d258e412582a2ba
+  FBSDKLoginKit: 7a1e411d46acc8834588eca437daf34de42e1d52
+  FBSDKShareKit: 0e45916f4150da485928ae2a17ca021950b194f5
+  Firebase: 02f3281965c075426141a0ce1277e9de6649cab9
+  FirebaseAnalyticsInterop: efbe45c8385ec626e29f9525e5ebd38520dfb6c1
+  FirebaseCore: 52f851b30e11360f1e67cf04b1edfebf0a47a2d3
+  FirebaseInstanceID: bd6fc5a258884e206fd5c474ebe4f5b00e21770e
+  FirebaseMessaging: d740150547f7686b33799f6489f5b69a4706631b
+  FormTextField: 061cd39ee77d5fb3d87b2e5a00728e2c874b3904
   GoogleAnalytics: f42cc53a87a51fe94334821868d9c8481ff47a7b
-  GoogleMaps: c087b8e5dfe87ca6ebf59adb9b4894a4146bec4f
-  GooglePlaces: dd70d9d71ea1c7944846afe67de3712c99b30a77
-  GoogleSignIn: 591e46382014e591269f862ba6e7bc0fbd793532
-  GoogleToolboxForMac: 2501e2ad72a52eb3dfe7bd9aee7dad11b858bd20
-  GTMOAuth2: e8b6512c896235149df975c41d9a36c868ab7fba
-  GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
+  GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
+  GooglePlaces: f09e76993c9c3ee4af8f4f7f535bb94d6aa3b649
+  GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
+  GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
+  GoogleUtilities: 111a012f4c3a29c9e7c954c082fafd6ee3c999c0
+  GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   IQDropDownTextField: 3d2e5728a2b83ff5dbb14cb9b497a80005124cbe
-  IQKeyboardManagerSwift: 02bfbb0dff71c66d0ab77d80d25dfce0c3717735
-  M13Checkbox: 12376f5b128189432508c240e4a36dc945ab7e4e
-  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  NVActivityIndicatorView: 54c9b93b6f25a4f467512680c0c90c09a1095cf2
-  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
-  Pulsator: a0e7c006790a576de63280b2f0552ea1c1b83ce0
-  SDWebImage: 1fa4c9edf525b744f002db89f3f5a38b3cd4c541
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
+  M13Checkbox: d75dca81d61c9903e7f091f32b35a3254bc97dce
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
+  Protobuf: 7a877b7f3e5964e3fce995e2eb323dbc6831bb5a
+  Pulsator: d58707c6827ec862cd89fd727424866795dabd24
+  SDWebImage: 3f3f0c02f09798048c47a5ed0a13f17b063572d8
   SideMenuController: b463d2b3aa58e2afe57f57a07938fa9a647894ca
-  Socket.IO-Client-Swift: ba3cb1c4bf0a6ca90080406a2c22685c25ad1f60
-  Starscream: 142bd8ef24592d985daee9fa48c936070b85b15f
-  TransitionButton: 0bf7e5ffe80030f9d10d57983a04acf2f511998a
+  Socket.IO-Client-Swift: b8e59ddc16bc3609ca2f49a4b50253f095d535c8
+  StarscreamSocketIO: 00b54e4208481ca5cef089545353aaf126bae16d
 
-PODFILE CHECKSUM: 55f9eaeb6ac82a5334efd215a0a729cd2789c8eb
+PODFILE CHECKSUM: ec19acb88a9f32cac6feae53224875aca081afbc
 
 COCOAPODS: 1.5.3

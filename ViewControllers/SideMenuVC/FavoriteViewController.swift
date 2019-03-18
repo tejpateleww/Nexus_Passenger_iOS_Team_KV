@@ -43,9 +43,11 @@ class FavoriteViewController: BaseViewController, UITableViewDataSource, UITable
     
     func setLocalization()
     {
-        self.setNavBarWithMenu(Title: "FAVOURITE LOCATION", IsNeedRightButton: false)
-        lblSwipeRightToLeftForRemoveAddress.text = "Please Swape Right To Left for remove address.".localized
+        self.setNavBarWithBack(Title: "FAVOURITE LOCATION", IsNeedRightButton: false)
+//        self.setNavBarWithMenu(Title: "FAVOURITE LOCATION", IsNeedRightButton: false)
+        lblSwipeRightToLeftForRemoveAddress.text = "Please Swipe Right To Left for remove address.".localized
     }
+    
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
@@ -63,6 +65,7 @@ class FavoriteViewController: BaseViewController, UITableViewDataSource, UITable
         self.labelNoData.text = "No Favourite Location Found!"
         self.labelNoData.textAlignment = .center
         self.view.addSubview(self.labelNoData)
+        self.lblSwipeRightToLeftForRemoveAddress.isHidden = true
         
     }
     
@@ -114,9 +117,9 @@ class FavoriteViewController: BaseViewController, UITableViewDataSource, UITable
         
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 70
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return 70
+//    }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         

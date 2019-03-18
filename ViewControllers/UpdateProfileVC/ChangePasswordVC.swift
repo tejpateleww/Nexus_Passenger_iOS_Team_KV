@@ -130,14 +130,14 @@ class ChangePasswordVC: BaseViewController {
         dictData["Password"] = txtNewPassword.text as AnyObject
         
         let activityData = ActivityData()
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
         
         webserviceForChangePassword(dictData as AnyObject) { (result, status) in
             
             if (status) {
                 print(result)
                 
-                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+                NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
                 
                 self.txtNewPassword.text = ""
                 self.txtConfirmPassword.text = ""

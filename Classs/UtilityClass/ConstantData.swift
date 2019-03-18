@@ -20,7 +20,7 @@ let themeGrayColor: UIColor = UIColor.init(red: 114/255, green: 114/255, blue: 1
 //let ThemeYellowColor : UIColor = UIColor.init(hex: "ffa300")
 let themeGrayBGColor : UIColor = UIColor.init(hex: "DDDDDD")
 let themeGrayTextColor : UIColor = UIColor.init(hex: "7A7A7C")
-let currencySign = "TZS"
+let currencySign = "$"
 let appName = "Nexus"
 let helpLineNumber = "+255777115054"//"0772506506"
 let googleAnalyticsTrackId = "UA-122360832-1"
@@ -64,8 +64,8 @@ let screenWidthDeveloper : Double = 320
 
 
 struct WebserviceURLs {
-    static let kBaseURL                                  = "http://3.17.200.7/web/Passenger_Api/"
-//    "https://www.tantaxitanzania.com/Passenger_Api/"
+    static let kBaseURL                                  = "https://nexusappllc.com/web/Passenger_Api/"
+//    "http://3.17.200.7/web/Passenger_Api/"
     static let kDriverRegister                          = "Register"
     static let kDriverLogin                             = "Login"
     static let kChangePassword                          = "ChangePassword"
@@ -79,14 +79,16 @@ struct WebserviceURLs {
     static let kBookingHistory                          = "BookingHistory"
     static let kPastBooking                             = "PastBooking"
     static let kGetEstimateFare                         = "GetEstimateFare"
-    static let kImageBaseURL                            = "http://3.17.200.7/web/"
-//    "https://www.tantaxitanzania.com/" // "https://pickngolk.info/web/" "http://54.169.67.226/web/" //
+    static let kImageBaseURL                            = "https://nexusappllc.com/web/"
+    //"http://3.17.200.7/web/"
+
     static let kFeedbackList                            = "FeedbackList/"
     static let kCardsList                               = "Cards/"
     static let kPackageBookingHistory                   = "PackageBookingHistory"
     static let kBookPackage                             = "BookPackage"
     static let kCurrentBooking                          = "CurrentBooking/"
     static let kAddNewCard                              = "AddNewCard"
+    static let kSendTip                                 = "TipsForCompletedBooking"
     static let kAddMoney                                = "AddMoney"
     static let kTransactionHistory                      = "TransactionHistory/"
     static let kSendMoney                               = "SendMoney"
@@ -100,6 +102,12 @@ struct WebserviceURLs {
     static let kTickpayInvoice                          = "TickpayInvoice"
     static let kGetTickpayRate                          = "GetTickpayRate"
     static let kInit                                    = "Init/"
+    
+    static let kFAQ                                     = "faq"
+    static let kGenerateTicket                          = "generateTicket/"
+    static let kTicketList                          = "ticketList/"
+    static let kTicketChatHistory                          = "ticketChatHistory/"
+    static let kTicketChat                          = "ticketChat"
     
     static let kReviewRating                            = "ReviewRating"
     static let kGetTickpayApprovalStatus                = "GetTickpayApprovalStatus/"
@@ -118,9 +126,9 @@ struct WebserviceURLs {
 
 struct SocketData {
     
-    static let kBaseURL                                     = "http://3.17.200.7:8080/"
-//    "https://www.tantaxitanzania.com:8081"//"http://3.120.161.225:8080"
-    // "http://54.255.222.125:8080/" // "https://pickngolk.info:8081" "http://54.169.67.226:8080" //
+    static let kBaseURL                                     = "https://nexusappllc.com:8080/"
+//    "http://3.17.200.7:8080/"
+
     static let kNearByDriverList                            = "NearByDriverListIOS"
     static let kUpdatePassengerLatLong                      = "UpdatePassengerLatLong"
     static let kAcceptBookingRequestNotification            = "AcceptBookingRequestNotification"
@@ -233,12 +241,17 @@ let OpenWallet = NSNotification.Name("OpenWallet")
 let OpenMyReceipt = NSNotification.Name("OpenMyReceipt")
 let OpenFavourite = NSNotification.Name("OpenFavourite")
 let OpenInviteFriend = NSNotification.Name("OpenInviteFriend")
+let OpenHelp = NSNotification.Name("Help")
 let OpenSetting = NSNotification.Name("OpenSetting")
 let OpenSupport = NSNotification.Name("OpenSupport")
 let OpenHome = NSNotification.Name("OpenHome")
 
 
 
+let NotificationforUpdateChatDetail = NSNotification.Name("UpdateChatDetail")
+let NotificationforOpenChat = NSNotification.Name(rawValue: "OpenChatfromNotification")
+let NotificationforUpdateChat = NSNotification.Name(rawValue: "UpdateChatfromNotification")
+let NotificationforRefreshNewChat = NSNotification.Name(rawValue: "RefreshNewChatfromNotification")
 
 //let NotificationHotelReservation = NSNotification.Name("NotificationHotelReservation")
 //let NotificationBookaTable = NSNotification.Name("NotificationBookaTable")
@@ -289,5 +302,6 @@ struct iPhoneDevices {
 
 }
 */
+
 
 

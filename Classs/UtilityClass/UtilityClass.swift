@@ -126,6 +126,34 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
         textfield.leftViewMode = UITextFieldViewMode.always
     }
     
+    class func findtopViewController(controller: UIViewController? = UIApplication.shared.keyWindow?.rootViewController) -> UIViewController? {
+        
+        if let navigationController = controller as? UINavigationController {
+            
+            return findtopViewController(controller: navigationController.visibleViewController)
+            
+        }
+        
+        if let tabController = controller as? UITabBarController {
+            
+            if let selected = tabController.selectedViewController {
+                
+                return findtopViewController(controller: selected)
+                
+            }
+            
+        }
+        
+        if let presented = controller?.presentedViewController {
+            
+            return findtopViewController(controller: presented)
+            
+        }
+        
+        return controller
+        
+    }
+    
     class func setRightPaddingInTextfield(textfield:UITextField, padding:(CGFloat))
     {
         
@@ -204,13 +232,14 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
     {
         let activityData = ActivityData()
         
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
+//            .startAnimating(activityData)
         
     }
     
     class func hideHUD()
     {
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
 
     }
     class func showACProgressHUD() {
@@ -234,14 +263,14 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
         NVActivityIndicatorView.DEFAULT_BLOCKER_DISPLAY_TIME_THRESHOLD = 55
         NVActivityIndicatorView.DEFAULT_TYPE = .ballRotate
         NVActivityIndicatorView.DEFAULT_COLOR = ThemeNaviBlueColor
-        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData, nil)
         
     }
     
     class func hideACProgressHUD() {
         
 //        ACProgressHUD.shared.hideHUD()
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
 
     }
 

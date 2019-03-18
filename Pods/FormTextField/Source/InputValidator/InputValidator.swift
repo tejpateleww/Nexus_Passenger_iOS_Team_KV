@@ -12,12 +12,8 @@ public struct InputValidator: InputValidatable {
         if let validation = self.validation {
             let evaluatedString = composedString(replacementString, fullString: fullString, inRange: range)
             valid = validation.validateString(evaluatedString, complete: false)
-            
-            
         }
 
         return valid
     }
-    
- 
 }

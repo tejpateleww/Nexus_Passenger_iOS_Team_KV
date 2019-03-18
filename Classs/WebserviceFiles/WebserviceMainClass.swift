@@ -230,7 +230,7 @@ func BarsAndClubs(_ dictParams: AnyObject, Location: String, Type: String,  comp
 {
     let CurrentLocation = Location
     let types = Type
-    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&key=\(googlApiKey)"
     
     UtilityClass.showACProgressHUD()
     
@@ -271,7 +271,7 @@ func BookTable(_ dictParams: AnyObject, Location: String, Type: String, Item: St
 {
     let CurrentLocation = Location
     let types = Type
-    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&keyword=\(Item)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    let url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=\(CurrentLocation)&radius=5000&type=\(types)&keyword=\(Item)&key=\(googlApiKey)"
     
     UtilityClass.showACProgressHUD()
     
@@ -312,7 +312,7 @@ func ShoppingListOfGoogle(_ dictParams: AnyObject, Location: String, Type: Strin
 {
     let CurrentLocation = Location
     let types = Type
-    let url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(types)\(CurrentLocation)&key=AIzaSyCRaduVCKdm1ll3kHPY-ebtvwwPV2VVozo"
+    let url = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(types)\(CurrentLocation)&key=\(googlApiKey)"
     
     UtilityClass.showACProgressHUD()
     

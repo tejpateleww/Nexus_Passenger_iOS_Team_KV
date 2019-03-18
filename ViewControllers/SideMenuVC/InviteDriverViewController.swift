@@ -54,7 +54,8 @@ class InviteDriverViewController: BaseViewController, MFMailComposeViewControlle
             
             imgProfilePick.sd_setShowActivityIndicatorView(true)
             imgProfilePick.sd_setIndicatorStyle(.gray)
-            imgProfilePick.sd_setImage(with: URL(string: imgProfile), completed: nil)
+            imgProfilePick.sd_setImage(with: URL(string: imgProfile), placeholderImage: UIImage(named: "iconProfilePicBlank"), options: [], completed: nil)
+//            imgProfilePick.sd_setImage(with: URL(string: imgProfile), completed: nil)
             
         }
         
@@ -88,8 +89,8 @@ class InviteDriverViewController: BaseViewController, MFMailComposeViewControlle
     }
     func setLocalization()
     {
-        lblWhenAFriendRegister.text = "When a friend register with your code, you will recieve referal amount.".localized
-        lblShareYourInviteCode.text = "SHARE YOUR INVITE CODE".localized
+//        lblWhenAFriendRegister.text = "When a friend register with your code, you will recieve referal amount.".localized
+//        lblShareYourInviteCode.text = "SHARE YOUR INVITE CODE".localized
         btnShare.setTitle("SHARE".localized, for: .normal)
     }
     
@@ -110,7 +111,8 @@ class InviteDriverViewController: BaseViewController, MFMailComposeViewControlle
             
             strName = (decodeResults.object(forKey: "Fullname") as? String)!
         }
-        let strContent = "\(strName)  has invited you to become a TanTaxi Passenger.\n \n click here \("https://itunes.apple.com/us/app/TanTaxi/id1445179460?ls=1&mt=8") \n\n Your invite code is: \(strReferralCode)" // \n https://www.facebook.com/tesluxe \n https://www.instagram.com/teslux3 \n https://www.instagram.com/teslux3 \n https://twitter.com/TESLUX3"
+        let strContent = "\(strName) has invited you to become a Nexus Passenger.\n\nclick here\nhttps://nexusappllc.com/"
+//        "\(strName)  has invited you to become a TanTaxi Passenger.\n \n click here \("https://itunes.apple.com/us/app/TanTaxi/id1445179460?ls=1&mt=8") \n\n Your invite code is: \(strReferralCode)" // \n https://www.facebook.com/tesluxe \n https://www.instagram.com/teslux3 \n https://www.instagram.com/teslux3 \n https://twitter.com/TESLUX3"
         //        name + " has invited you to become a Tesluxe Passenger.\n" +
         //            "\n" +
         //        click here (https://play.google.com/store/apps/details?id=com.Tesluxe) + "\n\n Your invite code is: "+ iniviteCode + "\n" + https://www.facebook.com/tesluxe

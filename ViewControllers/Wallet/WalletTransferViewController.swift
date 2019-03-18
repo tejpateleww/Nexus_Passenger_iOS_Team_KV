@@ -508,7 +508,7 @@ class WalletTransferSend: UIViewController, AVCaptureMetadataOutputObjectsDelega
                 
                 SingletonClass.sharedInstance.strQRCodeForSendMoney = unwraped.stringValue!
                 
-                print("Singletons.sharedInstance.strQRCodeForSendMoney  ::  \(SingletonClass.sharedInstance.strQRCodeForSendMoney)")
+                print("SingletonClass.sharedInstance.strQRCodeForSendMoney  ::  \(SingletonClass.sharedInstance.strQRCodeForSendMoney)")
                 
                 self.webserviceOfQRCodeDetails()
                 

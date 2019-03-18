@@ -9,7 +9,7 @@
 import UIKit
 //import NVActivityIndicatorView
 
-class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
+class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTipAlertDelegate,UIPickerViewDelegate, UIPickerViewDataSource,addCardFromHomeVCDelegate {
 
     
     var aryHistory = NSArray()
@@ -24,29 +24,28 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
     var isFromPushNotification = Bool()
     var bookingType = String()
     
-    var selectedBackgroundColor = UIColor.black
-    var unselectedBackgroundColor = UIColor.init(red: 204/255, green: 204/255, blue: 204/255, alpha: 1.0)
+    var selectedBackgroundColor = ThemeNaviBlueColor
+//        UIColor.black
+    var unselectedBackgroundColor = UIColor.clear
+//        UIColor.init(red: 204/255, green: 204/255, blue: 204/255, alpha: 1.0)
     
     
     
-    var selectedTextColor = ThemeNaviBlueColor //UIColor.init(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)
-    var unselectedTextColor = UIColor.init(red: 167/255, green: 167/255, blue: 167/255, alpha: 1.0)
+    var selectedTextColor = UIColor.white
+//    ThemeNaviBlueColor //UIColor.init(red: 48/255, green: 48/255, blue: 48/255, alpha: 1.0)
+    var unselectedTextColor = UIColor.black
+//        UIColor.init(red: 167/255, green: 167/255, blue: 167/255, alpha: 1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.TipParentView.isHidden = true
         heightOfLayer = 2.0
         heighMinusFromY = 2.0
         
-        
         self.setNavBarWithBack(Title: "My Bookings".localized, IsNeedRightButton: false)
 
-
-
         webserviceOfBookingHistory()
-     
         scrollObject.isUserInteractionEnabled = true
-        
         scrollObject.delegate = self
         scrollObject.layoutIfNeeded()
         scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
@@ -63,6 +62,10 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
         }
         else {
             PastBooking()
+        }
+        
+        if let PastbookingScreen = self.childViewControllers[2] as? PastBookingVC {
+            PastbookingScreen.DelegateForTip = self
         }
         
         // Do any additional setup after loading the view.
@@ -100,6 +103,9 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
     @IBOutlet weak var scrollObject: UIScrollView!
     
     
+    @IBOutlet weak var TipParentView: UIView!
+    
+    
     //-------------------------------------------------------------
     // MARK: - Actions
     //-------------------------------------------------------------
@@ -117,11 +123,8 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
     @IBOutlet weak var btnCall: UIButton!
     @IBAction func btCallClicked(_ sender: UIButton)
     {
-        
         let contactNumber = helpLineNumber
-        
         if contactNumber == "" {
-            
             UtilityClass.setCustomAlert(title: "\(appName)", message: "Contact number is not available") { (index, title) in
             }
         }
@@ -259,6 +262,34 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
     }
     
     //-------------------------------------------------------------
+    // MARK: - DidTipAlert Open Delegate Methods
+    //-------------------------------------------------------------
+    
+    func didOpenTipViewController(BookingId: String, BookingType: String) {
+        self.TipbookingType = BookingType
+        self.Tipbookingid = BookingId
+        self.txtEntertip.text = ""
+        self.PaymentOption()
+        UIView.transition(with: TipParentView, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
+            self.TipParentView.isHidden = false
+        }) { _ in }
+       
+        
+        /*
+        let TipAlertAfterBooking = self.storyboard?.instantiateViewController(withIdentifier: "TipViewController") as! TipViewController
+        TipAlertAfterBooking.bookingid = BookingId
+        TipAlertAfterBooking.bookingType = BookingType
+        let navigationPage = UINavigationController(rootViewController: TipAlertAfterBooking)
+        navigationPage.isNavigationBarHidden = true
+        navigationPage.modalTransitionStyle = .crossDissolve
+        navigationPage.modalPresentationStyle = .overCurrentContext
+        self.present(navigationPage, animated: true, completion: nil)
+        */
+    }
+    
+    
+    
+    //-------------------------------------------------------------
     // MARK: - Scroll Methods
     //-------------------------------------------------------------
     func scrollViewDidScroll(_ scrollView: UIScrollView)
@@ -280,7 +311,7 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
     func webserviceOfBookingHistory()
     {
 //        let activityData = ActivityData()
-//        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+//        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
 //
         webserviceForBookingHistory(SingletonClass.sharedInstance.strPassengerID as AnyObject) { (result, status) in
             
@@ -335,7 +366,7 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
                 // ------------------------------------------------------------
                 
-//                NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+//                NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
             }
             else {
                 
@@ -344,4 +375,298 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate {
         }
     }
 
+    
+    //-------------------------------------------------------------
+    // MARK: - TipView Handle Methods
+    //-------------------------------------------------------------
+    
+    @IBOutlet weak var viewSelectPaymentOption: UIView!
+    @IBOutlet weak var txtSelectPaymentOption: UITextField!
+    @IBOutlet weak var imgPaymentType: UIImageView!
+    
+    @IBOutlet weak var txtEntertip: UITextField!
+    
+    @IBOutlet weak var btnSubmit: ThemeButton!
+    
+    var pickerView = UIPickerView()
+    var paymentType:String = ""
+    var cardData = [[String:AnyObject]]()
+    var CardID:String = ""
+    var Tipbookingid:String = ""
+    var TipbookingType:String = ""
+    
+    func PaymentOption() {
+        self.btnSubmit.setTitle("Submit", for: .normal)
+        self.txtSelectPaymentOption.placeholder = "Select Card"
+        self.imgPaymentType.image = UIImage(named: "iconDummyCard")
+        if SingletonClass.sharedInstance.CardsVCHaveAryData.count != 0 {
+            
+            cardData = SingletonClass.sharedInstance.CardsVCHaveAryData
+            self.pickerView.reloadAllComponents()
+            
+            let data = cardData[0]
+            
+            imgPaymentType.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+            txtSelectPaymentOption.text = data["CardNum2"] as? String
+            paymentType = "card"
+            
+            if paymentType == "card" {
+                CardID = data["Id"] as! String
+            }
+        }
+    }
+    
+    
+    @IBAction func txtPaymentOption(_ sender: UITextField) {
+        if SingletonClass.sharedInstance.CardsVCHaveAryData.count != 0 {
+            
+            pickerView.delegate = self
+            pickerView.dataSource = self
+            txtSelectPaymentOption.inputView = pickerView
+        } else {
+            self.view.endEditing(true)
+            let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
+//            self.navigationController?.isNavigationBarHidden = false
+            next.delegateAddCardFromHomeVC = self
+            next.isCameforTips = true
+            self.navigationController?.pushViewController(next, animated: true)
+        }
+    }
+    
+    //-------------------------------------------------------------
+    // MARK: - IBAction Methods
+    //-------------------------------------------------------------
+    @IBAction func btnSubmitAction(_ sender: Any) {
+        self.view.endEditing(true)
+       let Validator = self.isValidate()
+        if Validator.1 == true {
+            self.webserviceOfSendTip()
+        } else {
+             UtilityClass.showAlert("", message: Validator.0, vc: self)
+        }
+        
+    }
+    
+    func isValidate() -> (String,Bool) {
+        
+        var isValid:Bool = true
+        var ValidatorMessage:String = ""
+        
+        if self.txtEntertip.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            isValid = false
+            ValidatorMessage = "Please enter tip."
+        } else if self.txtSelectPaymentOption.text == "" {
+            isValid = false
+            ValidatorMessage = "Please select Card."
+        }
+        return (ValidatorMessage,isValid)
+    }
+    
+    @IBAction func btnCloseAction(_ sender: Any) {
+        UIView.transition(with: TipParentView, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
+            self.TipParentView.isHidden = true
+        }) { _ in }
+        
+    }
+    
+    
+    func webserviceOfSendTip() {
+        // PassengerId,CardNo,Cvv,Expiry,Alias (CarNo : 4444555511115555,Expiry:09/20)
+        var dictData = [String:AnyObject]()
+        
+        dictData["BookingId"] = self.Tipbookingid as AnyObject
+        dictData["BookingType"] = self.TipbookingType as AnyObject
+        dictData["Amount"] = txtEntertip.text!.trimmingCharacters(in: .whitespacesAndNewlines) as AnyObject
+        dictData["CardId"] = self.CardID as AnyObject
+        
+        webserviceToSendTip(dictData as AnyObject) { (result, status) in
+            
+            if (status) {
+                print(result)
+                
+                UtilityClass.setCustomAlert(title: "", message: ((result as! NSDictionary).object(forKey: "message") as? String)!) { (index, title) in
+                    UIView.transition(with: self.TipParentView, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
+                        self.TipParentView.isHidden = true
+                    }) { _ in
+                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
+                    }
+                }
+            }
+            else {
+                print(result)
+                
+                if let res = result as? String {
+                    UtilityClass.setCustomAlert(title: "Error", message: res) { (index, title) in
+                    }
+                }
+                else if let resDict = result as? NSDictionary {
+                    UtilityClass.setCustomAlert(title: "Error", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+                else if let resAry = result as? NSArray {
+                    UtilityClass.setCustomAlert(title: "Error", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+                
+            }
+        }
+        
+    }
+    
+    func didAddCardFromHomeVC() {
+        
+        if SingletonClass.sharedInstance.CardsVCHaveAryData.count != 0 {
+            
+            cardData = SingletonClass.sharedInstance.CardsVCHaveAryData
+            self.pickerView.reloadAllComponents()
+            
+            let data = cardData[0]
+            
+            imgPaymentType.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+            txtSelectPaymentOption.text = data["CardNum2"] as? String
+            paymentType = "card"
+            
+            if paymentType == "card" {
+                CardID = data["Id"] as! String
+            }
+        }
+    }
+    
+    //-------------------------------------------------------------
+    // MARK: - PickerView Methods
+    //-------------------------------------------------------------
+    
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
+        return cardData.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        
+        return 60
+    }
+    
+    //    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    //
+    //    }
+    
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        
+        let data = cardData[row]
+        
+        let myView = UIView(frame: CGRect(x:0, y:0, width: pickerView.bounds.width - 30, height: 60))
+        
+        let myImageView = UIImageView(frame: CGRect(x:0, y:0, width:50, height:50))
+        
+        var rowString = String()
+        
+        
+        switch row {
+            
+        case 0:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 1:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 2:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 3:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 4:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 5:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 6:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 7:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 8:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 9:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        case 10:
+            rowString = data["CardNum2"] as! String
+            myImageView.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        default:
+            rowString = "Error: too many rows"
+            myImageView.image = nil
+        }
+        let myLabel = UILabel(frame: CGRect(x:60, y:0, width:pickerView.bounds.width - 90, height:60 ))
+        //        myLabel.font = UIFont(name:some, font, size: 18)
+        myLabel.text = rowString
+        
+        myView.addSubview(myLabel)
+        myView.addSubview(myImageView)
+        
+        return myView
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        let data = cardData[row]
+        
+        imgPaymentType.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
+        txtSelectPaymentOption.text = data["CardNum2"] as? String
+        
+        paymentType = "card"
+        
+        if paymentType == "card" {
+            CardID = data["Id"] as! String
+        }
+        
+        
+        // do something with selected row
+    }
+    
+    func setCardIcon(str: String) -> String {
+        //        visa , mastercard , amex , diners , discover , jcb , other
+        var CardIcon = String()
+        
+        switch str {
+        case "visa":
+            CardIcon = "Visa"
+            return CardIcon
+        case "mastercard":
+            CardIcon = "MasterCard"
+            return CardIcon
+        case "amex":
+            CardIcon = "Amex"
+            return CardIcon
+        case "diners":
+            CardIcon = "Diners Club"
+            return CardIcon
+        case "discover":
+            CardIcon = "Discover"
+            return CardIcon
+        case "jcb":
+            CardIcon = "JCB"
+            return CardIcon
+        case "iconCashBlack":
+            CardIcon = "iconCashBlack"
+            return CardIcon
+        case "iconWalletBlack":
+            CardIcon = "iconWalletBlack"
+            return CardIcon
+        case "other":
+            CardIcon = "iconDummyCard"
+            return CardIcon
+        default:
+            return ""
+        }
+        
+    }
 }

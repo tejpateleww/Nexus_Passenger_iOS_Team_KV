@@ -19,10 +19,16 @@ class RegisterViewController: UIViewController, UITextFieldDelegate,UIPickerView
     let countoryz : Int = 0
     var imgflag = UIImageView()
     var countoryPicker = UIPickerView()
+    
+    
+    
     @IBOutlet var txtContoryNum: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.txtEmail.text = SingletonClass.sharedInstance.strSocialEmail
+        
         aryContoryNum = [["countoryCode" : "+1","countoryName" : "USA","countoryID" : "US", "countoryimage" : "US_Flag"]] as [[String : AnyObject]]
         
         txtPhoneNumber.delegate = self

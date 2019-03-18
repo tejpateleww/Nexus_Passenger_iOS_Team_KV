@@ -26,6 +26,7 @@ protocol CompleterTripInfoDelegate {
 protocol addCardFromHomeVCDelegate {
     func didAddCardFromHomeVC()
 }
+
 protocol deleagateForBookTaxiLater
 {
     func btnRequestLater()
@@ -38,7 +39,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     let baseUrlForGetAddress = "https://maps.googleapis.com/maps/api/geocode/json?"
     let baseUrlForAutocompleteAddress = "https://maps.googleapis.com/maps/api/place/autocomplete/json?"
     
-    let apikey = googlPlacesApiKey //"AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"
+//    let apikey = googlPlacesApiKey //"AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"
     
     let socket = SocketIOClient(socketURL: URL(string: SocketData.kBaseURL)!, config: [.log(false), .compress])
     
@@ -380,6 +381,14 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     var dropoffLat = Double()
     var dropoffLng = Double()
     
+    override func loadView() {
+        super.loadView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.OpenChatList(notification:)), name: NotificationforOpenChat, object: nil)
+        //        NotificationCenter.default.addObserver(self, selector: #selector(self.OpenChatwhileAppisTerminated(notification:)), name: NotificationforOpenChatTerminatedApp, object: nil)
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -481,6 +490,117 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         
     }
     
+    @objc private func OpenChatwhileAppisTerminated(notification: NSDictionary)
+    {
+        
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + 9, execute: {
+        
+        //            self.navigationController?.popToRootViewController(animated: false)
+        
+        
+        if let VC = (UIApplication.shared.delegate as! AppDelegate).gettopMostViewController() as? ChatViewController
+        {
+            print(VC)
+            
+            if let NotificationDetail = notification["userInfo"] as? [String:Any]
+            {
+                var UserDict = [String:Any]()
+                let dictData = NotificationDetail["gcm.notification.data"] as! String
+                let data = dictData.data(using: .utf8)!
+                do
+                {
+                    if let jsonResponse = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
+                    {
+                        UserDict["Sender"] = jsonResponse["Sender"] as! String
+                        UserDict["ReceiverId"] = jsonResponse["ReceiverId"] as! String
+                        UserDict["TicketId"] = jsonResponse["TicketId"] as! String
+                        UserDict["Message"] = jsonResponse["Message"] as! String
+                        UserDict["Receiver"] = jsonResponse["Receiver"] as! String
+                        UserDict["SenderId"] = jsonResponse["SenderId"] as! String
+                        UserDict["Date"] = jsonResponse["Date"] as! String
+                    }
+                }
+                catch let error as NSError {
+                    print(error)
+                }
+                NotificationCenter.default.post(name: NotificationforRefreshNewChat, object: nil, userInfo: NotificationDetail as? [AnyHashable : Any])
+            }
+            
+            //                self.navigationController?.popViewController(animated: false)
+        }
+        else
+        {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 9, execute: {
+                
+                let HelpStoryBoard = UIStoryboard(name: "Help", bundle: nil)
+                let ChatList = HelpStoryBoard.instantiateViewController(withIdentifier: "TicketListViewController") as! TicketListViewController
+                if let NotificationDict = notification as? [String:Any]//["userInfo"]
+                {
+                    ChatList.NotificationObject = NotificationDict
+                }
+                ChatList.isFromNotifications = true
+                self.navigationController?.pushViewController(ChatList, animated: false)
+            })
+        }
+        
+        //        })
+    }
+    
+    
+    @objc private func OpenChatList(notification: NSNotification){
+        
+        DispatchQueue.main.async
+            {
+                //            self.navigationController?.popToRootViewController(animated: false)
+                if let VC = (UIApplication.shared.delegate as! AppDelegate).gettopMostViewController() as? ChatViewController
+                {
+                    print(VC)
+                    
+                    if let NotificationDetail = notification.userInfo as? [String:Any]
+                    {
+                        var UserDict = [String:Any]()
+                        let dictData = NotificationDetail["gcm.notification.data"] as! String
+                        let data = dictData.data(using: .utf8)!
+                        do
+                        {
+                            if let jsonResponse = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
+                            {
+                                UserDict["Sender"] = jsonResponse["Sender"] as! String
+                                UserDict["ReceiverId"] = jsonResponse["ReceiverId"] as! String
+                                UserDict["TicketId"] = jsonResponse["TicketId"] as! String
+                                UserDict["Message"] = jsonResponse["Message"] as! String
+                                UserDict["Receiver"] = jsonResponse["Receiver"] as! String
+                                UserDict["SenderId"] = jsonResponse["SenderId"] as! String
+                                UserDict["Date"] = jsonResponse["Date"] as! String
+                            }
+                        }
+                        catch let error as NSError {
+                            print(error)
+                        }
+                        NotificationCenter.default.post(name: NotificationforRefreshNewChat, object: nil, userInfo: NotificationDetail as? [AnyHashable : Any])
+                    }
+                    //                self.navigationController?.popViewController(animated: false)
+                }
+                else
+                {
+                    if let notificationDict = notification.userInfo as? [String:Any]
+                    {
+                        self.ChatListPage(NotificationDict: notificationDict)
+                    }
+                }
+        }
+        
+    }
+    
+    func ChatListPage(NotificationDict:[String:Any]) {
+        let HelpStoryBoard = UIStoryboard(name: "Help", bundle: nil)
+        let ChatList = HelpStoryBoard.instantiateViewController(withIdentifier: "TicketListViewController") as! TicketListViewController
+        ChatList.NotificationObject = NotificationDict
+        ChatList.isFromNotifications = true
+        self.navigationController?.pushViewController(ChatList, animated: false)
+    }
+    
+    
     func setNotificationcenter()
     {
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setLocationFromBarAndClub(_:)), name: NotificationBookNow, object: nil)
@@ -500,7 +620,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoInviteFriendPage), name: OpenInviteFriend, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSettingPage), name: OpenSetting, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSupportPage), name: OpenSupport, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHelpPage), name: OpenHelp, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHomePage), name: OpenHome, object: nil)
     }
     //    @IBOutlet weak var viewHeaderHeightConstant: NSLayoutConstraint!
@@ -546,7 +666,14 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             
             if strCarModelID == "" {
                 
-                UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+//                UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+//                }
+                if self.selectedIndexPath != nil {
+                    UtilityClass.setCustomAlert(title: "", message: "There is no car available".localized) { (index, title) in
+                    }
+                } else {
+                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                    }
                 }
             }
             else if strDestinationLocationForBookLater != "" {
@@ -563,6 +690,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                 
                 next.strFullname = profileData.object(forKey: "Fullname") as! String
                 next.strMobileNumber = profileData.object(forKey: "MobileNo") as! String
+                
+                let visibleRegion = mapView.projection.visibleRegion()
+                let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+                next.NearByRegion = bounds
                 
                 next.strDropoffLocation = strDestinationLocationForBookLater
                 next.doubleDropOffLat = dropOffLatForBookLater
@@ -2259,9 +2390,14 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                 }
                 else if strModelId == ""
                 {
-                    
-                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                    if self.selectedIndexPath != nil {
+                        UtilityClass.setCustomAlert(title: "", message: "There is no car available".localized) { (index, title) in
+                        }
+                    } else {
+                        UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                        }
                     }
+                    
                     //                    UtilityClass.setCustomAlert(title: appName, message: "There are no cars available. Do you want to pay extra chareges?") { (index, title) in
                     //                    }
                     
@@ -2561,7 +2697,12 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         }
         
         //        self.SetPaymentOption(SelectionIndex: 0)
+        
+        
         viewBookNow.isHidden = false
+        self.txtHavePromocode.text = ""
+        self.stackViewOfPromocode.isHidden = true
+        self.viewHavePromocode.checkState = .unchecked
         
         //        paymentType = "cash"
         
@@ -2584,9 +2725,15 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                 
                 if strCarModelID == ""
                 {
-                    
-                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                    if self.selectedIndexPath != nil {
+                        UtilityClass.setCustomAlert(title: "", message: "There is no car available".localized) { (index, title) in
+                        }
+                    } else {
+                        UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                        }
                     }
+//                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+//                    }
                 }
                 else
                 {
@@ -2600,6 +2747,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                     
                     next.strFullname = profileData.object(forKey: "Fullname") as! String
                     next.strMobileNumber = profileData.object(forKey: "MobileNo") as! String
+                    
+                    let visibleRegion = mapView.projection.visibleRegion()
+                    let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+                    next.NearByRegion = bounds
                     
                     next.strPickupLocation = strPickupLocation
                     next.doublePickupLat = doublePickupLat
@@ -2615,8 +2766,15 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             else {
                 
                 if strCarModelID == "" && strCarModelIDIfZero == ""{
-                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                    if self.selectedIndexPath != nil {
+                        UtilityClass.setCustomAlert(title: "", message: "There is no car available".localized) { (index, title) in
+                        }
+                    } else {
+                        UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+                        }
                     }
+//                    UtilityClass.setCustomAlert(title: "", message: "Please Select Car".localized) { (index, title) in
+//                    }
                 }
                 else {
                     let next = self.storyboard?.instantiateViewController(withIdentifier: "BookLaterViewController") as! BookLaterViewController
@@ -2632,6 +2790,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                     next.strDropoffLocation = strDropoffLocation
                     next.doubleDropOffLat = doubleDropOffLat
                     next.doubleDropOffLng = doubleDropOffLng
+                    
+                    let visibleRegion = mapView.projection.visibleRegion()
+                    let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+                    next.NearByRegion = bounds
                     
                     next.strFullname = profileData.object(forKey: "Fullname") as! String
                     next.strMobileNumber = profileData.object(forKey: "MobileNo") as! String
@@ -2744,7 +2906,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         //        }) { _ in }
         //
         //
-        //        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        //        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
         
         
         //        self.dismiss(animated: true, completion: nil)
@@ -2760,7 +2922,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         }) { _ in }
         
         
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
         
     }
     
@@ -2769,7 +2931,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     @objc func handleTap(_ sender: UITapGestureRecognizer) {
         print("Hello World")
         
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
     }
     
     @IBAction func btnCancelStartedTrip(_ sender: UIButton) {
@@ -3588,6 +3750,13 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         let next = self.storyboard?.instantiateViewController(withIdentifier: "webViewVC") as! webViewVC
         next.headerName = "\(appName)"
         next.strURL = "https://www.tantaxitanzania.com/front/about"
+        self.navigationController?.pushViewController(next, animated: true)
+    }
+    
+    @objc func GotoHelpPage()
+    {
+        let HelpStoryBoard = UIStoryboard(name: "Help", bundle: nil)
+        let next = HelpStoryBoard.instantiateViewController(withIdentifier: "HelpViewController") as! HelpViewController
         self.navigationController?.pushViewController(next, animated: true)
     }
     
@@ -4469,7 +4638,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             //
             //                if SingletonClass.sharedInstance.bookingId != "" {
             //                    if SingletonClass.sharedInstance.bookingId == bookingIdIs {
-            //                        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            //                        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
             //                        UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
             //
             //                        })
@@ -4481,7 +4650,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             //                    }
             //                }
             //                else {
-            //                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            //                    NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
             //                    UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
             //
             //                    })
@@ -4495,7 +4664,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             //            }
             
             
-            //            NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+            //            NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
             //            UtilityClass.setCustomAlert(title: "\(appName)", message: (data as! [[String:AnyObject]])[0]["message"]! as! String, completionHandler: { (index, title) in
             //
             //            })
@@ -4645,7 +4814,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         
         clearMap()
         self.stopTimer()
-        NVActivityIndicatorPresenter.sharedInstance.stopAnimating()
+        NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
         //        Utilities.hideActivityIndicator()
         self.scheduledTimerWithTimeInterval()
         

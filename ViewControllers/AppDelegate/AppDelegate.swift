@@ -15,22 +15,28 @@ import Crashlytics
 import SideMenuController
 import SocketIO
 import UserNotifications
+import FirebaseMessaging
 import Firebase
 import FBSDKCoreKit
 import GoogleSignIn
 
 
-let googlApiKey = "AIzaSyDeLFTr-pqAWNHp-XLdUb-4UZve6g0IpN8"//"AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" //"AIzaSyBpHWct2Dal71hBjPis6R1CU0OHZNfMgCw"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
-let googlPlacesApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" // "AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
+let googlApiKey = "AIzaSyAQPk1hdmEi1MgAsTK83gthxTDzQhGvZYM"
+//"AIzaSyC_fgLRMBK6zBSAzUFwZ78EQQb74vURLMM"
+//"AIzaSyAQPk1hdmEi1MgAsTK83gthxTDzQhGvZYM"
+//"AIzaSyAQPk1hdmEi1MgAsTK83gthxTDzQhGvZYM"
+//"AIzaSyDeLFTr-pqAWNHp-XLdUb-4UZve6g0IpN8"//"AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" //"AIzaSyBpHWct2Dal71hBjPis6R1CU0OHZNfMgCw"         // AIzaSyB08IH_NbumyQIAUCxbpgPCuZtFzIT5WQo
+//let googlPlacesApiKey = "AIzaSyB7GS-O76Vp0jkS2nU-eZ_jkxLXJaUHAjg" // "AIzaSyCKEP5WGD7n5QWtCopu0QXOzM9Qec4vAfE"   //   AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 
 
 
-let kGoogle_Client_ID : String = "1048315388776-2f8m0mndip79ae6jem9doe0uq0k25i7b.apps.googleusercontent.com"//"787787696945-nllfi2i6j9ts7m28immgteuo897u9vrl.apps.googleusercontent.com"
+let kGoogle_Client_ID : String = "243435127466-ehcnmq7f6qlftnbk2au3lnbqbmndis51.apps.googleusercontent.com"
+//"1048315388776-2f8m0mndip79ae6jem9doe0uq0k25i7b.apps.googleusercontent.com"//"787787696945-nllfi2i6j9ts7m28immgteuo897u9vrl.apps.googleusercontent.com"
 let kDeviceType : String = "1"
 
 //AIzaSyBBQGfB0ca6oApMpqqemhx8-UV-gFls_Zk
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSignInDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSignInDelegate {
     
     var window: UIWindow?
     var isAlreadyLaunched : Bool?
@@ -63,8 +69,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
         // Firebase
         FirebaseApp.configure()
         Messaging.messaging().delegate = self
-        
-        IQKeyboardManager.sharedManager().enable = true
+       
+        IQKeyboardManager.shared.enable = true
         
         GMSServices.provideAPIKey(googlApiKey)
         GMSPlacesClient.provideAPIKey(googlApiKey)
@@ -251,23 +257,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
         
         let token = toketParts.joined()
         print("Device Token: \(token)")
-        
-        
         Messaging.messaging().apnsToken = deviceToken as Data
-        
-        print("deviceToken : \(deviceToken)")
-        
-        
-        let fcmToken = Messaging.messaging().fcmToken
-        print("FCM token: \(fcmToken ?? "")")
-        
-        if fcmToken == nil {
-            
-        }
-        else {
-            SingletonClass.sharedInstance.deviceToken = fcmToken!
+        if let fcmToken = Messaging.messaging().fcmToken as? String {
+            SingletonClass.sharedInstance.deviceToken = fcmToken
             UserDefaults.standard.set(SingletonClass.sharedInstance.deviceToken, forKey: "Token")
+            UserDefaults.standard.synchronize()
         }
+        
+//        Messaging.messaging().apnsToken = deviceToken as Data
+        
+//        print("deviceToken : \(deviceToken)")
+//
+//
+//        let fcmToken = Messaging.messaging().fcmToken
+//        print("FCM token: \(fcmToken ?? "")")
+//
+//        if fcmToken == nil {
+//
+//        }
+//        else {
+//            SingletonClass.sharedInstance.deviceToken = fcmToken!
+//            UserDefaults.standard.set(SingletonClass.sharedInstance.deviceToken, forKey: "Token")
+//        }
         
         
         print("SingletonClass.sharedInstance.deviceToken : \(SingletonClass.sharedInstance.deviceToken)")
@@ -290,10 +301,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
             self.pushAfterReceiveNotification(typeKey: key as! String)
         }
         
-        
-        
         // Let FCM know about the message for analytics etc.
-        Messaging.messaging().appDidReceiveMessage(userInfo)
+        
+//        Messaging.messaging().appDidReceiveMessage(userInfo)
+
+        
+        //        Messaging.messaging().appDidReceiveMessage(userInfo)
         // handle your message
         
         // Print message ID.
@@ -308,7 +321,164 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
         
     }
     
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void)
+    {
+        
+        print(notification.request.content.userInfo)
+        
+        let dictNoti = notification.request.content.userInfo as! [String : AnyObject]
+        let key = (dictNoti)["gcm.notification.type"] as! String
+        
+        if let NotificationType = notification.request.content.userInfo["gcm.notification.type"]! as? String
+        {
+            if NotificationType == "ChatNotification"
+            {
+                let dictData = notification.request.content.userInfo["gcm.notification.data"] as! String
+                let data = dictData.data(using: .utf8)!
+                do
+                {
+                    if let jsonResponse = try JSONSerialization.jsonObject(with: data, options : .allowFragments) as? Dictionary<String,Any>
+                    {
+                        var UserDict = [String:Any]()
+                        UserDict["Sender"] = jsonResponse["Sender"] as! String
+                        UserDict["ReceiverId"] = jsonResponse["ReceiverId"] as! String
+                        UserDict["TicketId"] = jsonResponse["TicketId"] as! String
+                        UserDict["Message"] = jsonResponse["Message"] as! String
+                        UserDict["Receiver"] = jsonResponse["Receiver"] as! String
+                        UserDict["SenderId"] = jsonResponse["SenderId"] as! String
+                        UserDict["Date"] = jsonResponse["Date"] as! String
+                        let TicketID =  jsonResponse["TicketId"] as! String
+                        
+                        if SingletonClass.sharedInstance.isChatBoxOpen == true && TicketID == SingletonClass.sharedInstance.ChatBoxOpenedWithID
+                        {
+                            self.handleRemoteNotification(key: key, userInfo: UserDict as NSDictionary, application: UIApplication.shared)
+                        }
+                        else
+                        {
+                            completionHandler([.alert, .badge, .sound])
+                        }
+                    }
+                    else {
+                        print("bad json")
+                    }
+                }
+                catch let error as NSError
+                {
+                    print(error)
+                }
+            }
+        }
+        else
+        {
+            completionHandler([.alert, .badge, .sound])
+        }
+        
+    }
+    
+    func handleRemoteNotification(key : String, userInfo : NSDictionary, application: UIApplication)
+    {
+        
+        if(application.applicationState == .background || application.applicationState == .inactive)
+        {
+            print(userInfo)
+            
+            
+            if(application.applicationState == .inactive)
+            {
+                
+                //                NotificationCenter.default.post(name: NotificationforOpenChatTerminatedApp, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+                    SingletonClass.sharedInstance.NotificationDetail = userInfo //as! NSDictionary)//[AnyHashable : Any])
+                    SingletonClass.sharedInstance.strChatNotificationWhenAppTerminated = "ChatTerminatedApp"
+            }
+            else if(application.applicationState == .background)
+            {
+                NotificationCenter.default.post(name: NotificationforOpenChat, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+            }
+            //            self.pushAfterReceiveNotification(typeKey: key, newsID: newsID)
+        }
+        else if (application.applicationState == .active)
+        {
+            print(userInfo)
+            
+            
+            //            let AlertNotification = (userInfo["aps"] as! [String:Any])["alert"] as! [String:Any]
+            //            let AlertTitle = AlertNotification["title"] as! String
+            //            let AlertMessage = ((userInfo["aps"]! as! [String: AnyObject])["alert"]! as! [String: AnyObject])["body"]! as? String
+            var strTicketID = String()
+            
+            
+            if let TicketID =  userInfo["gcm.notification.ticket"] as? String
+            {
+                strTicketID = TicketID
+            }
+            else if let TicketID1 =  userInfo["TicketId"] as? String
+            {
+                strTicketID = TicketID1
+            }
+            
+            if SingletonClass.sharedInstance.isChatBoxOpen == true && strTicketID == SingletonClass.sharedInstance.ChatBoxOpenedWithID
+            {
+                
+                NotificationCenter.default.post(name: NotificationforUpdateChat, object: nil, userInfo: userInfo as? [AnyHashable : Any])
+                
+            }
+            else
+            {
+                
+                //                AudioServicesPlayAlertSound(SystemSoundID(1322))
+                ////                let notificationBar = GLNotificationBar(title: AlertTitle, message: AlertMessage, preferredStyle: .simpleBanner) { (status) in
+                //
+                //                    var UserDict = [String:Any]()
+                //                    UserDict["id"] = jsonResponse["sender_id"] as! String
+                //                    UserDict["fullname"] = jsonResponse["sender_name"] as! String
+                //                    UserDict["image"] = jsonResponse["sender_img"] as! String
+                NotificationCenter.default.post(name: NotificationforOpenChat, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+                ////                }
+            }
+            
+            //            let data = ((userInfo["aps"]! as! [String : AnyObject])["alert"]!) as! [String : AnyObject]
+            //
+            //            if let VC = self.gettopMostViewController() as? ChatViewController
+            //            {
+            //                print("Chat screen is already open")
+            //
+            //                NotificationCenter.default.post(name: NotificationforUpdateChatDetail, object: nil)
+            ////                VC.dismiss(animated: true, completion: nil)
+            //            }
+            //            else
+            //            {
+            //                let vc2 = self.gettopMostViewController()
+            //
+            //                print(vc2)
+            //            }
+            //            let alert = UIAlertController(title: appName,
+            //                                          message: data["body"] as? String,
+            //                                          preferredStyle: UIAlertControllerStyle.alert)
+            //
+            //            if key == "news"
+            //            {
+            //                alert.addAction(UIAlertAction(title: "Get Media Details", style: .default, handler: { (action) in
+            //                    self.pushAfterReceiveNotification(typeKey: key, newsID: newsID)
+            //
+            //                }))
+            //            }
+            //            alert.addAction(UIAlertAction(title: "Dismiss", style: .destructive, handler: { (action) in
+            //
+            //            }))
+            //
+            //            self.window?.rootViewController?.present(alert, animated: true, completion: nil)
+        }
+        
+        print(userInfo)
+    }
+
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Swift.Void) {
+        print(response.notification.request.content.userInfo)
+        let dictNoti = response.notification.request.content.userInfo as! [String : AnyObject]
+        let key = (dictNoti)["gcm.notification.type"] as! String
+        self.handleRemoteNotification(key: key, userInfo: dictNoti as NSDictionary, application: UIApplication.shared)
+        
         /*
          // 1
          let userInfo = response.notification.request.content.userInfo
@@ -368,24 +538,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
     //-------------------------------------------------------------
     // MARK: - FireBase Methods
     //-------------------------------------------------------------
-    
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
-        print("Firebase registration token: \(fcmToken)")
+    func messaging(_ messaging: Messaging, didReceive remoteMessage: MessagingRemoteMessage) {
+//        print("Firebase registration token: \(fcmToken)")
         
         // TODO: If necessary send token to application server.
         // Note: This callback is fired at each app startup and whenever a new token is generated.
         
         let token = Messaging.messaging().fcmToken
         print("FCM token: \(token ?? "")")
-        
     }
+    
+//    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String) {
+//        print("Firebase registration token: \(fcmToken)")
+//
+//        // TODO: If necessary send token to application server.
+//        // Note: This callback is fired at each app startup and whenever a new token is generated.
+//
+//        let token = Messaging.messaging().fcmToken
+//        print("FCM token: \(token ?? "")")
+//
+//    }
     
     //-------------------------------------------------------------
     // MARK: - Actions On Push Notifications
     //-------------------------------------------------------------
     
     func pushAfterReceiveNotification(typeKey : String)
-    {        
+    {
         if(typeKey == "AddMoney")
         {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
@@ -550,6 +729,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, GIDSig
         
         SingletonClass.sharedInstance.isPasscodeON = false
         self.GoToLogin()
+    }
+    
+    func gettopMostViewController() -> UIViewController?
+    {
+        return UtilityClass.findtopViewController()
+        
     }
 }
 

@@ -54,7 +54,7 @@ var mapView : GMSMapView?
     @IBOutlet var lblapplyPromoTitle: UILabel!
     var CardID = String()
     var paymentType = String()
-    
+    var NearByRegion:GMSCoordinateBounds!
     var selector = WWCalendarTimeSelector.instantiate()
     
     @IBOutlet var lblFlightnum: UILabel!
@@ -599,7 +599,7 @@ var mapView : GMSMapView?
         
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
-        
+        acController.autocompleteBounds = NearByRegion
         BoolCurrentLocation = false
         
         present(acController, animated: true, completion: nil)
@@ -641,9 +641,10 @@ var mapView : GMSMapView?
         selector.optionCurrentDate = dateCurrent.addingTimeInterval(30 * 60)
 
         // 3. Then you simply present it from your view controller when necessary!
-        self.present(selector, animated: true, completion: nil)
-   
+//        self.present(selector, animated: true, completion: nil)
+        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(selector, animated: true, completion: nil)
     }
+    
     
     
     @IBAction func btnSubmit(_ sender: ThemeButton) {

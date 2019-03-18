@@ -13,7 +13,7 @@ import UIKit
     func didAddCard(cards: NSArray)
 }
 
-class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDelegate, AddCadsDelegate {
+class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDelegate, AddCadsDelegate, DeleteCardDelegate {
 
     
     weak var delegateForTopUp: SelectCardDelegate!
@@ -69,7 +69,8 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
         super.viewDidLoad()
         
         self.setNavBarWithBack(Title: "Card List".localized, IsNeedRightButton: false)
-        
+        self.btnAddCards.layer.cornerRadius = 10.0
+        self.btnAddCards.layer.masksToBounds = true
         self.tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
@@ -113,7 +114,7 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return aryData.count + 1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -124,22 +125,67 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
 //        else {
 //            return aryData.count
 //        }
-        return 1
+        return aryData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "WalletCardsTableViewCell") as! WalletCardsTableViewCell
-        let cell2 = tableView.dequeueReusableCell(withIdentifier: "AddCard") as! WalletCardsTableViewCell
+//        let cell2 = tableView.dequeueReusableCell(withIdentifier: "AddCard") as! WalletCardsTableViewCell
         
         cell.selectionStyle = .none
-        cell2.selectionStyle = .none
-        cell2.lblAddNewCard.text = "Add New Card".localized
-        if indexPath.section == 0 {
-                return cell2
-        } else {
+//        cell2.selectionStyle = .none
+//        cell2.lblAddNewCard.text = "Add New Card".localized
+//        if indexPath.section == 0 {
+//                return cell2
+//        } else {
+            let dictData = aryData[indexPath.row] as [String:AnyObject]
+            //["Expiry": 02/20,"CardNum2": xxxx xxxx xxxx 4242,"Id": 64,"Type": visa,"Alias":,"CardNum": 4242424242424242]
+//            cell.lblCardType.text = "Credit Card"
             
+            let expiryDate = (dictData["Expiry"] as! String).split(separator: "/")
+            let month = expiryDate.first
+            let year = expiryDate.last
+            cell.lblMonthExpiry.text = String(describing: month!)
+            cell.lblYearExpiry.text = String(describing: year!)
+            cell.Delegate = self
+            cell.viewCards.layoutIfNeeded()
+            cell.viewCards.dropShadowToCardView(color: .gray, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
+            cell.viewCards.layer.cornerRadius = 5
+            cell.viewCards.layer.masksToBounds = true
+            
+            
+            let type = dictData["Type"] as! String
+            
+            cell.imgCardIcon.image = UIImage(named: setCreditCardImage(str: type))
+            
+            //                cell.viewCards.backgroundColor = UIColor.orange
+//            cell.lblBankName.text = dictData["Alias"] as? String
+            cell.lblCardNumber.text = dictData["CardNum2"] as? String
+            //                cell.imgCardIcon.image = UIImage(named: "MasterCard")
+            
+            if type == "discover" || type == "mastercard" {
+                // orange
+            }
+            else if type == "diners" {
+                // gray
+            }
+            else {
+                //
+            }
+            
+            let colorTop =  UIColor(red: 78/255, green: 202/255, blue:237/255, alpha: 1.0).cgColor
+            let colorMiddle =  UIColor(red: 187/255, green: 241/255, blue: 239/255, alpha: 0.5).cgColor
+            //            let colorBottom = UIColor(red: 64/255, green: 43/255, blue: 6/255, alpha: 0.8).cgColor
+            
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [colorTop, colorMiddle]
+            gradientLayer.locations = [ 0.0, 0.5]
+            gradientLayer.frame = self.view.bounds
+            cell.viewCards.layer.insertSublayer(gradientLayer, at: 0)
+            
+            /*
             let dictData = aryData[indexPath.section - 1] as [String:AnyObject]
             let expiryDate = (dictData["Expiry"] as! String).split(separator: "/")
             let month = expiryDate.first
@@ -172,7 +218,7 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
             
             
             cell.imgCard.setGradientLayer(LeftColor: colorTop.cgColor, RightColor: colorMiddle.cgColor, BoundFrame: self.view.bounds)
-            
+            */
 //            if type == "discover" || type == "mastercard" {
 //                // orange
 //            }
@@ -184,21 +230,20 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
 //            }
             
             return cell
-        }
+//        }
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         
-        if indexPath.section == 0 {
-            let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
-            next.delegateAddCard = self
-            self.navigationController?.pushViewController(next, animated: true)
-        }
-        else {
-            let selectedData = aryData[indexPath.section - 1] as [String:AnyObject]
-            
+//        if indexPath.section == 0 {
+//            let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
+//            next.delegateAddCard = self
+//            self.navigationController?.pushViewController(next, animated: true)
+//        }
+//        else {
+            let selectedData = aryData[indexPath.row] as [String:AnyObject]
             print("selectedData : \(selectedData)")
             
             if SingletonClass.sharedInstance.isFromTopUP {
@@ -211,17 +256,18 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
                 SingletonClass.sharedInstance.isFromTransferToBank = false
                 self.navigationController?.popViewController(animated: true)
             }
-        }
+//        }
         
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 50
-        }
-        else {
-            return 75
-        }
+        return 164
+//        if indexPath.section == 0 {
+//            return 50
+//        }
+//        else {
+//            return 75
+//        }
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -231,24 +277,24 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 10
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        
-        let selectedData = aryData[indexPath.section - 1] as [String:AnyObject]
-        
-        if editingStyle == .delete {
-            
-            let selectedID = selectedData["Id"] as? String
-            webserviceForRemoveCardFromWallet(cardId : selectedID!)
-//
-////            tableView.beginUpdates()
-//            aryData.remove(at: indexPath.section - 1)
-            
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-////            tableView.endUpdates()
-//            tableView.reloadData()
-        }
-        
-    }
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        
+//        let selectedData = aryData[indexPath.section - 1] as [String:AnyObject]
+//        
+//        if editingStyle == .delete {
+//            
+//            let selectedID = selectedData["Id"] as? String
+//            webserviceForRemoveCardFromWallet(cardId : selectedID!)
+////
+//////            tableView.beginUpdates()
+////            aryData.remove(at: indexPath.section - 1)
+//            
+////            tableView.deleteRows(at: [indexPath], with: .fade)
+//////            tableView.endUpdates()
+////            tableView.reloadData()
+//        }
+//        
+//    }
    
     
     //-------------------------------------------------------------
@@ -339,6 +385,31 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
     }
     
    
+    func DeleteCard(CustomCell: UITableViewCell) {
+        
+        let ConfirmationAlert = UIAlertController(title: "", message: "Are you sure you want to delete this card?", preferredStyle: UIAlertControllerStyle.alert)
+        let YesAction = UIAlertAction(title: "Yes", style: .default) { (UIAlertAction) in
+            if let CardIndexpath:IndexPath = self.tableView.indexPath(for: CustomCell) {
+                
+                let selectedCard = self.aryData[CardIndexpath.row]
+                let selectedID = selectedCard["Id"] as? String
+                
+                //            tableView.beginUpdates()
+                //            aryData.remove(at: indexPath.row)
+                self.webserviceForRemoveCardFromWallet(cardId : selectedID!)
+                //            tableView.deleteRows(at: [CardIndexpath], with: .fade)
+                //            tableView.endUpdates()
+                
+            }
+        }
+        
+        let NoAction = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        ConfirmationAlert.addAction(YesAction)
+        ConfirmationAlert.addAction(NoAction)
+        self.present(ConfirmationAlert, animated: true, completion: nil)
+        
+    }
+    
     //-------------------------------------------------------------
     // MARK: - Webservice Methods For All Cards
     //-------------------------------------------------------------
@@ -388,6 +459,8 @@ class WalletCardsVC: BaseViewController, UITableViewDataSource, UITableViewDeleg
         }
 
     }
+    
+    
     
     //-------------------------------------------------------------
     // MARK: - Webservice Methods Remove Cards

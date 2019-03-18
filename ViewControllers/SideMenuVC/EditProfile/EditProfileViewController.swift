@@ -17,7 +17,7 @@ class EditProfileViewController: BaseViewController {
     @IBOutlet weak var lblEditProfile: UILabel!
     @IBOutlet weak var lblAccount: UILabel!
     
-    @IBOutlet var btnSignOut: ThemeButton!
+//    @IBOutlet var btnSignOut: ThemeButton!
     
     
     override func viewDidLoad() {
@@ -31,6 +31,9 @@ class EditProfileViewController: BaseViewController {
         viewAccount.layer.cornerRadius = 10
         viewAccount.layer.masksToBounds = true
        
+        self.viewEditProfile.backgroundColor = ThemeNaviBlueColor
+        self.viewAccount.backgroundColor = ThemeNaviBlueColor
+        
 //        btnSignOut.setTitleColor(ThemeNaviBlueColor, for: .normal)
 //        btnSignOut.backgroundColor = UIColor.clear
 //        btnSignOut.layer.cornerRadius = btnSignOut.frame.height / 2
@@ -46,8 +49,10 @@ class EditProfileViewController: BaseViewController {
 
         setImageColor()
         
-        iconProfile.image = setImageColorOfImage(name: "iconEditProfile")
-        iconAccount.image = setImageColorOfImage(name: "iconAccount")
+        iconProfile.image = UIImage(named: "iconEditProfile-1")
+//            setImageColorOfImage(name: "iconEditProfile")
+        iconAccount.image = UIImage(named: "iconAddAccount")
+//            setImageColorOfImage(name: "iconAccount")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,7 +74,7 @@ class EditProfileViewController: BaseViewController {
     {
         lblEditProfile.text =  "Edit Profile".localized
         lblAccount.text =  "Account".localized
-        btnSignOut.setTitle("Signout".localized, for: .normal)
+//        btnSignOut.setTitle("Signout".localized, for: .normal)
         
     }
 
@@ -154,7 +159,7 @@ class EditProfileViewController: BaseViewController {
                 socket.off(SocketData.kAdvancedBookingDetails)
                 socket.off(SocketData.kInformPassengerForAdvancedTrip)
                 socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
-                //                Singletons.sharedInstance.isPasscodeON = false
+                //                SingletonClass.sharedInstance.isPasscodeON = false
                 socket.disconnect()
   
                 
@@ -181,6 +186,9 @@ class EditProfileViewController: BaseViewController {
         
         self.navigationController?.pushViewController(viewController!, animated: true)
     }
+    
+    
+    
     @IBOutlet weak var btnCall: UIButton!
     @IBAction func btCallClicked(_ sender: UIButton)
     {

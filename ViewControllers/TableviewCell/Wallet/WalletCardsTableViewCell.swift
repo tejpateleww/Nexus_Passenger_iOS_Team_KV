@@ -8,10 +8,14 @@
 
 import UIKit
 
+protocol DeleteCardDelegate {
+    func DeleteCard(CustomCell: UITableViewCell)
+}
+
 class WalletCardsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var lblAddNewCard: UILabel!
-
+    var Delegate:DeleteCardDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +37,11 @@ class WalletCardsTableViewCell: UITableViewCell {
     //-------------------------------------------------------------
     // Section 0
     
+    // Section 0
+    
+
+    
+    
     @IBOutlet weak var viewCards: UIView!
     
     @IBOutlet weak var imgCardIcon: UIImageView!
@@ -43,8 +52,12 @@ class WalletCardsTableViewCell: UITableViewCell {
     
     @IBOutlet weak var imgCard: UIImageView!
     @IBOutlet weak var lblMonthExpiry: UILabel!
+    @IBOutlet weak var lblYearExpiry: UILabel!
     
-//    @IBOutlet weak var lblYearExpiry: UILabel!
+    @IBAction func btnDeleteCard(_ sender: Any) {
+        self.Delegate.DeleteCard(CustomCell: self)
+        
+    }
     
     // Section 1
     

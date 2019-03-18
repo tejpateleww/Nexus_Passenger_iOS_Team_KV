@@ -42,6 +42,7 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
     var validation = Validation()
     var inputValidator = InputValidator()
     
+    var isCameforTips:Bool = false // this is to check page open from BookingViewcontroller to Give Tips After Booking
     
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -83,14 +84,19 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
     
     func setLocaliztion()
     {
+
         txtCardNumber.placeholder = "Card Number".localized
         txtValidThrough.placeholder = "Expiry Date".localized
         txtCVVNumber.placeholder = "CVV".localized
         btnScanCard.setTitle("scanCard".localized, for: .normal)
-        btnAddPaymentMethods.setTitle("Add Card".localized, for: .normal)
+        btnAddPaymentMethods.setTitle("SAVE".localized, for: .normal)
+        btnAddPaymentMethods.layer.cornerRadius = 10.0
+        btnAddPaymentMethods.layer.masksToBounds = true
+
     }
     
     @IBOutlet weak var btnScanCard: UIButton!
+    
     func setDesignView() {
         txtCardNumber.leftMargin = 0
         txtCVVNumber.leftMargin = 0
@@ -140,7 +146,6 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
         
         if component == 1 {
             if currentYear == aryYear[row] {
-                
                 aryYear.removeFirst(row)
                 for i in 0..<aryMonth.count {
                     if currentMonth == aryMonth[i] {
@@ -164,6 +169,16 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
             strSelectYear = aryYear[row]
             strSelectYear.removeFirst(2)
         }
+        
+        if strSelectMonth == "" {
+            strSelectMonth = aryMonth[0]
+        }
+        
+        if strSelectYear == "" {
+            strSelectYear = aryYear[0]
+            strSelectYear.removeFirst(2)
+        }
+        
         txtValidThrough.text = "\(strSelectMonth)/\(strSelectYear)"
     }
     
@@ -257,6 +272,9 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
         self.view.endEditing(true)
         if (ValidationForAddPaymentMethod()) {
             webserviceOfAddCard()
+        } else {
+            UtilityClass.setCustomAlert(title: "", message: "Please ensure you have entered your payment detail correctly.") { (index, title) in
+            }
         }
         
     }
@@ -317,24 +335,25 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
         }
     }
     
-    func ValidationForAddPaymentMethod() -> Bool {
+    func ValidationForAddPaymentMethod() -> (Bool) {
         
         if (txtCardNumber.text!.count == 0) {
-
-            UtilityClass.setCustomAlert(title: "", message: "Enter Card Number") { (index, title) in
-            }
+            
+            return false
+        }
+        else if (!creditCardValidator.validate(string: self.txtCardNumber.text as! String)) {
             return false
         }
         else if (txtValidThrough.text!.count == 0) {
 
-            UtilityClass.setCustomAlert(title: "", message: "Enter Expiry Date") { (index, title) in
-            }
+//            UtilityClass.setCustomAlert(title: "", message: "Enter Expiry Date") { (index, title) in
+//            }
             return false
         }
         else if (txtCVVNumber.text!.count == 0) {
 
-            UtilityClass.setCustomAlert(title: "", message: "Enter CVV Number") { (index, title) in
-            }
+//            UtilityClass.setCustomAlert(title: "", message: "Enter CVV Number") { (index, title) in
+//            }
             return false
         }
 //        else if (txtAlies.text!.count == 0) {
@@ -419,13 +438,15 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
                         
                         self.dismiss(animated: true, completion: nil)
                     }
+                    else if self.isCameforTips == true {
+                        self.delegateAddCardFromHomeVC.didAddCardFromHomeVC()
+                        self.navigationController?.popViewController(animated: true)
+                    }
                     else {
                         self.navigationController?.popViewController(animated: true)
                         
                     }
                 }
-                
-                
             }
             else {
                 print(result)
@@ -458,6 +479,8 @@ class WalletAddCardsViewController: BaseViewController, UIPickerViewDataSource, 
         if (tabBarController?.presentingViewController is UITabBarController) {
             return true
         }
+        
+        
         return false
     }
     

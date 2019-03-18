@@ -100,6 +100,15 @@ class SingletonClass: NSObject {
     
     
     var strSocialEmail = String()
-    var strSocialFullName = String()
+//    var strSocialFullName = String()
+    var strSocialFirstName = String()
+    var strSocialLastName = String()
     var strSocialImage = String()
+
+    var isChatBoxOpen = Bool()
+    var ChatBoxOpenedWithID = String()
+    
+    var strChatNotificationWhenAppTerminated = String()
+    var NotificationDetail = NSDictionary()
+    
 }

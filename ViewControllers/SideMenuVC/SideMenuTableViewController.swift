@@ -85,8 +85,8 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         self.imgProfile.layer.borderWidth = 1.0
         self.imgProfile.layer.borderColor = UIColor.white.cgColor
         self.imgProfile.layer.masksToBounds = true
-        
-        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
+        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), placeholderImage: UIImage(named: "iconProfilePicBlank"), options: [], completed: nil)
+//        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
         self.lblName.text = ProfileData.object(forKey: "Fullname") as? String
         
         if let Rating = ProfileData.object(forKey: "rating") as? String {
@@ -98,7 +98,7 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         
         
         arrMenuIcons = ["MyBooking","iconPaymentOption","iconStarOfSideMenu","MyReceipts","iconInviteFriends","FAQ","iconLogOut"]
-        arrMenuTitle = ["My Bookings","Payment Options","Favourites","My Receipts","Invite Friends","FAQ","Logout"]
+        arrMenuTitle = ["My Bookings","Payment Options","Favourites","My Receipts","Invite Friends","Help","Logout"]
         
         //,"icon_UnSelectedWallet",,"icon_PaymentOptionsUnselect"
 //                        "iconSettings","iconMyBooking","iconPackageHistory","iconLogOut"]
@@ -268,7 +268,7 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         socket.off(SocketData.kAdvancedBookingDetails)
         socket.off(SocketData.kInformPassengerForAdvancedTrip)
         socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
-        //                Singletons.sharedInstance.isPasscodeON = false
+        //                SingletonClass.sharedInstance.isPasscodeON = false
         socket.disconnect()
         
         for (key, value) in UserDefaults.standard.dictionaryRepresentation() {
@@ -422,6 +422,10 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
                 NotificationCenter.default.post(name: OpenInviteFriend, object: nil)
                 sideMenuController?.toggle()
             }
+            else if arrMenuTitle[indexPath.row] == "Help" {
+                NotificationCenter.default.post(name: OpenHelp, object: nil)
+                sideMenuController?.toggle()
+            }
             else if arrMenuTitle[indexPath.row] == "Settings" {
                 NotificationCenter.default.post(name: OpenSetting, object: nil)
                 sideMenuController?.toggle()
@@ -460,7 +464,7 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
                         socket.off(SocketData.kAdvancedBookingDetails)
                         socket.off(SocketData.kInformPassengerForAdvancedTrip)
                         socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
-                        //                Singletons.sharedInstance.isPasscodeON = false
+                        //                SingletonClass.sharedInstance.isPasscodeON = false
                         socket.disconnect()
                         
                         

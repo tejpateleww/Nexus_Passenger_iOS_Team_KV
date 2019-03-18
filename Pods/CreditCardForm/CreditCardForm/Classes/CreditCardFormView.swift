@@ -9,7 +9,7 @@
 import UIKit
 
 public enum Brands : String {
-    case NONE, Visa, MasterCard, Amex, JCB, DEFAULT, Discover
+    case NONE, Visa, UnionPay, MasterCard, Amex, JCB, DEFAULT, Discover
 }
 
 @IBDesignable
@@ -31,6 +31,7 @@ public class CreditCardFormView : UIView {
     fileprivate var backLine: UIView         = UIView(frame: .zero)
     fileprivate var cvc: AKMaskField         = AKMaskField(frame: .zero)
     fileprivate var chipImg: UIImageView     = UIImageView(frame: .zero)
+    fileprivate var amex                    = false
     
     public var colors = [String : [UIColor]]()
     
@@ -397,18 +398,34 @@ public class CreditCardFormView : UIView {
         let v = CreditCardValidator()
         self.cvc.text = cvc
         
-        if (cardNumber?.count)! >= 7 || (cardNumber?.count)! < 4 {
+        guard let cardN = cardNumber else {
+            return
+        }
+        
+        if (cardN.count == 0)
+        {
+            self.cardNumber.maskExpression = "{....} {....} {....} {....}"
+        }
+        if (cardN.count >= 7 || cardN.count < 4) {
             
-            guard let type = v.type(from: "\(cardNumber as String?)") else {
+            guard let type = v.type(from: "\(cardN as String?)") else {
                 self.brandImageView.image = nil
                 if let name = colors["NONE"] {
                     setType(colors: [name[0], name[1]], alpha: 0.5, back: name[0])
                 }
                 return
             }
-            
+
             // Visa, Mastercard, Amex etc.
             if let name = colors[type.name] {
+                if(type.name.lowercased() == "amex".lowercased()){
+                    if !amex {
+                        self.cardNumber.maskExpression = "{....} {....} {....} {...}"
+                        amex = true
+                    }
+                }else {
+                    amex = false
+                }
                 self.brandImageView.image = UIImage(named: type.name, in: Bundle.currentBundle(), compatibleWith: nil)
                 setType(colors: [name[0], name[1]], alpha: 1, back: name[0])
             }else{
@@ -422,7 +439,7 @@ public class CreditCardFormView : UIView {
             expireDate.text = "MM/YY"
         }
     }
-
+    
     public func paymentCardTextFieldDidBeginEditingCVC() {
         if !showingBack {
             flip()
@@ -446,6 +463,7 @@ extension CreditCardFormView {
         colors[Brands.NONE.rawValue] = [defaultCardColor, defaultCardColor]
         colors[Brands.Visa.rawValue] = [UIColor.hexStr(hexStr: "#5D8BF2", alpha: 1), UIColor.hexStr(hexStr: "#3545AE", alpha: 1)]
         colors[Brands.MasterCard.rawValue] = [UIColor.hexStr(hexStr: "#ED495A", alpha: 1), UIColor.hexStr(hexStr: "#8B1A2B", alpha: 1)]
+        colors[Brands.UnionPay.rawValue] = [UIColor.hexStr(hexStr: "#987c00", alpha: 1), UIColor.hexStr(hexStr: "#826a01", alpha: 1)]
         colors[Brands.Amex.rawValue] = [UIColor.hexStr(hexStr: "#005B9D", alpha: 1), UIColor.hexStr(hexStr: "#132972", alpha: 1)]
         colors[Brands.JCB.rawValue] = [UIColor.hexStr(hexStr: "#265797", alpha: 1), UIColor.hexStr(hexStr: "#3d6eaa", alpha: 1)]
         colors["Diners Club"] = [UIColor.hexStr(hexStr: "#5b99d8", alpha: 1), UIColor.hexStr(hexStr: "#4186CD", alpha: 1)]

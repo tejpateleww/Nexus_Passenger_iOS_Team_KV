@@ -23,7 +23,7 @@
 //  THE SOFTWARE.
 
 import Foundation
-import Starscream
+import StarscreamSocketIO
 
 enum JSONError : Error {
     case notArray
@@ -111,9 +111,9 @@ extension String {
         return array
     }
 
-    func toDictionary() throws -> [String: Any] {
+    func toNSDictionary() throws -> NSDictionary {
         guard let binData = data(using: .utf16, allowLossyConversion: false) else { return [:] }
-        guard let json = try JSONSerialization.jsonObject(with: binData, options: .allowFragments) as? [String: Any] else {
+        guard let json = try JSONSerialization.jsonObject(with: binData, options: .allowFragments) as? NSDictionary else {
             throw JSONError.notNSDictionary
         }
 

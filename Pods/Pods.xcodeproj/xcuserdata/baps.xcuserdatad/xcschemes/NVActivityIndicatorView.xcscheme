@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "50563F2D3BAABEDDCC403750C942DB42"
+               BlueprintIdentifier = "666D06A5C023D7FE806F970BF6FEBA77"
                BlueprintName = "NVActivityIndicatorView"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "NVActivityIndicatorView.framework">

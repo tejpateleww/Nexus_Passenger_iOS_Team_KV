@@ -87,49 +87,52 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         let cell = tableView.dequeueReusableCell(withIdentifier: "UpCommingTableViewCell") as! UpCommingTableViewCell
         
         if aryData.count > 0 {
-            
-            
-            let currentData = (aryData.object(at: indexPath.row) as! [String:AnyObject])
+//            let currentData = (aryData.object(at: indexPath.row) as! [String:AnyObject])
             
             cell.selectionStyle = .none
             
-            cell.viewCell.layer.cornerRadius = 10
-            cell.viewCell.clipsToBounds = true
+            cell.lblPickupAddressTitle.text = "PICK UP LOCATION".localized
+            cell.lblDropoffAddressTitle.text = "DROP OFF LOCATION".localized
+            cell.lblPickUpTimeTitle.text = "PICKUP TIME".localized
+            cell.lblVehicleTypeTitle.text = "VEHICLE TYPE".localized
+            cell.lblPaymentTypeTitle.text = "PAYMENT TYPE".localized
+            
+            cell.btnCancelRequest.setTitle("Track Your Trip".localized, for: .normal)
+            cell.btnCancelRequest.titleLabel?.font = UIFont.bold(ofSize: 11.0)
+            
+//            cell.viewCell.layer.cornerRadius = 10
+//            cell.viewCell.clipsToBounds = true
+            
+            let dictData = aryData.object(at: indexPath.row) as! NSDictionary
+            
+            if let BookingID = dictData.object(forKey: "Id") as? String {
+                cell.lblBookingId.text = "\("Booking Id".localized) : \(BookingID)"
+            }
+            
+            //            cell.lblBookingID.attributedText = formattedString
+            cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
+            cell.lblPickupAddress.text = dictData.object(forKey: "PickupLocation") as? String // PickupLocation
+            cell.lblDropoffAddress.text = dictData.object(forKey: "DropoffLocation") as? String  // DropoffLocation
+            
+            if let pickupTime = dictData.object(forKey: "PickupDateTime") as? String {
+                if pickupTime == "" {
+                    cell.lblPickUpTime.text = "Date and Time not available"
+                }
+                else {
+                    cell.lblPickUpTime.text = pickupTime
+//                        setTimeStampToDate(timeStamp: pickupTime)
+                }
+            }
+            cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
+            cell.lblPaymentType.text = dictData.object(forKey: "PaymentType") as? String
+            
             let myString = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String
-//            let myAttribute = [ NSAttributedStringKey.foregroundColor: UIColor.black, .underlineStyle: NSUnderlineStyle.styleSingle.rawValue] as [NSAttributedStringKey : Any]
-//            let myAttrString = NSAttributedString(string: myString!, attributes: myAttribute)
             cell.lblDriverName.text = myString
-            cell.lblPaymentType.text = "Cash"
-            cell.lblVehicleType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Model") as? String
-            cell.lblTripStatus.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Status") as? String
-            cell.lblPickupAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PickupLocation") as? String // PickupLocation
-            cell.lblDropoffAddress.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropoffLocation") as? String //  DropoffLocation
-            var time = ((aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String)
-            time!.removeLast(3)
-            
-            cell.lblDateAndTime.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "CreatedDate") as? String
-            cell.lblPaymentType.text = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "PaymentType") as? String
-  
-            if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? String {
-                cell.btnCancelRequest.tag = Int(bookingID)!
-            }
-            else if let bookingID = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id") as? Int {
-                cell.btnCancelRequest.tag = bookingID
-            }
-            
-//            cell.lblPickupTime.text = checkDictionaryHaveValue(dictData: currentData, didHaveValue: "PickupTime", isNotHave: notAvailable)
-//            cell.lblDistanceTravelled.text = checkDictionaryHaveValue(dictData: currentData, didHaveValue: "TripDistance", isNotHave: notAvailable)
-            
-            cell.lblBookingId.text = "\("Booking Id :".localized) \(checkDictionaryHaveValue(dictData: currentData, didHaveValue: "Id", isNotHave: notAvailable))"
-            
-            cell.lblVehicleTypeTitle.text = "Vehicle Type:".localized
-            cell.lblPaymentTypeTitle.text = "Payment Type:".localized
-            cell.lblTripStatusTitle.text = "Trip Status:".localized
             
             bookinType = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingType") as! String
             cell.btnCancelRequest.setTitle("Cancel Request".localized, for: .normal)
             cell.btnCancelRequest.addTarget(self, action: #selector(self.CancelRequest), for: .touchUpInside)
-            
+            cell.btnCancelRequest.tag = indexPath.row
             cell.btnCancelRequest.layer.cornerRadius = 5
             cell.btnCancelRequest.layer.masksToBounds = true
             
@@ -156,9 +159,11 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     @objc func CancelRequest(sender: UIButton)
     {
-        
-         let bookingID = sender.tag
-        
+        let Index = sender.tag
+        let currentData = (aryData.object(at: Index) as! [String:AnyObject])
+        guard let bookingID = currentData["Id"] as? String else {
+            return
+        }
         RMUniversalAlert.show(in: self, withTitle:appName, message: "Are you sure you want to cancel this request?", cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: ["Yes", "No"], tap: {(alert, buttonIndex) in
             if (buttonIndex == 2)
             {

@@ -26,28 +26,22 @@ class UpCommingTableViewCell: UITableViewCell {
     //-------------------------------------------------------------
     
     @IBOutlet var viewCell: UIView!
-    @IBOutlet weak var lblDriverName: UILabel!
-    
-    @IBOutlet weak var lblDropoffAddress: UILabel!
-    @IBOutlet weak var lblDateAndTime: UILabel!
-    
-    @IBOutlet weak var lblPickupAddress: UILabel!
-    
-    @IBOutlet weak var lblPaymentType: UILabel!
-    
-    @IBOutlet weak var btnCancelRequest: ThemeButton!
-    
     @IBOutlet weak var viewDetails: UIView!
-    
-    @IBOutlet weak var lblVehicleType: UILabel!
-    @IBOutlet weak var lblTripStatus: UILabel!
-    
+    @IBOutlet weak var lblDriverName: UILabel!
     @IBOutlet weak var lblBookingId: UILabel!
-    
-    
+    @IBOutlet weak var lblDropoffAddressTitle: UILabel!
+    @IBOutlet weak var lblPickupAddressTitle: UILabel!
+    @IBOutlet weak var lblDropoffAddress: UILabel!
+    @IBOutlet weak var lblPickupAddress: UILabel!
+    @IBOutlet weak var lblDateAndTime: UILabel!
+
+    @IBOutlet weak var btnCancelRequest: ThemeButton!
+    @IBOutlet weak var lblPickUpTimeTitle: UILabel!
     @IBOutlet weak var lblVehicleTypeTitle: UILabel!
     @IBOutlet weak var lblPaymentTypeTitle: UILabel!
-    @IBOutlet weak var lblTripStatusTitle: UILabel!
-    
+    @IBOutlet weak var lblPickUpTime: UILabel!
+    @IBOutlet weak var lblVehicleType: UILabel!
+    @IBOutlet weak var lblPaymentType: UILabel!
+
     
 }

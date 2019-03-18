@@ -25,41 +25,39 @@ class OnGoingTableViewCell: UITableViewCell {
     // MARK: - Outlets
     //-------------------------------------------------------------
     @IBOutlet weak var viewDetails: UIView!
-    
-    @IBOutlet weak var lblSecoundDescription: UILabel!
     @IBOutlet var viewCell: UIView!
+   
     @IBOutlet weak var lblDriverName: UILabel!
     @IBOutlet weak var lblBookingID: UILabel!
-    
-    @IBOutlet weak var lblFirstDescription: UILabel!
     @IBOutlet weak var btnTrackYourTrip: ThemeButton!
     
+    @IBOutlet weak var lblPickupUpAddressTitle: UILabel!
+    @IBOutlet weak var lblDropOffAddressTitle: UILabel!
     @IBOutlet weak var lblDropoffAddress: UILabel!
+    @IBOutlet weak var lblPickupAddress: UILabel!
     @IBOutlet weak var lblDateAndTime: UILabel!
     
-    @IBOutlet weak var lblPickupAddress: UILabel!
-    
+    @IBOutlet weak var lblPickupTimeTitle: UILabel!
+    @IBOutlet weak var lblVehicleTypeTitle: UILabel!
+    @IBOutlet weak var lblPaymentTypeTitle: UILabel!
     @IBOutlet weak var lblPickupTime: UILabel!
-    @IBOutlet weak var lblDropoffTime: UILabel!
-    
     @IBOutlet weak var lblVehicleType: UILabel!
+    @IBOutlet weak var lblPaymentType: UILabel!
     
+    /*
+    @IBOutlet weak var lblDropoffTime: UILabel!
+    @IBOutlet weak var lblSecoundDescription: UILabel!
     @IBOutlet weak var lblDistanceTravelled: UILabel!
     @IBOutlet weak var lblTripFare: UILabel!
-    
+    @IBOutlet weak var lblFirstDescription: UILabel!
     @IBOutlet weak var lblNightFare: UILabel!
     @IBOutlet weak var lblTollFee: UILabel!
-    
     @IBOutlet weak var lblWaitingCost: UILabel!
-    
     @IBOutlet weak var lblBookingCharge: UILabel!
-    
     @IBOutlet weak var lblTax: UILabel!
     @IBOutlet weak var lblDiscount: UILabel!
-    
-    @IBOutlet weak var lblPaymentType: UILabel!
     @IBOutlet weak var lblTotalCost: UILabel!
-    
+    */
     
 
 }

@@ -80,7 +80,7 @@ extension SocketEnginePollable {
             postStr += "\(packet.utf16.count):\(packet)"
         }
 
-        DefaultSocketLogger.Logger.log("Created POST string: \(postStr)", type: "SocketEnginePolling")
+        DefaultSocketLogger.Logger.log("Created POST string: %@", type: "SocketEnginePolling", args: postStr)
 
         var req = URLRequest(url: urlPollingWithSid)
         let postData = postStr.data(using: .utf8, allowLossyConversion: false)!
@@ -110,7 +110,8 @@ extension SocketEnginePollable {
     func doRequest(for req: URLRequest, callbackWith callback: @escaping (Data?, URLResponse?, Error?) -> ()) {
         guard polling && !closed && !invalidated && !fastUpgrade else { return }
 
-        DefaultSocketLogger.Logger.log("Doing polling \(req.httpMethod ?? "") \(req)", type: "SocketEnginePolling")
+        DefaultSocketLogger.Logger.log("Doing polling %@ %@", type: "SocketEnginePolling",
+                                       args: req.httpMethod ?? "", req)
 
         session?.dataTask(with: req, completionHandler: callback).resume()
     }
@@ -184,9 +185,9 @@ extension SocketEnginePollable {
     }
 
     func parsePollingMessage(_ str: String) {
-        guard str.count != 1 else { return }
+        guard str.characters.count != 1 else { return }
 
-        DefaultSocketLogger.Logger.log("Got poll message: \(str)", type: "SocketEnginePolling")
+        DefaultSocketLogger.Logger.log("Got poll message: %@", type: "SocketEnginePolling", args: str)
 
         var reader = SocketStringReader(message: str)
 
@@ -208,7 +209,7 @@ extension SocketEnginePollable {
     /// - parameter withType: The type of message to send.
     /// - parameter withData: The data associated with this message.
     public func sendPollMessage(_ message: String, withType type: SocketEnginePacketType, withData datas: [Data]) {
-        DefaultSocketLogger.Logger.log("Sending poll: \(message) as type: \(type.rawValue)", type: "SocketEnginePolling")
+        DefaultSocketLogger.Logger.log("Sending poll: %@ as type: %@", type: "SocketEnginePolling", args: message, type.rawValue)
 
         postWait.append(String(type.rawValue) + message)
 

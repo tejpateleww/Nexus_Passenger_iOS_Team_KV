@@ -5,13 +5,13 @@ target 'Nexus User' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   pod 'ACFloatingTextfield-Swift'
-  pod 'TransitionButton'
+#  pod 'TransitionButton'
   pod 'IQKeyboardManagerSwift'
   pod 'CHIPageControl'
-  pod 'GoogleMaps'
-  pod 'GooglePlaces'
+  pod 'GoogleMaps', '= 3.0.3'
+  pod 'GooglePlaces', '= 3.0.3'
   pod 'Alamofire'
-  pod 'Socket.IO-Client-Swift'
+  pod 'Socket.IO-Client-Swift','= 11.1.3'
   # pod 'SideMenu'
   pod 'NVActivityIndicatorView'
   pod 'Fabric'
@@ -28,13 +28,13 @@ target 'Nexus User' do
 #  pod 'ACProgressHUD-Swift'
   pod 'CreditCardForm'
   pod 'FormTextField'
-  pod 'Firebase/Core'
+#  pod 'Firebase/Core'
   pod 'Firebase/Messaging'
   pod 'IQDropDownTextField'
   pod 'GoogleAnalytics'
 
   # pod 'WWCalendarTimeSelector'
-  pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'
+#  pod 'DOAlertController', :git => 'https://github.com/okmr-d/DOAlertController.git', :branch => 'master'
   # Pods for TickTok User
 
 end
