@@ -31,7 +31,7 @@ extension UIApplication {
 class BookLaterViewController: BaseViewController, GMSAutocompleteViewControllerDelegate, UINavigationControllerDelegate, WWCalendarTimeSelectorProtocol, UIPickerViewDelegate, UIPickerViewDataSource, isHaveCardFromBookLaterDelegate, UITextFieldDelegate,GMSMapViewDelegate {
    
     var delegateBookLater : deleagateForBookTaxiLater!
-var mapView : GMSMapView?
+    var mapView : GMSMapView?
     var pickerView = UIPickerView()
     var strModelId = String()
     var BoolCurrentLocation = Bool()
@@ -51,10 +51,12 @@ var mapView : GMSMapView?
     var aryOfPaymentOptionsNames = [String]()
     var aryOfPaymentOptionsImages = [String]()
     
+    var isOpenPlacePickerController:Bool = false
+    
     @IBOutlet var lblapplyPromoTitle: UILabel!
     var CardID = String()
     var paymentType = String()
-    var NearByRegion:GMSCoordinateBounds!
+    var NearByRegion:GMSCoordinateBounds!   //this nearByRegion Detail to get near by locations in suggestions
     var selector = WWCalendarTimeSelector.instantiate()
     
     @IBOutlet var lblFlightnum: UILabel!
@@ -69,6 +71,7 @@ var mapView : GMSMapView?
         mapView = GMSMapView()
         mapView?.delegate = self
         txtDropOffLocation.delegate = self
+        txtPickupLocation.delegate = self
 //        txtSelectPaymentMethod.text = "Cash"
 //        txtSelectPaymentMethod.isUserInteractionEnabled = false
         self.setNavBarWithBack(Title: "Book Later".localized, IsNeedRightButton: false)
@@ -137,7 +140,7 @@ var mapView : GMSMapView?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-         
+         if self.isOpenPlacePickerController == false {
           
         gaveCornerRadius()
         
@@ -155,7 +158,8 @@ var mapView : GMSMapView?
 //       txtSelectPaymentMethod.keyboardToolbar.doneBarButton.setTarget(self, action: #selector(self.IQKeyboardmanagerDoneMethod))
 //
         fillTextFields()
-        
+        }
+        self.isOpenPlacePickerController = false
 //        getPlaceFromLatLong()
     }
 
@@ -567,41 +571,39 @@ var mapView : GMSMapView?
     }
     
     @IBAction func txtPickupLocation(_ sender: UITextField) {
-
-        let visibleRegion = mapView?.projection.visibleRegion()
-        var location = CLLocationCoordinate2D()
-        if SingletonClass.sharedInstance.currentLatitude != nil
-        {
-            location = CLLocationCoordinate2DMake(Double(SingletonClass.sharedInstance.currentLatitude)!, Double(SingletonClass.sharedInstance.currentLongitude)!)
-        }
         
-        let bounds = GMSCoordinateBounds(coordinate: location, coordinate: location)
+//        let visibleRegion = mapView?.projection.visibleRegion()
+//        var location = CLLocationCoordinate2D()
+//        if SingletonClass.sharedInstance.currentLatitude != nil
+//        {
+//            location = CLLocationCoordinate2DMake(Double(SingletonClass.sharedInstance.currentLatitude)!, Double(SingletonClass.sharedInstance.currentLongitude)!)
+//        }
         
+//        let bounds = GMSCoordinateBounds(coordinate: location, coordinate: location)
+        self.isOpenPlacePickerController = true
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
-        
+        acController.autocompleteBounds = NearByRegion
         BoolCurrentLocation = true
-        
         present(acController, animated: true, completion: nil)
         
     }
     @IBAction func txtDropOffLocation(_ sender: UITextField) {
         
-        
-        let visibleRegion = mapView?.projection.visibleRegion()
-        var location = CLLocationCoordinate2D()
-        if SingletonClass.sharedInstance.currentLatitude != nil
-        {
-            location = CLLocationCoordinate2DMake(Double(SingletonClass.sharedInstance.currentLatitude)!, Double(SingletonClass.sharedInstance.currentLongitude)!)
-        }
-        
-        let bounds = GMSCoordinateBounds(coordinate: location, coordinate: location)
-        
+       
+//        let visibleRegion = mapView?.projection.visibleRegion()
+//        var location = CLLocationCoordinate2D()
+//        if SingletonClass.sharedInstance.currentLatitude != nil
+//        {
+//            location = CLLocationCoordinate2DMake(Double(SingletonClass.sharedInstance.currentLatitude)!, Double(SingletonClass.sharedInstance.currentLongitude)!)
+//        }
+//
+//        let bounds = GMSCoordinateBounds(coordinate: location, coordinate: location)
+        self.isOpenPlacePickerController = true
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
         acController.autocompleteBounds = NearByRegion
         BoolCurrentLocation = false
-        
         present(acController, animated: true, completion: nil)
         
     }
@@ -738,8 +740,13 @@ var mapView : GMSMapView?
         if textField == txtDropOffLocation {
             
             self.txtDropOffLocation(txtDropOffLocation)
-            
             return false
+            
+        } else if textField == txtPickupLocation {
+            
+            self.txtPickupLocation(txtPickupLocation)
+            return false
+            
         }
         
         return true

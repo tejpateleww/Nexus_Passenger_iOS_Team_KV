@@ -111,7 +111,7 @@ class InviteDriverViewController: BaseViewController, MFMailComposeViewControlle
             
             strName = (decodeResults.object(forKey: "Fullname") as? String)!
         }
-        let strContent = "\(strName) has invited you to become a Nexus Passenger.\n\nclick here\nhttps://nexusappllc.com/"
+        let strContent = "\(strName) has invited you to become a \(appName) Passenger.\n\nclick here\nhttps://nexusappllc.com/"
 //        "\(strName)  has invited you to become a TanTaxi Passenger.\n \n click here \("https://itunes.apple.com/us/app/TanTaxi/id1445179460?ls=1&mt=8") \n\n Your invite code is: \(strReferralCode)" // \n https://www.facebook.com/tesluxe \n https://www.instagram.com/teslux3 \n https://www.instagram.com/teslux3 \n https://twitter.com/TESLUX3"
         //        name + " has invited you to become a Tesluxe Passenger.\n" +
         //            "\n" +
@@ -403,15 +403,16 @@ class InviteDriverViewController: BaseViewController, MFMailComposeViewControlle
     {
         let profile = SingletonClass.sharedInstance.dictProfile
         let driverFullName = profile.object(forKey: "Fullname") as! String
-        let messageBody = "\(driverFullName) has invited you to become a \(appName) user"
-        let androidLink = "Android click \("")"
- 
-        let iosLink = "iOS click \("https://goo.gl/L6XLqx")"
-        
-        let yourInviteCode = "Your invite code is: \(strReferralCode)"
-        let urlOfTick = "http://www.pickngo.lk/ https://www.facebook.com/PickNGoSrilanka/"
-        
-        let urlString = "\(messageBody) \n \(androidLink) \n \(iosLink) \n \(yourInviteCode) \n \(urlOfTick)" as String
+//        let messageBody = "\(driverFullName) has invited you to become a \(appName) user"
+//        let androidLink = "Android click \("")"
+//
+//        let iosLink = "iOS click \("https://goo.gl/L6XLqx")"
+//
+//        let yourInviteCode = "Your invite code is: \(strReferralCode)"
+//        let urlOfTick = "http://www.pickngo.lk/ https://www.facebook.com/PickNGoSrilanka/"
+//
+        let urlString = "\(driverFullName) has invited you to become a \(appName) Passenger.\n\nclick here\nhttps://nexusappllc.com/"
+            //"\(messageBody) \n \(androidLink) \n \(iosLink) \n \(yourInviteCode) \n \(urlOfTick)" as String
         return urlString
     }
     
