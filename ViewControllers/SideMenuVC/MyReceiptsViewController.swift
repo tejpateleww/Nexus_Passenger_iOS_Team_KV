@@ -21,6 +21,8 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
     
     var labelNoData = UILabel()
     
+    @IBOutlet weak var lblNoDataFound: UILabel!
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -34,21 +36,18 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         super.viewDidLoad()
         self.counts = 0
-  
-        
       
         tableView.dataSource = self
         tableView.delegate = self
         tableView.tableFooterView = UIView()
-        
 //        labelNoData = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
 //        self.labelNoData.text = "Loading..."
 //        labelNoData.textAlignment = .center
 //        self.view.addSubview(labelNoData)
 //        self.tableView.isHidden = true
         
-       webserviewOfMyReceipt()
-          self.setNavBarWithBack(Title: "My Receipts".localized, IsNeedRightButton: false)
+        webserviewOfMyReceipt()
+        self.setNavBarWithBack(Title: "My Receipts".localized, IsNeedRightButton: false)
         self.tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
         self.tableView.addSubview(self.refreshControl)
     }
@@ -398,6 +397,11 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                     }
                 }
                 
+                if self.newAryData.count > 0 {
+                    self.lblNoDataFound.isHidden = true
+                } else {
+                    self.lblNoDataFound.isHidden = false
+                }
             
                self.tableView.reloadData()
                 

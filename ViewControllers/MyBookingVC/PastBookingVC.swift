@@ -25,6 +25,8 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     var expandedCellPaths = Set<IndexPath>()
     
+    @IBOutlet weak var lblNoDataFound: UILabel!
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -38,7 +40,7 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.lblNoDataFound.text = "No Data Found".localized
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         self.tableView.addSubview(self.refreshControl)
@@ -360,7 +362,7 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current //Set timezone that you want
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH/mm yyyy/MM/dd" //Specify your format that you want
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd" //Specify your format that you want
         let strDate: String = dateFormatter.string(from: date)
         
         return strDate
@@ -388,14 +390,20 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                         }
                     }
                     
-                    if(self.aryData.count == 0) {
-//                        self.labelNoData.text = "No data found."
-//                        self.tableView.isHidden = true
+                    if self.aryData.count > 0 {
+                        self.lblNoDataFound.isHidden = true
+                    } else {
+                        self.lblNoDataFound.isHidden = false
                     }
-                    else {
-//                        self.labelNoData.removeFromSuperview()
-                        self.tableView.isHidden = false
-                    }
+                    
+//                    if(self.aryData.count == 0) {
+////                        self.labelNoData.text = "No data found."
+////                        self.tableView.isHidden = true
+//                    }
+//                    else {
+////                        self.labelNoData.removeFromSuperview()
+//                        self.tableView.isHidden = false
+//                    }
                     
                     //                    self.getPostJobs()
                     self.refreshControl.endRefreshing()
@@ -412,7 +420,7 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
     }
     
     var isDataLoading:Bool=false
-    var pageNo:Int = 0
+    var pageNo:Int = 1
     var didEndReached:Bool=false
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

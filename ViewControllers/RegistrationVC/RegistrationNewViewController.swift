@@ -67,6 +67,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         txtField.layer.borderColor = UIColor.white.cgColor
         txtField.layer.borderWidth = 1.0
     }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.width/2

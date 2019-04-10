@@ -24,6 +24,9 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     var expandedCellPaths = Set<IndexPath>()
     
+    @IBOutlet weak var lblNoDataFound: UILabel!
+    
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -37,7 +40,7 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.lblNoDataFound.text = "No Data Found".localized
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         
@@ -61,6 +64,13 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @objc func reloadDataTableView()
     {
         self.aryData = SingletonClass.sharedInstance.aryUpComming
+        
+        if self.aryData.count > 0 {
+            self.lblNoDataFound.isHidden = true
+        } else {
+            self.lblNoDataFound.isHidden = false
+        }
+        
         self.tableView.reloadData()
 //        self.tableView.frame.size = tableView.contentSize
     }

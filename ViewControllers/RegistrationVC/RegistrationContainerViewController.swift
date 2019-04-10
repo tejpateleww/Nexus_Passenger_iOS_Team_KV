@@ -77,6 +77,11 @@ class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate
             self.firstStep.image = UIImage(named: "Selected_Circle")
         } else if Index == 1 {
             self.secondStep.image = UIImage(named: "Selected_Circle")
+            for  ChildViewController in self.childViewControllers {
+                if let Childpage = ChildViewController as? RegisterOTPVarificationViewController {
+                    Childpage.txtOTP.text = ""
+                }
+            }
         } else if Index == 2 {
             self.thirdStep.image = UIImage(named: "Selected_Circle")
         }

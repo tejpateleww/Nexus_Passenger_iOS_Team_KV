@@ -16,11 +16,14 @@ class RegisterOTPVarificationViewController: UIViewController {
     // MARK: - Base Methods
     //-------------------------------------------------------------
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setCornerToTextField(txtField: txtOTP)
        
     }
+    
+
     func setCornerToTextField(txtField : UITextField)
     {
         txtField.layer.cornerRadius = txtField.frame.height / 2

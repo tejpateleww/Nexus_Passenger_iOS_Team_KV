@@ -53,7 +53,6 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
             // do some tasks..
         }
         else {
-            
             UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
             }
         }
@@ -104,16 +103,17 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         //        txtEmail.lineColor = UIColor.white
         //        txtPassword.lineColor = UIColor.white`
         
-        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" ||  UIDevice.current.name == "iOS2’s iPad" ||  UIDevice.current.name == "Excellent iPhone 7" || UIDevice.current.name ==  "Mayur's iPhone X" || UIDevice.current.name ==  "EWW iPhone" {
-            
-            txtPassword.text = "12345678"
-            txtEmail.text = "bhavesh@excellentwebworld.info" // "bhavesh@excellentwebworld.info"
-        }
-        
-        #if targetEnvironment(simulator)
-        txtPassword.text = "12345678"
-        txtEmail.text = "bhavesh@yahoo.com" // "bhavesh@excellentwebworld.info"
-        #endif
+//        if UIDevice.current.name == "Bhavesh iPhone" || UIDevice.current.name == "Excellent Web's iPhone 5s" || UIDevice.current.name == "Rahul's iPhone" ||  UIDevice.current.name == "iOS2’s iPad" ||  UIDevice.current.name == "Excellent iPhone 7" || UIDevice.current.name ==  "Mayur's iPhone X" || UIDevice.current.name ==  "EWW iPhone" {
+//
+//            txtPassword.text = "12345678"
+//            txtEmail.text = "bhavesh@excellentwebworld.info" // "bhavesh@excellentwebworld.info"
+//        }
+//
+//        #if targetEnvironment(simulator)
+//        txtPassword.text = "12345678"
+//        txtEmail.text = "bhavesh@yahoo.com" // "bhavesh@excellentwebworld.info"
+//        #endif
+//
         
         self.setCornerToTextField(txtField: txtEmail)
         self.setCornerToTextField(txtField: txtPassword)

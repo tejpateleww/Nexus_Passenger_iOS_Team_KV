@@ -847,7 +847,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var btnDoneForLocationSelected: ThemeButton!
     
     @IBAction func btnDoneForLocationSelected(_ sender: ThemeButton) {
-        
+        if Connectivity.isConnectedToInternet() == false {
+            UtilityClass.showAlert("", message: "Sorry! Not connected to internet".localized, vc: self)
+            return
+        }
         
         clearMap()
         self.routePolyline.map = nil
@@ -2828,6 +2831,11 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var btnRequest: ThemeButton!
     
     @IBAction func btnRequest(_ sender: ThemeButton) {
+        
+        if Connectivity.isConnectedToInternet() == false {
+            UtilityClass.showAlert("", message: "Sorry! Not connected to internet".localized, vc: self)
+            return
+        }
         
         
         let alert = UIAlertController(title: nil, message: "If you cancel the trip then you will be partially charged. Are you sure you want to cancel the trip?".localized, preferredStyle: .alert)

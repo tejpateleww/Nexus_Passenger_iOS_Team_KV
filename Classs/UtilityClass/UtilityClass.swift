@@ -295,7 +295,7 @@ extension UILabel {
 
 class Connectivity {
     class func isConnectedToInternet() ->Bool {
-        return NetworkReachabilityManager()!.isReachable
+        return NetworkReachabilityManager(host: "www.apple.com")!.isReachable
     }
 }
 

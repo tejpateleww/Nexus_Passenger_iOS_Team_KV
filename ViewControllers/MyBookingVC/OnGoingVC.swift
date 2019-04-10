@@ -23,6 +23,9 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     var expandedCellPaths = Set<IndexPath>()
     
+    
+    @IBOutlet weak var lblNoDataFound: UILabel!
+    
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -35,7 +38,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-   
+        self.lblNoDataFound.text = "No Data Found".localized
         tableView.separatorStyle = .none
         tableView.tableFooterView = UIView()
         self.tableView.addSubview(self.refreshControl)
@@ -50,9 +53,6 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
     }
     
-   
-    
-  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -62,6 +62,12 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @objc func reloadDataOfTableView() {
         
         self.aryData = SingletonClass.sharedInstance.aryOnGoing
+        
+        if self.aryData.count > 0 {
+            self.lblNoDataFound.isHidden = true
+        } else {
+            self.lblNoDataFound.isHidden = false
+        }
         self.tableView.reloadData()
         
     }
@@ -267,7 +273,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone.current //Set timezone that you want
         dateFormatter.locale = NSLocale.current
-        dateFormatter.dateFormat = "HH/mm yyyy/MM/dd" //Specify your format that you want
+        dateFormatter.dateFormat = "HH:mm yyyy/MM/dd" //Specify your format that you want
         let strDate: String = dateFormatter.string(from: date)
         
         return strDate
