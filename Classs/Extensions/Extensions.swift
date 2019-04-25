@@ -95,3 +95,34 @@ extension UIView {
     }
     
 }
+//Mark: Identifier
+
+extension UIViewController{
+    static var identifier: String{
+        return String(describing: self)
+    }
+}
+extension UITableViewCell{
+    static var identifier: String{
+        return String(describing: self)
+    }
+}
+extension UICollectionViewCell{
+    static var identifier: String{
+        return String(describing: self)
+    }
+}
+
+extension UIButton{
+    var status: PassStatus{
+        get{
+            if self.currentTitle == PassStatus.deactivate.rawValue{
+                return .deactivate
+            }
+            return .activate
+        }
+        set{
+            self.setTitle(newValue.rawValue, for: .normal)
+        }
+    }
+}

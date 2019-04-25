@@ -19,6 +19,7 @@ let themeYellowColor: UIColor =  UIColor.init(hex: "E48428")
 let themeGrayColor: UIColor = UIColor.init(red: 114/255, green: 114/255, blue: 114/255, alpha: 1.0)
 //let ThemeYellowColor : UIColor = UIColor.init(hex: "ffa300")
 let themeGrayBGColor : UIColor = UIColor.init(hex: "DDDDDD")
+let cellBGColor = UIColor(hex: "f5f5f5")
 let themeGrayTextColor : UIColor = UIColor.init(hex: "7A7A7C")
 let currencySign = "$"
 let appName = "Nexus"
@@ -118,6 +119,11 @@ struct WebserviceURLs {
     static let kMissBokkingRequest                      = "BookingMissRequest"
     static let kTrackRunningTrip                        = "TrackRunningTrip/"
     
+    static let kPassType                                = "PassType"
+    static let kPassHistory                             = "PassHistory/"
+    static let kSubscribePassType                       = "BuyPass"
+    static let kSubscribePassEdit                       = "EditPass"
+    static let kDeactivePass                            = "DeactivePass/"
 
 //    https://pickngolk.info/web/Passenger_Api/OtpForRegister
 }
@@ -142,6 +148,8 @@ struct SocketData {
     static let kReceiveHoldingNotificationToPassenger       = "TripHoldNotification"
     static let kSendRequestForGetEstimateFare               = "EstimateFare"
     static let kReceiveGetEstimateFare                      = "GetEstimateFare"
+    static let kArrivedDriverBookLaterRequest               = "AdvanceBookingDriverArrivedAtPickupLocation"
+    static let kArrivedDriverBookNowRequest                 = "DriverArrivedAtPickupLocation"
     
     static let kAcceptAdvancedBookingRequestNotification    = "AcceptAdvancedBookingRequestNotification"
     static let kRejectAdvancedBookingRequestNotification    = "RejectAdvancedBookingRequestNotification"
@@ -242,6 +250,7 @@ let OpenMyReceipt = NSNotification.Name("OpenMyReceipt")
 let OpenFavourite = NSNotification.Name("OpenFavourite")
 let OpenInviteFriend = NSNotification.Name("OpenInviteFriend")
 let OpenHelp = NSNotification.Name("Help")
+let OpenPass = NSNotification.Name("Pass")
 let OpenSetting = NSNotification.Name("OpenSetting")
 let OpenSupport = NSNotification.Name("OpenSupport")
 let OpenHome = NSNotification.Name("OpenHome")

@@ -320,7 +320,7 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
                 self.aryHistory = (result as! NSDictionary).object(forKey: "history") as! NSArray
                 
 //                print(self.aryHistory)
-                
+              
                 SingletonClass.sharedInstance.aryHistory = self.aryHistory
                 
                 // ------------------------------------------------------------

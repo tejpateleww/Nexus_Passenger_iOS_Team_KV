@@ -46,6 +46,7 @@ func postData(_ dictParams: AnyObject, nsURL: String, completion: @escaping (_ r
                 }
             }
             else {
+                
                 UtilityClass.hideACProgressHUD()
             }
     }

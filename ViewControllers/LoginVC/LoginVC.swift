@@ -417,6 +417,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                             homeVC.socket.off(SocketData.kReceiveGetEstimateFare)
                             homeVC.socket.off(SocketData.kInformPassengerForAdvancedTrip)
                             homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                            homeVC.socket.off(SocketData.kArrivedDriverBookNowRequest)
+                            homeVC.socket.off(SocketData.kArrivedDriverBookLaterRequest)
                             
                             homeVC.txtDestinationLocation.text = ""
                             homeVC.txtCurrentLocation.text = ""
@@ -461,6 +463,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                             homeVC.socket.off(SocketData.kReceiveGetEstimateFare)
                             homeVC.socket.off(SocketData.kInformPassengerForAdvancedTrip)
                             homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                            homeVC.socket.off(SocketData.kArrivedDriverBookNowRequest)
+                            homeVC.socket.off(SocketData.kArrivedDriverBookLaterRequest)
                             
                             if homeVC.txtCurrentLocation != nil {
                                 homeVC.txtCurrentLocation.text = ""

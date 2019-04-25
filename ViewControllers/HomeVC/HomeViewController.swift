@@ -607,22 +607,23 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.setBookLaterDestinationAddress(_:)), name: NotificationBookLater, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.webserviceOfRunningTripTrack), name: NotificationTrackRunningTrip, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.newBooking(_:)), name: NotificationForBookingNewTrip, object: nil)
-        
+    }
         
         //Menu Navigation Observer
         
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoProfilePage), name: OpenEditProfile, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoMyBookingPage), name: OpenMyBooking, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoPaymentPage), name: OpenPaymentOption, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoWalletPage), name: OpenWallet, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoMyReceiptPage), name: OpenMyReceipt, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoFavouritePage), name: OpenFavourite, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoInviteFriendPage), name: OpenInviteFriend, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSettingPage), name: OpenSetting, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSupportPage), name: OpenSupport, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHelpPage), name: OpenHelp, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHomePage), name: OpenHome, object: nil)
-    }
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoProfilePage), name: OpenEditProfile, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoMyBookingPage), name: OpenMyBooking, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoPaymentPage), name: OpenPaymentOption, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoWalletPage), name: OpenWallet, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoMyReceiptPage), name: OpenMyReceipt, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoFavouritePage), name: OpenFavourite, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoInviteFriendPage), name: OpenInviteFriend, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSettingPage), name: OpenSetting, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoSupportPage), name: OpenSupport, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoPassPage), name: OpenPass, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHelpPage), name: OpenHelp, object: nil)
+//        NotificationCenter.default.addObserver(self, selector: #selector(HomeViewController.GotoHomePage), name: OpenHome, object: nil)
+//    }
     //    @IBOutlet weak var viewHeaderHeightConstant: NSLayoutConstraint!
     //
     //    func setHeaderForIphoneX() {
@@ -2892,7 +2893,9 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
         let bookingInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "BookingInfo") as! NSArray).object(at: 0) as! NSDictionary
         
-        showDriverInfo(bookingInfo: bookingInfo, DriverInfo: DriverInfo, carInfo: carInfo)
+        let FeedbackInfoArray = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "Feedback") as! NSArray)
+        
+        showDriverInfo(bookingInfo: bookingInfo, DriverInfo: DriverInfo, carInfo: carInfo, Feedback: FeedbackInfoArray)
     }
     
     override func didReceiveMemoryWarning() {
@@ -3767,7 +3770,12 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         let next = HelpStoryBoard.instantiateViewController(withIdentifier: "HelpViewController") as! HelpViewController
         self.navigationController?.pushViewController(next, animated: true)
     }
-    
+    @objc func GotoPassPage()
+    {
+        let HelpStoryBoard = UIStoryboard(name: "Pass", bundle: nil)
+        let next = HelpStoryBoard.instantiateViewController(withIdentifier: OffersViewController.identifier) as! OffersViewController
+        self.navigationController?.pushViewController(next, animated: true)
+    }
     
     func BookingConfirmed(dictData : NSDictionary)
     {
@@ -3824,6 +3832,9 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                 self.socketMethodForGiveTipToDriverBookLater()
                 self.onAdvanceTripInfoBeforeStartTrip()                         // Start Later Req
                 self.onReceiveNotificationWhenDriverAcceptRequest()
+                self.onDriverArrviedAtPickupLocation()              // Driver Arrived Book Now
+                self.onDriverArrviedBookLaterAtPickupLocation()     // Driver Arrived Book Later
+                
                 self.onGetEstimateFare()
             }
             
@@ -4386,9 +4397,12 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     
     //MARK:- Show Driver Information
     
-    func showDriverInfo(bookingInfo : NSDictionary, DriverInfo: NSDictionary, carInfo : NSDictionary) {
+    func showDriverInfo(bookingInfo : NSDictionary, DriverInfo: NSDictionary, carInfo : NSDictionary,Feedback : NSArray ) {
         let next = self.storyboard?.instantiateViewController(withIdentifier: "DriverInfoPageViewController") as! DriverInfoPageViewController
         
+        print(DriverInfo)
+        next.driverInfo = DriverInfo
+        next.feedback = Feedback
         next.strDriverName = DriverInfo.object(forKey: "Fullname") as! String
         next.strPickupLocation = "\(bookingInfo.object(forKey: "PickupLocation") as! String)"
         next.strDropoffLocation = "\(bookingInfo.object(forKey: "DropoffLocation") as! String)"
@@ -5247,6 +5261,37 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             
         })
         
+        
+    }
+    
+    
+    func onDriverArrviedAtPickupLocation(){
+        self.socket.on(SocketData.kArrivedDriverBookNowRequest, callback: { (data, ack) in
+           
+            print("kArrivedDriverBookNowRequest is \(data)")
+            
+            if let arrivedDriver:[[String:Any]] = data as? [[String:Any]] {
+                let driverMsg = arrivedDriver[0]["message"]
+                UtilityClass.setCustomAlert(title: "", message: driverMsg as! String) { (index, title) in
+           
+                }
+                self.btnRequest.isHidden = true
+                self.btnCancelStartedTrip.isHidden = true
+            }
+        })
+        
+    }
+    
+    func onDriverArrviedBookLaterAtPickupLocation(){
+        self.socket.on(SocketData.kArrivedDriverBookLaterRequest, callback: { (data, ack) in
+            if let arrivedDriver:[[String:Any]] = data as? [[String:Any]] {
+                let driverMsg = arrivedDriver[0]["message"]
+                UtilityClass.setCustomAlert(title: "", message: driverMsg as! String) { (index, title) in
+                }
+                self.btnRequest.isHidden = true
+                self.btnCancelStartedTrip.isHidden = true
+            }
+        })
         
     }
     

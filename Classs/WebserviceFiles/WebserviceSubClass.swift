@@ -11,7 +11,7 @@ import Alamofire
 
 let DriverLogin = WebserviceURLs.kDriverLogin
 let Registration =  WebserviceURLs.kDriverRegister
-let SocialLogin               = WebserviceURLs.kSocialLogin
+let SocialLogin = WebserviceURLs.kSocialLogin
 let ForgotPassword =  WebserviceURLs.kForgotPassword
 let CarLists =  WebserviceURLs.kGetCarList
 let MakeBookingRequest = WebserviceURLs.kMakeBookingRequest
@@ -62,6 +62,12 @@ let OTPVerify = WebserviceURLs.kOtpForRegister
 
 let TrackRunningTrip = WebserviceURLs.kTrackRunningTrip
 
+
+let PassType       = WebserviceURLs.kPassType
+let PassHistory    = WebserviceURLs.kPassHistory
+let SubscribePassType = WebserviceURLs.kSubscribePassType
+let PassEdit = WebserviceURLs.kSubscribePassEdit
+let DeactivePass = WebserviceURLs.kDeactivePass
 //-------------------------------------------------------------
 // MARK: - Webservice For Registration
 //-------------------------------------------------------------
@@ -559,5 +565,49 @@ func webserviceForTrackRunningTrip(_ dictParams: AnyObject, completion: @escapin
     let url = TrackRunningTrip + "\(dictParams)"
     getData("" as AnyObject, nsURL: url, completion: completion)
 }
+//-------------------------------------------------------------
+// MARK: - Webservice For PassType
+//-------------------------------------------------------------
+func webserviceForGetPassType( dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = PassType
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
+//-------------------------------------------------------------
+// MARK: - Webservice For pass
+//-------------------------------------------------------------
+func webserviceForGetPassHistory( dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = PassHistory + "\(dictParams)"
+    getData("" as AnyObject, nsURL: url, completion: completion)
+}
 
+//-------------------------------------------------------------
+// MARK: - Webservice For Pass Activation
+//-------------------------------------------------------------
 
+func webserviceForPassActivation(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = SubscribePassType
+    postData(dictParams, nsURL: url, completion: completion)
+}
+
+//-------------------------------------------------------------
+// MARK: - Webservice For Pass Activation
+//-------------------------------------------------------------
+
+func webserviceForPassEdit(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = PassEdit
+    postData(dictParams, nsURL: url, completion: completion)
+}
+//-------------------------------------------------------------
+// MARK: - Webservice For Pass Deactivation
+//-------------------------------------------------------------
+
+func webserviceForPassDeactivation(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = DeactivePass + "\(dictParams)"
+    getData("" as AnyObject, nsURL: url, completion: completion)
+
+}

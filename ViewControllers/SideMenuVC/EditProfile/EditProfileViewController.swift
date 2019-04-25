@@ -159,6 +159,8 @@ class EditProfileViewController: BaseViewController {
                 socket.off(SocketData.kAdvancedBookingDetails)
                 socket.off(SocketData.kInformPassengerForAdvancedTrip)
                 socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                socket.off(SocketData.kArrivedDriverBookNowRequest)
+                socket.off(SocketData.kArrivedDriverBookLaterRequest)
                 //                SingletonClass.sharedInstance.isPasscodeON = false
                 socket.disconnect()
   

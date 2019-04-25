@@ -16,7 +16,6 @@ class RegisterOTPVarificationViewController: UIViewController {
     // MARK: - Base Methods
     //-------------------------------------------------------------
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setCornerToTextField(txtField: txtOTP)

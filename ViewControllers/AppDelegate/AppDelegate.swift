@@ -75,7 +75,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
         GMSServices.provideAPIKey(googlApiKey)
         GMSPlacesClient.provideAPIKey(googlApiKey)
         
-        
         Fabric.with([Crashlytics.self])
         FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         GIDSignIn.sharedInstance().clientID = kGoogle_Client_ID

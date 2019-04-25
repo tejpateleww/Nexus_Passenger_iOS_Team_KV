@@ -97,8 +97,8 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         // self.clearsSelectionOnViewWillAppear = false
         
         
-        arrMenuIcons = ["MyBooking","iconPaymentOption","iconStarOfSideMenu","MyReceipts","iconInviteFriends","FAQ","iconLogOut"]
-        arrMenuTitle = ["My Bookings","Payment Options","Favourites","My Receipts","Invite Friends","Help","Logout"]
+        arrMenuIcons = ["MyBooking","iconPaymentOption","iconStarOfSideMenu","MyReceipts","iconInviteFriends","pass-icon","FAQ","iconLogOut"]
+        arrMenuTitle = ["My Bookings","Payment Options","Favourites","My Receipts","Invite Friends","Pass","Help","Logout"]
         
         //,"icon_UnSelectedWallet",,"icon_PaymentOptionsUnselect"
 //                        "iconSettings","iconMyBooking","iconPackageHistory","iconLogOut"]
@@ -394,88 +394,153 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
 //        }
 //        else if (indexPath.section == 1)
 //        {
-            if arrMenuTitle[indexPath.row] == "New Booking" {
-                NotificationCenter.default.post(name: NotificationForBookingNewTrip, object: nil)
-                sideMenuController?.toggle()
+        if let NavController = sideMenuController?.centerViewController as? UINavigationController {
+            print(NavController.childViewControllers)
+            if let HomePage = NavController.childViewControllers[0] as? HomeViewController {
                 
-            } else if arrMenuTitle[indexPath.row] == "My Bookings"
-            {
-                NotificationCenter.default.post(name: OpenMyBooking, object: nil)
-                sideMenuController?.toggle()
-            } else if arrMenuTitle[indexPath.row] == "Payment Options" {
-                NotificationCenter.default.post(name: OpenPaymentOption, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Wallet" {
-                NotificationCenter.default.post(name: OpenWallet, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Favourites" {
-                NotificationCenter.default.post(name: OpenFavourite, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "My Receipts" {
-                NotificationCenter.default.post(name: OpenMyReceipt, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Invite Friends" {
-                NotificationCenter.default.post(name: OpenInviteFriend, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Help" {
-                NotificationCenter.default.post(name: OpenHelp, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Settings" {
-                NotificationCenter.default.post(name: OpenSetting, object: nil)
-                sideMenuController?.toggle()
-            }
-            else if arrMenuTitle[indexPath.row] == "Become a \(appName) Driver" {
-                UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
-            }
-            else if arrMenuTitle[indexPath.row] == "Package History"
-            {
-                let next = self.storyboard?.instantiateViewController(withIdentifier: "PackageHistoryViewController") as! PackageHistoryViewController
-                self.navigationController?.pushViewController(next, animated: true)
-            } else if (arrMenuTitle[indexPath.row] == "Logout")
-            {
-                RMUniversalAlert.show(in: self, withTitle:appName, message: "Are you sure you want to logout?".localized, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: ["Logout".localized, "Cancel".localized], tap: {(alert, buttonIndex) in
-                    if (buttonIndex == 2)
-                    {
-                        
-                        let socket = (UIApplication.shared.delegate as! AppDelegate).SocketManager
-                        
-                        
-                        socket.off(SocketData.kReceiveGetEstimateFare)
-                        socket.off(SocketData.kNearByDriverList)
-                        socket.off(SocketData.kAskForTipsToPassengerForBookLater)
-                        socket.off(SocketData.kAskForTipsToPassenger)
-                        socket.off(SocketData.kAcceptBookingRequestNotification)
-                        socket.off(SocketData.kRejectBookingRequestNotification)
-                        socket.off(SocketData.kCancelTripByDriverNotficication)
-                        socket.off(SocketData.kPickupPassengerNotification)
-                        socket.off(SocketData.kBookingCompletedNotification)
-                        socket.off(SocketData.kAcceptAdvancedBookingRequestNotification)
-                        socket.off(SocketData.kRejectAdvancedBookingRequestNotification)
-                        socket.off(SocketData.kAdvancedBookingPickupPassengerNotification)
-                        socket.off(SocketData.kReceiveHoldingNotificationToPassenger)
-                        socket.off(SocketData.kAdvancedBookingTripHoldNotification)
-                        socket.off(SocketData.kReceiveDriverLocationToPassenger)
-                        socket.off(SocketData.kAdvancedBookingDetails)
-                        socket.off(SocketData.kInformPassengerForAdvancedTrip)
-                        socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
-                        //                SingletonClass.sharedInstance.isPasscodeON = false
-                        socket.disconnect()
-                        
-                        
-                        //                self.navigationController?.popToRootViewController(animated: true)
-                        
-                        (UIApplication.shared.delegate as! AppDelegate).GoToLogout()
+                if arrMenuTitle[indexPath.row] == "New Booking" {
+                    
+                    //                        NotificationCenter.default.post(name: NotificationForBookingNewTrip, object: nil)
+                    //                        sideMenuController?.toggle()
+                    
+                } else if arrMenuTitle[indexPath.row] == "My Bookings"
+                {
+                    //                        NotificationCenter.default.post(name: OpenMyBooking, object: nil)
+                    let NextPage = self.storyboard?.instantiateViewController(withIdentifier: "MyBookingViewController") as! MyBookingViewController
+                    HomePage.navigationController?.pushViewController(NextPage, animated: true)
+                    sideMenuController?.toggle()
+                } else if arrMenuTitle[indexPath.row] == "Payment Options" {
+                    
+                    
+                    //                        NotificationCenter.default.post(name: OpenPaymentOption, object: nil)
+                    
+                    if SingletonClass.sharedInstance.CardsVCHaveAryData.count == 0 {
+                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletAddCardsViewController") as! WalletAddCardsViewController
+                        HomePage.navigationController?.pushViewController(next, animated: true)
                     }
-                })
+                    else {
+                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletCardsVC") as! WalletCardsVC
+                        HomePage.navigationController?.pushViewController(next, animated: true)
+                    }
+                    
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Wallet" {
+                    //                        NotificationCenter.default.post(name: OpenWallet, object: nil)
+                    if (SingletonClass.sharedInstance.isPasscodeON) {
+                        
+                        if SingletonClass.sharedInstance.setPasscode == "" {
+                            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "SetPasscodeViewController") as! SetPasscodeViewController
+                            viewController.strStatusToNavigate = "Wallet"
+                            HomePage.navigationController?.pushViewController(viewController, animated: true)
+                        }
+                        else {
+                            
+                            let viewController = self.storyboard?.instantiateViewController(withIdentifier: "VerifyPasswordViewController") as! VerifyPasswordViewController
+                            viewController.strStatusToNavigate = "Wallet"
+                            HomePage.navigationController?.pushViewController(viewController, animated: true)
+                        }
+                    }
+                    else {
+                        let next = self.storyboard?.instantiateViewController(withIdentifier: "WalletViewController") as! WalletViewController
+                        HomePage.navigationController?.pushViewController(next, animated: true)
+                    }
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Favourites" {
+                    
+                    //                        NotificationCenter.default.post(name: OpenFavourite, object: nil)
+                    
+                    let next = self.storyboard?.instantiateViewController(withIdentifier: "FavoriteViewController") as! FavoriteViewController
+                    HomePage.navigationController?.pushViewController(next, animated: true)
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "My Receipts" {
+                    //                        NotificationCenter.default.post(name: OpenMyReceipt, object: nil)
+                    let NextPage = self.storyboard?.instantiateViewController(withIdentifier: "MyReceiptsViewController") as! MyReceiptsViewController
+                    HomePage.navigationController?.pushViewController(NextPage, animated: true)
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Invite Friends" {
+                    //                        NotificationCenter.default.post(name: OpenInviteFriend, object: nil)
+                    let NextPage = self.storyboard?.instantiateViewController(withIdentifier: "InviteDriverViewController") as! InviteDriverViewController
+                    HomePage.navigationController?.pushViewController(NextPage, animated: true)
+                    
+                    sideMenuController?.toggle()
+                }else if arrMenuTitle[indexPath.row] == "Pass" {
+                    
+                    //                        NotificationCenter.default.post(name: OpenFavourite, object: nil)
+                    let PassStoryBoard = UIStoryboard(name: "Pass", bundle: nil)
+
+                    let next = PassStoryBoard.instantiateViewController(withIdentifier: "OffersViewController") as! OffersViewController
+                    HomePage.navigationController?.pushViewController(next, animated: true)
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Help" {
+                    //                        NotificationCenter.default.post(name: OpenHelp, object: nil)
+                    
+                    let HelpStoryBoard = UIStoryboard(name: "Help", bundle: nil)
+                    let next = HelpStoryBoard.instantiateViewController(withIdentifier: "HelpViewController") as! HelpViewController
+                    HomePage.navigationController?.pushViewController(next, animated: true)
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Settings" {
+                    //                        NotificationCenter.default.post(name: OpenSetting, object: nil)
+                    let NextPage = self.storyboard?.instantiateViewController(withIdentifier: "SettingPasscodeVC") as! SettingPasscodeVC
+                    HomePage.navigationController?.pushViewController(NextPage, animated: true)
+                    sideMenuController?.toggle()
+                }
+                else if arrMenuTitle[indexPath.row] == "Become a \(appName) Driver" {
+                    UIApplication.shared.openURL(NSURL(string: "https://itunes.apple.com/us/app/pick-n-go-driver/id1320783710?mt=8")! as URL)
+                }
+                else if arrMenuTitle[indexPath.row] == "Package History"
+                {
+                    let next = self.storyboard?.instantiateViewController(withIdentifier: "PackageHistoryViewController") as! PackageHistoryViewController
+                    self.navigationController?.pushViewController(next, animated: true)
+                    
+                } else if (arrMenuTitle[indexPath.row] == "Logout")
+                {
+                    RMUniversalAlert.show(in: self, withTitle:appName, message: "Are you sure you want to logout?".localized, cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: ["Logout".localized, "Cancel".localized], tap: {(alert, buttonIndex) in
+                        if (buttonIndex == 2)
+                        {
+                            
+                            let socket = (UIApplication.shared.delegate as! AppDelegate).SocketManager
+                            
+                            
+                            socket.off(SocketData.kReceiveGetEstimateFare)
+                            socket.off(SocketData.kNearByDriverList)
+                            socket.off(SocketData.kAskForTipsToPassengerForBookLater)
+                            socket.off(SocketData.kAskForTipsToPassenger)
+                            socket.off(SocketData.kAcceptBookingRequestNotification)
+                            socket.off(SocketData.kRejectBookingRequestNotification)
+                            socket.off(SocketData.kCancelTripByDriverNotficication)
+                            socket.off(SocketData.kPickupPassengerNotification)
+                            socket.off(SocketData.kBookingCompletedNotification)
+                            socket.off(SocketData.kAcceptAdvancedBookingRequestNotification)
+                            socket.off(SocketData.kRejectAdvancedBookingRequestNotification)
+                            socket.off(SocketData.kAdvancedBookingPickupPassengerNotification)
+                            socket.off(SocketData.kReceiveHoldingNotificationToPassenger)
+                            socket.off(SocketData.kAdvancedBookingTripHoldNotification)
+                            socket.off(SocketData.kReceiveDriverLocationToPassenger)
+                            socket.off(SocketData.kAdvancedBookingDetails)
+                            socket.off(SocketData.kInformPassengerForAdvancedTrip)
+                            socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
+                            socket.off(SocketData.kArrivedDriverBookNowRequest)
+                            socket.off(SocketData.kArrivedDriverBookLaterRequest)
+                            //                SingletonClass.sharedInstance.isPasscodeON = false
+                            socket.disconnect()
+                            
+                            
+                            //                self.navigationController?.popToRootViewController(animated: true)
+                            
+                            (UIApplication.shared.delegate as! AppDelegate).GoToLogout()
+                        }
+                    })
+                    
+                }
                 
             }
-            //            else if (indexPath.row == arrMenuTitle.count - 2)
+        }            //            else if (indexPath.row == arrMenuTitle.count - 2)
             //            {
             //                self.performSegue(withIdentifier: "pushToBlank", sender: self)
             //            }

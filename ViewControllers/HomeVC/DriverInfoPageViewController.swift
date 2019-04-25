@@ -14,11 +14,12 @@ class DriverInfoPageViewController: UIViewController {
     //-------------------------------------------------------------
     
     @IBOutlet weak var imgCar: UIImageView!
+    @IBOutlet weak var imgDriver: UIImageView!
     @IBOutlet weak var lblCarInfoTitle: UILabel!
     @IBOutlet weak var lblCareName: UILabel!
     @IBOutlet weak var lblCarClass: UILabel!
     @IBOutlet weak var lblCarPlateNumber: UILabel!
-    
+     @IBOutlet weak var ratingDriver: FloatRatingView!
     @IBOutlet weak var lblPickupLocation: UILabel!
     @IBOutlet weak var lblDropoffLocation: UILabel!
     @IBOutlet var btnCall: UIButton!
@@ -31,6 +32,18 @@ class DriverInfoPageViewController: UIViewController {
 //    @IBOutlet weak var btnOk: ThemeButton!
 //    @IBOutlet weak var lblDriverInfo: UILabel!
     
+    @IBOutlet weak var lblDriverAddress: UILabel!
+    @IBOutlet weak var lblDriverTotalTrips: UILabel!
+    @IBOutlet weak var lblDriverDescription: UILabel!
+    @IBOutlet weak var lblDriverLanguages: UILabel!
+    
+    @IBOutlet weak var lblDriverFunFacts: UILabel!
+    @IBOutlet weak var lblDriverOtherThings: UILabel!
+    @IBOutlet weak var lblDrivingReason: UILabel!
+    @IBOutlet weak var tblDriverFeedback: UITableView!
+    @IBOutlet weak var constraintFeedbackHeight: NSLayoutConstraint!
+    
+    var driverInfo = NSDictionary()
     var strCarImage = String()
     var strCareName = String()
     var strCarClass = String()
@@ -40,7 +53,7 @@ class DriverInfoPageViewController: UIViewController {
     var strDriverName = String()
     var strCarPlateNumber = String()
     var strPassengerMobileNumber = String()
-    
+
     //-------------------------------------------------------------
     // MARK: - Base Methods
     //-------------------------------------------------------------
@@ -70,6 +83,7 @@ class DriverInfoPageViewController: UIViewController {
         
                 imgCar.layer.cornerRadius = 37.5
                 imgCar.layer.masksToBounds = true
+                setupDriverDescriptionFields()
         //
 //        imgDriver.layer.cornerRadius = imgDriver.frame.size.width / 2
 //        imgDriver.layer.masksToBounds = true
@@ -80,6 +94,24 @@ class DriverInfoPageViewController: UIViewController {
         super.didReceiveMemoryWarning()
         
         
+    }
+    func setupDriverDescriptionFields(){
+        
+        lblDriverAddress.text =  driverInfoStringValue(key: "Address")
+        lblDriverTotalTrips.text = driverInfoStringValue(key: "TotalCompletedTrips")
+        lblDriverDescription.text = driverInfoStringValue(key: "ShortDescription")
+        lblDriverLanguages.text = driverInfoStringValue(key: "LanguagesKnown")
+        lblDriverFunFacts.text = driverInfoStringValue(key: "FunFacts")
+        lblDriverOtherThings.text = driverInfoStringValue(key: "OtherThings")
+        lblDrivingReason.text = driverInfoStringValue(key: "ReasonDriverDrives")
+        
+        ratingDriver.rating = Float(String(describing: (driverInfo.object(forKey: "DriverRating") ?? ""))) ?? 0.0
+        imgDriver.sd_setImage(with: URL(string: WebserviceURLs.kImageBaseURL + String(describing: (driverInfo.object(forKey: "Image") ?? ""))))
+        imgDriver.clipsToBounds = true
+    }
+    
+    func driverInfoStringValue(key: String)-> String{
+        return " : " + String(describing: (driverInfo.object(forKey: key) ?? ""))
     }
     func setLocalization()
     {
@@ -213,5 +245,26 @@ class DriverInfoPageViewController: UIViewController {
         }
         
     }
+    var feedback = NSArray()
+    
+}
+////-------------------------------------------------------------
+// MARK: - TableView Methods
+//-------------------------------------------------------------
 
+extension DriverInfoPageViewController: UITableViewDataSource, UITableViewDelegate{
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        constraintFeedbackHeight.constant = CGFloat(22 * feedback.count)
+        return feedback.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: DriverInfoTableViewCell.identifier, for: indexPath) as! DriverInfoTableViewCell
+        if let feedback = feedback[indexPath.row] as? [String:Any]{
+            cell.lblFeedBack.text = "-> " + (feedback["COMMENT"] as? String ?? "")
+        }
+        return cell
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 20
+    }
 }
