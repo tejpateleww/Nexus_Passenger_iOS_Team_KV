@@ -34,13 +34,25 @@ class TripDetailsViewController: BaseViewController {
     @IBOutlet weak var lblTax: UILabel!
     @IBOutlet weak var lblDiscount: UILabel!
     @IBOutlet weak var lblGrandTotal: UILabel!
+    
+    
+    @IBOutlet var lblTripFare: UILabel!
+    @IBOutlet var lblMinuteFareCharge: UILabel!
+    @IBOutlet var lblSurgeCharge: UILabel!
+    @IBOutlet var lblTip: UILabel!
+    @IBOutlet var lblTipSubTotal: UILabel!
+    @IBOutlet var lblPassDiscount: UILabel!
+    @IBOutlet var lblNexusCharge: UILabel!
+    @IBOutlet var lblTotalNexusCharge: UILabel!
     @IBOutlet weak var stackViewSpecialExtraCharge: UIStackView!
     @IBOutlet weak var tblObject : UITableView!
+    
+    
 //    @IBOutlet weak var lblPickUpLocaltion: UILabel!
 //    @IBOutlet weak var lblDropuplocation: UILabel!
 //    @IBOutlet weak var lblDrpupLocationDetail: UILabel!
 //    @IBOutlet weak var lblBaseFareDesc: UILabel!
-    @IBOutlet weak var lblBaseFareTitle: UILabel!
+
     @IBOutlet weak var lblDistanceFareTitle: UILabel!
     @IBOutlet weak var lblNightFareTitle: UILabel!
     @IBOutlet weak var lblSubTotalTitle: UILabel!
@@ -49,8 +61,45 @@ class TripDetailsViewController: BaseViewController {
     @IBOutlet weak var lblTaxTitle: UILabel!
     @IBOutlet weak var lblSpecialChargeTitle: UILabel!
     @IBOutlet weak var lblBookingChargeTitle: UILabel!
-    @IBOutlet weak var lblTollFreeTitle: UILabel!
     @IBOutlet weak var lblWaitingCostTitle: UILabel!
+    
+    
+    
+    @IBOutlet var lblTripFareTitle: UILabel!
+    @IBOutlet var lblMinuteFareChargeTitle: UILabel!
+    @IBOutlet var lblSurgeChargeTitle: UILabel!
+    @IBOutlet var lblTollFeeTitle: UILabel!
+    @IBOutlet var lblTipTitle: UILabel!
+    @IBOutlet var lblTipSubTotalTitle: UILabel!
+    @IBOutlet var lblPassDiscountTitle: UILabel!
+    @IBOutlet var lblNexusChargeTitle: UILabel!
+    @IBOutlet var lblTotalNexusChargeTitle: UILabel!
+    
+    
+    @IBOutlet var StackTripFare: UIStackView!
+    @IBOutlet var StackNightFare: UIStackView!
+    @IBOutlet var StackFareCharge: UIStackView!
+    @IBOutlet var StackWaitingCost: UIStackView!
+    @IBOutlet var StackDistanceFare: UIStackView!
+    @IBOutlet var StackSurgeCharge: UIStackView!
+    @IBOutlet var StackTollFee: UIStackView!
+    @IBOutlet var StackTripSubTotal: UIStackView!
+    
+    
+    @IBOutlet var StackTips: UIStackView!
+    @IBOutlet var StackTipSubTotal: UIStackView!
+    
+    @IBOutlet var StackBookingCharge: UIStackView!
+    @IBOutlet var StackSpecialCharge: UIStackView!
+    @IBOutlet var StackTax: UIStackView!
+    @IBOutlet var StackDiscount: UIStackView!
+    @IBOutlet var StackPassDiscount: UIStackView!
+    @IBOutlet var StackNexusCharge: UIStackView!
+    @IBOutlet var StackTotalNexusCharge: UIStackView!
+    
+    @IBOutlet var StackGrandTotal: UIStackView!
+    
+    
     //-------------------------------------------------------------
     // MARK: - Base Methods
     //-------------------------------------------------------------
@@ -87,20 +136,31 @@ class TripDetailsViewController: BaseViewController {
     
     func setLocalization()
     {
-        lblPickUpTitle.text = "Pickup Location".localized
-        lblDropOfTitle.text = "Dropoff Location".localized
+        lblPickUpTitle.text = "Pickup Location :".localized
+        lblDropOfTitle.text = "Dropoff Location :".localized
+        lblTripFareTitle.text = "Trip Fare :"
+        lblNightFareTitle.text = "Night Fare :"
+        lblMinuteFareChargeTitle.text = "Minute Fare Charge :"
+        lblWaitingCostTitle.text = "Waiting Cost :".localized
+//        lblBaseFareTitle.text = "Base Fare :".localized
+        lblDistanceFareTitle.text = "Distance Fare :".localized
+        lblSurgeChargeTitle.text = "Surge Charge :"
+        lblTollFeeTitle.text = "Toll Fee :"
+        lblSubTotalTitle.text = "Sub Total :"
+        lblTipTitle.text = "Tips :"
+        lblTipSubTotalTitle.text  = "Sub Total :"
         
-        lblBaseFareTitle.text = "Base Fare:".localized
-        lblDistanceFareTitle.text = "Distance Fare:".localized
-        lblNightFareTitle.text = "Night Fare:".localized
-        lblWaitingCostTitle.text = "Waiting Cost".localized
-        lblTollFreeTitle.text = "Tips".localized
-        lblSubTotalTitle.text = "Sub Total".localized
-        lblBookingChargeTitle.text = "Booking Charge".localized
-        lblSpecialChargeTitle.text = "Special Extra Charge".localized
-        lblTaxTitle.text = "Tax".localized
-        lblDiscountTitle.text = "Discount".localized
-        lblGrandTotalTitle.text = "Grand Total".localized
+        
+//        lblTollFreeTitle.text = "Tips :".localized
+        lblBookingChargeTitle.text = "Booking Charge :".localized
+        lblSpecialChargeTitle.text = "Special Extra Charge :".localized
+        lblTaxTitle.text = "Tax :".localized
+        lblDiscountTitle.text = "Discount :".localized
+        lblPassDiscountTitle.text = "Pass Discount :"
+        lblNexusChargeTitle.text = "Nexus Charge :"
+        lblTotalNexusChargeTitle.text = "Total Nexus Charge :"
+        
+        lblGrandTotalTitle.text = "Grand Total :".localized
         
     }
     
@@ -112,24 +172,182 @@ class TripDetailsViewController: BaseViewController {
         
         if let data = arrData.object(at: 0) as? NSDictionary {
             
-            let distanceFare = "\(data.object(forKey: "DistanceFare")!) (\(data.object(forKey: "TripDistance")!) km)"
+            let distanceFare = "\(data.object(forKey: "DistanceFare")!) (\(data.object(forKey: "TripDistance")!) miles)"
         
             lblPickupLocation.text = data.object(forKey: "PickupLocation") as? String
             lblDropoffLocation.text = data.object(forKey: "DropoffLocation") as? String
             
-            lblBaseFare.text = "\(currencySign) \(data.object(forKey: "TripFare") as! String)"
-            lblDistanceFare.text = "\(currencySign) \(distanceFare)"
+    
+            if let TripFare = data.object(forKey:"TripFare") as? String {
+                self.lblTripFare.text = "\(currencySign)" + TripFare
+                if TripFare == "" || TripFare == "0" {
+                    self.StackTripFare.isHidden = true
+                } else {
+                    self.StackTripFare.isHidden = false
+                }
+            }
+//           lblTripFare.text = "\(currencySign) \(data.object(forKey: "TripFare") as! String)"
+            
+            
             lblNightFare.text =  "\(currencySign) \(data.object(forKey: "NightFare") as! String)"
-            lblWaitingCost.text = "\(currencySign) \(data.object(forKey: "WaitingTimeCost") as! String)"
-            lblTollFee.text = "\(currencySign) \(data.object(forKey: "TollFee") as! String)"
-            lblSubTotal.text = "\(currencySign) \(data.object(forKey: "SubTotal") as! String)"
             
-            lblBookingCharge.text = "\(currencySign) \(data.object(forKey: "BookingCharge") as! String)"
-            lblTax.text = "\(currencySign) \(data.object(forKey: "Tax") as! String)"
-            lblDiscount.text = "\(currencySign) \(data.object(forKey: "Discount") as! String)"
+            if let MinuteFareCharge = data.object(forKey: "MinuteFareCharge" ) as? String {
+                self.lblMinuteFareCharge.text = "\(currencySign)" + MinuteFareCharge
+                if MinuteFareCharge == "" || MinuteFareCharge == "0" {
+                    self.StackFareCharge.isHidden = true
+                } else {
+                    self.StackFareCharge.isHidden = false
+                }
+            }
+//            lblMinuteFareCharge.text = "\(currencySign) \(data.object(forKey: "MinuteFareCharge") as! String)"
+            
+            if let DistanceFare =  data.object(forKey: "DistanceFare" ) as? String {
+                self.lblDistanceFare.text = "\(currencySign)\(String(format: "%.2f", Double((DistanceFare != "") ? DistanceFare : "0.0")!))"
+                if DistanceFare == "" || DistanceFare == "0" {
+                    self.StackDistanceFare.isHidden = true
+                } else {
+                    self.StackDistanceFare.isHidden = false
+                }
+            }
+//            lblDistanceFare.text = "\(currencySign) \(distanceFare)"
+            
+            if let SurgeCharge = data.object(forKey: "SpecialExtraCharge") as? String {
+                self.lblSurgeCharge.text = "\(currencySign)\(String(format: "%.2f", Double((SurgeCharge != "") ? SurgeCharge : "0.0")!))"
+                if SurgeCharge == "" || SurgeCharge == "0" {
+                    self.StackSurgeCharge.isHidden = true
+                } else {
+                    self.StackSurgeCharge.isHidden = false
+                }
+            }
+//            lblSurgeCharge.text = ""
+            
+            if let TollFee = data.object(forKey: "TollFee") as? String {
+                self.lblTollFee.text = "\(currencySign)\(String(format: "%.2f", Double((TollFee != "") ? TollFee : "0.0")!))"
+                if TollFee == "" || TollFee == "0" {
+                    self.StackTollFee.isHidden = true
+                } else {
+                    self.StackTollFee.isHidden = false
+                }
+            }
+//            lblTollFee.text = "\(currencySign) \(data.object(forKey: "TollFee") as! String)"
+            
+            if let TripSubTotal =  data.object(forKey: "SubTotal" ) as? String {
+                self.lblSubTotal.text = "\(currencySign)\(String(format: "%.2f", Double((TripSubTotal != "") ? TripSubTotal : "0.0")!))"
+                
+                if TripSubTotal == "" || TripSubTotal == "0" {
+                    self.StackTripSubTotal.isHidden = true
+                } else {
+                    self.StackTripSubTotal.isHidden = false
+                }
+            }
+//            lblSubTotal.text = "\(currencySign) \(data.object(forKey: "SubTotal") as! String)"
+            
+            if let WaitingTimeCost = data.object(forKey: "WaitingTimeCost") as? String {
+                lblWaitingCost.text = "\(currencySign)" + WaitingTimeCost
+                if WaitingTimeCost == "" || WaitingTimeCost == "0" {
+                    self.StackWaitingCost.isHidden = true
+                } else {
+                    self.StackWaitingCost.isHidden = false
+                }
+            }
+//            lblWaitingCost.text = "\(currencySign) \(data.object(forKey: "WaitingTimeCost") as! String)"
+            
+            if let tollFee = data.object(forKey: "Tip") as? String {
+                if tollFee == "" || tollFee == "0" {
+                    self.StackTips.isHidden = true
+                    self.lblTip.text = "\(currencySign)\(String(format: "%.2f", Double((tollFee != "") ? tollFee : "0.0")!))"
+                } else {
+                    self.StackTips.isHidden = false
+                    self.lblTip.text = "\(currencySign)\(String(format: "%.2f", Double((tollFee != "") ? tollFee : "0.0")!))"
+                }
+            }
+            
+            if let TipSubtotal = data.object(forKey: "CompanyAmount") as? String {
+                self.lblTipSubTotal.text = "\(currencySign)" + "\(String(format: "%.2f", Double((TipSubtotal != "") ? TipSubtotal : "0.0")!))"
+                
+                if TipSubtotal == "" || TipSubtotal == "0" {
+                    self.StackTipSubTotal.isHidden = true
+                } else {
+                    self.StackTipSubTotal.isHidden = false
+                }
+            }
+            
+            if let bookingCharge =  data.object(forKey: "BookingCharge") as? String {
+                self.lblBookingCharge.text = "\(currencySign)" + bookingCharge
+                
+                if bookingCharge == "" || bookingCharge == "0" {
+                    self.StackBookingCharge.isHidden = true
+                } else {
+                    self.StackBookingCharge.isHidden = false
+                }
+            }
+            //lblBookingCharge.text = "\(currencySign) \(data.object(forKey: "BookingCharge") as! String)"
+            
+            if let Tax =  data.object(forKey: "Tax") as? String {
+                self.lblTax.text = "\(currencySign)\(String(format: "%.2f", Double((Tax != "") ? Tax : "0.0")!)) (Including)"
+                if Tax == "" || Tax == "0" {
+                    self.StackTax.isHidden = true
+                } else {
+                    self.StackTax.isHidden = false
+                }
+            }
+//           lblTax.text = "\(currencySign) \(data.object(forKey: "Tax") as! String)"
             
             
-            lblGrandTotal.text = "\(currencySign) \(data.object(forKey: "GrandTotal") as! String)"
+            if let Discount =  data.object(forKey: "Discount") as? String {
+                self.lblDiscount.text = "\(currencySign)\(String(format: "%.2f", Double((Discount != "") ? Discount : "0.0")!))"
+                if Discount == "" || Discount == "0" {
+                    self.StackDiscount.isHidden = true
+                } else {
+                    self.StackDiscount.isHidden = false
+                }
+            }
+//            lblDiscount.text = "\(currencySign) \(data.object(forKey: "Discount") as! String)"
+            
+            
+            if let PassDiscount =  data.object(forKey: "PassDiscount") as? String {
+                    self.lblPassDiscount.text = "\(currencySign)\(String(format: "%.2f", Double((PassDiscount != "") ? PassDiscount : "0.0")!))"
+                if PassDiscount == "" || PassDiscount == "0" {
+                    self.StackPassDiscount.isHidden = true
+                } else {
+                    self.StackPassDiscount.isHidden = false
+                }
+            }
+//            lblPassDiscount.text = "\(currencySign) \(data.object(forKey: "PassDiscount") as! String)"
+            
+            if let NexusCharge = data.object(forKey: "NexusEarning") as? String {
+                self.lblNexusCharge.text = "\(currencySign)\(String(format: "%.2f", Double((NexusCharge != "") ? NexusCharge : "0.0")!))"
+                
+                if NexusCharge  == "" || NexusCharge == "0" {
+                    self.StackNexusCharge.isHidden = true
+                } else {
+                    self.StackNexusCharge.isHidden = false
+                }
+            }
+//            lblNexusCharge.text = ""
+            
+            
+            if let TotalNexusCharge = data.object(forKey: "AdminAmount") as? String {
+                self.lblTotalNexusCharge.text = "\(currencySign)\(String(format: "%.2f", Double((TotalNexusCharge != "") ? TotalNexusCharge : "0.0")!))"
+                
+                if TotalNexusCharge == "" || TotalNexusCharge == "0" {
+                    self.StackTotalNexusCharge.isHidden = true
+                } else {
+                    self.StackTotalNexusCharge.isHidden = false
+                }
+            }
+//            lblTotalNexusCharge.text = ""
+            
+            if let GrandTotal =  data.object(forKey: "GrandTotal" ) as? String {
+                self.lblGrandTotal.text = "\(currencySign)\(String(format: "%.2f", Double((GrandTotal != "") ? GrandTotal : "0.0")!))"
+                
+                if GrandTotal == "" || GrandTotal == "0" {
+                    self.StackGrandTotal.isHidden = true
+                } else {
+                    self.StackGrandTotal.isHidden = false
+                }
+            }
+//            lblGrandTotal.text = "\(currencySign) \(data.object(forKey: "GrandTotal") as! String)"
             
             var strSpecial = String()
             
@@ -146,6 +364,7 @@ class TripDetailsViewController: BaseViewController {
             }
         }
     }
+    
     @IBAction func btnBackAction(sender: UIButton) {
         
 //       NotificationCenter.default.addObserver(self, selector: #selector(YourClassName.methodOfReceivedNotification(notification:)), name: Notification.Name("CallToRating"), object: nil)

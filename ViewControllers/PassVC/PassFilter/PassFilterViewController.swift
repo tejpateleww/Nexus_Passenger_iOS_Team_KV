@@ -64,6 +64,7 @@ class PassFilterViewController: BaseViewController{
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.NearByRegion = SingletonClass.sharedInstance.NearByRegion
         pickupTimeFld.delegate = self
         dropOffTimeFld.delegate = self
         pickupFld.delegate = self

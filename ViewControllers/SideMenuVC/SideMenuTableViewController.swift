@@ -71,6 +71,8 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         //        giveGradientColor()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.SetRating), name: NSNotification.Name(rawValue: "rating"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.setProfileData), name: NSNotification.Name(rawValue: "UpdateProfile"), object: nil)
+        self.setProfileData()
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.setNewBookingOnArray), name: NotificationForAddNewBooingOnSideMenu, object: nil)
 //
 //        if SingletonClass.sharedInstance.bookingId != "" {
@@ -79,19 +81,7 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         
 //        webserviceOfTickPayStatus()
         
-        ProfileData = SingletonClass.sharedInstance.dictProfile
-        
-        self.imgProfile.layer.cornerRadius = self.imgProfile.frame.width / 2
-        self.imgProfile.layer.borderWidth = 1.0
-        self.imgProfile.layer.borderColor = UIColor.white.cgColor
-        self.imgProfile.layer.masksToBounds = true
-        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), placeholderImage: UIImage(named: "iconProfilePicBlank"), options: [], completed: nil)
-//        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
-        self.lblName.text = ProfileData.object(forKey: "Fullname") as? String
-        
-        if let Rating = ProfileData.object(forKey: "rating") as? String {
-            self.lblRating.text = Rating
-        }
+ 
         
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -182,7 +172,11 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
     }
     
     @objc func SetRating() {
-        self.tableView.reloadData()
+        if let Rating = ProfileData.object(forKey: "rating") as? String {
+            self.lblRating.text = Rating
+        } else {
+            self.lblRating.text = SingletonClass.sharedInstance.passengerRating
+        }
     }
     
     @objc func setNewBookingOnArray() {
@@ -505,8 +499,6 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
                         {
                             
                             let socket = (UIApplication.shared.delegate as! AppDelegate).SocketManager
-                            
-                            
                             socket.off(SocketData.kReceiveGetEstimateFare)
                             socket.off(SocketData.kNearByDriverList)
                             socket.off(SocketData.kAskForTipsToPassengerForBookLater)
@@ -527,13 +519,12 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
                             socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
                             socket.off(SocketData.kArrivedDriverBookNowRequest)
                             socket.off(SocketData.kArrivedDriverBookLaterRequest)
+                            socket.off(SocketData.kReceiveTollFeeToDriverBookLater)
+                            socket.off(SocketData.kReceiveTollFeeToDriver)
                             //                SingletonClass.sharedInstance.isPasscodeON = false
                             socket.disconnect()
-                            
-                            
-                            //                self.navigationController?.popToRootViewController(animated: true)
-                            
-                            (UIApplication.shared.delegate as! AppDelegate).GoToLogout()
+                          //                self.navigationController?.popToRootViewController(animated: true)
+                           (UIApplication.shared.delegate as! AppDelegate).GoToLogout()
                         }
                     })
                     
@@ -585,12 +576,38 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
         }
     }
     
+    @objc func setProfileData() {
+        ProfileData = SingletonClass.sharedInstance.dictProfile
+        
+        self.imgProfile.layer.cornerRadius = self.imgProfile.frame.width / 2
+        self.imgProfile.layer.borderWidth = 1.0
+        self.imgProfile.layer.borderColor = UIColor.white.cgColor
+        self.imgProfile.layer.masksToBounds = true
+        self.imgProfile.sd_setShowActivityIndicatorView(true)
+        self.imgProfile.sd_setIndicatorStyle(.white)
+        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), placeholderImage: UIImage(named: "iconProfilePicBlank"), options: [], completed: nil)
+        //        self.imgProfile.sd_setImage(with: URL(string: ProfileData.object(forKey: "Image") as! String), completed: nil)
+        self.lblName.text = ProfileData.object(forKey: "Fullname") as? String
+        
+        if let Rating = ProfileData.object(forKey: "rating") as? String {
+            self.lblRating.text = Rating
+        } else {
+            self.lblRating.text = SingletonClass.sharedInstance.passengerRating
+        }
+    }
+    
+    
     @IBAction func btnProfilePickClicked(_ sender: Any)
     {
-//        let next = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
-//        self.navigationController?.pushViewController(next, animated: true)
-        NotificationCenter.default.post(name: OpenEditProfile, object: nil)
-        sideMenuController?.toggle()
+        if let NavController = sideMenuController?.centerViewController as? UINavigationController {
+            if let HomePage = NavController.childViewControllers[0] as? HomeViewController {
+                let NextPage = self.storyboard?.instantiateViewController(withIdentifier: "EditProfileViewController") as! EditProfileViewController
+                HomePage.navigationController?.pushViewController(NextPage, animated: true)
+                sideMenuController?.toggle()
+           }
+        }
+//        NotificationCenter.default.post(name: OpenEditProfile, object: nil)
+//        sideMenuController?.toggle()
     }
     
     

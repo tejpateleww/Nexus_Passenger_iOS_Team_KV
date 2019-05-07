@@ -36,18 +36,106 @@ class MyRecepitTableViewCell: UITableViewCell {
     @IBOutlet var lblDropOffLocationDescription: UILabel!
     @IBOutlet var lblDateAndTime: UILabel!
     
+    // Title
+//    @IBOutlet weak var lblPickupTimeTitle: UILabel!
+//    @IBOutlet weak var lblDropoffTimeTitle: UILabel!
     @IBOutlet weak var lblVehicleTypeTitle: UILabel!
-    @IBOutlet weak var lblVehicleType: UILabel!
     @IBOutlet weak var lblDistanceTravelledTitle: UILabel!
-    @IBOutlet weak var lblDistanceTravelled: UILabel!
+    @IBOutlet weak var lblPaymentTypeTitle: UILabel!
+    
+    @IBOutlet weak var lblTripFareTitle: UILabel!
+    @IBOutlet var lblMinuteFareChargeTitle: UILabel!
+    @IBOutlet weak var lblWaitingCostTitle: UILabel!
+    @IBOutlet var lblDistanceFareTitle: UILabel!
+    @IBOutlet var lblSurgeChargeTitle: UILabel!
+    //    @IBOutlet weak var lblNightFareTitle: UILabel!
     @IBOutlet weak var lblTollFeeTitle: UILabel!
+    @IBOutlet var lblTripSubTotalTitle: UILabel!
+
+    @IBOutlet var lblTipsTitle: UILabel!
+    @IBOutlet var lblTipsSubTotalTitle: UILabel!
+    
+    @IBOutlet var lblBookingChargeTitle: UILabel!
+    @IBOutlet weak var lblTaxTitle: UILabel!
+    @IBOutlet weak var lblDiscountTitle: UILabel!
+    @IBOutlet var lblPassDiscountTitle: UILabel!
+    @IBOutlet var lblNexusChargeTitle: UILabel!
+    @IBOutlet var lblTotalNexusChargeTitle: UILabel!
+    
+    @IBOutlet var lblGrandTotalTitle: UILabel!
+    
+//    @IBOutlet weak var lblWaitingTimeTitle: UILabel!
+   //    @IBOutlet weak var lblTotalTitle: UILabel!
+//    @IBOutlet weak var lblTripStatusTitle: UILabel!
+
+    
+    // Value
+//    @IBOutlet weak var lblPickupTime: UILabel!
+//    @IBOutlet weak var lblDropoffTime: UILabel!
+    
+    
+    @IBOutlet weak var lblVehicleType: UILabel!
+    @IBOutlet weak var lblDistanceTravelled: UILabel!
+    @IBOutlet var lblPaymentType: UILabel!
+    
+    @IBOutlet weak var lblTripFare: UILabel!
+    @IBOutlet var lblMinuteFareCharge: UILabel!
+    @IBOutlet weak var lblWaitingCost: UILabel!
+    @IBOutlet var lblDistanceFare: UILabel!
+    @IBOutlet var lblSurgeCharge: UILabel!
     @IBOutlet weak var lblTollFee: UILabel!
-    @IBOutlet weak var lblFareTotalTitle: UILabel!
-    @IBOutlet weak var lblFareTotal: UILabel!
-    @IBOutlet weak var lblChargedCardTitle: UILabel!
-    @IBOutlet weak var lblChargedCard: UILabel!
-    @IBOutlet weak var lblDiscountAppliedTitle: UILabel!
-    @IBOutlet weak var lblDiscountApplied: UILabel!
+    @IBOutlet var lblTripSubTotal: UILabel!
+    
+    @IBOutlet var lblTips: UILabel!
+    @IBOutlet var lblTipsSubTotal: UILabel!
+    
+    @IBOutlet var lblBookingCharge: UILabel!
+    @IBOutlet weak var lblTax: UILabel!
+    @IBOutlet weak var lblDiscount: UILabel!
+    @IBOutlet var lblPassDiscount: UILabel!
+    @IBOutlet var lblNexusCharge: UILabel!
+    @IBOutlet var lblTotalNexusCharge: UILabel!
+
+    @IBOutlet var lblGrandTotal: UILabel!
+    
+    
+    @IBOutlet var StackVehicleType: UIStackView!
+    @IBOutlet var StackDistanceTravelled: UIStackView!
+    @IBOutlet var StackPaymentType: UIStackView!
+    
+    @IBOutlet var StackTripFare: UIStackView!
+    @IBOutlet var StackFareCharge: UIStackView!
+    @IBOutlet var StackWaitingCost: UIStackView!
+    @IBOutlet var StackDistanceFare: UIStackView!
+    @IBOutlet var StackSurgeCharge: UIStackView!
+    @IBOutlet var StackTollFee: UIStackView!
+    @IBOutlet var StackTripSubTotal: UIStackView!
+    
+    @IBOutlet var StackTips: UIStackView!
+    @IBOutlet var StackTipSubTotal: UIStackView!
+    
+    @IBOutlet var StackBookingCharge: UIStackView!
+    @IBOutlet var StackTax: UIStackView!
+    @IBOutlet var StackDiscount: UIStackView!
+    @IBOutlet var StackPassDiscount: UIStackView!
+    @IBOutlet var StackNexusCharge: UIStackView!
+    @IBOutlet var StackTotalNexusCharge: UIStackView!
+    
+    @IBOutlet var StackGrandTotal: UIStackView!
+
+    
+    //    @IBOutlet weak var lblNightFare: UILabel!
+//    @IBOutlet weak var lblWaitingTime: UILabel!
+    //    @IBOutlet weak var lblTotal: UILabel!
+//    @IBOutlet weak var lblTripStatus: UILabel!
+    
+    // New Fields Added
+    
+
+
+
+    
+
 
 /*
     @IBOutlet var lblTripFare: UILabel!

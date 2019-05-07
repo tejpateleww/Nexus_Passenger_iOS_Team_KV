@@ -11,7 +11,7 @@ import UIKit
 class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate { 
 
     
-    var aryData = NSArray()
+    var aryData:[[String:Any]] = []
     
     var strPickupLat = String()
     var strPickupLng = String()
@@ -32,7 +32,7 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = ThemeWhiteColor
+        refreshControl.tintColor = ThemeNaviBlueColor
         
         return refreshControl
     }()
@@ -63,7 +63,7 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         
     @objc func reloadDataTableView()
     {
-        self.aryData = SingletonClass.sharedInstance.aryUpComming
+//        self.aryData = SingletonClass.sharedInstance.aryUpComming
         
         if self.aryData.count > 0 {
             self.lblNoDataFound.isHidden = true
@@ -113,33 +113,50 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
 //            cell.viewCell.layer.cornerRadius = 10
 //            cell.viewCell.clipsToBounds = true
             
-            let dictData = aryData.object(at: indexPath.row) as! NSDictionary
+            let dictData = aryData[indexPath.row]
             
-            if let BookingID = dictData.object(forKey: "Id") as? String {
+            if let BookingID = dictData[ "Id"] as? String {
                 cell.lblBookingId.text = "\("Booking Id".localized) : \(BookingID)"
             }
             
             //            cell.lblBookingID.attributedText = formattedString
-            cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
-            cell.lblPickupAddress.text = dictData.object(forKey: "PickupLocation") as? String // PickupLocation
-            cell.lblDropoffAddress.text = dictData.object(forKey: "DropoffLocation") as? String  // DropoffLocation
-            
-            if let pickupTime = dictData.object(forKey: "PickupDateTime") as? String {
+            if let Createdate = dictData[ "CreatedDate"] as? String {
+                cell.lblDateAndTime.text =  Createdate
+            }
+            if let PickupLocation = dictData[ "PickupLocation"] as? String {
+                cell.lblPickupAddress.text = ": " + PickupLocation // PickupLocation
+            }
+            if let DropOffAddress = dictData[ "DropoffLocation"] as? String {
+                cell.lblDropoffAddress.text =  ": " + DropOffAddress  // DropoffLocation
+            }
+            if let pickupTime = dictData[ "PickupDateTime"] as? String {
                 if pickupTime == "" {
                     cell.lblPickUpTime.text = "Date and Time not available"
                 }
                 else {
-                    cell.lblPickUpTime.text = pickupTime
+                    cell.lblPickUpTime.text = ": " +  pickupTime
 //                        setTimeStampToDate(timeStamp: pickupTime)
                 }
             }
-            cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
-            cell.lblPaymentType.text = dictData.object(forKey: "PaymentType") as? String
             
-            let myString = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String
+            if let PassDiscount = dictData["PassDiscount"] as? String {
+                cell.lblPassDiscount.text = ": \(currencySign)\(String(format: "%.2f", Double((PassDiscount != "") ? PassDiscount : "0.0")!))"
+            }
+            
+            if let DistanceTravelled = dictData["TripDistance"] as? String {
+                cell.lblDistanceTravel.text = ": \(String(format: "%.2f", Double((DistanceTravelled != "") ? DistanceTravelled : "0.0")!)) miles"
+            }
+            
+            if let vehicleType = dictData["Model"] as? String {
+                cell.lblVehicleType.text = ": " + vehicleType
+            }
+            if let PaymentType = dictData["PaymentType"] as? String {
+                cell.lblPaymentType.text = ": " + PaymentType
+            }
+            let myString = aryData[ indexPath.row]["DriverName"] as? String
             cell.lblDriverName.text = myString
             
-            bookinType = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "BookingType") as! String
+            bookinType = aryData[ indexPath.row]["BookingType"] as! String
             cell.btnCancelRequest.setTitle("Cancel Request".localized, for: .normal)
             cell.btnCancelRequest.addTarget(self, action: #selector(self.CancelRequest), for: .touchUpInside)
             cell.btnCancelRequest.tag = indexPath.row
@@ -170,18 +187,20 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
     @objc func CancelRequest(sender: UIButton)
     {
         let Index = sender.tag
-        let currentData = (aryData.object(at: Index) as! [String:AnyObject])
+        let currentData = aryData [Index]
         guard let bookingID = currentData["Id"] as? String else {
             return
         }
         RMUniversalAlert.show(in: self, withTitle:appName, message: "Are you sure you want to cancel this request?", cancelButtonTitle: nil, destructiveButtonTitle: nil, otherButtonTitles: ["Yes", "No"], tap: {(alert, buttonIndex) in
             if (buttonIndex == 2)
             {
-               
                 
                 let socketData = (self.navigationController?.childViewControllers[0] as! HomeViewController).socket
+                let showTopView = self.navigationController?.childViewControllers[0] as! HomeViewController
+                
+                
                 //((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController).socket
-                let showTopView = self.navigationController?.childViewControllers[0] as! HomeViewController //((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController)
+            //((self.navigationController?.childViewControllers[1] as! CustomSideMenuViewController).childViewControllers[0].childViewControllers[0] as! HomeViewController)
                 
                 if (SingletonClass.sharedInstance.isTripContinue) {
                     
@@ -198,15 +217,14 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
                     {
                         let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
                         socketData.emit(SocketData.kCancelTripByPassenger , with: [myJSON])
-                        
                         showTopView.setHideAndShowTopViewWhenRequestAcceptedAndTripStarted(status: false)
-                        
+                        self.webserviceOfBookingHistory()
                         //                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
                         //                    self.navigationController?.popViewController(animated: true)
                         //                })
                         
                         //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.navigationController?.popViewController(animated: true)
+//                        self.navigationController?.popViewController(animated: true)
                         //                }
                         
                         
@@ -217,12 +235,12 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
                     else {
                         let myJSON = [SocketDataKeys.kBookingIdNow : bookingID] as [String : Any]
                         socketData.emit(SocketData.kAdvancedBookingCancelTripByPassenger , with: [myJSON])
-                        
+                         self.webserviceOfBookingHistory()
                         //                UtilityClass.showAlertWithCompletion("", message: "Your request cancelled successfully", vc: self, completionHandler: { ACTION in
                         //                    self.navigationController?.popViewController(animated: true)
                         //                })
                         //                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        self.navigationController?.popViewController(animated: true)
+//                        self.navigationController?.popViewController(animated: true)
                         //                }
                         //                UtilityClass.setCustomAlert(title: "\(appName)", message: "Your request cancelled successfully", completionHandler: { (index, title) in
                         //                    self.navigationController?.popViewController(animated: true)
@@ -271,5 +289,44 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
         return time2
     }
     
+    
+    @objc func webserviceOfBookingHistory()
+    {
+        if Connectivity.isConnectedToInternet() == false {
+            self.refreshControl.endRefreshing()
+            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+            }
+            return
+        }
+        webserviceForUpcomingBookingList(SingletonClass.sharedInstance.strPassengerID as AnyObject) { (result, status) in
+            
+            if (status) {
+                self.aryData = result["history"] as! [[String:Any]]
+                print(self.aryData)
+                
+                self.reloadDataTableView()
+                self.refreshControl.endRefreshing()
+                
+            }
+            else {
+                
+                print(result)
+                
+                if let res = result as? String {
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
+                    }
+                }
+                else if let resDict = result as? NSDictionary {
+                    UtilityClass.setCustomAlert(title: "", message: resDict[ "message"] as! String) { (index, title) in
+                    }
+                }
+                else if let resAry = result as? NSArray {
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary)[ "message"] as! String) { (index, title) in
+                    }
+                }
+            }
+        }
+    }
+
    
 }

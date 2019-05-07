@@ -34,6 +34,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
     
     var locationManager = CLLocationManager()
     var strURLForSocialImage = String()
+    
+    var CurrentLocation = CLLocation()
     //-------------------------------------------------------------
     // MARK: - Base Methods
     //-------------------------------------------------------------
@@ -53,13 +55,13 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
             // do some tasks..
         }
         else {
-            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
-            }
+            UtilityClass.showAlert("", message: "Sorry! Not connected to internet".localized, vc: self)
+//            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+//        }
         }
         
         
-        
-        webserviceOfAppSetting()
+        self.webserviceOfAppSetting()
         
         locationManager.requestAlwaysAuthorization()
         
@@ -72,7 +74,7 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                 {
                     locationManager.startUpdatingLocation()
                     locationManager.delegate = self
-                    
+                    self.CurrentLocation = locationManager.location!
                 }
                 
                 //                manager.startUpdatingLocation()
@@ -194,8 +196,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         dictparam.setObject(txtEmail.text!, forKey: "Username" as NSCopying)
         dictparam.setObject(txtPassword.text!, forKey: "Password" as NSCopying)
         dictparam.setObject("1", forKey: "DeviceType" as NSCopying)
-        dictparam.setObject("6287346872364287", forKey: "Lat" as NSCopying)
-        dictparam.setObject("6287346872364287", forKey: "Lng" as NSCopying)
+        dictparam.setObject("\(self.CurrentLocation.coordinate.latitude)", forKey: "Lat" as NSCopying)
+        dictparam.setObject("\(self.CurrentLocation.coordinate.longitude)", forKey: "Lng" as NSCopying)
         dictparam.setObject(SingletonClass.sharedInstance.deviceToken, forKey: "Token" as NSCopying)
         
         webserviceForDriverLogin(dictparam) { (result, status) in
@@ -419,6 +421,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                             homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
                             homeVC.socket.off(SocketData.kArrivedDriverBookNowRequest)
                             homeVC.socket.off(SocketData.kArrivedDriverBookLaterRequest)
+                            homeVC.socket.off(SocketData.kReceiveTollFeeToDriverBookLater)
+                            homeVC.socket.off(SocketData.kReceiveTollFeeToDriver)
                             
                             homeVC.txtDestinationLocation.text = ""
                             homeVC.txtCurrentLocation.text = ""
@@ -465,6 +469,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                             homeVC.socket.off(SocketData.kAcceptAdvancedBookingRequestNotify)
                             homeVC.socket.off(SocketData.kArrivedDriverBookNowRequest)
                             homeVC.socket.off(SocketData.kArrivedDriverBookLaterRequest)
+                            homeVC.socket.off(SocketData.kReceiveTollFeeToDriverBookLater)
+                            homeVC.socket.off(SocketData.kReceiveTollFeeToDriver)
                             
                             if homeVC.txtCurrentLocation != nil {
                                 homeVC.txtCurrentLocation.text = ""
@@ -579,8 +585,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
             dictUserData["Lastname"] = lastName as AnyObject
             dictUserData["Email"] = email as AnyObject
             dictUserData["MobileNo"] = "" as AnyObject
-            dictUserData["Lat"] = "6287346872364287" as AnyObject
-            dictUserData["Lng"] = "6287346872364287" as AnyObject
+            dictUserData["Lat"] = "\(self.CurrentLocation.coordinate.latitude)" as AnyObject
+            dictUserData["Lng"] = "\(self.CurrentLocation.coordinate.longitude)" as AnyObject
             dictUserData["SocialId"] = userId as AnyObject
             dictUserData["SocialType"] = "Google" as AnyObject
             dictUserData["Token"] = SingletonClass.sharedInstance.deviceToken as AnyObject
@@ -753,8 +759,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                 dictUserData["Lastname"] = strLastName as AnyObject
                 dictUserData["Email"] = strEmail as AnyObject
                 dictUserData["MobileNo"] = "" as AnyObject
-                dictUserData["Lat"] = "6287346872364287" as AnyObject
-                dictUserData["Lng"] = "6287346872364287" as AnyObject
+                dictUserData["Lat"] = "\(self.CurrentLocation.coordinate.latitude)" as AnyObject
+                dictUserData["Lng"] = "\(self.CurrentLocation.coordinate.longitude)" as AnyObject
                 dictUserData["SocialId"] = strUserId as AnyObject
                 dictUserData["SocialType"] = "Facebook" as AnyObject
                 dictUserData["Token"] = SingletonClass.sharedInstance.deviceToken as AnyObject
@@ -772,10 +778,14 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
     
     
     @IBAction func btnLogin(_ sender: Any) {
+        self.view.endEditing(true)
         let Validator = self.isValidateValue()
         
         if Validator.0 == true {
             //            self.btnLogin.startAnimation()
+            if Connectivity.isConnectedToInternet() == false {
+                UtilityClass.showAlert("", message: "Sorry! Not connected to internet".localized, vc: self)
+            }
             self.webserviceCallForLogin()
         } else {
             UtilityClass.setCustomAlert(title: "", message: Validator.1) { (index, title) in
@@ -785,6 +795,9 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
     }
     
     @IBAction func btnSignup(_ sender: Any) {
+        let RegisterVC = UIStoryboard(name: "Registration", bundle: nil).instantiateViewController(withIdentifier: "RegistrationContainerViewController") as! RegistrationContainerViewController
+        RegisterVC.CurrentLocation = self.CurrentLocation
+        self.navigationController?.pushViewController(RegisterVC, animated: true)
         
     }
     
@@ -829,6 +842,9 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location: CLLocation = locations.last!
+        if location != nil {
+            self.CurrentLocation = location
+        }
         //        print("Location: \(location)")
     }
     
@@ -846,6 +862,7 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         case .authorizedAlways: fallthrough
         case .authorizedWhenInUse:
             print("Location status is OK.")
+            self.CurrentLocation = manager.location!
         }
     }
     
@@ -863,7 +880,7 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
         
     }
     
-    
+
     func setCustomAlert(title: String, message: String) {
         AJAlertController.initialization().showAlertWithOkButton(aStrTitle: title, aStrMessage: message) { (index,title) in
         }

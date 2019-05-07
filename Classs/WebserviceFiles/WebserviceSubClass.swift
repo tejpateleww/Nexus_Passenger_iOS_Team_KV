@@ -22,6 +22,8 @@ let GetEstimateFare =  WebserviceURLs.kGetEstimateFare
 let ChangePassword = WebserviceURLs.kChangePassword
 let UpdateProfile = WebserviceURLs.kUpdateProfile
 let PastBooking = WebserviceURLs.kPastBooking
+let Upcoming = WebserviceURLs.kUpcomingBooking
+let OnGoing    = WebserviceURLs.kOnGoing
 let FeedbackList = WebserviceURLs.kFeedbackList
 let cardsList = WebserviceURLs.kCardsList
 let bookPackage = WebserviceURLs.kBookPackage
@@ -176,6 +178,29 @@ func webserviceForPastBookingList(_ dictParams: AnyObject,PageNumber : AnyObject
     let url = "\(PastBooking)/\(dictParams)/\(PageNumber)/taxi"
     getData(dictParams as AnyObject, nsURL: url, completion: completion)
 }
+
+//-------------------------------------------------------------
+// MARK: - Webservice For UpcomingBooking
+//-------------------------------------------------------------
+
+func webserviceForUpcomingBookingList(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = "\(Upcoming)/\(dictParams)"
+    getData(dictParams as AnyObject, nsURL: url, completion: completion)
+}
+
+
+//-------------------------------------------------------------
+// MARK: - Webservice For OnGoingBooking
+//-------------------------------------------------------------
+
+func webserviceForOnGoingBookingList(_ dictParams: AnyObject, completion: @escaping(_ result: AnyObject, _ success: Bool) -> Void)
+{
+    let url = "\(OnGoing)/\(dictParams)"
+    getData(dictParams as AnyObject, nsURL: url, completion: completion)
+}
+
+
 //-------------------------------------------------------------
 // MARK: - Webservice For Feedback List
 //-------------------------------------------------------------

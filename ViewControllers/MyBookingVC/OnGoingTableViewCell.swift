@@ -44,6 +44,10 @@ class OnGoingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblVehicleType: UILabel!
     @IBOutlet weak var lblPaymentType: UILabel!
     
+    @IBOutlet var lblWaitingTimeTitle: UILabel!
+    @IBOutlet var lblWaitingTime: UILabel!
+    
+    
     /*
     @IBOutlet weak var lblDropoffTime: UILabel!
     @IBOutlet weak var lblSecoundDescription: UILabel!

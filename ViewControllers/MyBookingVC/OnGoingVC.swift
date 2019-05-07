@@ -13,7 +13,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     var strPickupLat = String()
     var strPickupLng = String()
-    var aryData = NSArray()
+    var aryData:[[String:Any]] = []
     
     var strDropoffLat = String()
     var strDropoffLng = String()
@@ -31,7 +31,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         refreshControl.addTarget(self, action:
             #selector(self.handleRefresh(_:)),
                                  for: UIControlEvents.valueChanged)
-        refreshControl.tintColor = ThemeWhiteColor
+        refreshControl.tintColor = ThemeNaviBlueColor
         
         return refreshControl
     }()
@@ -61,7 +61,7 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @objc func reloadDataOfTableView() {
         
-        self.aryData = SingletonClass.sharedInstance.aryOnGoing
+//        self.aryData = SingletonClass.sharedInstance.aryOnGoing
         
         if self.aryData.count > 0 {
             self.lblNoDataFound.isHidden = true
@@ -113,46 +113,78 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
             
 //            cell.viewCell.layer.cornerRadius = 10
 //            cell.viewCell.clipsToBounds = true
-            if let name = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DriverName") as? String {
-                
+            if let name = aryData[ indexPath.row]["DriverName"] as? String {
                 if name == "" {
                     cell.lblDriverName.text = "NULL"
                 }
                 else {
                     cell.lblDriverName.text = name
                 }
-                
-            }
+           }
             else {
                 cell.lblDriverName.text = "NULL"
             }
             
-           let dictData = aryData.object(at: indexPath.row) as! NSDictionary
+           let dictData = aryData[ indexPath.row]
             
 //            let formattedString = NSMutableAttributedString()
 //            formattedString
 //                .normal("\("Booking Id :".localized)")
 //                .bold("\(String(describing: (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "Id")!))", 14)
             
-            if let BookingID = dictData.object(forKey: "Id") as? String {
+            if let BookingID = dictData["Id"] as? String {
                 cell.lblBookingID.text = "\("Booking Id".localized) : \(BookingID)"
             }
             
-//            cell.lblBookingID.attributedText = formattedString
-            cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
-            cell.lblPickupAddress.text = dictData.object(forKey: "PickupLocation") as? String // PickupLocation
-            cell.lblDropoffAddress.text = dictData.object(forKey: "DropoffLocation") as? String  // DropoffLocation
             
-            if let pickupTime = dictData.object(forKey: "PickupTime") as? String {
+//            cell.lblBookingID.attributedText = formattedString
+            if let Createdate = dictData[ "CreatedDate"] as? String {
+                cell.lblDateAndTime.text =  Createdate
+            }
+            if let PickupLocation = dictData[ "PickupLocation"] as? String {
+                cell.lblPickupAddress.text = ": " + PickupLocation // PickupLocation
+            }
+            if let DropOffAddress = dictData[ "DropoffLocation"] as? String {
+                cell.lblDropoffAddress.text =  ": " + DropOffAddress  // DropoffLocation
+            }
+            
+            if let pickupTime = dictData["PickupTime"] as? String {
                 if pickupTime == "" {
                     cell.lblPickupTime.text = "Date and Time not available"
                 }
                 else {
-                    cell.lblPickupTime.text = setTimeStampToDate(timeStamp: pickupTime)
+                    cell.lblPickupTime.text = ": " + setTimeStampToDate(timeStamp: pickupTime)
                 }
             }
-            cell.lblVehicleType.text = dictData.object(forKey: "Model") as? String
-            cell.lblPaymentType.text = dictData.object(forKey: "PaymentType") as? String
+            if let vehicleType = dictData["Model"] as? String {
+                cell.lblVehicleType.text = ": " + vehicleType
+            }
+            if let PaymentType = dictData["PaymentType"] as? String {
+                cell.lblPaymentType.text = ": " + PaymentType
+            }
+           
+            if let waitingTime = dictData["WaitingTime"] as? String {
+                
+                var strWaitingTime: String = "00:00:00"
+                
+                if waitingTime != "" {
+                    let intWaitingTime = Int(waitingTime)
+                    let WaitingTimeIs = ConvertSecondsToHoursMinutesSeconds(seconds: intWaitingTime!)
+                    if WaitingTimeIs.0 == 0 {
+                        if WaitingTimeIs.1 == 0 {
+                            strWaitingTime = "00:00:\(WaitingTimeIs.2)"
+                        } else {
+                            strWaitingTime = "00:\(WaitingTimeIs.1):\(WaitingTimeIs.2)"
+                        }
+                    } else {
+                        strWaitingTime = "\(WaitingTimeIs.0):\(WaitingTimeIs.1):\(WaitingTimeIs.2)"
+                    }
+                }
+                else {
+                    strWaitingTime = waitingTime
+                }
+                cell.lblWaitingTime.text = ": " + strWaitingTime
+            }
             
 //            if let DropoffTime = (aryData.object(at: indexPath.row) as! NSDictionary).object(forKey: "DropTime") as? String {
 //                if DropoffTime == "" {
@@ -214,9 +246,9 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
    
     @objc func trackYourTrip(sender: UIButton) {
         
-        let currentData = aryData.object(at: sender.tag)
+        let currentData = aryData[sender.tag]
         
-        let id:String = (currentData as! NSDictionary).object(forKey: "Id")! as! String
+        let id:String = currentData["Id"] as! String
         
         RunningTripTrack(param: id)
         
@@ -278,6 +310,47 @@ class OnGoingVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         
         return strDate
     }
+    
+    @objc func webserviceOfBookingHistory()
+    {
+        //        let activityData = ActivityData()
+        //        NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData)
+        //
+        if Connectivity.isConnectedToInternet() == false {
+            
+            UtilityClass.setCustomAlert(title: "Connection Error", message: "Internet connection not available") { (index, title) in
+            }
+            return
+        }
+         webserviceForOnGoingBookingList(SingletonClass.sharedInstance.strPassengerID as AnyObject ) { (result, status) in
+            
+            if (status) {
+                self.aryData = (result as! [String:Any])["history"] as! [[String:Any]]
+                print(self.aryData)
+                self.reloadDataOfTableView()
+                self.refreshControl.endRefreshing()
+                
+            }
+            else {
+                
+                print(result)
+                
+                if let res = result as? String {
+                    UtilityClass.setCustomAlert(title: "", message: res) { (index, title) in
+                    }
+                }
+                else if let resDict = result as? NSDictionary {
+                    UtilityClass.setCustomAlert(title: "", message: resDict.object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+                else if let resAry = result as? NSArray {
+                    UtilityClass.setCustomAlert(title: "", message: (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                    }
+                }
+            }
+        }
+    }
+    
     
 /*
     func setMarkersOnMap(PickupLatitude: Double, PickupLongitude: Double, DropoffLatitude: Double, DropoffLongitude: Double, PickupLocation: String, DropoffLocation: String) {

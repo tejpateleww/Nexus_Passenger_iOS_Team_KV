@@ -8,6 +8,7 @@
 
 import UIKit
 import CHIPageControl
+import  CoreLocation
 
 class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate {
 
@@ -17,6 +18,8 @@ class RegistrationContainerViewController: UIViewController,UIScrollViewDelegate
     @IBOutlet weak var firstStep: UIImageView!
     @IBOutlet weak var secondStep: UIImageView!
     @IBOutlet weak var thirdStep: UIImageView!
+    
+    var CurrentLocation = CLLocation()
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -912,7 +912,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         }
         let myLabel = UILabel(frame: CGRect(x:60, y:0, width:pickerView.bounds.width - 90, height:60 ))
 //        myLabel.font = UIFont(name:some, font, size: 18)
-        myLabel.text = rowString
+        myLabel.text = (rowString == "cash") ? "Cash" : rowString
         
         myView.addSubview(myLabel)
         myView.addSubview(myImageView)

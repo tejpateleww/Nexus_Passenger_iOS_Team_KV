@@ -105,7 +105,7 @@ class EditAccountViewController: BaseViewController {
     
     func validationForUpdateBankAccountDetails() -> Bool {
         
-        if (txtAccountHolderName.text!.count == 0) {
+        if (txtAccountHolderName.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count == 0) {
             UtilityClass.setCustomAlert(title: "", message: "Enter Account Holder Name.") { (index, title) in
             }
             return false
@@ -115,17 +115,17 @@ class EditAccountViewController: BaseViewController {
 //            }
 //            return false
 //        }
-        else if (txtBankName.text!.count == 0) {
+        else if (txtBankName.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count == 0) {
             UtilityClass.setCustomAlert(title: "", message: "Enter Bank Name.") { (index, title) in
             }
             return false
         }
-        else if (txtBSB.text!.count == 0) {
+        else if (txtBSB.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count == 0) {
             UtilityClass.setCustomAlert(title: "", message: "Enter BSB Number.") { (index, title) in
             }
             return false
         }
-        else if (txtBankAccount.text!.count == 0) {
+        else if (txtBankAccount.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count == 0) {
             UtilityClass.setCustomAlert(title: "", message: "Enter Bank Account Number.") { (index, title) in
             }
             return false
@@ -180,8 +180,7 @@ class EditAccountViewController: BaseViewController {
                     
 //                    (result as! NSDictionary).object(forKey: "profile") as! NSMutableDictionary
                 
-                UtilityClass.setCustomAlert(title: "Profile", message: "Update Successfully.") { (index, title) in
-                    
+                UtilityClass.setCustomAlert(title: "Profile", message: "Account details updated successfully.") { (index, title) in
                     self.navigationController?.popViewController(animated: true)
                 }
 /*

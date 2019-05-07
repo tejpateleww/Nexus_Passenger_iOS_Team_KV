@@ -8,10 +8,16 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="HelveticaNeue.ttc">
+            <string>HelveticaNeue</string>
+        </array>
+    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AJAlertController" customModule="Nexus_User" customModuleProvider="target">
             <connections>
                 <outlet property="btnCancel" destination="WKU-D5-GZU" id="faX-Wj-wBr"/>
+                <outlet property="btnCross" destination="MR7-xN-eIP" id="YOi-xI-7i0"/>
                 <outlet property="btnOK" destination="38z-3l-aEb" id="XHF-7B-Rvl"/>
                 <outlet property="btnOther" destination="i9M-DL-0zE" id="ftI-Vr-1bY"/>
                 <outlet property="lblAlertText" destination="5ev-HP-eeU" id="pRy-Da-hSD"/>
@@ -185,6 +191,6 @@
     </objects>
     <resources>
         <image name="HeaderLogo" width="200" height="61"/>
-        <image name="iconCloseAlert" width="40" height="40"/>
+        <image name="iconCloseAlert" width="64" height="64"/>
     </resources>
 </document>

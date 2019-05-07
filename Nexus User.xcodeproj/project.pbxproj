@@ -182,12 +182,12 @@
 		3A84BCA021C264E900EDA3A2 /* MyRatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A84BC9E21C264E800EDA3A2 /* MyRatingViewController.swift */; };
 		640C5A87225B103900592D4C /* PassKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640C5A86225B103900592D4C /* PassKeys.swift */; };
 		648D81FB225F2BED0077E93E /* DriverInfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 648D81FA225F2BED0077E93E /* DriverInfoTableViewCell.swift */; };
-		649D335D2251D9B5000613D7 /* Pass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 649D335C2251D9B5000613D7 /* Pass.storyboard */; };
 		649D33602251DF65000613D7 /* OffersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D335F2251DF65000613D7 /* OffersViewController.swift */; };
 		649D33642251F18F000613D7 /* OffersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649D33632251F18F000613D7 /* OffersTableViewCell.swift */; };
 		64D98D5B22522A47005AD476 /* PassFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D98D5A22522A47005AD476 /* PassFilterViewController.swift */; };
 		64F204742254EC6E005DBC22 /* MyOffersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F204732254EC6E005DBC22 /* MyOffersTableViewCell.swift */; };
 		7AAA412B227188E800885117 /* DriverINFOConfirmPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AAA412A227188E800885117 /* DriverINFOConfirmPopup.swift */; };
+		7AF8E97F22718AC200842A82 /* Pass.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7AF8E98122718AC200842A82 /* Pass.storyboard */; };
 		973E4FA80DF7E4F9E5FFB4A8 /* Pods_Nexus_User.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 003D491B5CB4DC364B8D8EE0 /* Pods_Nexus_User.framework */; };
 /* End PBXBuildFile section */
 
@@ -390,13 +390,15 @@
 		626E9D33B8993B5928C11526 /* Pods_TanTaxi_User.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TanTaxi_User.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		640C5A86225B103900592D4C /* PassKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassKeys.swift; sourceTree = "<group>"; };
 		648D81FA225F2BED0077E93E /* DriverInfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverInfoTableViewCell.swift; sourceTree = "<group>"; };
-		649D335C2251D9B5000613D7 /* Pass.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Pass.storyboard; sourceTree = "<group>"; };
 		649D335F2251DF65000613D7 /* OffersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersViewController.swift; sourceTree = "<group>"; };
 		649D33632251F18F000613D7 /* OffersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffersTableViewCell.swift; sourceTree = "<group>"; };
 		64D98D5A22522A47005AD476 /* PassFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PassFilterViewController.swift; sourceTree = "<group>"; };
 		64F204732254EC6E005DBC22 /* MyOffersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyOffersTableViewCell.swift; sourceTree = "<group>"; };
 		6C5BB4D02F5DAB560A69DD39 /* Pods_PickNGo_User.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PickNGo_User.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AAA412A227188E800885117 /* DriverINFOConfirmPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DriverINFOConfirmPopup.swift; sourceTree = "<group>"; };
+		7AF8E98022718AC200842A82 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Pass.storyboard; sourceTree = "<group>"; };
+		7AF8E98322718AC600842A82 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Pass.strings; sourceTree = "<group>"; };
+		7AF8E98522718ACA00842A82 /* sw */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sw; path = sw.lproj/Pass.strings; sourceTree = "<group>"; };
 		8AB9D1AFC2E46418F626C956 /* Pods-TickTok User.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TickTok User.release.xcconfig"; path = "Pods/Target Support Files/Pods-TickTok User/Pods-TickTok User.release.xcconfig"; sourceTree = "<group>"; };
 		94C0D7BC78B29F8F1DC79A5C /* Pods-Nexus User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Nexus User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Nexus User/Pods-Nexus User.debug.xcconfig"; sourceTree = "<group>"; };
 		BD32F68E712FA8642AFBDA39 /* Pods-TanTaxi User.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TanTaxi User.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TanTaxi User/Pods-TanTaxi User.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1016,7 +1018,7 @@
 				34E01A1F220EE898000D048E /* Main.storyboard */,
 				34E01A27220EED13000D048E /* LaunchScreen.storyboard */,
 				342EEFA22233820400E4354C /* Help.storyboard */,
-				649D335C2251D9B5000613D7 /* Pass.storyboard */,
+				7AF8E98122718AC200842A82 /* Pass.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -1102,7 +1104,7 @@
 				3A40740A21B512280015C494 /* WWCalendarTimeSelector.storyboard in Resources */,
 				3A40738821B512280015C494 /* proxima-nova-regular-italic.otf in Resources */,
 				3A4073F521B512280015C494 /* AJAlertController.xib in Resources */,
-				649D335D2251D9B5000613D7 /* Pass.storyboard in Resources */,
+				7AF8E97F22718AC200842A82 /* Pass.storyboard in Resources */,
 				3A4073A221B512280015C494 /* HeaderView.xib in Resources */,
 				34986F74223931AA00948B89 /* GoogleService-Info.plist in Resources */,
 				3A40739021B512280015C494 /* costcoWholesale.png in Resources */,
@@ -1457,6 +1459,16 @@
 				34E01A2D220EEEA7000D048E /* sw */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		7AF8E98122718AC200842A82 /* Pass.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7AF8E98022718AC200842A82 /* Base */,
+				7AF8E98322718AC600842A82 /* en */,
+				7AF8E98522718ACA00842A82 /* sw */,
+			);
+			name = Pass.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

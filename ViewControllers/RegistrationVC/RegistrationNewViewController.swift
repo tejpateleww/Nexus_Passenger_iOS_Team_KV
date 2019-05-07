@@ -12,8 +12,6 @@ import ACFloatingTextfield_Swift
 
 class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDelegate,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
  
-    
-    
     var strDateOfBirth = String()
 
     //-------------------------------------------------------------
@@ -306,8 +304,10 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         dictParams.setObject(SingletonClass.sharedInstance.deviceToken, forKey: "Token" as NSCopying)
         dictParams.setObject("1", forKey: "DeviceType" as NSCopying)
         dictParams.setObject(gender, forKey: "Gender" as NSCopying)
-        dictParams.setObject("12376152367", forKey: "Lat" as NSCopying)
-        dictParams.setObject("2348273489", forKey: "Lng" as NSCopying)
+        if let registerContainer = self.navigationController?.childViewControllers[(self.navigationController?.childViewControllers.count as! Int) - 1] as? RegistrationContainerViewController {
+            dictParams.setObject("\(registerContainer.CurrentLocation.coordinate.latitude)", forKey: "Lat" as NSCopying)
+            dictParams.setObject("\(registerContainer.CurrentLocation.coordinate.longitude)", forKey: "Lng" as NSCopying)
+        }
         dictParams.setObject(strDateOfBirth, forKey: "DOB" as NSCopying)
         
         webserviceForRegistrationForUser(dictParams, image1: imgProfile.image!) { (result, status) in

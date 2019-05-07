@@ -29,7 +29,7 @@ class WalletTransferViewController: BaseViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
 //        CustomCameraVC = imagePicker
 //        viewQRCodeScanner = imagePicker.view
 

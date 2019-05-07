@@ -204,6 +204,20 @@ class UtilityClass: NSObject, alertViewMethodsDelegates {
     class func setCustomAlert(title: String, message: String,completionHandler: alertCompletionBlockAJ) -> Void {
        
         AJAlertController.initialization().showAlertWithOkButton(aStrTitle: title, aStrMessage: message) { (index,title) in
+            if index == 0 {
+                completionHandler!(0,title)
+            }
+            else if index == 2 {
+                completionHandler!(2,title)
+            }
+        }
+        
+    }
+    
+    
+    class func setCustomAlertWithoutCrossButton(title: String, message: String,completionHandler: alertCompletionBlockAJ) -> Void {
+        
+        AJAlertController.initialization().showAlertWithOkButtonWithOutCrossButton(aStrTitle:  title, aStrMessage: message) { (index,title) in
             
             if index == 0 {
                 completionHandler!(0,title)

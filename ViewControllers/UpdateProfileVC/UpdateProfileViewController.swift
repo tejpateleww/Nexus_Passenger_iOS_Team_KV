@@ -104,7 +104,7 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         viewFemale.tintColor = ThemeNaviBlueColor
         viewMale.boxType = .circle
         viewFemale.boxType = .circle
-        
+        setData()
 //        viewRadioGender.layer.cornerRadius = 2
 //        viewRadioGender.layer.shadowRadius = 3.0
 //        viewRadioGender.layer.shadowColor = UIColor.black.withAlphaComponent(0.6).cgColor
@@ -139,7 +139,7 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setData()
+        
         setLocalization()
         self.setNavBarWithBack(Title: "Profile".localized, IsNeedRightButton: false)
     }
@@ -186,7 +186,6 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
 //    }
    
     @IBAction func txtDateOfBirthAction(_ sender: UITextField) {
-
 
         let datePickerView:UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = UIDatePickerMode.date
@@ -350,6 +349,7 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         imgProfile.sd_setIndicatorStyle(.gray)
         imgProfile.sd_setImage(with: URL(string: getData.object(forKey: "Image") as! String), completed: nil)
         
+        
 //        txtPhoneNumber.text = getData.object(forKey: "MobileNo") as? String
         txtDateOfBirth.text = getData.object(forKey: "DOB") as? String
         
@@ -405,15 +405,12 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
                 
                 print(result)
                 SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
-                
                 UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
-                
-               
+                NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateProfile") , object: nil)
                 UtilityClass.setCustomAlert(title: "Done", message: "Update Profile Successfully") { (index, title) in
                     self.navigationController?.popViewController(animated: true)
                 }
-                
-                
+               
             }
             else {
                 print(result)

@@ -32,6 +32,35 @@ class CanceledBookingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblTripStatus: UILabel!
 
     
+    // New Fields Added
+    
+    @IBOutlet var lblWaitingTimeTitle: UILabel!
+    @IBOutlet var lblSurgeChargeTitle: UILabel!
+    @IBOutlet var lblTollFeeTitle: UILabel!
+    @IBOutlet var lblTipsTitle: UILabel!
+    @IBOutlet var lblNexusChargeTitle: UILabel!
+    
+    
+    @IBOutlet var lblWaitingTime: UILabel!
+    @IBOutlet var lblSurgeCharge: UILabel!
+    @IBOutlet var lblTollFee: UILabel!
+    @IBOutlet var lblTips: UILabel!
+    @IBOutlet var lblNexusCharge: UILabel!
+    
+    @IBOutlet var StackVehicleType: UIStackView!
+    @IBOutlet var StackWaitingTime: UIStackView!
+    @IBOutlet var StackPaymentType: UIStackView!
+    @IBOutlet var StackTripStatus: UIStackView!
+    
+    @IBOutlet var StackSurgeCharge: UIStackView!
+    @IBOutlet var StackTollFee: UIStackView!
+    
+    @IBOutlet var StackTips: UIStackView!
+    @IBOutlet var StackNexusCharge: UIStackView!
+
+    @IBOutlet var SeparatorNexusCharge: UILabel!
+    @IBOutlet var SeparatorTips: UILabel!
+   @IBOutlet var SeparatorSurgeTollfee: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()

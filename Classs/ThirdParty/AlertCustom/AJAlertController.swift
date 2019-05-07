@@ -18,7 +18,7 @@ class AJAlertController: UIViewController {
     private var strAlertText = String()
     private var btnCancelTitle:String?
     private var btnOtherTitle:String?
-    
+    private var isHideCrossButton:Bool = false
     private let btnOtherColor  = UIColor(red: 255/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
     private let btnCancelColor = UIColor(red: 255.0/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1.0)
     
@@ -33,6 +33,8 @@ class AJAlertController: UIViewController {
     @IBOutlet var btnOther: UIButton!
     @IBOutlet var btnOK: UIButton!
     @IBOutlet var viewAlertBtns: UIView!
+    @IBOutlet var btnCross: UIButton!
+    
    // @IBOutlet var alertWidthConstraint: NSLayoutConstraint!
     
     /// AlertController Completion handler
@@ -54,6 +56,7 @@ class AJAlertController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.btnCross.isHidden = false
         btnOK.setTitle("OK".localized, for: .normal)
         setupAJAlertController()
     }
@@ -123,8 +126,11 @@ class AJAlertController: UIViewController {
     }
     
     /// Create and Configure Alert Controller
-    private func configure(title: String, message:String, btnCancelTitle:String?, btnOtherTitle:String?)
+    private func configure(title: String, message:String, btnCancelTitle:String?, btnOtherTitle:String? , ishideCrossbutton:Bool)
     {
+//        if self.btnCross != nil {
+//             self.btnCross.isHidden = ishideCrossbutton
+//        }
         self.strAlertTitle = title
         self.strAlertText = message
         self.btnCancelTitle = btnCancelTitle
@@ -234,7 +240,8 @@ class AJAlertController: UIViewController {
                     aCancelBtnTitle:String?,
                     aOtherBtnTitle:String? ,
                     completion : alertCompletionBlock){
-        configure( title: aStrTitle, message: aStrMessage, btnCancelTitle: aCancelBtnTitle, btnOtherTitle: aOtherBtnTitle)
+//        self.btnCross.isHidden = false
+        configure( title: aStrTitle, message: aStrMessage, btnCancelTitle: aCancelBtnTitle, btnOtherTitle: aOtherBtnTitle, ishideCrossbutton: false)
         show()
         block = completion
     }
@@ -248,7 +255,17 @@ class AJAlertController: UIViewController {
     
     public func showAlertWithOkButton( aStrTitle:String, aStrMessage:String,
                                 completion : alertCompletionBlock){
-        configure(title: aStrTitle, message: aStrMessage, btnCancelTitle: nil, btnOtherTitle: nil)
+//        self.btnCross.isHidden = false
+        configure(title: aStrTitle, message: aStrMessage, btnCancelTitle: nil, btnOtherTitle: nil, ishideCrossbutton: false)
+        show()
+        block = completion
+    }
+    
+    public func showAlertWithOkButtonWithOutCrossButton( aStrTitle:String, aStrMessage:String,
+                                       completion : alertCompletionBlock){
+//        self.btnCross.isHidden = true
+        configure(title: aStrTitle, message: aStrMessage, btnCancelTitle: nil, btnOtherTitle: nil, ishideCrossbutton: true)
+        self.isHideCrossButton = true
         show()
         block = completion
     }

@@ -44,6 +44,7 @@ class DriverInfoPageViewController: UIViewController {
     @IBOutlet weak var constraintFeedbackHeight: NSLayoutConstraint!
     
     var driverInfo = NSDictionary()
+    var CarModelInfo = NSDictionary()
     var strCarImage = String()
     var strCareName = String()
     var strCarClass = String()
@@ -111,8 +112,15 @@ class DriverInfoPageViewController: UIViewController {
     }
     
     func driverInfoStringValue(key: String)-> String{
-        return " : " + String(describing: (driverInfo.object(forKey: key) ?? ""))
+        if let DriverInfoString = driverInfo.value(forKey: key) as? String {
+            return ": " + DriverInfoString
+        }
+        else if let DriverInfoString = driverInfo.value(forKey: key) as? Int {
+            return ": " + "\(DriverInfoString)"
+        }
+        return ": "
     }
+    
     func setLocalization()
     {
         
@@ -180,13 +188,15 @@ class DriverInfoPageViewController: UIViewController {
         lblPickupLocation.text = "Pickup Location : \(strPickupLocation)"
         lblDropoffLocation.text = "Dropoff Location : \(strDropoffLocation)"
         lblDriverName.text = strDriverName
-        
-        if strCarClass.count == 1 {
-            lblCarClass.text = carClass(strClass: strCarClass)
-        }
-        else {
+//        if let CarModel = self.CarModelInfo["name"] as? String {
+//            lblCarClass.text = CarModel
+//        }
+//        if strCarClass.count == 1 {
+//            lblCarClass.text = carClass(strClass: strCarClass)
+//        }
+//        else {
             lblCarClass.text = strCarClass
-        }
+//        }
     }
     
     @IBAction func btnCallToDriver(_ sender: UIButton) {

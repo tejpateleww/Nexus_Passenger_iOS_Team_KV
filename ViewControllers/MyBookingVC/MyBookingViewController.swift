@@ -44,7 +44,7 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
         
         self.setNavBarWithBack(Title: "My Bookings".localized, IsNeedRightButton: false)
 
-        webserviceOfBookingHistory()
+//        webserviceOfBookingHistory()
         scrollObject.isUserInteractionEnabled = true
         scrollObject.delegate = self
         scrollObject.layoutIfNeeded()
@@ -146,13 +146,16 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
     }
     
     @IBAction func lblOnGoing(_ sender: UIButton) {
-        OnGoing()
+         if self.btnOnGoing.backgroundColor != selectedBackgroundColor {
+            OnGoing()
+        }
         
     }
     
     @IBAction func btnUpComming(_ sender: UIButton) {
-        Upcomming()
-       
+         if self.btnUpComming.backgroundColor != selectedBackgroundColor {
+            Upcomming()
+        }
     }
     
     func isModal() -> Bool {
@@ -186,6 +189,10 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
         btnOnGoing.backgroundColor = selectedBackgroundColor
         btnOnGoing.setTitleColor(selectedTextColor, for: .normal)
         
+        if let OnGoingScreen = self.childViewControllers[0] as? OnGoingVC {
+            OnGoingScreen.webserviceOfBookingHistory()
+        }
+        
         scrollObject.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
@@ -218,7 +225,9 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
 //        lblOnGoing.setTitleColor(UIColor.black, for: .normal)
 //        btnUpComming.setTitleColor(UIColor.black, for: .normal)
 //        btnPastBooking.setTitleColor(UIColor.black, for: .normal)
-        
+        if let UpcomingScreen = self.childViewControllers[1] as? UpCommingVC {
+            UpcomingScreen.webserviceOfBookingHistory()
+        }
       
         scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width, y: 0), animated: true)
     }
@@ -250,14 +259,20 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
         btnUpComming.setTitleColor(unselectedTextColor, for: .normal)
         btnOnGoing.setTitleColor(unselectedTextColor, for: .normal)
         btnPastBooking.setTitleColor(selectedTextColor, for: .normal)
-
+        
+        if let PastBookingScreen = self.childViewControllers[2] as? PastBookingVC {
+            PastBookingScreen.ReloadNewData()
+//            getPastBookingHistory()
+        }
         
         scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width * 2, y: 0), animated: true)
     }
     
     @IBAction func btnPastBooking(_ sender: UIButton) {
-       
-        PastBooking()
+        if self.btnPastBooking.backgroundColor != selectedBackgroundColor {
+            PastBooking()
+        }
+        
         
     }
     
@@ -486,9 +501,13 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
                 
                 UtilityClass.setCustomAlert(title: "", message: ((result as! NSDictionary).object(forKey: "message") as? String)!) { (index, title) in
                     UIView.transition(with: self.TipParentView, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
+                        if let PastBookingScreen = self.childViewControllers[2] as? PastBookingVC {
+                            PastBookingScreen.ReloadNewData()
+                            //.getPastBookingHistory()
+                        }
                         self.TipParentView.isHidden = true
                     }) { _ in
-                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
+//                        NotificationCenter.default.post(name: NSNotification.Name(rawValue: NotificationCenterName.keyForPastBooking), object: nil)
                     }
                 }
             }

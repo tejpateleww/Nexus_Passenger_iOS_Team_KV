@@ -1,0 +1,81 @@
+
+/* Class = "UITextField"; placeholder = "Click Icon to Select DropOff Time"; ObjectID = "0KP-rX-2t9"; */
+"0KP-rX-2t9.placeholder" = "Click Icon to Select DropOff Time";
+
+/* Class = "UILabel"; text = "Actual Price:-"; ObjectID = "1hL-wh-mEk"; */
+"1hL-wh-mEk.text" = "Actual Price:-";
+
+/* Class = "UILabel"; text = "Weekly Pass"; ObjectID = "3sc-W6-xuj"; */
+"3sc-W6-xuj.text" = "Weekly Pass";
+
+/* Class = "UILabel"; text = "Discount Price:-"; ObjectID = "5Hf-1z-X1Z"; */
+"5Hf-1z-X1Z.text" = "Discount Price:-";
+
+/* Class = "UILabel"; text = "Select Car Model"; ObjectID = "69i-V4-MzF"; */
+"69i-V4-MzF.text" = "Select Car Model";
+
+/* Class = "UIButton"; normalTitle = "Offers"; ObjectID = "AQj-Ul-a2P"; */
+"AQj-Ul-a2P.normalTitle" = "Offers";
+
+/* Class = "UIButton"; normalTitle = "My Offers"; ObjectID = "DKG-2S-F2V"; */
+"DKG-2S-F2V.normalTitle" = "My Offers";
+
+/* Class = "UILabel"; text = "Weekly Pass Offers"; ObjectID = "Dek-zq-j2K"; */
+"Dek-zq-j2K.text" = "Weekly Pass Offers";
+
+/* Class = "UITextField"; placeholder = "Dropoff Location"; ObjectID = "FMQ-uz-Yvb"; */
+"FMQ-uz-Yvb.placeholder" = "Dropoff Location";
+
+/* Class = "UILabel"; text = "You get discount on your regular trips in month"; ObjectID = "Ii1-2z-b8u"; */
+"Ii1-2z-b8u.text" = "You get discount on your regular trips in month";
+
+/* Class = "UILabel"; text = "End Date"; ObjectID = "JTc-8O-BXs"; */
+"JTc-8O-BXs.text" = "End Date";
+
+/* Class = "UITextField"; placeholder = "Click Icon to Select Pickup Time"; ObjectID = "MxW-ak-bc6"; */
+"MxW-ak-bc6.placeholder" = "Click Icon to Select Pickup Time";
+
+/* Class = "UILabel"; text = "2019-04-03"; ObjectID = "Szm-xM-sRQ"; */
+"Szm-xM-sRQ.text" = "2019-04-03";
+
+/* Class = "UILabel"; text = "2019-04-03"; ObjectID = "UmL-N6-G9z"; */
+"UmL-N6-G9z.text" = "2019-04-03";
+
+/* Class = "UIButton"; normalTitle = "Submit"; ObjectID = "V4E-8W-xdy"; */
+"V4E-8W-xdy.normalTitle" = "Submit";
+
+/* Class = "UILabel"; text = "Start Date"; ObjectID = "YoX-lO-76b"; */
+"YoX-lO-76b.text" = "Start Date";
+
+/* Class = "UILabel"; text = "$$"; ObjectID = "ZeU-5l-J1G"; */
+"ZeU-5l-J1G.text" = "$$";
+
+/* Class = "UILabel"; text = "No data found"; ObjectID = "ZhD-Zy-hcD"; */
+"ZhD-Zy-hcD.text" = "No data found";
+
+/* Class = "UILabel"; text = "Dropoff Location:-"; ObjectID = "d6J-CU-KXd"; */
+"d6J-CU-KXd.text" = "Dropoff Location:-";
+
+/* Class = "UITextField"; placeholder = "Pickup Location"; ObjectID = "e0x-lO-iG3"; */
+"e0x-lO-iG3.placeholder" = "Pickup Location";
+
+/* Class = "UILabel"; text = "Is Round Trip?"; ObjectID = "ioO-UJ-59i"; */
+"ioO-UJ-59i.text" = "Is Round Trip?";
+
+/* Class = "UIButton"; normalTitle = "Activate"; ObjectID = "npQ-aO-3p7"; */
+"npQ-aO-3p7.normalTitle" = "Activate";
+
+/* Class = "UILabel"; text = "Excellent webworld, Science City Gujrat"; ObjectID = "qG6-5q-a8x"; */
+"qG6-5q-a8x.text" = "Excellent webworld, Science City Gujrat";
+
+/* Class = "UILabel"; text = "Excellent webworld, Science City Gujrat"; ObjectID = "uIJ-pK-FP3"; */
+"uIJ-pK-FP3.text" = "Excellent webworld, Science City Gujrat";
+
+/* Class = "UILabel"; text = "$$"; ObjectID = "uMp-oV-Mgc"; */
+"uMp-oV-Mgc.text" = "$$";
+
+/* Class = "UILabel"; text = "5% Discount"; ObjectID = "uyx-No-OrR"; */
+"uyx-No-OrR.text" = "5% Discount";
+
+/* Class = "UILabel"; text = "Pickup Location:-"; ObjectID = "xRP-H3-yj5"; */
+"xRP-H3-yj5.text" = "Pickup Location:-";

@@ -43,5 +43,11 @@ class UpCommingTableViewCell: UITableViewCell {
     @IBOutlet weak var lblVehicleType: UILabel!
     @IBOutlet weak var lblPaymentType: UILabel!
 
+    @IBOutlet var lblDistanceTravelTitle: UILabel!
+    @IBOutlet var lblPassDiscountTitle: UILabel!
+    @IBOutlet var lblDistanceTravel: UILabel!
+    @IBOutlet var lblPassDiscount: UILabel!
+    
+    
     
 }

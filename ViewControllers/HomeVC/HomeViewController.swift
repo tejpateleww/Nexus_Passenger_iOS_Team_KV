@@ -32,7 +32,7 @@ protocol deleagateForBookTaxiLater
     func btnRequestLater()
 }
 
-class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, GMSAutocompleteViewControllerDelegate, FavouriteLocationDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, FloatRatingViewDelegate, CompleterTripInfoDelegate, ARCarMovementDelegate, GMSMapViewDelegate, addCardFromHomeVCDelegate, SelectCardDelegate,delegateRateGiven,deleagateForBookTaxiLater
+class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, GMSAutocompleteViewControllerDelegate, FavouriteLocationDelegate, UIPickerViewDelegate, UIPickerViewDataSource, NVActivityIndicatorViewable, UIGestureRecognizerDelegate, FloatRatingViewDelegate, CompleterTripInfoDelegate, ARCarMovementDelegate, GMSMapViewDelegate, addCardFromHomeVCDelegate, SelectCardDelegate,delegateRateGiven,deleagateForBookTaxiLater, ConfirmedDriverDelegate
 {
     
     let baseURLDirections = "https://maps.googleapis.com/maps/api/directions/json?"
@@ -114,9 +114,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     @IBOutlet weak var giveRating: FloatRatingView!
     
     @IBOutlet weak var viewBookNowLater: UIView!
-    
-    
-    
+   
     
     func floatRatingView(_ ratingView: FloatRatingView, didUpdate rating: Float) {
         
@@ -1790,6 +1788,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     
     
     @IBAction func btnRequestNow(_ sender: UIButton) {
+        self.view.endEditing(true)
         self.webserviceCallForBookingCar()
     }
     
@@ -1905,9 +1904,10 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             rowString = "Error: too many rows"
             myImageView.image = nil
         }
-        let myLabel = UILabel(frame: CGRect(x:60, y:0, width:pickerView.bounds.width - 90, height:60 ))
+        
         //        myLabel.font = UIFont(name:some, font, size: 18)
-        myLabel.text = rowString
+        let myLabel = UILabel(frame: CGRect(x:60, y:0, width:pickerView.bounds.width - 90, height:60 ))
+        myLabel.text = (rowString == "cash") ? "Cash" : rowString
         
         myView.addSubview(myLabel)
         myView.addSubview(myImageView)
@@ -2677,6 +2677,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             }
         }
         self.pickerView.reloadAllComponents()
+        self.pickerView.selectRow(0, inComponent: 0, animated: true)
         
         let data = cardData[0]
         
@@ -2892,7 +2893,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
         let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
         let bookingInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "BookingInfo") as! NSArray).object(at: 0) as! NSDictionary
-        
+       
         let FeedbackInfoArray = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "Feedback") as! NSArray)
         
         showDriverInfo(bookingInfo: bookingInfo, DriverInfo: DriverInfo, carInfo: carInfo, Feedback: FeedbackInfoArray)
@@ -3388,7 +3389,8 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize
     {
-        let CellWidth = ( UIScreen.main.bounds.width - 30 ) / 3
+        let numberOfCars = ( self.arrNumberOfOnlineCars.count > 3) ? 4 : 3
+        let CellWidth = ( UIScreen.main.bounds.width - 30 ) / CGFloat(numberOfCars)
         return CGSize(width: CellWidth , height: self.collectionViewCars.frame.size.height)
         //        self.viewCarLists.frame.size.height
     }
@@ -4397,12 +4399,38 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     
     //MARK:- Show Driver Information
     
-    func showDriverInfo(bookingInfo : NSDictionary, DriverInfo: NSDictionary, carInfo : NSDictionary,Feedback : NSArray ) {
-        let next = self.storyboard?.instantiateViewController(withIdentifier: "DriverInfoPageViewController") as! DriverInfoPageViewController
+    func showDriverInfo(bookingInfo : NSDictionary, DriverInfo: NSDictionary, carInfo : NSDictionary,Feedback : NSArray) {
+       
+//        let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
+//        let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
+//
+//
+//        self.btnRequest.isHidden = true
+//        self.btnCancelStartedTrip.isHidden = true
+//        let DriverInfoConfirmPage = self.storyboard?.instantiateViewController(withIdentifier: "DriverINFOConfirmPopup") as! DriverINFOConfirmPopup
+//        DriverInfoConfirmPage.ArrivedMessage    = "your driver arrived"
+//        DriverInfoConfirmPage.DriverInfo = DriverInfo as! [String:Any]
+//        DriverInfoConfirmPage.CarInfo = carInfo as! [String:Any]
+//        let requestObject = (self.aryRequestAcceptedData.object(at: 0) as! NSDictionary)
+//        if  let ModelInfo = requestObject.object(forKey: "ModelInfo") as? NSArray {
+//            DriverInfoConfirmPage.ModelInfo = (ModelInfo as! [[String:Any]] )[0] as! [String:Any]
+//        } else {
+//             DriverInfoConfirmPage.ModelInfo = carInfo["Model"]  as! [String:Any]
+//        }
+//        DriverInfoConfirmPage.Delegate = self
+//        self.present(DriverInfoConfirmPage, animated: true, completion: nil)
+//
+//
+//        return
         
+        
+        
+        
+        let next = self.storyboard?.instantiateViewController(withIdentifier: "DriverInfoPageViewController") as! DriverInfoPageViewController
         print(DriverInfo)
         next.driverInfo = DriverInfo
         next.feedback = Feedback
+        
         next.strDriverName = DriverInfo.object(forKey: "Fullname") as! String
         next.strPickupLocation = "\(bookingInfo.object(forKey: "PickupLocation") as! String)"
         next.strDropoffLocation = "\(bookingInfo.object(forKey: "DropoffLocation") as! String)"
@@ -5272,11 +5300,23 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             
             if let arrivedDriver:[[String:Any]] = data as? [[String:Any]] {
                 let driverMsg = arrivedDriver[0]["message"]
-                UtilityClass.setCustomAlert(title: "", message: driverMsg as! String) { (index, title) in
-           
-                }
+                 let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
+                let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
                 self.btnRequest.isHidden = true
                 self.btnCancelStartedTrip.isHidden = true
+                let DriverInfoConfirmPage = self.storyboard?.instantiateViewController(withIdentifier: "DriverINFOConfirmPopup") as! DriverINFOConfirmPopup
+                DriverInfoConfirmPage.ArrivedMessage  = driverMsg as! String
+                DriverInfoConfirmPage.DriverInfo = DriverInfo as! [String:Any]
+                DriverInfoConfirmPage.CarInfo = carInfo as! [String:Any]
+                let requestObject = (self.aryRequestAcceptedData.object(at: 0) as! NSDictionary)
+                if  let ModelInfo = requestObject.object(forKey: "ModelInfo") as? NSArray {
+                    DriverInfoConfirmPage.ModelInfo = (ModelInfo as! [[String:Any]] )[0]
+                } else {
+                    DriverInfoConfirmPage.ModelInfo = carInfo["Model"]  as! [String:Any]
+                }
+                DriverInfoConfirmPage.isBookNow = true
+                DriverInfoConfirmPage.Delegate = self
+                self.present(DriverInfoConfirmPage, animated: true, completion: nil)
             }
         })
         
@@ -5286,10 +5326,83 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         self.socket.on(SocketData.kArrivedDriverBookLaterRequest, callback: { (data, ack) in
             if let arrivedDriver:[[String:Any]] = data as? [[String:Any]] {
                 let driverMsg = arrivedDriver[0]["message"]
-                UtilityClass.setCustomAlert(title: "", message: driverMsg as! String) { (index, title) in
-                }
+                let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
+                let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
+                //                let ModelInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "ModelInfo") as! NSArray).object(at: 0) as! NSDictionary
+                
                 self.btnRequest.isHidden = true
                 self.btnCancelStartedTrip.isHidden = true
+                let DriverInfoConfirmPage = self.storyboard?.instantiateViewController(withIdentifier: "DriverINFOConfirmPopup") as! DriverINFOConfirmPopup
+                DriverInfoConfirmPage.ArrivedMessage  = driverMsg as! String
+                DriverInfoConfirmPage.DriverInfo = DriverInfo as! [String:Any]
+                DriverInfoConfirmPage.CarInfo = carInfo as! [String:Any]
+                let requestObject = (self.aryRequestAcceptedData.object(at: 0) as! NSDictionary)
+                if  let ModelInfo = requestObject.object(forKey: "ModelInfo") as? NSArray {
+                    DriverInfoConfirmPage.ModelInfo = (ModelInfo as! [[String:Any]] )[0]
+                } else {
+                    DriverInfoConfirmPage.ModelInfo = carInfo["Model"]  as! [String:Any]
+                }
+                DriverInfoConfirmPage.isBookNow = false
+                DriverInfoConfirmPage.Delegate = self
+                self.present(DriverInfoConfirmPage, animated: true, completion: nil)
+                
+                self.btnRequest.isHidden = true
+                self.btnCancelStartedTrip.isHidden = true
+            }
+        })
+        
+    }
+    
+    
+    func SendArrivedConfirmationBookNow() {
+        
+        let myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID , "BookingId" : SingletonClass.sharedInstance.bookingId ] as [String : Any]
+        socket.emit(SocketData.kArrviedDetailConfirmation , with: [myJSON])
+        
+    }
+    
+    func SendArrivedConfirmationBookLater() {
+        
+        let myJSON = ["PassengerId" : SingletonClass.sharedInstance.strPassengerID , "BookingId" : SingletonClass.sharedInstance.bookingId ] as [String : Any]
+        socket.emit(SocketData.kArrivedDetailConfirmationBookLater , with: [myJSON])
+        
+    }
+    
+    
+//MARK:- ConfirmedDriverDelegate Methods
+    func didConfirmDriverDetail() {
+        UtilityClass.setCustomAlertWithoutCrossButton(title: "", message: "Are you sure you have checked the Vehicle Make, Model, Color, TAG (number plate) and asked the Driver's name before you sit in the Vehicle?") { (index, title) in
+            self.SendArrivedConfirmationBookNow()
+        }
+    }
+    
+    func didConfirmDriverDetailBookLater() {
+        UtilityClass.setCustomAlertWithoutCrossButton(title: "", message: "Are you sure you have checked the Vehicle Make, Model, Color, TAG (number plate) and asked the Driver's name before you sit in the Vehicle?") { (index, title) in
+            self.SendArrivedConfirmationBookLater()
+        }
+    }
+    
+    
+    //MARK:- RECIEVE TOLLFEE
+    
+    func OnReceiveTollFeeToDriver () {
+        
+        self.socket.on(SocketData.kReceiveTollFeeToDriver, callback: { (data, ack) in
+            if let ReceiveTollFee:[[String:Any]] = data as? [[String:Any]] {
+                let ReceiveTollFeeMsg = ReceiveTollFee[0]["message"] as! String
+                UtilityClass.setCustomAlert(title: "", message: ReceiveTollFeeMsg, completionHandler: nil)
+            }
+        })
+        
+    }
+    
+    
+    func OnReceiveTollFeeToDriverBookLater() {
+        
+        self.socket.on(SocketData.kReceiveTollFeeToDriverBookLater, callback: { (data, ack) in
+            if let ReceiveTollFee:[[String:Any]] = data as? [[String:Any]] {
+                let ReceiveTollFeeMsg = ReceiveTollFee[0]["message"] as! String
+                UtilityClass.setCustomAlert(title: "", message: ReceiveTollFeeMsg, completionHandler: nil)
             }
         })
         
@@ -5404,7 +5517,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             
             if let resAry = NSArray(array: data) as? NSArray {
                 message = (resAry.object(at: 0) as! NSDictionary).object(forKey: "message") as! String
-                
             }
             
             let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
@@ -5496,8 +5608,6 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
         
         let visibleRegion = mapView.projection.visibleRegion()
         let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
-        
-        
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
         acController.autocompleteBounds = bounds
@@ -6684,6 +6794,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                             SingletonClass.sharedInstance.bookingId = self.bookingIDNow
                             
                             self.bookingTypeIsBookNowAndAccepted()
+                            self.openDriverConfirmationPopup()
                             
                         }
                         else if statusOfRequest == "traveling" {
@@ -6711,6 +6822,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                             SingletonClass.sharedInstance.bookingId = self.bookingIDNow
                             
                             self.bookingTypeIsBookNowAndAccepted()
+                            self.openDriverConfirmationPopup()
                             
                         }
                         else if statusOfRequest == "traveling" {
@@ -6782,6 +6894,7 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                             SingletonClass.sharedInstance.bookingId = self.bookingIDNow
                             
                             self.bookingTypeIsBookNowAndAccepted()
+                            self.openDriverConfirmationPopup()
                             
                         }
                         else if statusOfRequest == "traveling" {
@@ -6809,7 +6922,8 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
                             SingletonClass.sharedInstance.bookingId = self.bookingIDNow
                             
                             self.bookingTypeIsBookNowAndAccepted()
-                            
+                            self.openDriverConfirmationPopup()
+                           
                         }
                         else if statusOfRequest == "traveling" {
                             self.bookingIDNow = self.dictCurrentBookingInfoData.object(forKey: "Id") as! String
@@ -6832,6 +6946,52 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
             }
         }
     }
+    
+    func openDriverConfirmationPopup() {
+        
+        if let IsDetailsCheckedvalue  = self.dictCurrentBookingInfoData["IsDetailsChecked"] as? Int,  let arrivedTime = self.dictCurrentBookingInfoData["ArrivedTime"] as? String {
+            if IsDetailsCheckedvalue == 0 && arrivedTime != "" {
+                let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
+                let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
+                self.btnRequest.isHidden = true
+                self.btnCancelStartedTrip.isHidden = true
+                let DriverInfoConfirmPage = self.storyboard?.instantiateViewController(withIdentifier: "DriverINFOConfirmPopup") as! DriverINFOConfirmPopup
+                DriverInfoConfirmPage.ArrivedMessage  = "your driver has arrived. Please check the vehicle & Driver Details below:"
+                DriverInfoConfirmPage.DriverInfo = DriverInfo as! [String:Any]
+                DriverInfoConfirmPage.CarInfo = carInfo as! [String:Any]
+                let requestObject = (self.aryRequestAcceptedData.object(at: 0) as! NSDictionary)
+                if  let ModelInfo = requestObject.object(forKey: "ModelInfo") as? NSArray {
+                    DriverInfoConfirmPage.ModelInfo = (ModelInfo as! [[String:Any]] )[0]
+                } else {
+                    DriverInfoConfirmPage.ModelInfo = carInfo["Model"]  as! [String:Any]
+                }
+                DriverInfoConfirmPage.isBookNow = true
+                DriverInfoConfirmPage.Delegate = self
+                self.present(DriverInfoConfirmPage, animated: true, completion: nil)
+            }
+        } else if let IsDetailsCheckedvalue  = self.dictCurrentBookingInfoData["IsDetailsChecked"] as? String, let arrivedTime = self.dictCurrentBookingInfoData["ArrivedTime"] as? String {
+            if IsDetailsCheckedvalue == "0" && arrivedTime != "" {
+                let DriverInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "DriverInfo") as! NSArray).object(at: 0) as! NSDictionary
+                let carInfo = ((self.aryRequestAcceptedData.object(at: 0) as! NSDictionary).object(forKey: "CarInfo") as! NSArray).object(at: 0) as! NSDictionary
+                self.btnRequest.isHidden = true
+                self.btnCancelStartedTrip.isHidden = true
+                let DriverInfoConfirmPage = self.storyboard?.instantiateViewController(withIdentifier: "DriverINFOConfirmPopup") as! DriverINFOConfirmPopup
+                DriverInfoConfirmPage.ArrivedMessage  = "your driver has arrived. Please check the vehicle & Driver Details below:"
+                DriverInfoConfirmPage.DriverInfo = DriverInfo as! [String:Any]
+                DriverInfoConfirmPage.CarInfo = carInfo as! [String:Any]
+                let requestObject = (self.aryRequestAcceptedData.object(at: 0) as! NSDictionary)
+                if  let ModelInfo = requestObject.object(forKey: "ModelInfo") as? NSArray {
+                    DriverInfoConfirmPage.ModelInfo = (ModelInfo as! [[String:Any]] )[0]
+                } else {
+                    DriverInfoConfirmPage.ModelInfo = carInfo["Model"]  as! [String:Any]
+                }
+                DriverInfoConfirmPage.isBookNow = true
+                DriverInfoConfirmPage.Delegate = self
+                self.present(DriverInfoConfirmPage, animated: true, completion: nil)
+            }
+        }
+    }
+    
     
     // ----------------------------------------------------------------------
     
@@ -7063,6 +7223,9 @@ extension HomeViewController: CLLocationManagerDelegate {
             let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,longitude: location.coordinate.longitude, zoom: 17)
             mapView.animate(to: camera)
             
+            let visibleRegion = mapView.projection.visibleRegion()
+            let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+            SingletonClass.sharedInstance.NearByRegion = bounds
             
         }
         

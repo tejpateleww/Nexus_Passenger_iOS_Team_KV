@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import GoogleMaps
+import GooglePlaces
 
 class SingletonClass: NSObject {
    
@@ -35,6 +37,7 @@ class SingletonClass: NSObject {
     
     var dictIsFromPrevious = NSDictionary()
     
+    var NearByRegion = GMSCoordinateBounds()   //this nearByRegion Detail to get near by locations in suggestions
     
     var isCardsVCFirstTimeLoad: Bool = true
     var CardsVCHaveAryData = [[String:AnyObject]]()

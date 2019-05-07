@@ -53,7 +53,7 @@ class RegisterOTPVarificationViewController: UIViewController {
         
         if SingletonClass.sharedInstance.otpCode == txtOTP.text {
 
-            let registrationContainerVC = self.navigationController?.viewControllers.last as! RegistrationContainerViewController
+            let registrationContainerVC = self.navigationController?.viewControllers[1]  as! RegistrationContainerViewController
             registrationContainerVC.scrollObject.setContentOffset(CGPoint(x: self.view.frame.size.width * 2, y: 0), animated: true)
             registrationContainerVC.selectPageControlIndex(Index: 2)
         }

@@ -194,12 +194,12 @@ class TripInfoViewController: UIViewController//,delegateRateGiven
 
 //                lblTripDistance.text = (!UtilityClass.isEmpty(str: (dictData.object(forKey: "TripDistance") as? String))) ? (dictData.object(forKey: "TripDistance") as? String): "0.00"
 
-        let strTemp = (!UtilityClass.isEmpty(str: (dictData.object(forKey: "TripDistance") as? String ))) ?  (dictData.object(forKey: "TripDistance") as! String ) : "0.00 km"
+        let strTemp = (!UtilityClass.isEmpty(str: (dictData.object(forKey: "TripDistance") as? String ))) ?  (dictData.object(forKey: "TripDistance") as! String ) : "0.00 miles"
 
         let distaceFloat = Float(strTemp)
         let doubleStr = String(format: "%.2f", distaceFloat!)
 
-        lblTripDistance.text = (doubleStr != nil) ? "\(doubleStr) km" : "0.00 km"
+        lblTripDistance.text = (doubleStr != nil) ? "\(doubleStr) miles" : "0.00 miles"
 
 
 
