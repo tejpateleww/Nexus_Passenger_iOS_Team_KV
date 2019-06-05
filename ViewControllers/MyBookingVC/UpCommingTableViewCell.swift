@@ -49,5 +49,8 @@ class UpCommingTableViewCell: UITableViewCell {
     @IBOutlet var lblPassDiscount: UILabel!
     
     
+    @IBOutlet var lblNotesTitle: UILabel!
+    @IBOutlet var lblNotes: UILabel!
+    
     
 }

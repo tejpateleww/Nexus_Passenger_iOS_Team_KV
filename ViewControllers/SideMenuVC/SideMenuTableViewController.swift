@@ -498,6 +498,8 @@ class SideMenuTableViewController: UIViewController, delegateForTiCKPayVerifySta
                         if (buttonIndex == 2)
                         {
                             
+                            HomePage.stopTimertoUpdateLocation()
+                            
                             let socket = (UIApplication.shared.delegate as! AppDelegate).SocketManager
                             socket.off(SocketData.kReceiveGetEstimateFare)
                             socket.off(SocketData.kNearByDriverList)

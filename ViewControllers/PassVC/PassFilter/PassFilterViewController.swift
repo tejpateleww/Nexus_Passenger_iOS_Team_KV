@@ -12,7 +12,7 @@ import GoogleMaps
 import GooglePlaces
 
 class PassFilterViewController: BaseViewController{
-
+    
     @IBOutlet weak var roundTripCheckBox: M13Checkbox!
     @IBOutlet weak var dropOffView: UIView!
     @IBOutlet weak var pickupTimeFld: UITextField!
@@ -29,7 +29,7 @@ class PassFilterViewController: BaseViewController{
     
     let pickupTimeSelector = WWCalendarTimeSelector.instantiate()
     let dropoffTimeSelector = WWCalendarTimeSelector.instantiate()
-
+    
     let pickupController = GMSAutocompleteViewController()
     let dropOffController = GMSAutocompleteViewController()
     
@@ -61,10 +61,15 @@ class PassFilterViewController: BaseViewController{
     
     var editable = false
     var currentData = [String: Any]()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.NearByRegion = SingletonClass.sharedInstance.NearByRegion
+        
+        if let Homepage = self.navigationController?.childViewControllers[0] as? HomeViewController {
+            let visibleRegion = Homepage.mapView.projection.visibleRegion()
+            let bounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
+            self.NearByRegion = bounds
+        }
         pickupTimeFld.delegate = self
         dropOffTimeFld.delegate = self
         pickupFld.delegate = self
@@ -73,12 +78,12 @@ class PassFilterViewController: BaseViewController{
         carModelFld.inputView = picker
         picker.delegate = self
         roundTripCheckBox.tintColor = ThemeNaviBlueColor
-       roundTripCheckBox.stateChangeAnimation = .fill
+        roundTripCheckBox.stateChangeAnimation = .fill
         roundTripCheckBox.boxType = .square
         setupEditing()
         roundTripCheckBox.checkState = isRoundTrip == "1" ? .checked : .unchecked
         dropOffView.isHidden = roundTripCheckBox.checkState == .unchecked
-
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
@@ -102,9 +107,17 @@ class PassFilterViewController: BaseViewController{
     func formattedTime(key: String) -> String{
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm:ss"
+        if key == "PickupTime" {
+            dateFormatter.locale = Locale.current
+            self.pickupDate = dateFormatter.date(from: formattedString(key: key))!
+        } else if key == "DropoffTime" {
+            dateFormatter.locale = Locale.current
+            self.dropoffDate = dateFormatter.date(from: formattedString(key: key))!
+        }
         if let date = dateFormatter.date(from:formattedString(key: key))?.stringFromFormat("h:mm a"){
             return date
         }
+        
         return formattedString(key: key)
     }
     
@@ -126,7 +139,7 @@ class PassFilterViewController: BaseViewController{
         }
         
     }
-  
+    
 }
 
 //-------------------------------------------------------------
@@ -141,7 +154,7 @@ extension PassFilterViewController: WWCalendarTimeSelectorProtocol{
     @IBAction func dropoffCalendarAction(_ sender: UIButton) {
         setupCalendar(dropoffTimeSelector)
     }
-   
+    
     func WWCalendarTimeSelectorDone(_ selector: WWCalendarTimeSelector, date: Date) {
         switch selector {
         case pickupTimeSelector:
@@ -155,7 +168,7 @@ extension PassFilterViewController: WWCalendarTimeSelectorProtocol{
         }
     }
     
-   
+    
     func  setupCalendar(_ timeSelector: WWCalendarTimeSelector){
         timeSelector.delegate = self
         timeSelector.optionCalendarFontColorPastDates = UIColor.gray
@@ -192,35 +205,39 @@ extension PassFilterViewController : GMSAutocompleteViewControllerDelegate{
         switch viewController{
         case pickupController:
             pickupPlace = place
-            pickupFld.text = place.formattedAddress
+            pickupFld.text = "\(place.name as! String) \(place.formattedAddress as! String)"
+            //                place.formattedAddress
             getCarModels()
         case dropOffController:
             dropoffPlace = place
-            dropOffFld.text = place.formattedAddress
+            dropOffFld.text = "\(place.name as! String) \(place.formattedAddress as! String)"
+            //                place.formattedAddress
             getCarModels()
-           
+            
         default:
             break
         }
         dismiss(animated: true, completion: nil)
     }
-
+    
     func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
         print("Error: \(error)")
         dismiss(animated: true, completion: nil)
     }
-
+    
     func wasCancelled(_ viewController: GMSAutocompleteViewController) {
         print("Autocomplete was cancelled.")
         dismiss(animated: true, completion: nil)
     }
+    
+    
     func setupLocationPicker(acController: GMSAutocompleteViewController){
         self.isOpenPlacePickerController = true
         acController.delegate = self
         acController.autocompleteBounds = NearByRegion
         present(acController, animated: true, completion: nil)
     }
-
+    
 }
 
 //-------------------------------------------------------------
@@ -231,32 +248,32 @@ extension PassFilterViewController : GMSAutocompleteViewControllerDelegate{
 extension PassFilterViewController: UITextFieldDelegate{
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         switch textField {
-            case pickupTimeFld:
-                view.endEditing(true)
-                setupCalendar(pickupTimeSelector)
+        case pickupTimeFld:
+            view.endEditing(true)
+            setupCalendar(pickupTimeSelector)
+            return false
+        case dropOffTimeFld:
+            view.endEditing(true)
+            setupCalendar(dropoffTimeSelector)
+            return false
+        case pickupFld:
+            setupLocationPicker(acController: pickupController)
+            return false
+        case dropOffFld:
+            setupLocationPicker(acController: dropOffController)
+            return false
+        case carModelFld:
+            guard carModels.count > 0 else{
+                getCarModels()
                 return false
-            case dropOffTimeFld:
-                view.endEditing(true)
-                setupCalendar(dropoffTimeSelector)
-                return false
-            case pickupFld:
-                setupLocationPicker(acController: pickupController)
-                return false
-            case dropOffFld:
-                setupLocationPicker(acController: dropOffController)
-                return false
-            case carModelFld:
-               guard carModels.count > 0 else{
-                 getCarModels()
-                return false
-               }
-                return true
-            default:
-                break
             }
+            return true
+        default:
+            break
+        }
         return true
     }
-  
+    
     @IBAction func clearPickupLocation(_ sender: UIButton){
         pickupFld.text = ""
         getCarModels()
@@ -265,14 +282,14 @@ extension PassFilterViewController: UITextFieldDelegate{
         dropOffFld.text = ""
         getCarModels()
     }
-   
+    
 }
 
 //MARK: - PickerView Methods
 
 extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource{
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-       return 1
+        return 1
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -287,8 +304,8 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
         carModelFld.text = carModels[row]
         let selectedCar = availableCars[row]
         
-//        self.lblActualPrice.text = formattedPrice(key: "total",selectedCar: selectedCar)
-//        self.lblDiscountPrice.text = formattedPrice(key: "trip_fare",selectedCar: selectedCar)
+        //        self.lblActualPrice.text = formattedPrice(key: "total",selectedCar: selectedCar)
+        //        self.lblDiscountPrice.text = formattedPrice(key: "trip_fare",selectedCar: selectedCar)
         formattedPrice(key: "total",selectedCar: selectedCar)
     }
     
@@ -297,16 +314,16 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
         
         carModels = [String]()
         carModelFld.text = ""
-        lblActualPrice.text = "$"
-        lblDiscountPrice.text = "$"
+        lblActualPrice.text = ""
+        lblDiscountPrice.text = ""
         
-//        guard pickupFld.text != "", dropOffFld.text != "" else { return }
+        //        guard pickupFld.text != "", dropOffFld.text != "" else { return }
         if pickupFld.text != "", dropOffFld.text != "" {
             getDistance()
             UtilityClass.showACProgressHUD()
         } else {
             UtilityClass.setCustomAlert(title: "", message: "Please enter pickup and dropoff location.") { (no, str) in
-                }
+            }
             return
         }
         
@@ -344,10 +361,9 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
     ////-------------------------------------------------------------
     // MARK: - String Formatting
     //-------------------------------------------------------------
-
+    
     func formattedPrice(key: String, selectedCar: [String:Any]){
-        if let  actualPrice = Double(String(describing: (selectedCar[key] ?? "")))?.rounded(toPlaces: 2),
-            var cutDiscount = Double(discountValue)?.rounded(toPlaces: 2){
+        if let  actualPrice = Double(String(describing: (selectedCar[key] ?? "")))?.rounded(toPlaces: 2), var cutDiscount = Double(discountValue)?.rounded(toPlaces: 2){
             if discountType == .percentage{
                 cutDiscount = actualPrice * (cutDiscount / 100)
             }
@@ -363,30 +379,30 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
         
     }
     
-////-------------------------------------------------------------
-// MARK: - Webservices
-//-------------------------------------------------------------
-
-   func getSubscription(){
-    if editable{
-        if tripDistance == "" {
-            getDistance(){
+    ////-------------------------------------------------------------
+    // MARK: - Webservices
+    //-------------------------------------------------------------
+    
+    func getSubscription(){
+        if editable{
+            if tripDistance == "" {
+                getDistance(){
+                    self.editSubscription()
+                }
+            }else{
                 self.editSubscription()
             }
-        }else{
-            self.editSubscription()
         }
-    }
-    else{
-        if tripDistance == "" {
-            getDistance(){
-                self.doneSubscription()
+        else{
+            if tripDistance == "" {
+                getDistance(){
+                    self.doneSubscription()
+                }
+            }else{
+                doneSubscription()
             }
-        }else{
-            doneSubscription()
         }
-    }
-    
+        
     }
     
     func doneSubscription(){
@@ -394,19 +410,19 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
                                                          passengerId: passengerId,
                                                          passType: passType,
                                                          pickLat: "\(pickupPlace!.coordinate.latitude)",
-                                                         dropoffLat: "\(dropoffPlace!.coordinate.latitude)",
-                                                         pickLong:  "\(pickupPlace!.coordinate.longitude)",
-                                                         dropoffLong:  "\(dropoffPlace!.coordinate.longitude)",
-                                                         pickupLocation: pickupFld.text!,
-                                                         dropoffLocation: dropOffFld.text!,
-                                                         tripDistance: tripDistance,
-                                                         isRoundTrip: isRoundTrip,
-                                                         pickupTime: pickupDate,
-                                                         dropoffTime: dropoffDate)
+            dropoffLat: "\(dropoffPlace!.coordinate.latitude)",
+            pickLong:  "\(pickupPlace!.coordinate.longitude)",
+            dropoffLong:  "\(dropoffPlace!.coordinate.longitude)",
+            pickupLocation: pickupFld.text!,
+            dropoffLocation: dropOffFld.text!,
+            tripDistance: tripDistance,
+            isRoundTrip: isRoundTrip,
+            pickupTime: pickupDate,
+            dropoffTime: dropoffDate)
         print(parameter)
         webserviceForPassActivation(parameter as AnyObject) { (response, status) in
             print(response)
-          
+            
             if status{
                 self.getTrip()
                 UtilityClass.setCustomAlert(title: "", message: "Pass has been subscribed successfully") { (index, title) in
@@ -427,11 +443,11 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
         let parameter = PassSubscription.shared.setParam(edit: true,
                                                          passHistoryId: formattedString(key: "Id"),
                                                          pickLat: formattedString(key: "PickupLat"),
-                                                        dropoffLat: formattedString(key: "DropoffLat"),
-                                                        pickLong:  formattedString(key: "PickupLong"),
-                                                        dropoffLong: formattedString(key: "DropoffLong"),
-                                                        pickupLocation: pickupFld.text!,
-                                                        dropoffLocation: dropOffFld.text!,
+                                                         dropoffLat: formattedString(key: "DropoffLat"),
+                                                         pickLong:  formattedString(key: "PickupLong"),
+                                                         dropoffLong: formattedString(key: "DropoffLong"),
+                                                         pickupLocation: pickupFld.text!,
+                                                         dropoffLocation: dropOffFld.text!,
                                                          tripDistance: tripDistance,
                                                          isRoundTrip: isRoundTrip,
                                                          pickupTime: pickupDate,
@@ -468,7 +484,7 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
                     if let availableCars = data["estimate_fare"] as? [[String:Any]]{
                         self.availableCars = availableCars
                         self.carModels = [String]()
-
+                        
                         availableCars.forEach({
                             self.carModels.append($0["name"] as! String)
                         })
@@ -478,13 +494,13 @@ extension PassFilterViewController: UIPickerViewDelegate, UIPickerViewDataSource
                         if let distance = availableCars[0]["km"] as? Double{
                             self.tripDistance = "\(distance)"
                             if let completion = completion{
-                            completion()
+                                completion()
+                            }
+                        }
+                        else{
+                            UtilityClass.showAlert("Invalid Location", message: "Distance not given by the provider", vc: self)
                         }
                     }
-                    else{
-                        UtilityClass.showAlert("Invalid Location", message: "Distance not given by the provider", vc: self)
-                    }
-                }
                 }else{
                     UtilityClass.showAlert("Data cant be retrived", message: "Data can't be retrived", vc: self)
                 }

@@ -72,7 +72,7 @@
 "Transfer To Bank" = "Uhamisho kwa Benki";
 "Transfer To Bank Account" = "Uhamisho kwa Akaunti ya Benki";
 "History" = "Historia";
-"UpComing" = "Yajayo";
+"Upcoming" = "Yajayo";
 "Send Money" = "Tuma Pesa";
 "Receive Money" = "Pokea Pesa";
 "Set Amount" = "Weka Kiasi";
@@ -363,8 +363,8 @@
 "SHARE YOUR INVITE CODE" = "SAMBAZA CODE YAKO";
 "Share Your Invite Code" = "Sambaza Code Yako";
 
-"OnGoing" = "Yasasa";
-"Past Booking" = "Ya Nyuma";
+"Ongoing" = "Yasasa";
+"Past Bookings" = "Ya Nyuma";
 
 
 

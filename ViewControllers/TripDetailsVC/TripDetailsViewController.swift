@@ -176,7 +176,6 @@ class TripDetailsViewController: BaseViewController {
         
             lblPickupLocation.text = data.object(forKey: "PickupLocation") as? String
             lblDropoffLocation.text = data.object(forKey: "DropoffLocation") as? String
-            
     
             if let TripFare = data.object(forKey:"TripFare") as? String {
                 self.lblTripFare.text = "\(currencySign)" + TripFare
@@ -188,8 +187,15 @@ class TripDetailsViewController: BaseViewController {
             }
 //           lblTripFare.text = "\(currencySign) \(data.object(forKey: "TripFare") as! String)"
             
-            
-            lblNightFare.text =  "\(currencySign) \(data.object(forKey: "NightFare") as! String)"
+            if let NightFare = data.object(forKey: "NightFare" ) as? String {
+                self.lblNightFare.text = "\(currencySign)" + NightFare
+                if NightFare == "" || NightFare == "0" {
+                    self.StackNightFare.isHidden = true
+                } else {
+                    self.StackNightFare.isHidden = false
+                }
+            }
+//            lblNightFare.text =  "\(currencySign) \(data.object(forKey: "NightFare") as! String)"
             
             if let MinuteFareCharge = data.object(forKey: "MinuteFareCharge" ) as? String {
                 self.lblMinuteFareCharge.text = "\(currencySign)" + MinuteFareCharge

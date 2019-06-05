@@ -81,7 +81,6 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
 
         if #available(iOS 11.0, *) {
             if (UIApplication.shared.keyWindow?.safeAreaInsets.top)! > 0.0 {
-                
                 print("iPhone X")
             }
             else {
@@ -92,7 +91,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         }
     
         txtDropOffLocation.text = strDropoffLocation
-
+        self.btnCancelPromocode.isHidden = true
         
         let paddingView = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
         txtFullName.leftView = paddingView
@@ -107,9 +106,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
 //        btnForOthersAction.addTarget(self, action: #selector(self.ActionForViewOther), for: .touchUpInside)
         
         viewProocode.isHidden = true
-        
-
-        
+       
         webserviceOfCardList()
         
         pickerView.delegate = self
@@ -345,11 +342,33 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
     @IBAction func btnApply(_ sender: UIButton)
     {
         
-        UIView.transition(with: self.viewProocode, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
-            self.viewProocode.isHidden = true
-        }) { _ in
-            self.lblPromoCode.text = self.txtPromoCode.text
+        if  self.txtPromoCode.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) != "" {
+            var dictData = [String : AnyObject]()
+            dictData["PromoCode"] = self.txtPromoCode.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as AnyObject
+            webserviceForValidPromocode(dictData as AnyObject, showHUD: true) { (result, status) in
+                if status
+                {
+                    UIView.transition(with: self.viewProocode, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
+                        self.viewProocode.isHidden = true
+                    }) { _ in
+                        self.lblPromoCode.text = self.txtPromoCode.text
+                        self.btnCancelPromocode.isHidden = false
+                    }
+                } else {
+                    guard let Response = result as? [String:Any] else {
+                        return
+                    }
+                    if let message = Response["message"] as? String{
+                        UtilityClass.setCustomAlert(title: "", message: message) { (index, title) in }
+                    }
+                }
+            }
+        } else {
+            UtilityClass.setCustomAlert(title: "", message: "Please enter promocode.") { (index, status) in }
         }
+
+        
+       
         
 //
 //        let strPromo = txtPromoCode.text
@@ -461,6 +480,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         UIView.transition(with: self.viewProocode, duration: 0.4, options: .transitionCrossDissolve, animations: {() -> Void in
             self.viewProocode.isHidden = false
         }) { _ in
+             self.txtPromoCode.text = ""
              self.txtPromoCode.becomeFirstResponder()
         }
 
@@ -469,6 +489,14 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
 //        UIApplication.shared.keyWindow!.bringSubview(toFront: alertView)
     }
  
+    
+    @IBOutlet var btnCancelPromocode: UIButton!
+    @IBAction func btnRemovePromoCode(_ sender: UIButton) {
+        self.lblPromoCode.text = ""
+        self.txtPromoCode.text = ""
+        self.btnCancelPromocode.isHidden = true
+    }
+    
     
     @IBAction func btnNotes(_ sender: M13Checkbox) {
         
@@ -703,15 +731,15 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
     func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
         
         if BoolCurrentLocation {
-            txtPickupLocation.text = place.formattedAddress
-            strPickupLocation = place.formattedAddress!
+            txtPickupLocation.text =  "\(place.name as! String) \(place.formattedAddress as! String)"
+            strPickupLocation =  "\(place.name as! String) \(place.formattedAddress as! String)"
             doublePickupLat = place.coordinate.latitude
             doublePickupLng = place.coordinate.longitude
             
         }
         else {
-            txtDropOffLocation.text = place.formattedAddress
-            strDropoffLocation = place.formattedAddress!
+            txtDropOffLocation.text =  "\(place.name as! String) \(place.formattedAddress as! String)"
+            strDropoffLocation =  "\(place.name as! String) \(place.formattedAddress as! String)"
             doubleDropOffLat = place.coordinate.latitude
             doubleDropOffLng = place.coordinate.longitude
         }
@@ -767,11 +795,12 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
             if let placeLikelihoodList = placeLikelihoodList {
                 let place = placeLikelihoodList.likelihoods.first?.place
                 if let place = place {
-                    self.strPickupLocation = place.formattedAddress!
+                    self.strPickupLocation =  "\(place.name as! String) \(place.formattedAddress as! String)"
                     self.doublePickupLat = place.coordinate.latitude
                     self.doublePickupLng = place.coordinate.longitude
-                    self.txtPickupLocation.text = place.formattedAddress?.components(separatedBy: ", ")
-                        .joined(separator: "\n")
+                    self.txtPickupLocation.text =  "\(place.name as! String) \(place.formattedAddress as! String)"
+//                        place.formattedAddress?.components(separatedBy: ", ")
+//                        .joined(separator: "\n")
                 }
             }
         })
@@ -927,7 +956,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         let data = aryCards[row]
         
         imgPaymentOption.image = UIImage(named: setCardIcon(str: data["Type"] as! String))
-        txtSelectPaymentMethod.text = data["CardNum2"] as? String
+        txtSelectPaymentMethod.text = ((data["CardNum2"] as? String) == "cash") ? "Cash" : (data["CardNum2"] as? String)
         
         if data["CardNum"] as! String == "Add a Card" {
             
@@ -946,11 +975,9 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         else {
             paymentType = "card"
         }
-        
-        
+       
         if paymentType == "card" {
-            
-            if data["Id"] as? String != "" {
+           if data["Id"] as? String != "" {
                 CardID = data["Id"] as! String
             }
         }
@@ -1067,10 +1094,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
         dictData["PassengerContact"] = txtMobileNumber.text as AnyObject
         dictData["PickupDateTime"] = convertDateToString as AnyObject
         
-        if lblPromoCode.text == "" {
-            
-        }
-        else {
+        if lblPromoCode.text != "" {
             dictData["PromoCode"] = lblPromoCode.text as AnyObject
         }
         
@@ -1195,7 +1219,7 @@ class BookLaterViewController: BaseViewController, GMSAutocompleteViewController
                 let data = self.aryCards[0]
 
                 self.imgPaymentOption.image = UIImage(named: self.setCardIcon(str: data["Type"] as! String))
-                self.txtSelectPaymentMethod.text = data["CardNum2"] as? String
+                self.txtSelectPaymentMethod.text = ((data["CardNum2"] as? String) == "cash") ? "Cash" : (data["CardNum2"] as? String)
 
                 let type = data["CardNum"] as! String
 //

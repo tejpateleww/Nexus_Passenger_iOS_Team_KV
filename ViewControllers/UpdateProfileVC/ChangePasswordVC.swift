@@ -56,35 +56,66 @@ class ChangePasswordVC: BaseViewController {
     //-------------------------------------------------------------
     // MARK: - Outlets
     //-------------------------------------------------------------
-    
+    @IBOutlet weak var txtOldPassword: ACFloatingTextfield!
     @IBOutlet weak var txtNewPassword: ACFloatingTextfield!
     @IBOutlet weak var txtConfirmPassword: ACFloatingTextfield!
-    
+
     
     @IBOutlet weak var btnSubmit: ThemeButton!
     
     
     @IBAction func btnSubmit(_ sender: ThemeButton) {
-            
-        let str = txtNewPassword.text
-        
-        if txtNewPassword.text == txtConfirmPassword.text {
-        
-            if str!.count >= 8  {
-                webserviceOfChangePassword()
+            let validator = self.isValidateValue()
+            if validator.1 == true {
+                    webserviceOfChangePassword()
+            } else {
+                UtilityClass.setCustomAlert(title: "", message: validator.0) { (index, title) in
+                    
+                }
             }
-            else {
-                UtilityClass.setCustomAlert(title: "", message: "Password must contain at least 8 characters".localized) { (index, title) in
-            }
-            }
-        }
-        else {
-            UtilityClass.setCustomAlert(title: "Password did not match", message: "Password and confirm password must be same".localized) { (index, title) in
-            }
-        }
-        
+//        let str = txtNewPassword.text
+//
+//        if txtNewPassword.text == txtConfirmPassword.text {
+//
+//            if str!.count >= 8  {
+//                webserviceOfChangePassword()
+//            }
+//            else {
+//                UtilityClass.setCustomAlert(title: "", message: "Password must contain at least 8 characters".localized) { (index, title) in
+//            }
+//            }
+//        }
+//        else {
+//            UtilityClass.setCustomAlert(title: "Password did not match", message: "Password and confirm password must be same".localized) { (index, title) in
+//            }
+//        }
+//
     }
     
+    
+    func isValidateValue() -> (String,Bool) {
+        var isValid:Bool  = true
+        var ValidatorMessage:String = ""
+        
+        if self.txtOldPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            
+            isValid = false
+            ValidatorMessage = "Please enter old password."
+            
+        } else if self.txtNewPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
+            
+            isValid = false
+            ValidatorMessage = "Please enter new password."
+            
+        } else if self.txtConfirmPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) != self.txtNewPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) {
+            
+            isValid = false
+            ValidatorMessage = "Password and confirm password must be same."
+            
+        }
+        
+        return (ValidatorMessage,isValid)
+    }
     
     @IBAction func btnBack(_ sender: UIButton) {
         self.navigationController?.popViewController(animated: true)
@@ -127,7 +158,8 @@ class ChangePasswordVC: BaseViewController {
         var dictData = [String:AnyObject]()
         
         dictData["PassengerId"] = SingletonClass.sharedInstance.strPassengerID as AnyObject
-        dictData["Password"] = txtNewPassword.text as AnyObject
+        dictData["OldPassword"] = txtOldPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as AnyObject
+        dictData["Password"] = txtNewPassword.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) as AnyObject
         
         let activityData = ActivityData()
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
@@ -142,7 +174,7 @@ class ChangePasswordVC: BaseViewController {
                 self.txtNewPassword.text = ""
                 self.txtConfirmPassword.text = ""
                 
-                UtilityClass.setCustomAlert(title: appName, message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String) { (index, title) in
                     
                     self.navigationController?.popViewController(animated: true)
             }
@@ -153,6 +185,9 @@ class ChangePasswordVC: BaseViewController {
             }
             else {
                  print(result)
+                UtilityClass.setCustomAlert(title: "", message: (result as! NSDictionary).object(forKey: "message") as! String, completionHandler: { (index, title) in
+                    
+                })
                 
 //                UtilityClass.setCustomAlert(title: <#T##String#>, message: <#T##String#>, completionHandler: { (<#Int#>, <#String#>) in
 //                    <#code#>

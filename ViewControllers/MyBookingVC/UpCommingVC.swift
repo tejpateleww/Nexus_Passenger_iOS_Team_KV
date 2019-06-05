@@ -123,6 +123,11 @@ class UpCommingVC: UIViewController, UITableViewDataSource, UITableViewDelegate 
             if let Createdate = dictData[ "CreatedDate"] as? String {
                 cell.lblDateAndTime.text =  Createdate
             }
+            
+            if let Notes = dictData["Notes"] as? String {
+                cell.lblNotes.text = Notes
+            }
+            
             if let PickupLocation = dictData[ "PickupLocation"] as? String {
                 cell.lblPickupAddress.text = ": " + PickupLocation // PickupLocation
             }

@@ -85,9 +85,9 @@ class MyBookingViewController: BaseViewController, UIScrollViewDelegate, GiveTip
     func setLocalization()
     {
         lbltitile.text = "My Bookings".localized
-        btnOnGoing.setTitle("OnGoing".localized, for: .normal)
-        btnUpComming.setTitle("UpComing".localized, for: .normal)
-        btnPastBooking.setTitle("Past Booking".localized, for: .normal)
+        btnOnGoing.setTitle("Ongoing".localized, for: .normal)
+        btnUpComming.setTitle("Upcoming".localized, for: .normal)
+        btnPastBooking.setTitle("Past Bookings".localized, for: .normal)
         
     }
     

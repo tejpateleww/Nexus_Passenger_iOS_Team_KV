@@ -137,7 +137,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
         if remoteNotif != nil {
             let key = (remoteNotif as! NSDictionary).object(forKey: "gcm.notification.type")!
             NSLog("\n Custom: \(String(describing: key))")
-            self.pushAfterReceiveNotification(typeKey: key as! String)
+            if (key as! String) ==  "CheckDriverDetails" {
+                
+            } else {
+                self.pushAfterReceiveNotification(typeKey: key as! String)
+            }
         }
         else {
             //            let aps = remoteNotif!["aps" as NSString] as? [String:AnyObject]
@@ -365,6 +369,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
                 {
                     print(error)
                 }
+            } else if NotificationType == "CheckDriverDetails" {
+                NotificationCenter.default.post(name: NotificationforDriverArrived, object: nil, userInfo: (dictNoti as [AnyHashable : Any]))
             }
         }
         else
@@ -391,7 +397,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
             }
             else if(application.applicationState == .background)
             {
-                NotificationCenter.default.post(name: NotificationforOpenChat, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+                if key == "CheckDriverDetails" {
+                     NotificationCenter.default.post(name: NotificationforDriverArrived, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+                } else {
+                    NotificationCenter.default.post(name: NotificationforOpenChat, object: nil, userInfo: (userInfo as! [AnyHashable : Any]))
+                }
             }
             //            self.pushAfterReceiveNotification(typeKey: key, newsID: newsID)
         }
@@ -417,9 +427,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
             
             if SingletonClass.sharedInstance.isChatBoxOpen == true && strTicketID == SingletonClass.sharedInstance.ChatBoxOpenedWithID
             {
-                
-                NotificationCenter.default.post(name: NotificationforUpdateChat, object: nil, userInfo: userInfo as? [AnyHashable : Any])
-                
+               NotificationCenter.default.post(name: NotificationforUpdateChat, object: nil, userInfo: userInfo as? [AnyHashable : Any])
             }
             else
             {
@@ -655,7 +663,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,MessagingDelegate, GIDSign
                 })
             }
         }
-        
+       
         //        else if(typeKey == "RejectDispatchJobRequest")
         //        {
         //            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {

@@ -268,7 +268,9 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     CancelledCell.viewDetails.isHidden = !expandedCellPaths.contains(indexPath)
                     CancelledCell.selectionStyle = .none
                     CustomCell = CancelledCell
+                    
                 } else {
+                    
                     let cell = tableView.dequeueReusableCell(withIdentifier: "PastBooingTableViewCell") as! PastBooingTableViewCell
                     
                     cell.lblPickupAddressTitle.text = "PICK UP LOCATION".localized
@@ -415,8 +417,8 @@ class PastBookingVC: UIViewController, UITableViewDataSource, UITableViewDelegat
                     cell.btnTips.layer.cornerRadius = 5
                     cell.btnTips.layer.masksToBounds = true
                     
-                    if let tollFee = currentData["Tip" ]as? String {
-                        if tollFee == "" || tollFee == "0" {
+                    if let tollFee = currentData["Tip"] as? String {
+                        if tollFee == "" {
                             cell.btnTips.isHidden = false
                             cell.StackTips.isHidden = true
                             cell.lblTips.text = ": \(currencySign)\(String(format: "%.2f", Double((tollFee != "") ? tollFee : "0.0")!))"

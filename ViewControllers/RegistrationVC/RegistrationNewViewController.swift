@@ -33,6 +33,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     var strEmail = String()
     var strPassword = String()
     var gender = String()
+    var isImageSelected:Bool = false
     
     //-------------------------------------------------------------
     // MARK: - Base Methods
@@ -154,6 +155,7 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.isImageSelected = true
             imgProfile.contentMode = .scaleToFill
             imgProfile.image = pickedImage
         }
@@ -310,9 +312,12 @@ class RegistrationNewViewController: UIViewController,AKRadioButtonsControllerDe
         }
         dictParams.setObject(strDateOfBirth, forKey: "DOB" as NSCopying)
         
-        webserviceForRegistrationForUser(dictParams, image1: imgProfile.image!) { (result, status) in
-            
-            
+        var ProfileImage = UIImage()
+        if self.isImageSelected == true {
+            ProfileImage = self.imgProfile.image!
+        }
+        
+        webserviceForRegistrationForUser(dictParams, image1:ProfileImage) { (result, status) in
             print(result)
             
             if ((result as! NSDictionary).object(forKey: "status") as! Int == 1)

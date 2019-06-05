@@ -186,7 +186,7 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
 //                }
                
 //                "\("Booking Id :".localized) \(String(describing: dictData.object(forKey: "Id")))"
-              
+              /*
                 let PickTime = Double(dictData.object(forKey: "PickupTime") as! String)
                 let dropoffTime = Double(dictData.object(forKey: "DropTime") as! String)
                 
@@ -200,7 +200,7 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                 dateFormatter.dateFormat = "yyyy/MM/dd HH:mm" //Specify your format that you want
                 let strDate = dateFormatter.string(from: date)
                 let strDateDrop = dateFormatter.string(from: dateDrop)
-                
+                */
                 cell.lblDateAndTime.text = dictData.object(forKey: "CreatedDate") as? String
                 
                 if let PickUpLocation =  dictData.object(forKey: "PickupLocation") as? String {
@@ -213,6 +213,10 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                 
                 if let VehicleTypeModel = dictData.object(forKey: "Model") as? String {
                     cell.lblVehicleType.text = ": " + VehicleTypeModel
+                }
+                
+               if let DriverName = dictData["DriverName"] as? String {
+                    cell.lblDriverName.text = DriverName
                 }
                 
                 if let DistanceTravelled = dictData["TripDistance"] as? String {
@@ -423,7 +427,7 @@ class MyReceiptsViewController: BaseViewController, UITableViewDataSource, UITab
                         cell.StackGrandTotal.isHidden = false
                     }
                 }
-           
+                
                 
 //                    dictData.object(forKey: "TollFee") as? String
 //                cell.lblFareTotal.text = "\(currencySign)\(String(format: "%.2f", Double((dictData["GrandTotal"] as! String != "") ? dictData["GrandTotal"] as! String : "0.0")!))"

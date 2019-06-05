@@ -268,9 +268,9 @@
 "Done" = "Done";
 "Start Trip" = "Start Trip";
 //"Cancel Request" = "Cancel Request";
-"OnGoing" = "OnGoing";
-"UpComing" = "UpComing";
-"Past Booking" = "Past Booking";
+"Ongoing" = "Ongoing";
+"Upcoming" = "Upcoming";
+"Past Bookings" = "Past Bookings";
 "Packages can be made after 2 hours from now. Sri Lankan time is"  = "Packages can be made after 2 hours from now. Sri Lankan time is 2018-03-06 11:16 AM";
 "No data Found" = "No data Found";
 "Account" = "Account";

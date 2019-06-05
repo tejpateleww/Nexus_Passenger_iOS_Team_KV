@@ -81,6 +81,8 @@ class HelpViewController: BaseViewController,UITableViewDataSource, UITableViewD
         
 //
 //
+        customCell.viewCell.layer.cornerRadius = 5.0
+        customCell.viewCell.layer.masksToBounds = true
         customCell.lblTitle.text = dictData["Questions"] as? String
         customCell.lblDescription.text = ""
 

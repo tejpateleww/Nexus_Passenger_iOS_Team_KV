@@ -58,7 +58,6 @@ struct PassSubscription{
         dictParam[forKeyPickupLat] = pickLat
         dictParam[forKeyPickupLong] = pickLong
         dictParam[forKeyDropoffLat] = dropoffLat
-        
         dictParam[forKeyDropoffLong] = dropoffLong
         dictParam[forKeyTripDistance] = tripDistance
         dictParam[forKeyIsRoundTrip] = isRoundTrip

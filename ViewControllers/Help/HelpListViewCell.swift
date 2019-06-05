@@ -12,7 +12,6 @@ class HelpListViewCell: UITableViewCell {
 
     
     @IBOutlet var viewCell: UIView!
-    
     @IBOutlet var lblDescription: UILabel!
     @IBOutlet var lblTitle: UILabel!
     @IBOutlet var iconArrow: UIImageView!
@@ -20,6 +19,7 @@ class HelpListViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+    
         // Initialization code
     }
 

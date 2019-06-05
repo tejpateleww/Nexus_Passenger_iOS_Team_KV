@@ -55,6 +55,9 @@ class OffersViewController: BaseViewController {
             btnSelected(selectedBtn: btnOffers, unselectedBtn: btnMyOffers)
             getTabData(sender)
         }else{
+            guard data.count > 0 else {
+                return
+            }
             offersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
         }
     }
@@ -63,6 +66,9 @@ class OffersViewController: BaseViewController {
             btnSelected(selectedBtn: btnMyOffers, unselectedBtn: btnOffers)
             getTabData(sender)
         }else{
+            guard data.count > 0 else {
+                return
+            }
             offersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
 
         }
@@ -197,6 +203,9 @@ extension OffersViewController: UITableViewDataSource, UITableViewDelegate{
             return
         }
         lblNoData.isHidden = true
+        guard data.count > 0 else {
+            return
+        }
         offersTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
     }
     

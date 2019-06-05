@@ -82,6 +82,7 @@ struct WebserviceURLs {
     static let kUpcomingBooking                     = "UpcomingBooking"
     static let kOnGoing                                     = "OngoingBooking"
     static let kGetEstimateFare                         = "GetEstimateFare"
+    static let kCheckPromoCode                      = "PromoCodeCheck"
     static let kImageBaseURL                            = "https://nexusappllc.com/web/"
     //"http://3.17.200.7/web/"
 
@@ -90,6 +91,7 @@ struct WebserviceURLs {
     static let kPackageBookingHistory                   = "PackageBookingHistory"
     static let kBookPackage                             = "BookPackage"
     static let kCurrentBooking                          = "CurrentBooking/"
+    static let kShareLocation                           = "PassengerLocation/"
     static let kAddNewCard                              = "AddNewCard"
     static let kSendTip                                 = "TipsForCompletedBooking"
     static let kAddMoney                                = "AddMoney"
@@ -100,6 +102,7 @@ struct WebserviceURLs {
     static let kTickpay                                 = "Tickpay"
     static let kAddAddress                              = "AddAddress"
     static let kGetAddress                              = "GetAddress/"
+    static let kGetAirportDetail                     = "AirportLatLng"
     static let kRemoveAddress                           = "RemoveAddress/"
     static let kVarifyUser                              = "VarifyUser"
     static let kTickpayInvoice                          = "TickpayInvoice"
@@ -202,7 +205,8 @@ struct SubmitBookingRequest {
     
     static let kShareRide               = "ShareRide"
     static let kNoOfPassenger           = "NoOfPassenger"
-    
+    static let kAirportRequest       = "AirportRequest"
+    static let kAirportId               = "AirportId"
     
 }
 
@@ -267,7 +271,7 @@ let NotificationforUpdateChatDetail = NSNotification.Name("UpdateChatDetail")
 let NotificationforOpenChat = NSNotification.Name(rawValue: "OpenChatfromNotification")
 let NotificationforUpdateChat = NSNotification.Name(rawValue: "UpdateChatfromNotification")
 let NotificationforRefreshNewChat = NSNotification.Name(rawValue: "RefreshNewChatfromNotification")
-
+let NotificationforDriverArrived = NSNotification.Name(rawValue: "DriverArrivedNotification")
 //let NotificationHotelReservation = NSNotification.Name("NotificationHotelReservation")
 //let NotificationBookaTable = NSNotification.Name("NotificationBookaTable")
 //let NotificationShopping = NSNotification.Name("NotificationShopping")

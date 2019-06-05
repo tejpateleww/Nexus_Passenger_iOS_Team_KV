@@ -561,7 +561,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                 if let imageData = data {
                     image = UIImage(data: imageData)!
                 }else {
-                    image = UIImage(named: "iconUser")!
+                    image = UIImage()
+//                        UIImage(named: "iconUser")!
                 }
                 
                 //                dictUserData["image"] = strImage as AnyObject
@@ -751,7 +752,8 @@ class LoginVC: UIViewController, CLLocationManagerDelegate, alertViewMethodsDele
                 if let imageData = data {
                     image = UIImage(data: imageData)!
                 }else {
-                    image = UIImage(named: "iconUser")!
+                    image = UIImage()
+//                        UIImage(named: "iconUser")!
                 }
                 
                 var dictUserData = [String: AnyObject]()

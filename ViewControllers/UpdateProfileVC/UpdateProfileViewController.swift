@@ -41,9 +41,10 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     
     
     var firstName = String()
-    var lastName = String()
-    var fullName = String()
+//    var lastName = String()
+//    var fullName = String()
     var gender = String()
+    var isimageSelected:Bool = false
     
 //    @IBOutlet weak var viewFullName: UIView!
 //    @IBOutlet weak var viewEmail: UIView!
@@ -232,10 +233,12 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     @IBAction func btnSave(_ sender: ThemeButton) {
         
         let VAlidator = self.isProfileValidate()
-        if VAlidator.0 == false {
-            UtilityClass.setCustomAlert(title: "", message: VAlidator.1, completionHandler: nil)
-        } else {
+        if VAlidator.0 == true {
             webserviceOfUpdateProfile()
+            
+        } else {
+            UtilityClass.setCustomAlert(title: "", message: VAlidator.1) { (index, status) in
+            }
         }
         
 //        if txtAddress.text == "" || txtFirstName.text == "" || gender == "" {
@@ -257,7 +260,7 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         
         if self.txtFirstName.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
             isValid  = false
-            ValidatorMessage = "Please enter fullname."
+            ValidatorMessage = "Please enter full name."
         } else if self.txtDateOfBirth.text?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) == "" {
             isValid = false
             ValidatorMessage = "Please enter date of birth."
@@ -347,21 +350,25 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         
         imgProfile.sd_setShowActivityIndicatorView(true)
         imgProfile.sd_setIndicatorStyle(.gray)
+        
         imgProfile.sd_setImage(with: URL(string: getData.object(forKey: "Image") as! String), completed: nil)
         
         
 //        txtPhoneNumber.text = getData.object(forKey: "MobileNo") as? String
         txtDateOfBirth.text = getData.object(forKey: "DOB") as? String
-        
 
-        fullName = getData.object(forKey: "Fullname") as! String
-  
-        let fullNameArr = fullName.components(separatedBy: " ")
         
-        firstName = fullNameArr[0]
-        lastName = fullNameArr[1]
+//        fullName = getData.object(forKey: "Fullname") as! String
+//
+//        let fullNameArr = fullName.components(separatedBy: " ")
+//        if fullNameArr.count == 1 {
+//            firstName = fullNameArr[0]
+//        } else if fullNameArr.count == 2 {
+//            firstName = fullNameArr[0]
+//            lastName = fullNameArr[1]
+//        }
 
-        txtFirstName.text = fullName
+        txtFirstName.text = getData.object(forKey: "Fullname") as? String
         self.lblEmailId.text = getData.object(forKey: "Email") as? String
         self.lblContactNumber.text = getData.object(forKey: "MobileNo") as? String
         txtAddress.text = getData.object(forKey: "Address") as? String
@@ -384,11 +391,11 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
     
     func webserviceOfUpdateProfile()
     {
-        fullName = txtFirstName.text! // + " " + txtLastName.text!
+//        fullName = txtFirstName.text! // + " " + txtLastName.text!
         
         var dictData = [String:AnyObject]()
         dictData["PassengerId"] = SingletonClass.sharedInstance.strPassengerID as AnyObject
-        dictData["Fullname"] = fullName as AnyObject
+        dictData["Fullname"] = txtFirstName.text as AnyObject
         dictData["Gender"] = gender as AnyObject
         dictData["Address"] = txtAddress.text as AnyObject
         dictData["DOB"] = txtDateOfBirth.text as AnyObject
@@ -396,18 +403,16 @@ class UpdateProfileViewController: BaseViewController, UIImagePickerControllerDe
         let activityData = ActivityData()
         NVActivityIndicatorPresenter.sharedInstance.startAnimating(activityData,nil)
         
-        
         webserviceForUpdateProfile(dictData as AnyObject, image1: self.imgUpdatedProfilePic ) { (result, status) in
             
             if (status) {
                 
                 NVActivityIndicatorPresenter.sharedInstance.stopAnimating(nil)
-                
                 print(result)
                 SingletonClass.sharedInstance.dictProfile = NSMutableDictionary(dictionary: (result as! NSDictionary).object(forKey: "profile") as! NSDictionary)
                 UserDefaults.standard.set(SingletonClass.sharedInstance.dictProfile, forKey: "profileData")
                 NotificationCenter.default.post(name: NSNotification.Name(rawValue: "UpdateProfile") , object: nil)
-                UtilityClass.setCustomAlert(title: "Done", message: "Update Profile Successfully") { (index, title) in
+                UtilityClass.setCustomAlert(title: "", message: "The profile has been updated successfully.") { (index, title) in
                     self.navigationController?.popViewController(animated: true)
                 }
                
