@@ -5983,6 +5983,8 @@ class HomeViewController: BaseViewController, UICollectionViewDelegate, UICollec
     }
     
     
+    
+    
     func getAirportLatLong() {
         
         webserviceToGetAirportsDetail { (result, status) in
